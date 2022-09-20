@@ -72,7 +72,6 @@ return array(
     'League\\Config\\' => array($vendorDir . '/league/config/src'),
     'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),
     'Lcobucci\\JWT\\' => array($vendorDir . '/lcobucci/jwt/src'),
-    'Lcobucci\\Clock\\' => array($vendorDir . '/lcobucci/clock/src'),
     'Laravolt\\Avatar\\' => array($vendorDir . '/laravolt/avatar/src'),
     'Laravel\\Ui\\' => array($vendorDir . '/laravel/ui/src'),
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),

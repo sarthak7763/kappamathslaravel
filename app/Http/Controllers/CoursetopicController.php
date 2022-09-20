@@ -7,6 +7,7 @@ use App\Coursetopic;
 use App\Category;
 use Exception;
 use Yajra\Datatables\DataTables;
+use DB;
 class CoursetopicController extends Controller
 {
     /**
@@ -223,7 +224,7 @@ class CoursetopicController extends Controller
         }
 
         try{
-        $coursetopicdata=Coursetopic::where('topic_name122',$request->title)->first();
+        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
         if($coursetopicdata)
         {
         	return back()->with('deleted','Title already exists.');

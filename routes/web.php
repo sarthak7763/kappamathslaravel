@@ -207,3 +207,9 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::post('/admin/course-topic/changestatus','CoursetopicController@changestatus')->name('coursetopicchangestatus');
 
 });
+
+
+
+Route::fallback( function () {
+    abort( 404 );
+});

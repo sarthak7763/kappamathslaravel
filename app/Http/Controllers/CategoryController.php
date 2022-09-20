@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Yajra\Datatables\DataTables;
 use Exception;
+use DB;
 class CategoryController extends Controller
 {
     /**

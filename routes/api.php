@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\PassportController;
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +14,15 @@ use App\Http\Controllers\PassportController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+ 
+Route::middleware('auth:api')->group(function () {
+    Route::get('get-user', [AuthController::class, 'userInfo']);
 });
 
 
-Route::post('login', [PassportController::class, 'login']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::post('user-detail', [PassportController::class, 'userDetail']);
+Route::fallback( function () {
+    abort( 404 );
 });

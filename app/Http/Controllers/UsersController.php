@@ -266,7 +266,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+      try{
         $user = User::find($id);
+
+        if(is_null($user)){
+           return redirect('admin/users')->with('deleted','Something went wrong.');
+        }
         
         if($user->image !=''){
           unlink('images/user/'.$user->image);
@@ -277,7 +282,44 @@ class UsersController extends Controller
         }catch(\Exception $e){
           return back()->with('deleted',$e->getMessage());
         }
+
+      }catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
         
+    }
+
+    public function changestatus(Request $request)
+    {
+        try{
+        $id=$request->id;
+        $user = User::find($id);
+
+        if(is_null($user)){
+           return redirect('admin/users')->with('deleted','Something went wrong.');
+        }
+
+
+        if(isset($request->status)){
+            $user->status = 1;
+          }else{
+            $user->status = 0;
+        }
+
+        try{
+            $user->save();
+           return back()->with('updated','Category updated !');
+        }catch(\Exception $e){
+            return back()->with('deleted',$e->getMessage());
+         }
+
+     }
+     catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+
     }
 
 }
