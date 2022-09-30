@@ -1,10 +1,10 @@
 @extends('layouts.admin', [
-  'page_header' => 'Course Topics'
+  'page_header' => 'Subject Category'
 ])
 
 @section('content')
   <div class="margin-bottom">
-    <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Topic</button></a>
+    <a href="{{route('course-category.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Category</button></a>
   </div>
 
   <div class="box">
@@ -13,15 +13,13 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Subject</th>
             <th>Category</th>
             <th>Title</th>
-            <th>Video ID</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
-        @if(isset($coursetopic))
+        @if(isset($subjectcategory))
         <tbody>
          
         </tbody>
@@ -56,15 +54,13 @@ $(function () {
       scrollCollapse: true,
 
 
-      ajax: "{{ route('course-topic.index') }}",
+      ajax: "{{ route('course-category.index') }}",
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},
-      {data: 'subject', name: 'subject',searchable: false},
-      {data: 'category', name: 'category',searchable: false},
-      {data: 'topic_name', name: 'title',searchable: true},
-      {data: 'topic_video_id', name: 'topic_video_id',searchable: false},
-      {data: 'topic_status', name: 'status'},
+      {data: 'subject', name: 'category',searchable: true},
+      {data: 'category_name', name: 'title',searchable: true},
+      {data: 'category_status', name: 'status'},
       {data: 'action', name: 'action',searchable: false}
 
       ]

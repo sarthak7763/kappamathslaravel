@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Avatar;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Validation\ValidationException;
+use Validator;
 
 class UsersController extends Controller
 {
@@ -18,10 +20,18 @@ class UsersController extends Controller
     public function index(Request $request)
     {
        
-        $users = \DB::table('users')->where('role','!=' , 'A')->select('id','image','name','email','mobile','role','city','address');
+        $users = \DB::table('users')->where('role','!=' , 'A')->select('id','image','name','email','username','mobile','role','status');
 
         if($request->ajax()){
           return DataTables::of($users)
+
+          ->filter(function ($row) use ($request) { 
+            if ($request->input('search.value') != "") {
+                $search=$request->input('search.value');
+                $row->where('name', 'LIKE', '%'.$search.'%');
+            }
+        })
+          
           ->addIndexColumn()
           ->addColumn('image',function($row){
             if ($row->image) {
@@ -37,27 +47,70 @@ class UsersController extends Controller
           ->addColumn('email',function($row){
             return $row->email;
           })
+          ->addColumn('username',function($row){
+            return $row->username;
+          })
           ->addColumn('mobile',function($row){
               return $row->mobile;
           })
           ->addColumn('role',function($row){
               return $row->role == 'S' ? 'Student' : '-';
           })
-          ->addColumn('city',function($row){
-              return isset($row->city) && $row->city ? $row->city : '-';
-          })
-          ->addColumn('address',function($row){
-            return isset($row->address) && $row->address ? $row->address : '-';
-          })
+          ->addColumn('status',function($row){
+
+            if($row->status=="1")
+            {
+                $statusvalue="Active";
+            }
+            else{
+                $statusvalue="suspend";
+            }
+
+                return $statusvalue;
+            })
           ->addColumn('action',function($row){
+
+            if($row->status=="1")
+            {
+                $checked="checked";
+            }
+            else{
+                $checked="";
+            }
+
             $btn ='<div class="admin-table-action-block">
 
                     <a href="' . route('users.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
                   
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal' . $row->id . '"><i class="fa fa-trash"></i> </button></div>';
+                    <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
 
 
-                     $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                //      $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                //   <div class="modal-dialog modal-sm">
+                //     <!-- Modal content-->
+                //     <div class="modal-content">
+                //       <div class="modal-header">
+                //         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                //         <div class="delete-icon"></div>
+                //       </div>
+                //       <div class="modal-body text-center">
+                //         <h4 class="modal-heading">Are You Sure ?</h4>
+                //         <p>Do you really want to delete these records? This process cannot be undone.</p>
+                //       </div>
+                //       <div class="modal-footer">
+                //         <form method="POST" action="' . route("users.destroy", $row->id) . '">
+                //           ' . method_field("DELETE") . '
+                //           ' . csrf_field() . '
+                //             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
+                //             <button type="submit" class="btn btn-danger">Yes</button>
+                //         </form>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </div>';
+
+
+                    $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -65,25 +118,40 @@ class UsersController extends Controller
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <div class="delete-icon"></div>
                       </div>
+
+                       <form method="POST" action="' . route("userchangestatus") . '">
+                          ' . method_field("POST") . '
+                          ' . csrf_field() . '
                       <div class="modal-body text-center">
                         <h4 class="modal-heading">Are You Sure ?</h4>
-                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                        <p>Do you really want to Change the  status of this record? This process cannot be undone.</p>
+
+                        <div class="row">
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Status: </label>
+                             <input '.$checked.' type="checkbox" class="toggle-input statusvalue" name="status" id="toggle_status'.$row->id.'">
+                             <label for="toggle_status'.$row->id.'"></label>
+                            <br>
+                          </div>
+                          </div>
+                          </div>
+
                       </div>
                       <div class="modal-footer">
-                        <form method="POST" action="' . route("users.destroy", $row->id) . '">
-                          ' . method_field("DELETE") . '
-                          ' . csrf_field() . '
+                          <input type="hidden" name="id" value="'.$row->id.'">
                             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
                             <button type="submit" class="btn btn-danger">Yes</button>
-                        </form>
                       </div>
                     </div>
+                    </form>
                   </div>
                 </div>';
+
                 return $btn;
 
           })
-          ->rawColumns(['image','name','email','mobile','role','city','address','action'])
+          ->rawColumns(['image','name','email','username','mobile','role','status','action'])
           ->make(true);
         }
         return view('admin.users.index', compact('users'));
@@ -107,43 +175,64 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-          $user = new User;
+      try{
 
           $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'unique:users|min:10',
-            'password' => 'required|string|min:6',
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required|min:10',
+            'password' => 'required|min:8',
+            'username'=>'required'
           ]);
 
+          try{
+          $checkmail=User::where('email',$request->email)->get()->first();
+          if($checkmail)
+          {
+              return back()->with('deleted', 'Email already exists. Please try with another email.');
+          }
+        }
+        catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+               try{
+               $checkusername=User::where('username',$request->username)->get()->first();
+               if($checkusername)
+               {
+                  return back()->with('deleted', 'Username already exists. Please try with another Username.');
+               }
+             }
+             catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+
+          $user = new User;
           $user->name = $request->name;
           $user->email = $request->email;
           $user->mobile = $request->mobile;
-          $user->address = $request->address;
-          $user->role = $request->role;
-          $user->city = $request->city;
+          $user->username=$request->username;
+          $user->address="";
+          $user->role = 'S';
+          $user->city="";
 
           if($request->password !="")
           {
             $user->password = bcrypt($request->password);
           }
 
-          if ($file = $request->file('image'))
-          {
+            if ($file = $request->file('image')) {
+                $name = 'user_'.time(); 
+                $file->move('images/user/', $name);
+                $image = $name;
+            }
+            else{
+                $image="";
+            }
 
-          if($user->image !="")
-          {
-              unlink('images/user/'.$user->image);
-          }
+            $user->image = $name;
 
-          $name = time().$file->getClientOriginalName();
-
-          $file->move('images/user', $name);
-          
-          $user->image = $name;
-      
-
-          }
           try{
             $user->save();
             return back()->with('added', 'User has been added !');
@@ -151,6 +240,29 @@ class UsersController extends Controller
           }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
           }
+
+      }
+      catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0];
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('deleted',$listmessage);
+                        }
+                        else{
+                            return back()->with('deleted','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('deleted','Something went wrong.');
+                    }      
+               }
 
           
         
@@ -175,8 +287,13 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-      $user = User::find($id);
+      try{
+      $user = User::findOrFail($id);
       return view('admin.users.edit',compact('user'));
+      }
+      catch(\Exception $e){
+                  return redirect('admin/users/')->with('deleted','Something went wrong.');     
+               }
     }
 
     /**
@@ -188,74 +305,192 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
+      try{
         $request->validate([
-          'name' => 'required|string|max:255',
+          'name' => 'required|string',
           'email' => 'required|string|email',
           'mobile' => 'sometimes|nullable|min:10'
         ]);
 
+        $user = User::find($id);
+          if(is_null($user)){
+           return redirect('admin/users/')->with('deleted','Something went wrong.');
+        }
+
         $input = $request->all();
 
-        if (Auth::user()->role == 'A') 
-        {
-          $user->name = $request->name;
-          $user->email = $request->email;
-          $user->mobile = $request->mobile;
-          $user->address = $request->address;
-          $user->city = $request->city;
-
-          if($request->password !="")
-          {
-            $user->password = bcrypt($request->password);
-          }
-
-          if ($file = $request->file('image'))
-          {
-            if($user->image !="")
-            {
-              unlink('images/user/'.$user->image);
+        if ($file = $request->file('image')) {
+                $name = 'user_'.time(); 
+                $file->move('images/user/', $name);
+                $image = $name;
+            }
+            else{
+                $image="";
             }
 
-            $name = time().$file->getClientOriginalName();
-            $file->move('images/user', $name);
-            $user->image = $name;      
-          }
 
-          $user->save();
-
-        } 
-        else if (Auth::user()->role == 'S') 
+        if($user->email==$request->email && $user->username==$request->username)
         {
-          $user->name = $request->name;
-          $user->email = $request->email;
-          $user->mobile = $request->mobile;
-          $user->address = $request->address;
-          $user->city = $request->city;
-
-          if($request->password !="")
+          if($image!="")
           {
-            $user->password = bcrypt($request->password);
+            $user->name = $request->name;
+            $user->mobile = $request->mobile;
+            $user->address = "";
+            $user->city = "";
+            $user->image = $image;
           }
+          else{
+            $user->name = $request->name;
+            $user->mobile = $request->mobile;
+            $user->address = "";
+            $user->city = "";
+          }
+          
+        }
+        elseif($user->email!=$request->email && $user->username==$request->username)
+        {
+            try{
+          $checkmail=User::where('email',$request->email)->get()->first();
+          if($checkmail)
+          {
+              return back()->with('deleted', 'Email already exists. Please try with another email.');
+          }
+        }
+        catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
 
-            if ($file = $request->file('image'))
+
+          if($image!="")
+          {
+              $user->name = $request->name;
+              $user->mobile = $request->mobile;
+              $user->address = "";
+              $user->city = "";
+              $user->email=$request->email;
+              $user->image = $image;
+          }
+          else{
+              $user->name = $request->name;
+              $user->mobile = $request->mobile;
+              $user->address = "";
+              $user->city = "";
+              $user->email=$request->email;
+          }
+          
+
+        }
+        elseif($user->email==$request->email && $user->username!=$request->username)
+        {
+            try{
+               $checkusername=User::where('username',$request->username)->get()->first();
+               if($checkusername)
+               {
+                  return back()->with('deleted', 'Username already exists. Please try with another Username.');
+               }
+             }
+             catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+               if($image!="")
+               {
+                  $user->name = $request->name;
+                  $user->mobile = $request->mobile;
+                  $user->address = "";
+                  $user->city = "";
+                  $user->username=$request->username;
+                  $user->image = $image;
+               }
+               else{
+                    $user->name = $request->name;
+                    $user->mobile = $request->mobile;
+                    $user->address = "";
+                    $user->city = "";
+                    $user->username=$request->username;
+               }
+              
+        }
+        else{
+              try{
+          $checkmail=User::where('email',$request->email)->get()->first();
+          if($checkmail)
+          {
+              return back()->with('deleted', 'Email already exists. Please try with another email.');
+          }
+        }
+        catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+               try{
+               $checkusername=User::where('username',$request->username)->get()->first();
+               if($checkusername)
+               {
+                  return back()->with('deleted', 'Username already exists. Please try with another Username.');
+               }
+             }
+             catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong.');     
+               }
+
+            if($image!="")
             {
-              if($user->image !="")
-              {
-                unlink('images/user/'.$user->image);
-              }
-
-              $name = time().$file->getClientOriginalName();
-              $file->move('images/user', $name);
-              $user->image = $name;
-            }
-
-          $user->save();
+                $user->name = $request->name;
+                $user->mobile = $request->mobile;
+                $user->address = "";
+                $user->city = "";
+                $user->username=$request->username;
+                $user->email = $request->email;
+                $user->image = $image;
+            } 
+            else{
+                $user->name = $request->name;
+                $user->mobile = $request->mobile;
+                $user->address = "";
+                $user->city = "";
+                $user->username=$request->username;
+                $user->email = $request->email;
+            }  
+           
 
         }
 
-        return back()->with('updated', 'Student has been updated');
+          if($request->password !="")
+          {
+            $user->password = bcrypt($request->password);
+          }
+
+          try{
+            $user->save();
+            return back()->with('updated', 'User has been updated !');
+
+          }catch(\Exception $e){
+            return back()->with('deleted',$e->getMessage());
+          }
+      }
+      catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0];
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('deleted',$listmessage);
+                        }
+                        else{
+                            return back()->with('deleted','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('deleted','Something went wrong.');
+                    }      
+               }
+
     }
 
     /**
@@ -309,7 +544,7 @@ class UsersController extends Controller
 
         try{
             $user->save();
-           return back()->with('updated','Category updated !');
+           return back()->with('updated','User updated !');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }

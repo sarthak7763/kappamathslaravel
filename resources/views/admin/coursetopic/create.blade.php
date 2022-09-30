@@ -1,15 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Topic',
-  'dash' => '',
-  'category'=>'',
-  'course-topic'=>'active',
-  'course'=>'',
-  'quiz' => '',
-  'users' => '',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Course Topics'
 ])
 
 @section('content')
@@ -27,14 +17,24 @@
       <div class="row">
           <div class="col-md-6">
 
+
+             <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
+              <label for="">Subject: </label>
+              <span class="required">*</span>
+             <select class="form-control" name="subject" id="subject">
+              <option value="">Select</option>
+              @foreach($subjectlist as $list)
+                <option value="{{$list['id']}}">{{$list['title']}}</option>
+              @endforeach
+             </select>
+              <small class="text-danger">{{ $errors->first('category') }}</small>
+            </div>
+
             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
               <label for="">Category: </label>
               <span class="required">*</span>
-             <select class="form-control" name="category">
-              <option value="">Select</option>
-              @foreach($categorylist as $list)
-                <option value="{{$list['id']}}">{{$list['title']}}</option>
-              @endforeach
+             <select class="form-control" name="category" id="subject_category">
+              
              </select>
               <small class="text-danger">{{ $errors->first('category') }}</small>
             </div>
@@ -42,7 +42,7 @@
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Topic Title') !!}
               <span class="required">*</span>
-              {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title', 'required' => 'required']) !!}
+              {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
               <small class="text-danger">{{ $errors->first('title') }}</small>
             </div>
 
@@ -50,6 +50,13 @@
               {!! Form::label('description', 'Description') !!}
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
               <small class="text-danger">{{ $errors->first('description') }}</small>
+            </div>
+
+             <div class="form-group{{ $errors->has('topic_video_id') ? ' has-error' : '' }}">
+              {!! Form::label('topic_video_id', 'Topic Video ID') !!}
+              <span class="required">*</span>
+              {!! Form::text('topic_video_id', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Vimeo Video ID']) !!}
+              <small class="text-danger">{{ $errors->first('topic_video_id') }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('topic_img') ? ' has-error' : '' }}">
@@ -88,6 +95,50 @@
     }
     reader.readAsDataURL(this.files[0]);
   });
+
+  $(document).on('change','#subject',function(){
+    var subject=$(this).val();
+    if(subject!="")
+    {
+      $.ajax({
+            'url':'{{url("/")}}/admin/course-topic/getsubjectcategorylist',
+            'data':{"_token": "{{ csrf_token() }}","subject":subject},
+            'type':'post',
+            'dataType':'json',
+            error:function()
+            {
+              alert('Something went wrong');
+            },
+            success:function(data)
+            {
+              if(data.code=="200")
+              {
+                getsubjectcategoryoptionhtml(data.message);
+              }
+              else{
+                alert(data.message);
+              }
+            }
+        });
+    }
+    else{
+      alert('Please choose subject');
+    }
+  });
+
+  function getsubjectcategoryoptionhtml(data)
+  {
+      var optionhtml='<option value="">Select</option>';
+      for(emp in data)
+      {
+          var category_name=data[emp].category_name;
+          var categoryid=data[emp].id;
+
+          optionhtml+='<option value="'+categoryid+'">'+category_name+'</option>'
+      }
+
+      $('#subject_category').html(optionhtml);
+  }
 
 </script>
 

@@ -1,19 +1,10 @@
 @extends('layouts.admin', [
-  'page_header' => 'Category',
-  'dash' => '',
-  'category'=>'active',
-  'course'=>'',
-  'quiz' => '',
-  'users' => '',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Subject'
 ])
 
 @section('content')
   <div class="margin-bottom">
-    <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Category</button>
+    <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Subject</button>
   </div>
   <!-- Create Modal -->
   <div id="createModal" class="modal fade" role="dialog">
@@ -21,16 +12,16 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Category</h4>
+          <h4 class="modal-title">Add Subject</h4>
         </div>
-        {!! Form::open(['method' => 'POST', 'action' => 'CategoryController@store']) !!}
+        {!! Form::open(['method' => 'POST','enctype'=>'multipart/form-data','action' => 'SubjectController@store']) !!}
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                   {!! Form::label('title', 'Title') !!}
                   <span class="required">*</span>
-                  {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title', 'required' => 'required']) !!}
+                  {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
                   <small class="text-danger">{{ $errors->first('title') }}</small>
                 </div>
 
@@ -40,6 +31,17 @@
                   {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description', 'rows' => '8']) !!}
                   <small class="text-danger">{{ $errors->first('description') }}</small>
                 </div>
+
+          <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+            {!! Form::label('image', 'Add Image') !!}
+            {!! Form::file('image') !!}
+            <small class="text-danger">{{ $errors->first('image') }}</small>
+            <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
+          </div>
+
+          <div id="preview_image_div">
+            <img id="preview-image" src="/images/noimage.jpg" style="height: auto;width: 50%;">
+          </div>
 
               <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
                   <label for="">Status: </label>
@@ -72,7 +74,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        @if(isset($category))
+        @if(isset($subject))
         <tbody>
          
         </tbody>
@@ -83,6 +85,14 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
+
+  $(document).on('change','#image',function(){
+    let reader = new FileReader();
+    reader.onload = (e) => { 
+      $('#preview-image').attr('src', e.target.result); 
+    }
+    reader.readAsDataURL(this.files[0]);
+  });
 
   $(document).on('click','.changestatusbtn',function(){
     var status=$(this).data('status');
@@ -107,7 +117,7 @@ $(function () {
       scrollCollapse: true,
 
 
-      ajax: "{{ route('category.index') }}",
+      ajax: "{{ route('subject.index') }}",
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},

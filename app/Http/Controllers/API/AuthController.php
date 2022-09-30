@@ -11,27 +11,110 @@ use Validator;
 
 class AuthController extends BaseController
 {
-    /**
-     * Registration Req
-     */
+
+    public function checkusername(Request $request)
+    {
+        try{
+            $input = $request->all();
+
+            $validator=Validator::make($request->all(), [
+                'username'=>'required'
+            ]);
+
+        if($validator->fails()){
+            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+        }
+
+        try{
+            $checkusername=User::where('username',$request->username)->get()->first();
+            if($checkusername)
+            {
+                return $this::sendError('Username exists.', ['error'=>'Username already exists. Please try with another one.']);
+            }
+            else{
+                $success['username'] =  $request->username;
+                return $this::sendResponse($success, 'Username is unique.');
+            }
+        }
+        catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+
+        }
+        catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+
+    }
+
     public function register(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:4',
+        try{
+        $validator=Validator::make($request->all(), [
+            'name' => 'required',
+            'username'=>'required',
             'email' => 'required|email',
+            'number'=>'required',
             'password' => 'required|min:8',
         ]);
- 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
- 
-        $token = $user->createToken('Laravel8PassportAuth')->accessToken;
- 
-        return response()->json(['token' => $token], 200);
+
+        if($validator->fails()){
+            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+        }
+
+        try{
+            $checkusername=User::where('username',$request->username)->get()->first();
+            if($checkusername)
+            {
+                return $this::sendError('Username exists.', ['error'=>'Username already exists. Please try with another one.']);
+            }
+            else{
+                try{
+                    $checkmail=User::where('email',$request->email)->get()->first();
+                    if($checkmail)
+                    {
+                        return $this::sendError('Email exists.', ['error'=>'Email already exists. Please try with another one.']);
+                    }
+
+                }catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+            }
+        }
+        catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+
+        try{
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'username'=>$request->username,
+                'mobile'=>$request->number,
+                'password' => bcrypt($request->password),
+                'role'=>'S',
+                'status'=>'1'
+            ]);
+
+            $token = $user->createToken('Laravel8PassportAuth')->accessToken;
+            
+            $success['token'] =  $token; 
+            $success['name'] =  $request->name;
+            $success['userdet']=$user;
+      
+            return $this::sendResponse($success, 'User login successfully.');
+
+        }
+        catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+        
     }
+    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+
+}
  
     /**
      * Login Req
@@ -41,16 +124,18 @@ class AuthController extends BaseController
         try{
         $input = $request->all();
         $validator = Validator::make($input, [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required'
         ]);
    
         if($validator->fails()){
-            return $this->sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
         }
 
+        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         $data = [
-            'email' => $request->email,
+            $fieldType => $request->username,
             'password' => $request->password
         ];
         
@@ -67,36 +152,30 @@ class AuthController extends BaseController
                 {
                     $success['token'] =  $token; 
                     $success['name'] =  $user->name;
+                    $success['userdet']=$user;
 
-                    return $this->sendResponse($success, 'User login successfully.');
+                    return $this::sendResponse($success, 'User login successfully.');
                 }
                 else{
-                    return $this->sendError('Account Supended.', ['error'=>'Your account has been suspended.']);
+                    return $this::sendError('Account Supended.', ['error'=>'Your account has been suspended.']);
                 }
             }
             else{
-                return $this->sendError('Unauthorised.', ['error'=>'Unauthorised User']);
+                return $this::sendForbiddenError('Unauthorised.', ['error'=>'Unauthorised User']);
             }
 
         } else {
-            return $this->sendError('Unauthorised.', ['error'=>'Invalid email or password.']);
+            return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Invalid email or password.']);
         }
     }
     catch(\Exception $e){
-                  return $this->sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
 
     }
     catch(\Exception $e){
-                  return $this->sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
     }
 
-    public function userInfo() 
-    {
-
-     $user = auth()->user();
-     return response()->json(['user' => $user], 200);
-
-    }
 }

@@ -1,13 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
-  'dash' => '',
-  'course'=>'',
-  'quiz' => '',
-  'users' => 'active',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Students'
 ])
 
 @section('content')
@@ -39,12 +31,6 @@
                 {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Change Your Password']) !!}
                 <small class="text-danger">{{ $errors->first('password') }}</small>
               </div>
-              <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                  {!! Form::label('role', 'User Role') !!}
-                  <span class="required">*</span>
-                  {!! Form::select('role', ['S' => 'Student', 'A'=>'Administrator'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
-                  <small class="text-danger">{{ $errors->first('role') }}</small>
-              </div>
 
                <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
                 <label for="image">Choose Profile Picture:</label>
@@ -57,16 +43,17 @@
                 {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'eg: +91-123-456-7890']) !!}
                 <small class="text-danger">{{ $errors->first('mobile') }}</small>
               </div>
-              <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                {!! Form::label('city', 'Enter City') !!}
-                {!! Form::text('city', null, ['class' => 'form-control', 'placeholder'=>'Enter Your City']) !!}
-                <small class="text-danger">{{ $errors->first('city') }}</small>
-              </div>
+              <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                    {!! Form::label('username', 'Enter Username') !!}
+                    {!! Form::text('username', null, ['class' => 'form-control', 'placeholder'=>'Enter Your Username']) !!}
+                    <small class="text-danger">{{ $errors->first('username') }}</small>
+                  </div>
 
-              <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                {!! Form::label('address', 'Address') !!}
-                {!! Form::textarea('address', null, ['class' => 'form-control', 'rows'=>'5', 'placeholder' => 'Enter Your Address']) !!}
-                <small class="text-danger">{{ $errors->first('address') }}</small>
+                  <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
+                  <label for="">Status: </label>
+                 <input {{ $user->status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
+                 <label for="toggle2"></label>
+                <br>
               </div>
 
                 @if($user->image !="")

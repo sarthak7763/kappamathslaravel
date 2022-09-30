@@ -56,7 +56,6 @@ $setting = App\Setting::first();
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <a href="{{url('/')}}" class="btn visit-btn" target="_blank" title="Visit Site">Visit Site <i class="fa fa-arrow-circle-o-right"></i></a>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
@@ -108,21 +107,26 @@ $setting = App\Setting::first();
         <li class="header">Main Sections</li>
         @if ($auth->role == 'A')
           <!-- Optionally, you can add icons to the links -->
-          <li class="{{$dash}}"><a href="{{url('/admin')}}" title="Dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li class="{{$users}}"><a href="{{url('/admin/users')}}" title="Students"><i class="fa fa-users"></i> <span>Students</span></a></li>
 
-          <li class="{{$course}}"><a href="{{url('admin/courses')}}" title="Course"><i class="fa fa-gears"></i> <span>Course</span></a></li> 
+          <li class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('/admin')}}" title="Dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
-          <li class="{{$quiz}}"><a href="{{url('admin/topics')}}" title="Quiz"><i class="fa fa-gears"></i> <span>Quiz</span></a></li>
+          <li class="{{ (request()->is('admin/users*')) ? 'active' : '' }}"><a href="{{url('/admin/users')}}" title="Students"><i class="fa fa-users"></i> <span>Students</span></a></li>
 
-          <li class="{{$questions}}"><a href="{{url('admin/questions')}}" title="Questions"><i class="fa fa-question-circle-o"></i> <span>Questions</span></a></li>          
-          <li class="{{$all_re}}"><a href="{{url('/admin/all_reports')}}" title="Student Report"><i class="fa fa-file-text-o"></i> <span>Student Report</span></a></li>
-          <li class="{{$top_re}}"><a href="{{url('/admin/top_report')}}" title="Top Student Report"><i class="fa fa-user"></i> <span>Top Student Report</span></a></li>
+          <li class="{{ (request()->is('admin/subject*')) ? 'active' : '' }}"><a href="{{url('admin/subject')}}" title="Subjects"><i class="fa fa-gears"></i> <span>Subjects</span></a></li> 
 
-          
+          <li class="{{ (request()->is('admin/course-category*')) ? 'active' : '' }}"><a href="{{url('admin/course-category')}}" title="Subject Category"><i class="fa fa-gears"></i> <span>Subject Category</span></a></li> 
+
+          <li class="{{ (request()->is('admin/course-topic*')) ? 'active' : '' }}"><a href="{{url('admin/course-topic')}}" title="Course Topics"><i class="fa fa-gears"></i> <span>Course Topics</span></a></li> 
+
+          <li class="{{ (request()->is('admin/quiz-topics*')) ? 'active' : '' }}"><a href="{{url('admin/quiz-topics')}}" title="Quiz"><i class="fa fa-gears"></i> <span>Quiz</span></a></li>
+
+          <li class="{{ (request()->is('admin/questions*')) ? 'active' : '' }}"><a href="{{url('admin/questions')}}" title="Questions"><i class="fa fa-question-circle-o"></i> <span>Questions</span></a></li> 
+
+          <li class="{{ (request()->is('admin/all_reports*')) ? 'active' : '' }}"><a href="{{url('/admin/all_reports')}}" title="Student Report"><i class="fa fa-file-text-o"></i> <span>Student Report</span></a></li>
+
+          <li class="{{ (request()->is('admin/top_report*')) ? 'active' : '' }}"><a href="{{url('/admin/top_report')}}" title="Top Student Report"><i class="fa fa-user"></i> <span>Top Student Report</span></a></li>
            
-          <li class="{{$sett}}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li>
-          
+          <li class="{{ (request()->is('admin/settings*')) ? 'active' : '' }}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li>   
 
           <li class="treeview {{ Nav::isRoute('pages.index') }} {{ Nav::isRoute('pages.add') }} {{ Nav::isRoute('pages.edit') }} {{ Nav::isRoute('faq.index') }} {{ Nav::isRoute('faq.add') }} {{ Nav::isRoute('faq.edit') }} {{ Nav::isRoute('copyright.index') }} {{ Nav::isRoute('set.facebook') }} {{ Nav::isRoute('customstyle') }} {{ Nav::isRoute('mail.getset') }} {{ Nav::isRoute('socialicons.index')}}">
             <a href="#">
@@ -148,6 +152,7 @@ $setting = App\Setting::first();
                 <li class="{{ Nav::isRoute('mail.getset') }}"><a href="{{route('mail.getset')}}"><i class="fa fa-circle-o"></i>Mail Setting</a>
                </li>
                </li>
+
                 <li class="{{ Nav::isRoute('customstyle') }}"><a href="{{route('customstyle')}}"><i class="fa fa-circle-o"></i>Custom Style Settings</a>
                </li>
 

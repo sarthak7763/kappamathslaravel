@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Subject;
 use Yajra\Datatables\DataTables;
 use Exception;
 use DB;
-class CategoryController extends Controller
+use Illuminate\Validation\ValidationException;
+use Validator;
+
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +19,11 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $category = \DB::table('category')->select('id','title','description','status');
+        $subject = \DB::table('subject')->select('id','title','description','status');
 
           if($request->ajax()){
 
-            return DataTables::of($category)
+            return DataTables::of($subject)
 
             ->filter(function ($row) use ($request) { 
             if ($request->input('search.value') != "") {
@@ -61,7 +64,7 @@ class CategoryController extends Controller
 
               $btn = '<div class="admin-table-action-block">
 
-                    <a href="' . route('category.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+                    <a href="' . route('subject.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
 
                     <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
                    
@@ -99,7 +102,7 @@ class CategoryController extends Controller
                         <div class="delete-icon"></div>
                       </div>
 
-                       <form method="POST" action="' . route("categorychangestatus") . '">
+                       <form method="POST" action="' . route("subjectchangestatus") . '">
                           ' . method_field("POST") . '
                           ' . csrf_field() . '
                       <div class="modal-body text-center">
@@ -136,7 +139,7 @@ class CategoryController extends Controller
 
           }
 
-        return view('admin.category.index', compact('category'));
+        return view('admin.subject.index', compact('subject'));
     }
 
     /**
@@ -160,7 +163,8 @@ class CategoryController extends Controller
         try{
        $input = $request->all();
         $request->validate([
-          'title' => 'required|string'
+          'title' => 'required|string',
+          'image' => 'required|mimes:jpeg,png,jpg'
         ]);
 
         if(isset($request->status)){
@@ -169,16 +173,28 @@ class CategoryController extends Controller
           $input['status'] = "0";
         }
 
+
+        if ($file = $request->file('image')) {
+            $name = 'subject_'.time().$file->getClientOriginalName(); 
+            $file->move('images/subjects/', $name);
+            $image = $name;
+        }
+        else{
+            $image="";
+        }
+
+        $input['image']=$image;
+
         try{
-        $categorydata=Category::where('title',$request->title)->first();
-        if($categorydata)
+        $subjectdata=Subject::where('title',$request->title)->first();
+        if($subjectdata)
         {
         	return back()->with('deleted','Title already exists.');
         }
         else{
         	try{
-		         $quiz = Category::create($input);
-		           return back()->with('added', 'Category has been added');
+		         $quiz = Subject::create($input);
+		           return back()->with('added', 'Subject has been added');
 		        }catch(\Exception $e){
 		          return back()->with('deleted',$e->getMessage());     
 		       }
@@ -189,9 +205,26 @@ class CategoryController extends Controller
                }
 
     }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0];
+                        }
 
+                        if($listmessage!="")
+                        {
+                            return back()->with('deleted',$listmessage);
+                        }
+                        else{
+                            return back()->with('deleted','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('deleted','Something went wrong.');
+                    }      
+               }
          
     }
 
@@ -215,11 +248,11 @@ class CategoryController extends Controller
     public function edit($id)
     {
         try{
-            $category = Category::findOrFail($id);
-           return view('admin.category.edit',compact('category'));
+            $subject = Subject::findOrFail($id);
+           return view('admin.subject.edit',compact('subject'));
         }
         catch(\Exception $e){
-                  return redirect('admin/category/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/subject/')->with('deleted','Something went wrong.');     
                }
     }
 
@@ -237,9 +270,9 @@ class CategoryController extends Controller
           'title' => 'required|string'
         ]);
 
-          $category = Category::find($id);
-          if(is_null($category)){
-           return redirect('admin/category')->with('deleted','Something went wrong.');
+          $subject = Subject::find($id);
+          if(is_null($subject)){
+           return redirect('admin/subject')->with('deleted','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -248,15 +281,32 @@ class CategoryController extends Controller
             $statusvalue = 0;
           }
 
-        if($category->title==$request->title)
+        if ($file = $request->file('image')) {
+            $name = 'subject_'.time().$file->getClientOriginalName(); 
+            $file->move('images/subjects/', $name);
+            $subjectimage = $name;
+        }
+        else{
+            $subjectimage="";
+        }
+
+        if($subject->title==$request->title)
         {
-          $category->description = $request->description;
-          $category->status=$statusvalue;
+            if($subjectimage!="")
+            {
+                $subject->description = $request->description;
+                $subject->status=$statusvalue;
+                $subject->image=$subjectimage;
+            }
+            else{
+                $subject->description = $request->description;
+                $subject->status=$statusvalue;
+            }
         }
         else{
             try{
-                $categorydata=Category::where('title',$request->title)->first();
-                if($categorydata)
+                $subjectdata=Subject::where('title',$request->title)->first();
+                if($subjectdata)
                 {
                     return back()->with('deleted','Title already exists.');
                 }
@@ -265,24 +315,52 @@ class CategoryController extends Controller
                   return back()->with('deleted','Something went wrong.');     
                }
 
-            $category->title=$request->title;
-            $category->description = $request->description;
-            $category->status=$statusvalue;
+            if($subjectimage!="")
+            {
+                $subject->title=$request->title;
+                $subject->description = $request->description;
+                $subject->status=$statusvalue;
+                $subject->image=$subjectimage;
+            }
+            else{
+                $subject->title=$request->title;
+                $subject->description = $request->description;
+                $subject->status=$statusvalue;
+            }
         } 
 
          try{
-            $category->save();
-          return back()->with('updated','Category updated !');
+            $subject->save();
+          return back()->with('updated','Subject updated !');
          }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
 
      }
-     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
+     catch(\Exception $e){          
+              if($e instanceof ValidationException){
+                    $listmessage="";
+                    foreach($e->errors() as $list)
+                    {
+                        $listmessage.=$list[0];
+                    }
 
-          
+                    if($listmessage!="")
+                    {
+                        return back()->with('deleted',$listmessage);
+                    }
+                    else{
+                        return back()->with('deleted','Something went wrong.');
+                    }
+                    
+                }
+                else{
+                    return back()->with('deleted','Something went wrong.');
+                }
+
+            }
+               
+
     }
 
     /**
@@ -294,15 +372,15 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         try{
-        $category = Category::find($id);
+        $subject = Subject::find($id);
 
-        if(is_null($category)){
-           return redirect('admin/category')->with('deleted','Something went wrong.');
+        if(is_null($subject)){
+           return redirect('admin/subject')->with('deleted','Something went wrong.');
         }
 
         try{
-            $category->delete();
-           return back()->with('deleted', 'Category has been deleted');
+            $subject->delete();
+           return back()->with('deleted', 'Subject has been deleted');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -317,22 +395,22 @@ class CategoryController extends Controller
     {
         try{
         $id=$request->id;
-        $category = Category::find($id);
+        $subject = Subject::find($id);
 
-        if(is_null($category)){
-           return redirect('admin/category')->with('deleted','Something went wrong.');
+        if(is_null($subject)){
+           return redirect('admin/subject')->with('deleted','Something went wrong.');
         }
 
 
         if(isset($request->status)){
-            $category->status = 1;
+            $subject->status = 1;
           }else{
-            $category->status = 0;
+            $subject->status = 0;
         }
 
         try{
-            $category->save();
-           return back()->with('updated','Category updated !');
+            $subject->save();
+           return back()->with('updated','Subject updated !');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }

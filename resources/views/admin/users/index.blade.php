@@ -1,20 +1,12 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
-  'dash' => '',
-  'course'=>'',
-  'quiz' => '',
-  'users' => 'active',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Students'
 ])
 
 @section('content')
   @if ($auth->role == 'A')
     <div class="margin-bottom">
       <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Student</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Students</button>
+      <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Students</button> -->
     </div>
     <!-- All Delete Button -->
     <div id="AllDeleteModal" class="delete-modal modal fade" role="dialog">
@@ -53,29 +45,20 @@
                   <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                     {!! Form::label('name', 'Student Name') !!}
                     <span class="required">*</span>
-                    {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter Your Name']) !!}
+                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Enter Your Name']) !!}
                     <small class="text-danger">{{ $errors->first('name') }}</small>
                   </div>
                   <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     {!! Form::label('email', 'Email address') !!}
                     <span class="required">*</span>
-                    {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@examlpe.com', 'required' => 'required']) !!}
+                    {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@examlpe.com']) !!}
                     <small class="text-danger">{{ $errors->first('email') }}</small>
                   </div>
                   <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     {!! Form::label('password', 'Password') !!}
                     <span class="required">*</span>
-                    {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Enter Your Password', 'required' => 'required']) !!}
+                    {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Enter Your Password']) !!}
                     <small class="text-danger">{{ $errors->first('password') }}</small>
-                  </div>
-                  <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                      {!! Form::label('role', 'User Role') !!}
-                      <span class="required">*</span>
-                     <select name="role" id="" class="select2 form-control">
-                       <option value="S">Student</option>
-                       <option value="A">Admin</option>
-                     </select>
-                      <small class="text-danger">{{ $errors->first('role') }}</small>
                   </div>
                   
                 <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
@@ -90,16 +73,17 @@
                     {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'eg: +91-123-456-7890']) !!}
                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                   </div>
-                  <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                    {!! Form::label('city', 'Enter City') !!}
-                    {!! Form::text('city', null, ['class' => 'form-control', 'placeholder'=>'Enter Your City']) !!}
-                    <small class="text-danger">{{ $errors->first('city') }}</small>
+                  <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                    {!! Form::label('username', 'Enter Username') !!}
+                    {!! Form::text('username', null, ['class' => 'form-control', 'placeholder'=>'Enter Your Username']) !!}
+                    <small class="text-danger">{{ $errors->first('username') }}</small>
                   </div>
-                  <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                    {!! Form::label('address', 'Address') !!}
-                    {!! Form::textarea('address', null, ['class' => 'form-control', 'rows'=>'5', 'placeholder' => 'Enter Your address']) !!}
-                    <small class="text-danger">{{ $errors->first('address') }}</small>
-                  </div>
+                  <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
+                  <label for="">Status: </label>
+                 <input type="checkbox" class="toggle-input" name="status" id="toggle2">
+                 <label for="toggle2"></label>
+                <br>
+              </div>
                 </div>
               </div>
             </div>
@@ -122,10 +106,10 @@
               <th>User Image</th>
               <th>Student Name</th>
               <th>Email</th>
+              <th>Username</th>
               <th>Mobile No.</th>
               <th>User Role</th>
-              <th>City</th>
-              <th>Address</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -141,6 +125,19 @@
 @endsection
 @section('scripts')
 <script>
+
+  $(document).on('click','.changestatusbtn',function(){
+    var status=$(this).data('status');
+    if(status==1)
+    {
+      $('.statusvalue').prop('checked',true);
+    }
+    else{
+      $('.statusvalue').prop('checked',false);
+    }
+    
+  });
+
   $(function () {
 
     var table = $('#usersTable').DataTable({
@@ -158,17 +155,12 @@
       {data: 'image', name: 'image',searchable: false},
       {data: 'name', name: 'name'},
       {data: 'email', name: 'email'},
+      {data: 'username', name: 'username'},
       {data: 'mobile', name: 'mobile'},
       {data: 'role', name: 'role'},
-      {data: 'city', name: 'city'},
-      {data: 'address', name: 'address'},
+      {data: 'status', name: 'status'},
       {data: 'action', name: 'action',searchable: false}
-      ],
-      dom : 'lBfrtip',
-      buttons : [
-      'csv','excel','pdf','print'
-      ],
-      order : [[0,'desc']]
+      ]
     });
 
   });

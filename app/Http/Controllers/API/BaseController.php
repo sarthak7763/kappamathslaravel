@@ -15,7 +15,7 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($result, $message)
+    public static function sendResponse($result, $message)
     {
     	$response = [
             'status_code' => 200,
@@ -33,10 +33,10 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendError($error, $errorMessages = [], $code = 401)
+    public static function sendError($error, $errorMessages = [], $code = 400)
     {
     	$response = [
-            'status_code' => 401,
+            'status_code' => 400,
             'message' => $error,
         ];
 
@@ -49,7 +49,7 @@ class BaseController extends Controller
         return response()->json($response, $code);
     }
 
-    public function sendExceptionError($error, $errorMessages = [], $code = 500)
+    public static function sendExceptionError($error, $errorMessages = [], $code = 500)
     {
         $response = [
             'status_code' => 500,
@@ -65,10 +65,10 @@ class BaseController extends Controller
         return response()->json($response, $code);
     }
 
-    public function sendValidationError($error, $errorMessages = [], $code = 404)
+    public static function sendValidationError($error, $errorMessages = [], $code = 400)
     {
         $response = [
-            'status_code' => 404,
+            'status_code' => 400,
             'message' => $error,
         ];
 
@@ -79,4 +79,36 @@ class BaseController extends Controller
 
         return response()->json($response, $code);
     }
+
+    public static function sendUnauthorisedError($error, $errorMessages = [], $code = 401)
+    {
+        $response = [
+            'status_code' => 401,
+            'message' => $error,
+        ];
+
+        if(!empty($errorMessages)){
+            $response['data'] = $errorMessages;
+        }
+
+
+        return response()->json($response, $code);
+    }
+
+    public static function sendForbiddenError($error, $errorMessages = [], $code = 403)
+    {
+        $response = [
+            'status_code' => 403,
+            'message' => $error,
+        ];
+
+        if(!empty($errorMessages)){
+            $response['data'] = $errorMessages;
+        }
+
+
+        return response()->json($response, $code);
+    }
+
+
 }

@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Quiztopic;
 use App\Coursetopic;
 use App\Subject;
 use App\Subjectcategory;
-use Exception;
-use Yajra\Datatables\DataTables;
-use DB;
-
-class CoursetopicController extends Controller
+use DataTables;
+class QuizTopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +17,20 @@ class CoursetopicController extends Controller
      */
     public function index(Request $request)
     {
-        $coursetopic = \DB::table('coursetopics')->select('id','subject','category','topic_name','topic_video_id','topic_status');
+        $topics = Quiztopic::all();
 
+        $topics = \DB::table('quiztopics')->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
           if($request->ajax()){
 
-            return DataTables::of($coursetopic)
+            return DataTables::of($topics)
 
             ->filter(function ($row) use ($request) { 
             if ($request->input('search.value') != "") {
                 $search=$request->input('search.value');
-                $row->where('topic_name', 'LIKE', '%'.$search.'%');
+                $row->where('title', 'LIKE', '%'.$search.'%');
             }
         })
-
+            
             ->addIndexColumn()
             ->addColumn('subject',function($row){
                 if($row->subject!="" && $row->subject!="0")
@@ -71,15 +70,52 @@ class CoursetopicController extends Controller
 
                 return $categoryname;
             })
-            ->addColumn('topic_name',function($row){
-                return $row->topic_name;
-            })
-            ->addColumn('topic_video_id',function($row){
-                return $row->topic_video_id;
-            })
-            ->addColumn('topic_status',function($row){
+            ->addColumn('course_topic',function($row){
+                if($row->course_topic!="" && $row->course_topic!="0")
+                {
+                    $course_topicdata=Coursetopic::where('id',$row->course_topic)->first();
+                    if(!empty($course_topicdata))
+                    {
+                        $course_topicdataarray=$course_topicdata->toArray();
+                        $coursetopicname=$course_topicdataarray['topic_name'];
+                    }
+                    else{
+                        $coursetopicname="NA";
+                    }
+                }
+                else{
+                    $coursetopicname="NA";
+                }
 
-            if($row->topic_status=="1")
+                return $coursetopicname;
+            })
+            ->addColumn('quiz_type',function($row){
+
+            if($row->quiz_type=="1")
+            {
+                $quiztypevalue="Objective Quiz";
+            }
+            else{
+                $quiztypevalue="Theory Quiz";
+            }
+
+                return $quiztypevalue;
+            })
+            ->addColumn('title',function($row){
+                return $row->title;
+            })
+            ->addColumn('description',function($row){
+                return $row->description;
+            })
+            ->addColumn('per_q_mark',function($row){
+                return $row->per_q_mark;
+            })
+            ->addColumn('timer',function($row){
+              return $row->timer;
+            })
+            ->addColumn('quiz_status',function($row){
+
+            if($row->quiz_status=="1")
             {
                 $statusvalue="Active";
             }
@@ -92,7 +128,7 @@ class CoursetopicController extends Controller
 
             ->addColumn('action',function($row){
 
-            if($row->topic_status=="1")
+            if($row->quiz_status=="1")
             {
                 $checked="checked";
             }
@@ -102,10 +138,9 @@ class CoursetopicController extends Controller
 
               $btn = '<div class="admin-table-action-block">
 
-                    <a href="' . route('course-topic.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
-
-                    <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->topic_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
-                   
+                    <a href="' . route('quiz-topics.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+                  
+                     <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->quiz_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
 
                 //      $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
                 //   <div class="modal-dialog modal-sm">
@@ -120,7 +155,7 @@ class CoursetopicController extends Controller
                 //         <p>Do you really want to delete these records? This process cannot be undone.</p>
                 //       </div>
                 //       <div class="modal-footer">
-                //         <form method="POST" action="' . route("course-topic.destroy", $row->id) . '">
+                //         <form method="POST" action="' . route("quiz-topics.destroy", $row->id) . '">
                 //           ' . method_field("DELETE") . '
                 //           ' . csrf_field() . '
                 //             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
@@ -131,7 +166,7 @@ class CoursetopicController extends Controller
                 //   </div>
                 // </div>';
 
-                $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                     $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -140,7 +175,7 @@ class CoursetopicController extends Controller
                         <div class="delete-icon"></div>
                       </div>
 
-                       <form method="POST" action="' . route("coursetopicchangestatus") . '">
+                       <form method="POST" action="' . route("quiztopicchangestatus") . '">
                           ' . method_field("POST") . '
                           ' . csrf_field() . '
                       <div class="modal-body text-center">
@@ -171,13 +206,12 @@ class CoursetopicController extends Controller
 
               return $btn;
             })
-            ->escapeColumns(['action'])
-            ->rawColumns(['category','topic_name','topic_video_id','topic_status','action'])
+            ->rawColumns(['title','description','per_q_mark','timer','action'])
             ->make(true);
 
           }
 
-        return view('admin.coursetopic.index', compact('coursetopic'));
+        return view('admin.quiz.index', compact('topics'));
     }
 
     /**
@@ -188,7 +222,8 @@ class CoursetopicController extends Controller
     public function create()
     {
         //
-    	try{
+
+        try{
         $subjectalldata=Subject::where('status','1')->get();
           if(!empty($subjectalldata))
           {
@@ -198,14 +233,14 @@ class CoursetopicController extends Controller
             $subjectlist=[];
           }
 
-          return view('admin.coursetopic.create', compact('subjectlist'));
+          return view('admin.quiz.create', compact('subjectlist'));
       }catch(\Exception $e){
-                  return redirect('admin/course-topic/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
                }
-
     }
 
-    public function getsubjectcategorylist(Request $request)
+
+     public function getsubjectcategorylist(Request $request)
     {
       try{
 
@@ -269,6 +304,77 @@ class CoursetopicController extends Controller
 
     }
 
+    public function getcoursetopiclist(Request $request)
+    {
+      try{
+
+        $input = $request->all();
+
+        $request->validate([
+            'subject'=>'required',
+            'category'=>'required'
+        ]);
+
+        $subject=$request->subject;
+        $category=$request->category;
+
+        $subjectdata=Subject::find($subject);
+
+      if(is_null($subjectdata)){
+        $data=array('code'=>'400','message'=>'Please choose subject.');
+      }
+
+      try{
+        $subjectcategorydata=Subjectcategory::where('id',$category)->where('subject',$subject)->get()->first();
+        if(!$subjectcategorydata)
+        {
+          $data=array('code'=>'400','message'=>'Please choose category.');
+        }
+
+      $coursetopicdata=Coursetopic::where('subject',$subject)->where('category',$category)->where('topic_status','1')->get();
+
+        if(!empty($coursetopicdata))
+        {
+          $coursetopiclist=$coursetopicdata->toArray();
+        }
+        else{
+          $coursetopiclist=[];
+        }
+
+        $data=array('code'=>'200','message'=>$coursetopiclist);
+      }
+        catch(\Exception $e)
+        {
+          $data=array('code'=>'400','message'=>'Something went wrong.');
+        }
+      }
+      catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0];
+                        }
+
+                        if($listmessage!="")
+                        {
+                          $data=array('code'=>'400','message'=>$listmessage);
+                        }
+                        else{
+                        $data=array('code'=>'400','message'=>'Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                      $data=array('code'=>'400','message'=>'Something went wrong.');
+                    }
+
+               }
+
+               return json_encode($data);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -277,13 +383,15 @@ class CoursetopicController extends Controller
      */
     public function store(Request $request)
     {
-      try{
+        try{
        $input = $request->all();
-
         $request->validate([
-              'subject'=>'required',
-            'category'=>'required',
-          'title' => 'required|string'
+          'subject'=>'required',
+          'category'=>'required',
+          'course'=>'required',
+          'quiz_type'=>'required',
+          'title' => 'required|string',
+          'per_q_mark' => 'required'    
         ]);
 
         if(isset($request->status)){
@@ -292,34 +400,18 @@ class CoursetopicController extends Controller
           $statusvalue = "0";
         }
 
-        if ($file = $request->file('topic_img')) {
-            $name = 'topic_'.time().$file->getClientOriginalName(); 
-            $file->move('images/topics/', $name);
-            $topic_img = $name;
-        }
-        else{
-        	$topic_img="";
-        }
-
         try{
-        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
-        if($coursetopicdata)
-        {
-        	return back()->with('deleted','Title already exists.');
-        }
-        else{
-            try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
-                if(!$subjectdata)
-                {
-                    return back()->with('deleted','Please choose subject.');
-                }
-            }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
+            $subjectdata=Subject::where('id',$request->subject)->first();
+            if(!$subjectdata)
+            {
+                return back()->with('deleted','Please choose subject.');
+            }
+          }catch(\Exception $e){
+                return back()->with('deleted','Something went wrong.');     
+             }
 
 
-               try{
+             try{
                 $categorydata=Subjectcategory::where('id',$request->category)->where('subject',$request->subject)->first();
                 if(!$categorydata)
                 {
@@ -329,38 +421,41 @@ class CoursetopicController extends Controller
                   return back()->with('deleted','Something went wrong.');     
                }
 
-               if($topic_img!="" || $request->topic_video_id)
-               {
-                    try{
-                      $coursetopic = new Coursetopic;
-                      $coursetopic->subject=$request->subject;
-                      $coursetopic->category = $request->category;
-                      $coursetopic->topic_name = $request->title;
-                      $coursetopic->topic_description = $request->description;
-                      $coursetopic->topic_image = $topic_img;
-                      $coursetopic->topic_video_id=$request->topic_video_id;
-                      $coursetopic->topic_status = $statusvalue;
-                      $coursetopic->save();
-                     return back()->with('added', 'Topic has been added');
-                  }catch(\Exception $e){
-                    return back()->with('deleted',$e->getMessage());     
-                 }
-               }
-               else{
-                return back()->with('deleted','Please choose image or enter video id to continue the process.');
-               }  
-        }
-    }
-    catch(\Exception $e){
+
+               try{
+                $coursetopicdata=Coursetopic::where('id',$request->course)->where('subject',$request->subject)->where('category',$request->category)->first();
+                if(!$coursetopicdata)
+                {
+                    return back()->with('deleted','Please choose Course Topic.');
+                }
+            }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
                }
 
+
+        try{
+          $quiztopic = new Quiztopic;
+          $quiztopic->subject=$request->subject;
+          $quiztopic->category = $request->category;
+          $quiztopic->course_topic=$request->course;
+          $quiztopic->quiz_type=$request->quiz_type;
+          $quiztopic->title = $request->title;
+          $quiztopic->description = $request->description;
+          $quiztopic->per_q_mark = $request->per_q_mark;
+          $quiztopic->timer=$request->timer;
+          $quiztopic->quiz_status = $statusvalue;
+          $quiztopic->save();
+
+           return back()->with('added', 'Quiz Topic has been added');
         }catch(\Exception $e){
+          return back()->with('deleted',$e->getMessage());
+           
+       }
+     }
+     catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
                }
-
-
-         
+       
     }
 
     /**
@@ -382,24 +477,22 @@ class CoursetopicController extends Controller
      */
     public function edit($id)
     {
-      try{
-    	$subjectalldata=Subject::where('status','1')->get();
-	      if(!empty($subjectalldata))
-	      {
-	        $subjectlist=$subjectalldata->toArray();
-	      }
-	      else{
-	        $subjectlist=[];
-	      }
-	     
-	     $coursetopic = Coursetopic::findOrFail($id);
-	     $coursetopic->title=$coursetopic->topic_name;
-	     $coursetopic->description=$coursetopic->topic_description;
-       $coursetopic->topic_video_id=$coursetopic->topic_video_id;
-       $subject=$coursetopic->subject;
-       $category=$coursetopic->category;
-
        try{
+        $subjectalldata=Subject::where('status','1')->get();
+          if(!empty($subjectalldata))
+          {
+            $subjectlist=$subjectalldata->toArray();
+          }
+          else{
+            $subjectlist=[];
+          }
+
+        $quiztopic = Quiztopic::findOrFail($id);
+        $subject=$quiztopic->subject;
+        $category=$quiztopic->category;
+        $course_topic=$quiztopic->course_topic;
+
+        try{
       $subjectcategorydata=Subjectcategory::where('subject',$subject)->where('category_status','1')->get();
 
         if(!empty($subjectcategorydata))
@@ -411,14 +504,29 @@ class CoursetopicController extends Controller
         }
       }
       catch(\Exception $e){
-                  return redirect('admin/course-topic/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
                }
 
-        return view('admin.coursetopic.edit',compact('coursetopic','subjectlist','subjectcategorylist'));
-     }
-     catch(\Exception $e){
-                  return redirect('admin/course-topic/')->with('deleted','Something went wrong.');     
-               }  
+      try{
+      $subjectcoursedata=Coursetopic::where('subject',$subject)->where('category',$category)->where('topic_status','1')->get();
+
+        if(!empty($subjectcoursedata))
+        {
+          $subjectcourselist=$subjectcoursedata->toArray();
+        }
+        else{
+          $subjectcourselist=[];
+        }
+      }
+      catch(\Exception $e){
+                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
+               }
+
+          return view('admin.quiz.edit', compact('subjectlist','quiztopic','subjectcategorylist','subjectcourselist'));
+      }catch(\Exception $e){
+                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
+               }
+
     }
 
     /**
@@ -434,23 +542,18 @@ class CoursetopicController extends Controller
         $request->validate([
           'subject'=>'required',
           'category'=>'required',
-          'title' => 'required|string'
+          'course'=>'required',
+          'quiz_type'=>'required',
+          'title' => 'required|string',
+          'per_q_mark' => 'required'
+          
         ]);
 
-          $coursetopic = Coursetopic::find($id);
+          $quiztopic = Quiztopic::find($id);
 
-         if(is_null($coursetopic)){
-		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
-		}
-
-          if ($file = $request->file('topic_img')) {
-            $name = 'topic_'.time().$file->getClientOriginalName(); 
-            $file->move('images/topics/', $name);
-            $topic_img = $name;
-        }
-        else{
-        	$topic_img="";
-        }
+          if(is_null($quiztopic)){
+       return redirect('admin/quiz-topics')->with('deleted','Something went wrong11.');
+    }
 
           if(isset($request->status)){
             $statusvalue = 1;
@@ -465,7 +568,7 @@ class CoursetopicController extends Controller
                     return back()->with('deleted','Please choose subject.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('deleted','Something went wrong12.');     
                }
 
             try{
@@ -475,74 +578,41 @@ class CoursetopicController extends Controller
                     return back()->with('deleted','Please choose category.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('deleted','Something went wrong13.');     
+               }
+
+               try{
+                $coursetopicdata=Coursetopic::where('id',$request->course)->where('subject',$request->subject)->where('category',$request->category)->first();
+                if(!$coursetopicdata)
+                {
+                    return back()->with('deleted','Please choose Course Topic.');
+                }
+            }catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong14.');     
                }
 
 
-
-
-          if($coursetopic->topic_name==$request->title)
-          {
-	          if($topic_img!="")
-	          {
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
-  		        $coursetopic->topic_description = $request->description;
-  		        $coursetopic->topic_image = $topic_img;
-  		        $coursetopic->topic_status = $statusvalue;
-              $coursetopic->topic_video_id=$request->topic_video_id;
-	          }
-	          else{
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
-  		        $coursetopic->topic_description = $request->description;
-  		        $coursetopic->topic_status = $statusvalue;
-              $coursetopic->topic_video_id=$request->topic_video_id;
-	          }
-          }
-          else{
-          		try{
-		        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
-		        if($coursetopicdata)
-		        {
-		        	return back()->with('deleted','Title already exists.');
-		        }
-		    }
-		    catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
-
-            if($topic_img!="")
-	          {
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
-	          	$coursetopic->topic_name=$request->title;
-  		        $coursetopic->topic_description = $request->description;
-  		        $coursetopic->topic_image = $topic_img;
-  		        $coursetopic->topic_status = $statusvalue;
-              $coursetopic->topic_video_id=$request->topic_video_id;
-	          }
-	          else{
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
-	          	$coursetopic->topic_name=$request->title;
-		          $coursetopic->topic_description = $request->description;
-		          $coursetopic->topic_status = $statusvalue;
-              $coursetopic->topic_video_id=$request->topic_video_id;
-	          }
-          }
          try{
-            $coursetopic->save();
-          return back()->with('updated','Topic updated !');
+            $quiztopic->subject=$request->subject;
+            $quiztopic->category = $request->category;
+            $quiztopic->course_topic=$request->course;
+            $quiztopic->quiz_type=$request->quiz_type;
+            $quiztopic->title = $request->title;
+            $quiztopic->description = $request->description;
+            $quiztopic->per_q_mark = $request->per_q_mark;
+            $quiztopic->timer=$request->timer;
+            $quiztopic->quiz_status = $statusvalue;
+            $quiztopic->save();
+
+          return back()->with('updated','Quiz Topic updated !');
          }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
 
-       }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
-
-          
+       }
+       catch(\Exception $e){
+                  return back()->with('deleted','Something went wrong15.');     
+               } 
     }
 
     /**
@@ -553,15 +623,15 @@ class CoursetopicController extends Controller
      */
     public function destroy($id)
     {
-        try{
-        $coursetopic = Coursetopic::find($id);
+      try{
+        $quiztopic = Quiztopic::find($id);
 
-        if(is_null($coursetopic)){
-		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
-		}
+         if(is_null($quiztopic)){
+       return redirect('admin/quiz-topics')->with('deleted','Something went wrong.');
+    }
 
         try{
-            $coursetopic->delete();
+            $quiztopic->delete();
            return back()->with('deleted', 'Topic has been deleted');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
@@ -578,21 +648,21 @@ class CoursetopicController extends Controller
     {
         try{
         $id=$request->id;
-        $coursetopic = Coursetopic::find($id);
+        $quiztopic = Quiztopic::find($id);
 
-        if(is_null($coursetopic)){
-		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
-		}
+        if(is_null($quiztopic)){
+       return redirect('admin/quiz-topics')->with('deleted','Something went wrong.');
+    }
 
         if(isset($request->status)){
-            $coursetopic->topic_status = 1;
+            $quiztopic->quiz_status = 1;
           }else{
-            $coursetopic->topic_status = 0;
+            $quiztopic->quiz_status = 0;
         }
 
         try{
-            $coursetopic->save();
-           return back()->with('updated','Topic updated !');
+            $quiztopic->save();
+           return back()->with('updated','Quiz Topic updated !');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -602,6 +672,5 @@ class CoursetopicController extends Controller
                   return back()->with('deleted','Something went wrong.');     
                }
   }
-
 
 }
