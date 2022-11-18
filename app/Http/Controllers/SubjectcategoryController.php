@@ -196,7 +196,7 @@ class SubjectcategoryController extends Controller
        $input = $request->all();
 
         $request->validate([
-            'subject'=>'required',
+            'course'=>'required',
           'title' => 'required|string'
         ]);
 
@@ -206,13 +206,13 @@ class SubjectcategoryController extends Controller
           $statusvalue = "0";
         }
 
-        if ($file = $request->file('category_img')) {
+        if ($file = $request->file('topic_img')) {
             $name = 'category_'.time().$file->getClientOriginalName(); 
             $file->move('images/subjectcategory/', $name);
-            $category_img = $name;
+            $topic_img = $name;
         }
         else{
-        	$category_img="";
+        	$topic_img="";
         }
 
         try{
@@ -223,10 +223,10 @@ class SubjectcategoryController extends Controller
         }
         else{
             try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
+                $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose subject.');
+                    return back()->with('deleted','Please choose course.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -235,13 +235,15 @@ class SubjectcategoryController extends Controller
 
         	try{
                 $subjectcategory = new Subjectcategory;
-                $subjectcategory->subject = $request->subject;
+                $subjectcategory->subject = $request->course;
                 $subjectcategory->category_name = $request->title;
                 $subjectcategory->category_description = $request->description;
-                $subjectcategory->category_image = $category_img;
+                $subjectcategory->category_image = $topic_img;
                 $subjectcategory->category_status = $statusvalue;
                 $subjectcategory->save();
-		           return back()->with('added', 'Category has been added');
+
+               return redirect('admin/course-category/')->with('added','Topic has been added.');
+
 		        }catch(\Exception $e){
 		          return back()->with('deleted',$e->getMessage());     
 		       }
@@ -257,12 +259,12 @@ class SubjectcategoryController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0];
+                            $listmessage.=$list[0].'<br>';
                         }
 
                         if($listmessage!="")
                         {
-                            return back()->with('deleted',$listmessage);
+                            return back()->with('error',$listmessage);
                         }
                         else{
                             return back()->with('deleted','Something went wrong12.');
@@ -330,7 +332,7 @@ class SubjectcategoryController extends Controller
     {
       try{
         $request->validate([
-        	'subject'=>'required',
+        	'course'=>'required',
           'title' => 'required|string'
         ]);
 
@@ -340,13 +342,13 @@ class SubjectcategoryController extends Controller
 		   return redirect('admin/course-category')->with('deleted','Something went wrong.');
 		}
 
-          if ($file = $request->file('category_img')) {
+          if ($file = $request->file('topic_img')) {
             $name = 'topic_'.time().$file->getClientOriginalName(); 
             $file->move('images/subjectcategory/', $name);
-            $category_img = $name;
+            $topic_img = $name;
         }
         else{
-        	$category_img="";
+        	$topic_img="";
         }
 
           if(isset($request->status)){
@@ -356,10 +358,10 @@ class SubjectcategoryController extends Controller
           }
 
           try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
+                $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose subject.');
+                    return back()->with('deleted','Please choose course.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -368,15 +370,15 @@ class SubjectcategoryController extends Controller
 
           if($subjectcategory->category_name==$request->title)
           {
-	          if($category_img!="")
+	          if($topic_img!="")
 	          {
-	          	$subjectcategory->subject = $request->subject;
+	          	$subjectcategory->subject = $request->course;
   		        $subjectcategory->category_description = $request->description;
-  		        $subjectcategory->category_image = $category_img;
+  		        $subjectcategory->category_image = $topic_img;
   		        $subjectcategory->category_status = $statusvalue;
 	          }
 	          else{
-	          	$subjectcategory->subject = $request->subject;
+	          	$subjectcategory->subject = $request->course;
   		        $subjectcategory->category_description = $request->description;
   		        $subjectcategory->category_status = $statusvalue;
 	          }
@@ -393,16 +395,16 @@ class SubjectcategoryController extends Controller
                   return back()->with('deleted','Something went wrong.');     
                }
 
-            if($category_img!="")
+            if($topic_img!="")
 	          {
-	          	$subjectcategory->subject = $request->subject;
+	          	$subjectcategory->subject = $request->course;
 	          	$subjectcategory->category_name=$request->title;
   		        $subjectcategory->category_description = $request->description;
-  		        $subjectcategory->category_image = $category_img;
+  		        $subjectcategory->category_image = $topic_img;
   		        $subjectcategory->category_status = $statusvalue;
 	          }
 	          else{
-	          	$subjectcategory->subject = $request->subject;
+	          	$subjectcategory->subject = $request->course;
 	          	$subjectcategory->category_name=$request->title;
 		          $subjectcategory->category_description = $request->description;
 		          $subjectcategory->category_status = $statusvalue;
@@ -410,7 +412,9 @@ class SubjectcategoryController extends Controller
           }
          try{
             $subjectcategory->save();
-          return back()->with('updated','Category updated !');
+
+          return redirect('admin/course-category/')->with('updated','Topic updated !.');
+
          }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -421,12 +425,12 @@ class SubjectcategoryController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0];
+                            $listmessage.=$list[0].'<br>';
                         }
 
                         if($listmessage!="")
                         {
-                            return back()->with('deleted',$listmessage);
+                            return back()->with('error',$listmessage);
                         }
                         else{
                             return back()->with('deleted','Something went wrong.');
@@ -459,7 +463,7 @@ class SubjectcategoryController extends Controller
 
         try{
             $subjectcategory->delete();
-           return back()->with('deleted', 'Category has been deleted');
+           return back()->with('deleted', 'Topic has been deleted');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -489,7 +493,7 @@ class SubjectcategoryController extends Controller
 
         try{
             $subjectcategory->save();
-           return back()->with('updated','Category updated !');
+           return back()->with('updated','Topic updated !');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }

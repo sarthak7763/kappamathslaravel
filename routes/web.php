@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\Topic;
+use App\Quiztopic;
 use App\Answer;
 use App\copyrighttext;
 use App\Question;
@@ -22,46 +22,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware'=> 'coming_soon'], function(){
 
-  Route::redirect('/', 'home');
+Route::get('/', function(){
+    return redirect()->route('login');
+});
+
+Route::post('/login/checkwebuserlogin','Auth\LoginController@checkwebuserlogin')->name('checkwebuserlogin');
+
   Auth::routes();
 
-  /*facebook login route*/
-  // Route::get('login/o_auth/facebook  ', 'Auth\LoginController@redirectToProvider');
-  // Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
-
-  /*Social Login*/
-  Route::get('login/{service}', 'Auth\LoginController@redirectToProvider')->name('sociallogin');
-  Route::get('login/{service}/callback', 'Auth\LoginController@handleProviderCallback');
-
-
-  /*google login route*/
-  // Route::get('login/google', 'Auth\LoginController@redirectToProvider');
-  // Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
-
-  Route::get('/faqs',function(){
-    $menus  = Page::where('show_in_menu','=',1)->get();
-    return view('faq',compact('menus'));
-  })->name('faq.get');
-
   Route::get('/home', function(){
-    $topics = Topic::all();
-    $questions = Question::all();
-    $menus  = Page::where('show_in_menu','=',1)->get();
-    return view('home', compact('topics', 'questions','menus'));
-  });
+    return redirect()->route('login');
+});
 
-  Route::get('/redirect', function () {
-      $query = http_build_query([
-          'client_id' => '1',
-          'redirect_uri' => 'http://example.com/callback',
-          'response_type' => 'token', 
-          'scope' => '',
-      ]);
-
-      return redirect('http://your-app.com/oauth/authorize?'.$query);
-  });
+  Route::get('/user/forgot-password/{code}','Userforgotpassword@index');
+  
+  Route::post('/resetuserpassword','Userforgotpassword@resetuserpassword')->name('resetuserpassword');
 
   Route::resource('/admin/users', 'UsersController');
+  Route::post('/admin/users/changestatus','UsersController@changestatus')->name('userchangestatus');
 
   Route::get('/admin/profile', function(){
     if (Auth::check()) {
@@ -70,51 +48,9 @@ Route::group(['middleware'=> 'coming_soon'], function(){
       return redirect('/');
     }
   });
+  
   Route::get('/admin/my_reports', 'MyReportsController@index')->name('my_report');
   Route::get('/admin/my_reports/{my_reports}', 'MyReportsController@show')->name('my_report_show');
-
-
-  Route::get('start_quiz/{id}', function($id){
-    $topic = Topic::findOrFail($id);
-    $answers = Answer::where('topic_id','=',$topic->topic_id)->first();
-    return view('main_quiz', compact('topic','answers'));
-  })->name('start_quiz');
-
-  Route::resource('start_quiz/{id}/quiz', 'MainQuizController');
-
-  Route::get('start_quiz/{id}/finish', function($id){
-    $auth = Auth::user();
-    $topic = Topic::findOrFail($id);
-    $questions = Question::where('topic_id', $id)->get();
-    $count_questions = $questions->count();
-    $answers = Answer::where('user_id',$auth->id)
-                ->where('topic_id',$id)->get(); 
-
-    if($count_questions != $answers->count()){
-      foreach($questions as $que){ 
-        $a = false;   
-        foreach($answers as $ans){ 
-          if($que->id == $ans->question_id){ 
-            $a = true;
-          }
-        }
-        if($a == false){  
-          Answer::create([
-            'topic_id' => $id,
-            'user_id' => $auth->id,
-            'question_id' => $que->id,
-            'user_answer' => 0,
-            'answer' => $que->answer,
-          ]);
-        }
-      }
-    }
-
-    $ans= Answer::all();
-    $q= Question::all();
-    
-    return view('finish', compact('ans','q','topic', 'answers', 'count_questions'));
-  });
 
   Route::get('admin/moresettings/socialicons/','SocialController@index')->name('socialicons.index');
   Route::post('/admin/moresettings/socialicons/insert','SocialController@store')->name('social.store');
@@ -158,7 +94,7 @@ Route::group(['middleware'=> 'isadmin'], function(){
   {
     $user = User::where('role', '!=', 'A')->count();
     $question = Question::count();
-    $quiz = Topic::count();
+    $quiz = Quiztopic::count();
     $user_latest = User::where('id', '!=', Auth::id())->orderBy('created_at', 'desc')->get();
     return view('admin.dashboard', compact('user', 'question', 'quiz', 'user_latest'));
     //remove the answer line comment
@@ -170,7 +106,15 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/all_reports', 'AllReportController');
   Route::resource('/admin/top_report', 'TopReportController');
-  Route::resource('/admin/topics', 'TopicController');
+
+  Route::resource('/admin/quiz-topics', 'QuizTopicController');
+
+  Route::post('/admin/quiz-topics/getsubjectcategorylist','QuizTopicController@getsubjectcategorylist')->name('getquizsubjectcategorylist');
+
+  Route::post('/admin/quiz-topics/getcoursetopiclist','QuizTopicController@getcoursetopiclist')->name('getcoursetopiclist');
+
+  Route::post('/admin/quiz-topics/changestatus','QuizTopicController@changestatus')->name('quiztopicchangestatus');
+
   Route::resource('/admin/questions', 'QuestionsController');
   Route::post('/admin/questions/import_questions', 'QuestionsController@importExcelToDB')->name('import_questions');
   Route::resource('/admin/answers', 'AnswersController');
@@ -200,16 +144,52 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::get('/admin/mail-settings','Configcontroller@getset')->name('mail.getset');
   Route::post('admin/mail-settings', 'Configcontroller@changeMailEnvKeys')->name('mail.update');
 
-  Route::resource('/admin/category', 'CategoryController');
-  Route::post('/admin/category/changestatus','CategoryController@changestatus')->name('categorychangestatus');
+  Route::resource('/admin/subject', 'SubjectController');
+  Route::post('/admin/subject/changestatus','SubjectController@changestatus')->name('subjectchangestatus');
+
+  Route::resource('/admin/course-category', 'SubjectcategoryController');
+  
+  Route::post('/admin/course-category/changestatus','SubjectcategoryController@changestatus')->name('subjectcategorychangestatus');
 
   Route::resource('/admin/course-topic', 'CoursetopicController');
+
   Route::post('/admin/course-topic/changestatus','CoursetopicController@changestatus')->name('coursetopicchangestatus');
+
+  Route::post('/admin/questions/getquizlist','QuestionsController@getquizlist')->name('getquizlist');
+
+  Route::post('/admin/questions/storeobjectivequiz','QuestionsController@storeobjectivequiz')->name('storeobjectivequiz');
+
+  Route::post('/admin/questions/storetheoryquiz','QuestionsController@storetheoryquiz')->name('storetheoryquiz');
+
+    Route::patch('/admin/questions/updatetheoryquiz/{id}','QuestionsController@updatetheoryquiz')->name('updatetheoryquiz');
+
+  Route::post('/admin/questions/changestatus','QuestionsController@changestatus')->name('questionchangestatus');
+
+  Route::get('/admin/questions/create/{id}','QuestionsController@create')->name('questions.create'); 
+
+  Route::post('/admin/course-topic/getsubjectcategorylist','CoursetopicController@getsubjectcategorylist')->name('getsubjectcategorylist');
+
+  Route::post('/admin/postAcceptor','QuestionsController@postAcceptor');
+
+  Route::resource('/admin/subscription', 'SubscriptionController');
+  Route::post('/admin/subscription/changestatus','SubscriptionController@changestatus')->name('subscriptionchangestatus');
+
+  Route::resource('/admin/notifications', 'NotificationController');
+  Route::post('/admin/notifications/changestatus','NotificationController@changestatus')->name('notificationchangestatus');
+
+  Route::resource('/admin/exam-information', 'ExamInformationController');
+  Route::post('/admin/exam-information/changestatus','ExamInformationController@changestatus')->name('examinformationchangestatus');
+
+  Route::resource('/admin/bulletin', 'BulletinController');
+  Route::post('/admin/bulletin/changestatus','BulletinController@changestatus')->name('bulletinchangestatus');
+
+  Route::resource('/admin/cms-pages', 'CmsPagesController');
+  Route::post('/admin/cms-pages/changestatus','CmsPagesController@changestatus')->name('cmspageschangestatus');
 
 });
 
 
 
 Route::fallback( function () {
-    abort( 404 );
+    abort( 405 );
 });

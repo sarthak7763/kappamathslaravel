@@ -5,7 +5,7 @@
 @section('content')
   <div class="box">
     <div class="box-body">
-        <h3>Edit Topic: {{ $quiztopic->title }}
+        <h3>Edit Quiz: {{ $quiztopic->title }}
           <a href="{{ route('quiz-topics.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> {{ __('Back')}}
           </a>
@@ -17,41 +17,41 @@
         <div class="row">
           <div class="col-md-6">
 
-            <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
-              <label for="">Subject: </label>
+            <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
+              <label for="">Course: </label>
               <span class="required">*</span>
-             <select class="form-control" name="subject" id="subject">
+             <select class="form-control" name="course" id="course">
               <option value="">Select</option>
               @foreach($subjectlist as $list)
                 <option {{ $quiztopic->subject ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['title']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('category') }}</small>
+              <small class="text-danger">{{ $errors->first('course') }}</small>
             </div>
 
-            <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
-              <label for="">Category: </label>
+            <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
+              <label for="">Topics: </label>
               <span class="required">*</span>
-             <select class="form-control" name="category" id="subject_category">
+             <select class="form-control" name="topic" id="subject_category">
               <option value="">Select</option>
               @foreach($subjectcategorylist as $list)
                 <option {{ $quiztopic->category ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['category_name']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('category') }}</small>
+              <small class="text-danger">{{ $errors->first('topic') }}</small>
             </div>
 
 
-            <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
-              <label for="">Course Topics: </label>
+            <div class="form-group{{ $errors->has('sub_topic') ? ' has-error' : '' }}">
+              <label for="">Sub Topics: </label>
               <span class="required">*</span>
-             <select class="form-control" name="course" id="course_topic">
+             <select class="form-control" name="sub_topic" id="course_topic">
               <option value="">Select</option>
               @foreach($subjectcourselist as $list)
                 <option {{ $quiztopic->course_topic ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['topic_name']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('course') }}</small>
+              <small class="text-danger">{{ $errors->first('sub_topic') }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('quiz_type') ? ' has-error' : '' }}">
@@ -110,13 +110,13 @@
 @section('scripts')
 <script type="text/javascript">
 
-  $(document).on('change','#subject',function(){
-    var subject=$(this).val();
-    if(subject!="")
+  $(document).on('change','#course',function(){
+    var course=$(this).val();
+    if(course!="")
     {
       $.ajax({
             'url':'{{url("/")}}/admin/quiz-topics/getsubjectcategorylist',
-            'data':{"_token": "{{ csrf_token() }}","subject":subject},
+            'data':{"_token": "{{ csrf_token() }}","course":course},
             'type':'post',
             'dataType':'json',
             error:function()
@@ -136,18 +136,18 @@
         });
     }
     else{
-      alert('Please choose subject');
+      alert('Please choose course');
     }
   });
 
   $(document).on('change','#subject_category',function(){
-    var subject=$('#subject').val();
-    var category=$(this).val();
-    if(subject!="" && category!="")
+    var course=$('#course').val();
+    var topic=$(this).val();
+    if(course!="" && topic!="")
     {
       $.ajax({
             'url':'{{url("/")}}/admin/quiz-topics/getcoursetopiclist',
-            'data':{"_token": "{{ csrf_token() }}","category":category,"subject":subject},
+            'data':{"_token": "{{ csrf_token() }}","topic":topic,"course":course},
             'type':'post',
             'dataType':'json',
             error:function()
@@ -166,14 +166,14 @@
             }
         });
     }
-    else if(subject!="" && category==""){
-      alert('Please choose category');
+    else if(course!="" && topic==""){
+      alert('Please choose topic');
     }
-    else if(subject=="" && category!=""){
-      alert('Please choose subject');
+    else if(course=="" && topic!=""){
+      alert('Please choose course');
     }
     else{
-      alert('Please choose subject and category');
+      alert('Please choose course and topic');
     }
 
   });

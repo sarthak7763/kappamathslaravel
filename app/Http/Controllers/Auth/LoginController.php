@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use App\User;
@@ -50,6 +51,66 @@ class LoginController extends Controller
     //  * Obtain the user information from GitHub.
     //  *
     //  * @return \Illuminate\Http\Response
+
+    public function checkwebuserlogin(Request $request)
+    {
+        try{
+
+            $form_data=$request->all();
+            $request->validate([
+                'email'=>'required|email',
+                'password'=>'required'
+            ]);
+
+            $remember_me = $request->has('remember') ? true : false;
+            $email=$request->input('email');
+            $password=$request->input('password');
+            $check = $request->only('email', 'password');
+
+            try{
+            if(\Auth::attempt(['email'=>$email,'password'=>$password ], $remember_me))
+            {
+                $user = auth()->user();
+                return redirect('/admin');
+            }
+            else
+            {
+                return back()->with('error','your username and password are wrong.');
+            }
+        }
+        catch(\Exception $e)
+        {
+          return back()->with('error','Something went wrong.');
+        }
+
+
+        }
+        catch(\Exception $e){
+                  
+                  if($e instanceof \Illuminate\Validation\ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0];
+                        }
+
+                        if($listmessage!="")
+                        {
+                          return back()->with('error',$listmessage);
+                        }
+                        else{
+                        return back()->with('error','Something went wrong.');
+                        }   
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }
+
+               }
+
+        
+        
+    }
      
     public function handleProviderCallback($service)
     {

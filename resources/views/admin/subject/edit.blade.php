@@ -1,12 +1,12 @@
 @extends('layouts.admin', [
-  'page_header' => 'Subject'
+  'page_header' => 'Course'
 ])
 
 @section('content')
   <div class="box">
     <div class="box-body">
-        <h3>Edit Subject: {{ $subject->title }}
-          <a href="{{ route('topics.index') }}" class="btn btn-gray pull-right">
+        <h3>Edit Course: {{ $subject->title }}
+          <a href="{{ route('subject.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> {{ __('Back')}}
           </a>
         </h3>
@@ -15,11 +15,33 @@
       {!! Form::model($subject, ['method' => 'PATCH','enctype'=>'multipart/form-data', 'action' => ['SubjectController@update', $subject->id]]) !!}
             
         <div class="row">
+
+          @if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('deleted'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('added'))
+<div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-              {!! Form::label('title', 'Topic Title') !!}
+              {!! Form::label('title', 'Course Title') !!}
               <span class="required">*</span>
-              {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title', 'required' => 'required']) !!}
+              {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
               <small class="text-danger">{{ $errors->first('title') }}</small>
             </div>
 

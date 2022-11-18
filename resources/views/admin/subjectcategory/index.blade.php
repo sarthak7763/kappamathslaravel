@@ -1,19 +1,41 @@
 @extends('layouts.admin', [
-  'page_header' => 'Subject Category'
+  'page_header' => 'Course Topics'
 ])
 
 @section('content')
   <div class="margin-bottom">
-    <a href="{{route('course-category.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Category</button></a>
+    <a href="{{route('course-category.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Topic</a>
   </div>
 
   <div class="box">
+
+    @if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('deleted'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('added'))
+<div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
     <div class="box-body table-responsive">
       <table id="coursetopicTable" class="table table-hover table-striped">
         <thead>
           <tr>
             <th>#</th>
-            <th>Category</th>
+            <th>Course</th>
             <th>Title</th>
             <th>Status</th>
             <th>Actions</th>

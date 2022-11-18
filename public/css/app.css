@@ -8383,6 +8383,11 @@ button.btn-wave {
 
 .login-logo {
   margin: 0 auto;
+  position: absolute;
+  left: 12.24%;
+  right: 12.51%;
+  top: 12.54%;
+  bottom: 33.83%;
 }
 
 .form ::-webkit-input-placeholder {
@@ -8391,6 +8396,13 @@ button.btn-wave {
 
 .login-page .logo {
   margin-bottom: 20px;
+  width: 168.68px;
+  height: 168.68px;
+  left: 0.46px;
+  top: 0px;
+  background: #042A60;
+  border-radius: 34.7561px;
+  margin-left: 45px;
 }
 
 .login-page .form {

@@ -4,7 +4,7 @@
 
 @section('content')
   <div class="margin-bottom">
-    <a href="{{route('quiz-topics.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Topic</button></a>
+    <a href="{{route('quiz-topics.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Quiz</button></a>
   </div>
 
   <div class="box">
@@ -13,9 +13,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Subject</th>
-            <th>Category</th>
-            <th>Course Topic</th>
+            <th>Course</th>
+            <th>Topic</th>
+            <th>Sub Topic</th>
             <th>Quiz Type</th>
             <th>Quiz Title</th>
             <th>Description</th>

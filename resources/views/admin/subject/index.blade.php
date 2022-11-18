@@ -1,10 +1,10 @@
 @extends('layouts.admin', [
-  'page_header' => 'Subject'
+  'page_header' => 'Course'
 ])
 
 @section('content')
   <div class="margin-bottom">
-    <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Subject</button>
+    <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Course</button>
   </div>
   <!-- Create Modal -->
   <div id="createModal" class="modal fade" role="dialog">
@@ -12,7 +12,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Subject</h4>
+          <h4 class="modal-title">Add Course</h4>
         </div>
         {!! Form::open(['method' => 'POST','enctype'=>'multipart/form-data','action' => 'SubjectController@store']) !!}
           <div class="modal-body">
@@ -34,6 +34,7 @@
 
           <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
             {!! Form::label('image', 'Add Image') !!}
+            <span class="required">*</span>
             {!! Form::file('image') !!}
             <small class="text-danger">{{ $errors->first('image') }}</small>
             <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
@@ -63,11 +64,33 @@
     </div>
   </div>
   <div class="box">
+
+@if ($message = Session::get('error'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('deleted'))
+<div class="alert alert-danger alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{!! $message !!}</strong>
+</div>
+@endif
+
+@if ($message = Session::get('added'))
+<div class="alert alert-success alert-block">
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+
     <div class="box-body table-responsive">
       <table id="categoryTable" class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>#</th>
+            <th>SNo</th>
             <th>Title</th>
             <th>Description</th>
             <th>Status</th>
@@ -120,11 +143,11 @@ $(function () {
       ajax: "{{ route('subject.index') }}",
       columns: [
 
-      {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},
-      {data: 'title', name: 'title',searchable: true},
-      {data: 'description', name: 'description'},
-      {data: 'status', name: 'status'},
-      {data: 'action', name: 'action',searchable: false}
+      {data: 'id', name: 'id',orderable: true, searchable: false},
+      {data: 'title', name: 'title',searchable: true,orderable: true},
+      {data: 'description', name: 'description',orderable: false},
+      {data: 'status', name: 'status',orderable: true},
+      {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
     });

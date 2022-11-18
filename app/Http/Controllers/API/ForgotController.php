@@ -25,6 +25,7 @@ class ForgotController extends BaseController
 
             try{
                     $checkmail=User::where('email',$request->email)->get()->first();
+                    
                     if(!$checkmail)
                     {
                         return $this::sendError('Email not exists.', ['error'=>'Email does not exists. Please enter your registered email.']);
@@ -34,8 +35,8 @@ class ForgotController extends BaseController
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
 
-               $user_forgot_otp=rand(111111,999999);
                $userid=$checkmail->id;
+               $user_forgot_otp=rand(111111,999999).$userid; 
 
                $userdet = User::find($userid);
 
@@ -48,8 +49,11 @@ class ForgotController extends BaseController
             $userdet->forgot_otp = $user_forgot_otp;
             $userdet->save();
 
+            $newforgototp=base64_encode($user_forgot_otp);
+            $forgotlink=url('/').'/user/forgot-password/'.$newforgototp;
+
             $success['email'] =  $request->email; 
-            $success['otp'] =  $user_forgot_otp;
+            $success['link'] =  $forgotlink;
 
             return $this::sendResponse($success, 'Please check your email. We have sent OTP to reset password to your account.');
         }

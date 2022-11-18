@@ -1,13 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Dashboard',
-  'dash' => 'active',
-  'course'=>'',
-  'quiz' => '',
-  'users' => '',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Dashboard'
 ])
 
 @section('content')
@@ -57,5 +49,4 @@
                 toolbar: 'restoredraft,bold italic underline | fontselect |  fontsizeselect | forecolor backcolor |alignleft aligncenter alignright alignjustify| bullist,numlist | link image'
   });
 </script>
-  <script>
   @endsection

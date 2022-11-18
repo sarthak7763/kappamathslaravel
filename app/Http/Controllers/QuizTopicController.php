@@ -247,10 +247,10 @@ class QuizTopicController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'subject'=>'required'
+            'course'=>'required'
         ]);
 
-        $subject=$request->subject;
+        $subject=$request->course;
         $subjectdata=Subject::find($subject);
 
 
@@ -311,12 +311,12 @@ class QuizTopicController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'subject'=>'required',
-            'category'=>'required'
+            'course'=>'required',
+            'topic'=>'required'
         ]);
 
-        $subject=$request->subject;
-        $category=$request->category;
+        $subject=$request->course;
+        $category=$request->topic;
 
         $subjectdata=Subject::find($subject);
 
@@ -386,9 +386,9 @@ class QuizTopicController extends Controller
         try{
        $input = $request->all();
         $request->validate([
-          'subject'=>'required',
-          'category'=>'required',
           'course'=>'required',
+          'topic'=>'required',
+          'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
           'per_q_mark' => 'required'    
@@ -401,10 +401,10 @@ class QuizTopicController extends Controller
         }
 
         try{
-            $subjectdata=Subject::where('id',$request->subject)->first();
+            $subjectdata=Subject::where('id',$request->course)->first();
             if(!$subjectdata)
             {
-                return back()->with('deleted','Please choose subject.');
+                return back()->with('deleted','Please choose course.');
             }
           }catch(\Exception $e){
                 return back()->with('deleted','Something went wrong.');     
@@ -412,10 +412,10 @@ class QuizTopicController extends Controller
 
 
              try{
-                $categorydata=Subjectcategory::where('id',$request->category)->where('subject',$request->subject)->first();
+                $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose category.');
+                    return back()->with('deleted','Please choose topic.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -423,7 +423,7 @@ class QuizTopicController extends Controller
 
 
                try{
-                $coursetopicdata=Coursetopic::where('id',$request->course)->where('subject',$request->subject)->where('category',$request->category)->first();
+                $coursetopicdata=Coursetopic::where('id',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->first();
                 if(!$coursetopicdata)
                 {
                     return back()->with('deleted','Please choose Course Topic.');
@@ -435,9 +435,9 @@ class QuizTopicController extends Controller
 
         try{
           $quiztopic = new Quiztopic;
-          $quiztopic->subject=$request->subject;
-          $quiztopic->category = $request->category;
-          $quiztopic->course_topic=$request->course;
+          $quiztopic->subject=$request->course;
+          $quiztopic->category = $request->topic;
+          $quiztopic->course_topic=$request->sub_topic;
           $quiztopic->quiz_type=$request->quiz_type;
           $quiztopic->title = $request->title;
           $quiztopic->description = $request->description;
@@ -540,9 +540,9 @@ class QuizTopicController extends Controller
     {
       try{
         $request->validate([
-          'subject'=>'required',
-          'category'=>'required',
           'course'=>'required',
+          'topic'=>'required',
+          'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
           'per_q_mark' => 'required'
@@ -562,27 +562,27 @@ class QuizTopicController extends Controller
           }
 
           try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
+                $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose subject.');
+                    return back()->with('deleted','Please choose course.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong12.');     
                }
 
             try{
-                $categorydata=Subjectcategory::where('id',$request->category)->where('subject',$request->subject)->first();
+                $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose category.');
+                    return back()->with('deleted','Please choose topic.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong13.');     
                }
 
                try{
-                $coursetopicdata=Coursetopic::where('id',$request->course)->where('subject',$request->subject)->where('category',$request->category)->first();
+                $coursetopicdata=Coursetopic::where('id',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->first();
                 if(!$coursetopicdata)
                 {
                     return back()->with('deleted','Please choose Course Topic.');
@@ -593,9 +593,9 @@ class QuizTopicController extends Controller
 
 
          try{
-            $quiztopic->subject=$request->subject;
-            $quiztopic->category = $request->category;
-            $quiztopic->course_topic=$request->course;
+            $quiztopic->subject=$request->course;
+            $quiztopic->category = $request->topic;
+            $quiztopic->course_topic=$request->sub_topic;
             $quiztopic->quiz_type=$request->quiz_type;
             $quiztopic->title = $request->title;
             $quiztopic->description = $request->description;

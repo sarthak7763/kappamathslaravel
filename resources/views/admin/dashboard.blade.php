@@ -1,13 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Dashboard',
-  'dash' => 'active',
-  'course'=>'',
-  'quiz' => '',
-  'users' => '',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => '',
-  'sett' => ''
+  'page_header' => 'Dashboard'
 ])
 
 @section('content')

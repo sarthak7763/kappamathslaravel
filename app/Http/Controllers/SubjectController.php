@@ -194,7 +194,7 @@ class SubjectController extends Controller
         else{
         	try{
 		         $quiz = Subject::create($input);
-		           return back()->with('added', 'Subject has been added');
+		           return back()->with('added', 'Course has been added');
 		        }catch(\Exception $e){
 		          return back()->with('deleted',$e->getMessage());     
 		       }
@@ -209,12 +209,12 @@ class SubjectController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0];
+                            $listmessage.=$list[0].'<br>';
                         }
 
                         if($listmessage!="")
                         {
-                            return back()->with('deleted',$listmessage);
+                            return back()->with('error',$listmessage);
                         }
                         else{
                             return back()->with('deleted','Something went wrong.');
@@ -331,7 +331,7 @@ class SubjectController extends Controller
 
          try{
             $subject->save();
-          return back()->with('updated','Subject updated !');
+          return back()->with('updated','Course updated !');
          }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -342,12 +342,12 @@ class SubjectController extends Controller
                     $listmessage="";
                     foreach($e->errors() as $list)
                     {
-                        $listmessage.=$list[0];
+                        $listmessage.=$list[0].'<br>';
                     }
 
                     if($listmessage!="")
                     {
-                        return back()->with('deleted',$listmessage);
+                        return back()->with('error',$listmessage);
                     }
                     else{
                         return back()->with('deleted','Something went wrong.');
@@ -380,7 +380,7 @@ class SubjectController extends Controller
 
         try{
             $subject->delete();
-           return back()->with('deleted', 'Subject has been deleted');
+           return back()->with('deleted', 'Course has been deleted');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }
@@ -410,7 +410,7 @@ class SubjectController extends Controller
 
         try{
             $subject->save();
-           return back()->with('updated','Subject updated !');
+           return back()->with('updated','Course updated !');
         }catch(\Exception $e){
             return back()->with('deleted',$e->getMessage());
          }

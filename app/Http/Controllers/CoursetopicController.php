@@ -19,7 +19,7 @@ class CoursetopicController extends Controller
      */
     public function index(Request $request)
     {
-        $coursetopic = \DB::table('coursetopics')->select('id','subject','category','topic_name','topic_video_id','topic_status');
+        $coursetopic = \DB::table('coursetopics')->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
 
           if($request->ajax()){
 
@@ -88,6 +88,10 @@ class CoursetopicController extends Controller
             }
 
                 return $statusvalue;
+            })
+
+            ->addColumn('sort_order',function($row){
+                return $row->sort_order;
             })
 
             ->addColumn('action',function($row){
@@ -172,7 +176,7 @@ class CoursetopicController extends Controller
               return $btn;
             })
             ->escapeColumns(['action'])
-            ->rawColumns(['category','topic_name','topic_video_id','topic_status','action'])
+            ->rawColumns(['category','topic_name','topic_video_id','topic_status','sort_order','action'])
             ->make(true);
 
           }
@@ -212,10 +216,10 @@ class CoursetopicController extends Controller
         $input = $request->all();
 
         $request->validate([
-            'subject'=>'required'
+            'course'=>'required'
         ]);
 
-        $subject=$request->subject;
+        $subject=$request->course;
         $subjectdata=Subject::find($subject);
 
 
@@ -281,9 +285,10 @@ class CoursetopicController extends Controller
        $input = $request->all();
 
         $request->validate([
-              'subject'=>'required',
-            'category'=>'required',
-          'title' => 'required|string'
+              'course'=>'required',
+              'topic'=>'required',
+              'title' => 'required|string',
+              'sort_order'=>'required'
         ]);
 
         if(isset($request->status)){
@@ -309,10 +314,10 @@ class CoursetopicController extends Controller
         }
         else{
             try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
+                $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose subject.');
+                    return back()->with('deleted','Please choose course.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -320,10 +325,10 @@ class CoursetopicController extends Controller
 
 
                try{
-                $categorydata=Subjectcategory::where('id',$request->category)->where('subject',$request->subject)->first();
+                $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose category.');
+                    return back()->with('deleted','Please choose topic.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -333,15 +338,16 @@ class CoursetopicController extends Controller
                {
                     try{
                       $coursetopic = new Coursetopic;
-                      $coursetopic->subject=$request->subject;
-                      $coursetopic->category = $request->category;
+                      $coursetopic->subject=$request->course;
+                      $coursetopic->category = $request->topic;
                       $coursetopic->topic_name = $request->title;
                       $coursetopic->topic_description = $request->description;
                       $coursetopic->topic_image = $topic_img;
                       $coursetopic->topic_video_id=$request->topic_video_id;
                       $coursetopic->topic_status = $statusvalue;
+                      $coursetopic->sort_order=$request->sort_order;
                       $coursetopic->save();
-                     return back()->with('added', 'Topic has been added');
+                     return back()->with('added', 'Sub Topic has been added');
                   }catch(\Exception $e){
                     return back()->with('deleted',$e->getMessage());     
                  }
@@ -432,9 +438,10 @@ class CoursetopicController extends Controller
     {
       try{
         $request->validate([
-          'subject'=>'required',
-          'category'=>'required',
-          'title' => 'required|string'
+          'course'=>'required',
+          'topic'=>'required',
+          'title' => 'required|string',
+          'sort_order'=>'required'
         ]);
 
           $coursetopic = Coursetopic::find($id);
@@ -459,20 +466,20 @@ class CoursetopicController extends Controller
           }
 
           try{
-                $subjectdata=Subject::where('id',$request->subject)->first();
+                $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose subject.');
+                    return back()->with('deleted','Please choose course.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
                }
 
             try{
-                $categorydata=Subjectcategory::where('id',$request->category)->where('subject',$request->subject)->first();
+                $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose category.');
+                    return back()->with('deleted','Please choose topic.');
                 }
             }catch(\Exception $e){
                   return back()->with('deleted','Something went wrong.');     
@@ -485,19 +492,21 @@ class CoursetopicController extends Controller
           {
 	          if($topic_img!="")
 	          {
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
+              $coursetopic->subject=$request->course;
+	          	$coursetopic->category = $request->topic;
   		        $coursetopic->topic_description = $request->description;
   		        $coursetopic->topic_image = $topic_img;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
+              $coursetopic->sort_order=$request->sort_order;
 	          }
 	          else{
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
+              $coursetopic->subject=$request->course;
+	          	$coursetopic->category = $request->topic;
   		        $coursetopic->topic_description = $request->description;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
+              $coursetopic->sort_order=$request->sort_order;
 	          }
           }
           else{
@@ -514,21 +523,23 @@ class CoursetopicController extends Controller
 
             if($topic_img!="")
 	          {
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
+              $coursetopic->subject=$request->course;
+	          	$coursetopic->category = $request->topic;
 	          	$coursetopic->topic_name=$request->title;
   		        $coursetopic->topic_description = $request->description;
   		        $coursetopic->topic_image = $topic_img;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
+              $coursetopic->sort_order=$request->sort_order;
 	          }
 	          else{
-              $coursetopic->subject=$request->subject;
-	          	$coursetopic->category = $request->category;
+              $coursetopic->subject=$request->course;
+	          	$coursetopic->category = $request->topic;
 	          	$coursetopic->topic_name=$request->title;
 		          $coursetopic->topic_description = $request->description;
 		          $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
+              $coursetopic->sort_order=$request->sort_order;
 	          }
           }
          try{

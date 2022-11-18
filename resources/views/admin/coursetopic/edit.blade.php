@@ -1,12 +1,12 @@
 @extends('layouts.admin', [
-  'page_header' => 'Course Topics'
+  'page_header' => 'Course Sub Topics'
 ])
 
 @section('content')
   <div class="box">
     <div class="box-body">
-        <h3>Edit Topic: {{ $coursetopic->topic_name }}
-          <a href="{{ route('topics.index') }}" class="btn btn-gray pull-right">
+        <h3>Edit SubTopic: {{ $coursetopic->topic_name }}
+          <a href="{{ route('course-topic.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> {{ __('Back')}}
           </a>
         </h3>
@@ -17,28 +17,28 @@
         <div class="row">
           <div class="col-md-6">
 
-            <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
-              <label for="">Subject: </label>
+            <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
+              <label for="">Course: </label>
               <span class="required">*</span>
-             <select class="form-control" name="subject">
+             <select class="form-control" name="course" id="course">
               <option value="">Select</option>
               @foreach($subjectlist as $list)
                 <option {{ $coursetopic->subject ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['title']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('subject') }}</small>
+              <small class="text-danger">{{ $errors->first('course') }}</small>
             </div>
 
-            <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
-              <label for="">Category: </label>
+            <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
+              <label for="">Topics: </label>
               <span class="required">*</span>
-             <select class="form-control" name="category">
+             <select class="form-control" name="topic" id="subject_category">
               <option value="">Select</option>
               @foreach($subjectcategorylist as $list)
                 <option {{ $coursetopic->category ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['category_name']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('category') }}</small>
+              <small class="text-danger">{{ $errors->first('topic') }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -52,6 +52,13 @@
               {!! Form::label('description', 'Description') !!}
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
               <small class="text-danger">{{ $errors->first('description') }}</small>
+            </div>
+
+            <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
+              {!! Form::label('sort_order', 'Sort Order') !!}
+              <span class="required">*</span>
+              {!! Form::text('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order']) !!}
+              <small class="text-danger">{{ $errors->first('sort_order') }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('topic_video_id') ? ' has-error' : '' }}">
@@ -102,13 +109,13 @@
     reader.readAsDataURL(this.files[0]);
   });
 
-  $(document).on('change','#subject',function(){
-    var subject=$(this).val();
-    if(subject!="")
+  $(document).on('change','#course',function(){
+    var course=$(this).val();
+    if(course!="")
     {
       $.ajax({
             'url':'{{url("/")}}/admin/course-topic/getsubjectcategorylist',
-            'data':{"_token": "{{ csrf_token() }}","subject":subject},
+            'data':{"_token": "{{ csrf_token() }}","course":course},
             'type':'post',
             'dataType':'json',
             error:function()
@@ -128,7 +135,7 @@
         });
     }
     else{
-      alert('Please choose subject');
+      alert('Please choose course');
     }
   });
 

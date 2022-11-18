@@ -1,10 +1,10 @@
 @extends('layouts.admin', [
-  'page_header' => 'Course Topics'
+  'page_header' => 'Course Sub Topics'
 ])
 
 @section('content')
   <div class="margin-bottom">
-    <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add Topic</button></a>
+    <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add SubTopic</button></a>
   </div>
 
   <div class="box">
@@ -13,11 +13,12 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Subject</th>
-            <th>Category</th>
+            <th>Course</th>
+            <th>Topic</th>
             <th>Title</th>
             <th>Video ID</th>
             <th>Status</th>
+            <th>Sort Order</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -65,6 +66,7 @@ $(function () {
       {data: 'topic_name', name: 'title',searchable: true},
       {data: 'topic_video_id', name: 'topic_video_id',searchable: false},
       {data: 'topic_status', name: 'status'},
+      {data: 'sort_order', name: 'sort_order'},
       {data: 'action', name: 'action',searchable: false}
 
       ]

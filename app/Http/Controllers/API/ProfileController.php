@@ -182,8 +182,90 @@ class ProfileController extends BaseController
     		}
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
                }
 
     }
+
+    public function updateuserpushnotificationsettings()
+    {
+    	try{
+    		$user=auth()->user();
+    		if($user)
+    		{
+    			$validator = Validator::make($request->all(), [
+		            'push_notification' => 'required'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		        }
+
+		        $userid=$user->id;
+		        $userdet=User::find($userid);
+
+		        if(is_null($userdet)){
+	               return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	            }
+
+	            $userdet->push_notifications=$request->push_notification;
+	            $userdet->save();
+
+	            $userarray=array(
+			        	'push_notification'=>$user->push_notifications
+			        );
+
+				    $success['userarray'] =  $userarray;
+	            	return $this::sendResponse($success, 'Settings updated successfully.');
+
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
+               }
+    }
+
+    public function updateuseremailnotificationsettings()
+    {
+    	try{
+    		$user=auth()->user();
+    		if($user)
+    		{
+    			$validator = Validator::make($request->all(), [
+		            'email_notification' => 'required'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		        }
+
+		        $userid=$user->id;
+		        $userdet=User::find($userid);
+
+		        if(is_null($userdet)){
+	               return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	            }
+
+	            $userdet->email_notifications=$request->email_notification;
+	            $userdet->save();
+
+	            $userarray=array(
+			        	'email_notification'=>$user->email_notifications
+			        );
+
+				    $success['userarray'] =  $userarray;
+	            	return $this::sendResponse($success, 'Settings updated successfully.');
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
+               }
+    }
+
 }
