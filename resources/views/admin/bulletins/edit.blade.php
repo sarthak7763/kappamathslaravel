@@ -45,12 +45,15 @@
               {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question']) !!}
               <small class="text-danger">{{ $errors->first('question') }}</small>
             </div>
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
               {!! Form::label('answer', 'Answer') !!}
               {!! Form::textarea('answer', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Answer']) !!}
               <small class="text-danger">{{ $errors->first('answer') }}</small>
             </div>
+          </div>
+          <div class="col-md-6">  
 
             <label for="">Status: </label>
              <input {{ $bulletins->status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">

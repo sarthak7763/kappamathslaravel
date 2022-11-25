@@ -51,7 +51,7 @@ class DashboardController extends BaseController
 					        }
 
 	        				$courselist[]=array(
-	        					'course_id'=>base64_encode($list['id']),
+	        					'course_id'=>$list['id'],
 	        					'title'=>$list['title'],
 	        					'image'=>$courseimage,
 	        					'topics'=>$coursetopics,
@@ -87,12 +87,16 @@ class DashboardController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$request->validate([
-		            'course_id'=>'required'
+
+		        $validator = Validator::make($request->all(), [
+		            'course_id' => 'required'
 		        ]);
 
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
 	        	$courseid=$request->course_id;
-	        	$courseid=base64_decode($courseid);
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
@@ -120,7 +124,7 @@ class DashboardController extends BaseController
 		        					foreach($coursesubtopicsdataarray as $row)
 		        					{
 			        						$subtopicslist[]=array(
-					        				'sub_topic_id'=>base64_encode($row['id']),
+					        				'sub_topic_id'=>$row['id'],
 					        				'sub_topic_name'=>$row['topic_name']
 					        			);
 		        					}
@@ -134,7 +138,7 @@ class DashboardController extends BaseController
 		        			}
 
 		        			$topicslist[]=array(
-		        				'topic_id'=>base64_encode($list['id']),
+		        				'topic_id'=>$list['id'],
 		        				'topic_name'=>$list['category_name'],
 		        				'sub_topics'=>$subtopicslist
 		        			);
@@ -167,12 +171,16 @@ class DashboardController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$request->validate([
-		            'course_id'=>'required'
+
+		        $validator = Validator::make($request->all(), [
+		            'course_id' => 'required'
 		        ]);
 
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
 	        	$courseid=$request->course_id;
-	        	$courseid=base64_decode($courseid);
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
@@ -190,7 +198,7 @@ class DashboardController extends BaseController
 		        		foreach($coursetopicsdataarray as $list)
 		        		{
 		        			$topicslist[]=array(
-		        				'topic_id'=>base64_encode($list['id']),
+		        				'topic_id'=>$list['id'],
 		        				'topic_name'=>$list['category_name']
 		        			);
 		        		}
@@ -221,16 +229,18 @@ class DashboardController extends BaseController
     		$user=auth()->user();
     		if($user)
     		{
-    			$request->validate([
+
+		        $validator = Validator::make($request->all(), [
 		            'course_id'=>'required',
 		            'topic_id'=>'required'
 		        ]);
 
-		        $courseid=$request->course_id;
-	        	$courseid=base64_decode($courseid);
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
 
+		        $courseid=$request->course_id;
 	        	$topicid=$request->topic_id;
-	        	$topicid=base64_decode($topicid);
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
@@ -263,7 +273,7 @@ class DashboardController extends BaseController
 		        					foreach($coursesubtopicsdataarray as $row)
 		        					{
 			        						$subtopicslist[]=array(
-					        				'sub_topic_id'=>base64_encode($row['id']),
+					        				'sub_topic_id'=>$row['id'],
 					        				'sub_topic_name'=>$row['topic_name']
 					        			);
 		        					}
@@ -278,7 +288,7 @@ class DashboardController extends BaseController
 
 		        	$topicdetail=array(
 		        				'course_name'=>$subject->title,
-		        				'topic_id'=>base64_encode($coursetopicsdetaildata['id']),
+		        				'topic_id'=>$coursetopicsdetaildata['id'],
 		        				'topic_name'=>$coursetopicsdetaildata['category_name'],
 		        				'topic_description'=>$coursetopicsdetaildata['category_description'],
 		        				'topic_image'=>$topic_image,
@@ -306,20 +316,19 @@ class DashboardController extends BaseController
     {
     	try{
 
-    		$request->validate([
+    		$validator = Validator::make($request->all(), [
 		            'course_id'=>'required',
 		            'topic_id'=>'required',
 		            'sub_topic_id'=>'required'
 		        ]);
 
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
 		        $courseid=$request->course_id;
-	        	$courseid=base64_decode($courseid);
-
 	        	$topicid=$request->topic_id;
-	        	$topicid=base64_decode($topicid);
-
 	        	$subtopicid=$request->sub_topic_id;
-	        	$subtopicid=base64_decode($subtopicid);
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
@@ -352,7 +361,7 @@ class DashboardController extends BaseController
 			        if($coursesubtopicsdetailnext)
 			        {
 			        	$coursetopicsdetailnextdata=$coursesubtopicsdetailnext->toArray();
-			        	$next_topic_key=base64_encode($coursetopicsdetailnextdata['id']);
+			        	$next_topic_key=$coursetopicsdetailnextdata['id'];
 			        }
 			        else{
 			        	$next_topic_key="0";
@@ -362,7 +371,7 @@ class DashboardController extends BaseController
 			        if($coursesubtopicsdetailprevious)
 			        {
 			        	$coursetopicsdetailpreviousdata=$coursesubtopicsdetailprevious->toArray();
-			        	$previous_topic_key=base64_encode($coursetopicsdetailpreviousdata['id']);
+			        	$previous_topic_key=$coursetopicsdetailpreviousdata['id'];
 			        }
 			        else{
 			        	$previous_topic_key="0";
@@ -378,7 +387,7 @@ class DashboardController extends BaseController
 			        		foreach($quiztopicdataarray as $key=>$list)
 			        		{
 			        			$quizarray[]=array(
-			        				'quiz_id'=>base64_encode($list['id']),
+			        				'quiz_id'=>$list['id'],
 			        				'quiz_title'=>$list['title'],
 			        				'quiz_type'=>$list['quiz_type']
 			        			);
@@ -395,7 +404,7 @@ class DashboardController extends BaseController
 		        		$subtopicdetail=array(
 		        				'course_name'=>$subject->title,
 		        				'topic_name'=>$coursetopicsdetaildata['category_name'],
-		        				'sub_topic_id'=>base64_encode($coursesubtopicsdetaildata['id']),
+		        				'sub_topic_id'=>$coursesubtopicsdetaildata['id'],
 		        				'sub_topic_name'=>$coursesubtopicsdetaildata['topic_name'],
 		        				'sub_topic_description'=>$coursesubtopicsdetaildata['topic_description'],
 		        				'sub_topic_image'=>$sub_topic_image,

@@ -34,7 +34,7 @@
    <div class="front-footer">
         <div class="container" >
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12 text-center">
                     {{ $ct->name }}
                 </div>
                 <div class="col-md-6">

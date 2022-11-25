@@ -21,21 +21,13 @@ class ProfileController extends BaseController
 	        {
 		        if($user->image!="")
 		        {
-		        	$userimage=url('/').'/images/user/'.$user->image;
+		        	$user->image=url('/').'/images/user/'.$user->image;
 		        }
 		        else{
-		        	$userimage=url('/').'/images/user/profile.png';
+		        	$user->image=url('/').'/images/user/profile.png';
 		        }
 
-		        $userarray=array(
-		        	'name'=>$user->name,
-		        	'email'=>$user->email,
-		        	'mobile'=>$user->mobile,
-		        	'username'=>$user->username,
-		        	'image'=>$userimage
-		        );
-
-		        $success['userarray'] =  $userarray;
+		        $success['userdet']=$user;
                 return $this::sendResponse($success, 'User Found.');
 	        }
 	        else{
@@ -60,7 +52,25 @@ class ProfileController extends BaseController
 		        ]);
 
 		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        if ($file = $request->file('image')) {
+
+		        	$validator = Validator::make($request->all(), [
+		            	'image' => 'required|mimes:jpeg,png,jpg'
+		        	]);
+
+			         if($validator->fails()){
+			            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+			        }
+
+		            $name = 'profile_'.time().$file->getClientOriginalName(); 
+		            $file->move('images/user/', $name);
+		            $image = $name;
+		        }
+		        else{
+		            $image="";
 		        }
 
 		        $userid=$user->id;
@@ -72,9 +82,19 @@ class ProfileController extends BaseController
 
 	            if($userdet->username==$request->username)
 	            {
-	            	$userdet->name = $request->name;
-	            	$userdet->mobile=$request->mobile;
-            		$userdet->save();
+	            	if($image!="")
+	            	{
+	            		$userdet->image=$image;
+	            		$userdet->name = $request->name;
+	            		$userdet->mobile=$request->mobile;
+            			$userdet->save();
+	            	}
+	            	else{
+	            		$userdet->name = $request->name;
+	            		$userdet->mobile=$request->mobile;
+            			$userdet->save();
+	            	}
+	            	
 	            }
 	            else{
 	            	try{
@@ -84,10 +104,21 @@ class ProfileController extends BaseController
 		                return $this::sendError('Username exists.', ['error'=>'Username already exists. Please try with another one.']);
 		            }
 		            else{
-		            	$userdet->username=$request->username;
-		                $userdet->name = $request->name;
-	            		$userdet->mobile=$request->mobile;
-            			$userdet->save();
+		            	if($image!="")
+		            	{
+		            		$userdet->image=$image;
+		            		$userdet->username=$request->username;
+		                	$userdet->name = $request->name;
+	            			$userdet->mobile=$request->mobile;
+            				$userdet->save();
+		            	}
+		            	else{
+		            		$userdet->username=$request->username;
+		                	$userdet->name = $request->name;
+	            			$userdet->mobile=$request->mobile;
+            				$userdet->save();
+		            	}
+		            	
 		            }
 		        }
 		        catch(\Exception $e){
@@ -95,23 +126,15 @@ class ProfileController extends BaseController
 		               }
 	            }
 
-	            if($user->image!="")
+	            if($userdet->image!="")
 		        {
-		        	$userimage=url('/').'/images/user/'.$user->image;
+		        	$userdet->image=url('/').'/images/user/'.$userdet->image;
 		        }
 		        else{
-		        	$userimage=url('/').'/images/user/profile.png';
-		        }      
+		        	$userdet->image=url('/').'/images/user/profile.png';
+		        }     
 
-	            $userarray=array(
-		        	'name'=>$user->name,
-		        	'email'=>$user->email,
-		        	'mobile'=>$user->mobile,
-		        	'username'=>$user->username,
-		        	'image'=>$userimage
-		        );
-
-		        $success['userarray'] =  $userarray;
+		        $success['userdet']=$userdet;
 	            return $this::sendResponse($success, 'Profile updated successfully.');
     		}
     		else{
@@ -119,11 +142,64 @@ class ProfileController extends BaseController
     		}	
     	}
     	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+    }
+
+    public function updateprofileimage(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+    		if($user)
+    		{
+    			$validator = Validator::make($request->all(), [
+		            'image' => 'required|mimes:jpeg,png,jpg'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        $userid=$user->id;
+		        $userdet=User::find($userid);
+
+		        if(is_null($userdet)){
+	               return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	            }
+
+		        if ($file = $request->file('image')) {
+		            $name = 'profile_'.time().$file->getClientOriginalName(); 
+		            $file->move('images/user/', $name);
+		            $image = $name;
+		        }
+		        else{
+		            $image="";
+		        }
+
+		        $userdet->image=$image;
+				$userdet->save();
+
+				if($userdet->image!="")
+		        {
+		        	$userdet->image=url('/').'/images/user/'.$userdet->image;
+		        }
+		        else{
+		        	$userdet->image=url('/').'/images/user/profile.png';
+		        }
+
+			    $success['userdet']=$userdet;
+            	return $this::sendResponse($success, 'Profile image updated successfully.');
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
     }
 
-    public function  changepassword(Request $request)
+    public function updatepassword(Request $request)
     {
     	try{
     		$user=auth()->user();
@@ -135,7 +211,7 @@ class ProfileController extends BaseController
 		        ]);
 
 		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
 		        }
 
 		        $userid=$user->id;
@@ -153,23 +229,7 @@ class ProfileController extends BaseController
 				    $userdet->password=$finalnewpassword;
 				    $userdet->save();
 
-					if($user->image!="")
-			        {
-			        	$userimage=url('/').'/images/user/'.$user->image;
-			        }
-			        else{
-			        	$userimage=url('/').'/images/user/profile.png';
-			        }
-
-				    $userarray=array(
-			        	'name'=>$user->name,
-			        	'email'=>$user->email,
-			        	'mobile'=>$user->mobile,
-			        	'username'=>$user->username,
-			        	'image'=>$userimage
-			        );
-
-				    $success['userarray'] =  $userarray;
+				    $success['userdet']=$userdet;
 	            	return $this::sendResponse($success, 'Password updated successfully.');
 
 				}
@@ -180,17 +240,19 @@ class ProfileController extends BaseController
 		    else{
     			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
     		}
+
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
                }
-
     }
 
-    public function updateuserpushnotificationsettings()
+
+    public function updateuserpushnotificationsettings(Request $request)
     {
     	try{
     		$user=auth()->user();
+
     		if($user)
     		{
     			$validator = Validator::make($request->all(), [
@@ -198,7 +260,7 @@ class ProfileController extends BaseController
 		        ]);
 
 		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
 		        }
 
 		        $userid=$user->id;
@@ -212,7 +274,7 @@ class ProfileController extends BaseController
 	            $userdet->save();
 
 	            $userarray=array(
-			        	'push_notification'=>$user->push_notifications
+			        	'push_notification'=>$userdet->push_notifications
 			        );
 
 				    $success['userarray'] =  $userarray;
@@ -224,14 +286,16 @@ class ProfileController extends BaseController
     		}
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
     }
 
-    public function updateuseremailnotificationsettings()
+
+    public function updateuseremailnotificationsettings(Request $request)
     {
     	try{
     		$user=auth()->user();
+    		
     		if($user)
     		{
     			$validator = Validator::make($request->all(), [
@@ -239,7 +303,7 @@ class ProfileController extends BaseController
 		        ]);
 
 		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
 		        }
 
 		        $userid=$user->id;
@@ -253,7 +317,7 @@ class ProfileController extends BaseController
 	            $userdet->save();
 
 	            $userarray=array(
-			        	'email_notification'=>$user->email_notifications
+			        	'email_notification'=>$userdet->email_notifications
 			        );
 
 				    $success['userarray'] =  $userarray;
@@ -262,10 +326,14 @@ class ProfileController extends BaseController
     		else{
     			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
     		}
+
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong')]);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
     }
+  
+
+    
 
 }

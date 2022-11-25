@@ -37,7 +37,7 @@
 </div>
 @endif
 
-          <div class="col-md-6">
+          <div class="col-md-12">
 
              <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">
               {!! Form::label('question', 'Question') !!}

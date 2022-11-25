@@ -8289,7 +8289,7 @@ button.btn-wave {
   border: none;
   text-decoration: none;
   color: #fff;
-  background-color: #26a69a;
+  background-color: #00B1DA;
   text-align: center;
   letter-spacing: 0.5px;
   transition: 0.2s ease-out;
@@ -8300,7 +8300,7 @@ button.btn-wave {
 .btn-wave:active,
 .btn-wave:focus,
 .btn-wave.hover {
-  background-color: #2bbbad;
+  background-color: #18BADF;
   color: #FFF !important;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
   outline: none !important;
@@ -8372,11 +8372,11 @@ button.btn-wave {
 }
 
 .login-page {
-  width: 360px;
+  width: 550px;
   margin: auto;
   margin-top: 4%;
   border-radius: 4px;
-  padding: 10px 45px 45px;
+  padding: 30px 30px 30px;
   background-color: #FFF;
   box-shadow: 0 7px 24px 2px rgba(0, 0, 0, 0.1), 5px 7px 17px 2px rgba(0, 0, 0, 0.15);
 }
@@ -8386,7 +8386,7 @@ button.btn-wave {
   position: absolute;
   left: 12.24%;
   right: 12.51%;
-  top: 12.54%;
+  top: 15.54%;
   bottom: 33.83%;
 }
 
@@ -8402,13 +8402,13 @@ button.btn-wave {
   top: 0px;
   background: #042A60;
   border-radius: 34.7561px;
-  margin-left: 45px;
+  margin-left: 158px;
 }
 
 .login-page .form {
   position: relative;
   z-index: 1;
-  max-width: 360px;
+  max-width: 550px;
 }
 
 .login-page .form input {

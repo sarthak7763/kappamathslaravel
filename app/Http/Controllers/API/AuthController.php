@@ -56,6 +56,7 @@ class AuthController extends BaseController
             'email' => 'required|email',
             'number'=>'required',
             'password' => 'required|min:8',
+            'fcm_token'=>'required'
         ]);
 
         if($validator->fails()){
@@ -93,7 +94,8 @@ class AuthController extends BaseController
                 'mobile'=>$request->number,
                 'password' => bcrypt($request->password),
                 'role'=>'S',
-                'status'=>'1'
+                'status'=>'1',
+                'device_id'=>$request->fcm_token
             ]);
 
             $token = $user->createToken('Laravel8PassportAuth')->accessToken;
@@ -125,7 +127,8 @@ class AuthController extends BaseController
         $input = $request->all();
         $validator = Validator::make($input, [
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'fcm_token'=>'required'
         ]);
    
         if($validator->fails()){
@@ -150,6 +153,16 @@ class AuthController extends BaseController
             {
                 if($user->status=="1")
                 {
+
+                    $userdet = User::find($user->id);
+
+                    if(is_null($userdet)){
+                       return $this::sendForbiddenError('Unauthorised.', ['error'=>'Unauthorised User']);
+                    }
+
+                    $userdet->device_id=$request->fcm_token;
+                    $userdet->save();
+
                     $success['token'] =  $token; 
                     $success['name'] =  $user->name;
                     $success['userdet']=$user;

@@ -50,14 +50,12 @@
   border-right-width: 0;
 }
 .skin-black .main-header > .logo {
-  background-color: #ffffff;
+  background-color: #042A60;
   color: #333333;
   border-bottom: 0 solid transparent;
-  border-right: 1px solid #eee;
+  border-bottom: 1px solid #ffffff1c;
 }
-.skin-black .main-header > .logo:hover {
-  background-color: #fcfcfc;
-}
+
 @media (max-width: 767px) {
   .skin-black .main-header > .logo {
     background-color: #222222;
@@ -81,8 +79,9 @@
   color: #fff;
 }
 .skin-black .sidebar-menu > li.header {
-  color: #4b646f;
-  background: #1a2226;
+  color: #aaa;
+  background: #042a60;
+  text-align: center;
 }
 .skin-black .sidebar-menu > li > a {
   border-left: 3px solid transparent;
@@ -101,7 +100,7 @@
   background: #2c3b41;
 }
 .skin-black .sidebar a {
-  color: #b8c7ce;
+  color: #fff;
 }
 .skin-black .sidebar a:hover {
   text-decoration: none;
@@ -154,3 +153,5 @@
   border-top-color: #222;
   border-left-color: #222;
 }
+
+

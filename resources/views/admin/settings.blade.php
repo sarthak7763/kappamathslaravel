@@ -18,40 +18,28 @@
 
   {!! Form::model($setting, ['method' => 'PATCH', 'action' => ['SettingController@update', $setting->id], 'files' => true]) !!}
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="box">
         <div class="box-body settings-block">
           <!-- Project Name -->
-          <div class="form-group{{ $errors->has('welcome_txt') ? ' has-error' : '' }}">
-            {!! Form::label('welcome_txt', 'Project Name') !!}
-            <p class="label-desc">{{ __('Please Enter Your Project Name')}}</p>
-            {!! Form::text('welcome_txt', null, ['class' => 'form-control']) !!}
-            <small class="text-danger">{{ $errors->first('welcome_txt') }}</small>
-          </div>
-
-          <!-- Project URL -->
-          <div class="form-group{{ $errors->has('APP_URL') ? ' has-error' : '' }}">
-            {!! Form::label('APP_URL', 'Project URL') !!}
-            <p class="label-desc">{{ __('Please Enter Your Project URL')}}</p>
-            <input class="form-control" type="text" name="APP_URL" value="{{env('APP_URL')? env('APP_URL') : ''}}" placeholder="Please enter your App URL eg: https://yourdomain.com/">
-            <small class="text-danger">{{ $errors->first('APP_URL') }}</small>
-          </div>
-
           <div class="row">
-            <!-- Logo -->
             <div class="col-md-6">
-              <div class="form-group{{ $errors->has('logo') ? ' has-error' : '' }}">
-                {!! Form::label('logo', 'Logo Select') !!}
-                <p class="label-desc"> {{ __('Please Select Logo') }} </p>
-                {!! Form::file('logo') !!}
-                <small class="text-danger">{{ $errors->first('logo') }}</small>
-              </div>
-              <div class="logo-block">
-                <img src="{{asset('/images/logo/'. $setting->logo)}}" class="img-responsive"  alt="{{$setting->welcome_txt}}">
+              <div class="form-group{{ $errors->has('welcome_txt') ? ' has-error' : '' }}">
+                {!! Form::label('welcome_txt', 'Project Name') !!}
+                <p class="label-desc">{{ __('Please Enter Your Project Name')}}</p>
+                {!! Form::text('welcome_txt', null, ['class' => 'form-control']) !!}
+                <small class="text-danger">{{ $errors->first('welcome_txt') }}</small>
               </div>
             </div>
-
-            <!-- Favicon -->
+            <div class="col-md-6">
+               <div class="form-group{{ $errors->has('APP_URL') ? ' has-error' : '' }}">
+                  {!! Form::label('APP_URL', 'Project URL') !!}
+                  <p class="label-desc">{{ __('Please Enter Your Project URL')}}</p>
+                  <input class="form-control" type="text" name="APP_URL" value="{{env('APP_URL')? env('APP_URL') : ''}}" placeholder="Please enter your App URL eg: https://yourdomain.com/">
+                  <small class="text-danger">{{ $errors->first('APP_URL') }}</small>
+                </div>
+            </div>
+            
             <div class="col-md-6">
               <div class="form-group{{ $errors->has('favicon') ? ' has-error' : '' }}">
                 {!! Form::label('favicon', 'Favicon Select') !!}
@@ -60,8 +48,6 @@
                 <small class="text-danger">{{ $errors->first('favicon') }}</small>
               </div>
             </div>
-
-            <!-- Default Email -->
             <div class="col-md-6">
                <div class="form-group{{ $errors->has('w_email') ? ' has-error' : '' }}">
                   {!! Form::label('w_email', 'Default Email') !!}
@@ -70,8 +56,6 @@
                   <small class="text-danger">{{ $errors->first('w_email') }}</small>
               </div>
             </div>
-
-            <!-- Currency Code -->
             <div  class="col-md-6">
               <div class="form-group{{ $errors->has('currency_code') ? ' has-error' : '' }}">
                 {!! Form::label('currency_code', 'Currency Code') !!}
@@ -80,8 +64,6 @@
                 <small class="text-danger">{{ $errors->first('currency_code') }}</small>
               </div>
             </div>
-
-            <!-- Currency Symbol -->
             <div class="col-md-6">
                <div class="form-group{{ $errors->has('currency_symbol') ? ' has-error' : '' }} currency-symbol-block">
                 {!! Form::label('currency_symbol', 'Currency Symbol') !!}
@@ -93,8 +75,6 @@
                 <small class="text-danger">{{ $errors->first('currency_symbol') }}</small>
               </div>
             </div>
-
-            <!-- Welcome Email -->
             <div class="col-md-6">
               <div class="form-group">
                <label for="wel_mail">Welcome email for user:</label>
@@ -102,8 +82,6 @@
                 <label for="wel_mail"></label>
               </div>
             </div>
-
-            <!-- Debug -->
             <div class="col-md-6">
               <div class="form-group">
                <label for="APP_DEBUG">Debug:</label>
@@ -111,8 +89,6 @@
                 <label for="APP_DEBUG"></label>
               </div>
             </div>
-
-            <!-- Right Click -->
             <div class="col-md-6">
               <div class="form-group">
                <label for="status">Right Click Disable:</label>
@@ -120,8 +96,6 @@
                 <label for="rightclick"></label>
               </div>
             </div>
-
-            <!-- Inspect element -->
             <div class="col-md-6">
               <div class="form-group">
                 <label for="status">Inspect Element Disable:</label>
@@ -129,18 +103,14 @@
                     <label for="inspect"></label>
               </div>
             </div>
-
-            <!-- Coming Soon -->
             <div class="col-md-6">
-              <div class="col-sm-5">
                 <div class="form-group">
                  <label for="status">Coming Soon:</label>
                   <input {{ $setting->coming_soon == 1 ? "checked" : "" }} type="checkbox" class="toggle-input coming_soon" name="coming_soon" id="coming_soon" onChange ='iscomingsoon()'>
                   <label for="coming_soon"></label>
                 </div>
               </div>
-              
-              <div class="col-sm-7" id="coming_soon_link" style="{{ $setting->coming_soon == '1' ? " " : "display: none" }}">
+              <div class="col-md-8" id="coming_soon_link" style="{{ $setting->coming_soon == '1' ? " " : "display: none" }}">
                 <div class="form-group" style="width:100% !important;">
                    <label for="status">Coming Enabled IP:</label>
                   <select class="form-control select2" name="comingsoon_enabled_ip[]" multiple="multiple">
@@ -152,8 +122,31 @@
                   </select>
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group{{ $errors->has('logo') ? ' has-error' : '' }}">
+                  {!! Form::label('logo', 'Logo Select') !!}
+                  <p class="label-desc"> {{ __('Please Select Logo') }} </p>
+                  {!! Form::file('logo') !!}
+                  <small class="text-danger">{{ $errors->first('logo') }}</small>
+                </div>
+                <div class="logo-block">
+                  <img src="{{asset('/images/logo/'. $setting->logo)}}" class="img-responsive"  alt="{{$setting->welcome_txt}}">
+                </div>
             </div>
-            
+            <div class="col-md-2">
+            <div class="btn-block mt-0"> 
+              {!! Form::submit("Save Setting", ['class' => 'btn btn-wave btn-block']) !!}
+            </div>
+          </div>
+          </div>
+          
+
+          <!-- Project URL -->
+         
+
+          <div class="row">
+            <!-- Logo -->
+
             <!-- Repeat Quiz -->
             {{-- <div class="col-md-6">
               <div class="form-group">
@@ -164,10 +157,10 @@
                 </select>
              </div>
             </div>  --}}             
-          </div>
+         
 
           <!-- Save setting button -->
-          {!! Form::submit("Save Setting", ['class' => 'btn btn-wave btn-block']) !!}
+          
         </div>
        
       </div>

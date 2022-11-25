@@ -63,7 +63,9 @@
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
               <small class="text-danger">{{ $errors->first('description') }}</small>
             </div>
-
+          </div>
+          <div class="col-md-6">  
+            
             <div class="form-group{{ $errors->has('topic_img') ? ' has-error' : '' }}">
             {!! Form::label('topic_img', 'Add Image') !!}
             {!! Form::file('topic_img') !!}

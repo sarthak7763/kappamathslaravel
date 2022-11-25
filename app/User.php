@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mobile', 'mobile_2', 'school', 'address', 'city', 'percent_10', 'percent_11', 'role','username','status'
+        'name', 'email', 'password', 'mobile', 'address', 'city', 'role','username','status','device_id','push_notifications','email_notifications'
     ];
 
     /**
@@ -29,17 +29,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-
-    public function answers() {
-      return $this->hasOne('App\Answer');
-    }
-
-    public function topic() {
-      return $this->belongsToMany('App\Topic','topic_user')
-        ->withPivot('amount','transaction_id','status')
-        ->withTimestamps();
-    }
 
     public function is_admin() {
       if (Auth::check()) {

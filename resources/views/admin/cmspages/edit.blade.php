@@ -45,13 +45,15 @@
               {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Name']) !!}
               <small class="text-danger">{{ $errors->first('name') }}</small>
             </div>
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
               {!! Form::label('description', 'Description') !!}
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
               <small class="text-danger">{{ $errors->first('description') }}</small>
             </div>
-
+          </div>  
+          <div class="col-md-6">
             <label for="">Status: </label>
              <input {{ $cmspages->status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
              <label for="toggle2"></label>

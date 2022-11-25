@@ -6,6 +6,9 @@ use App\Http\Controllers\API\ForgotController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\PagesController;
+use App\Http\Controllers\API\PracticeDashboardController;
+use App\Http\Controllers\API\QuizDashboardController;
+use App\Http\Controllers\API\QuizResultController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +32,21 @@ Route::post('verifyotp', [ForgotController::class, 'verifyotp']);
 Route::post('resetpassword', [ForgotController::class, 'resetpassword']);
  
 Route::middleware('auth:api')->group(function () {
+
+    //profile controller start
+
     Route::get('getuserinfo', [ProfileController::class, 'getuserinfo']);
-    Route::post('changepassword', [ProfileController::class, 'changepassword']);
+    Route::post('updatepassword', [ProfileController::class, 'updatepassword']);
     Route::post('updateprofile', [ProfileController::class, 'updateprofile']);
     Route::post('updateprofileimage', [ProfileController::class, 'updateprofileimage']);
 
     Route::post('updateuserpushnotificationsettings', [ProfileController::class, 'updateuserpushnotificationsettings']);
 
     Route::post('updateuseremailnotificationsettings', [ProfileController::class, 'updateuseremailnotificationsettings']);
+
+    //profile controller end
+
+    //dashboard controller start
 
     Route::get('course-list', [DashboardController::class, 'getallcourseslist']);
 
@@ -47,6 +57,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('topic-detail', [DashboardController::class, 'gettopicdetailpage']);
 
     Route::post('sub-topic-detail', [DashboardController::class, 'getsubtopicdetails']);
+
+    //dashboard controller end
+
+    // pages controller start
 
     Route::post('subscriptions', [PagesController::class, 'getallsubscriptionlist']);
 
@@ -59,6 +73,22 @@ Route::middleware('auth:api')->group(function () {
     Route::post('cms-pages', [PagesController::class, 'getcmspagecontent']);
 
     Route::post('contact-subject', [PagesController::class, 'getcontactsubjectlist']);
+
+    //pages controller end
+
+    //quiz dashboard controller start
+
+    Route::post('getobjectivequestions', [QuizDashboardController::class, 'getsubtopicobjectivequizquestions']);
+
+    Route::post('submitobjectivequizquestion', [QuizDashboardController::class, 'submitobjectivequizquestion']);
+
+    //quiz dashboard controller end
+
+    //practice dashboard controller start
+
+    Route::get('practice-dashboard', [PracticeDashboardController::class, 'getpracticedashboardinfo']);
+
+    //practice dashboard controller end
 
 });
 

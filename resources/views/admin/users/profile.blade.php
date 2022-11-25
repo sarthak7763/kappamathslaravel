@@ -59,6 +59,11 @@
                   <label for="image">Choose Profile Picture:</label>
                   <input type="file" class="form-control" name="image">
                 </div>
+                 @if($auth->image !="")
+                  <img title="Current image" class="img-circle" width="100px" height="100px" src="{{ url('images/user/'.$auth->image) }}" alt="user profile">
+                @else
+                    <img title="Current image" class="img-circle" width="100px" height="100px" src="{{ Avatar::create(ucfirst($auth->name))->toBase64() }}" alt="user profile">
+                @endif
               </div>
 
               <div class="col-md-6 margin-bottom">
@@ -85,15 +90,11 @@
                 </div>
 
                 <!-- User Profile -->
-                @if($auth->image !="")
-                  <img title="Current image" class="img-circle" width="100px" height="100px" src="{{ url('images/user/'.$auth->image) }}" alt="user profile">
-                @else
-                    <img title="Current image" class="img-circle" width="100px" height="100px" src="{{ Avatar::create(ucfirst($auth->name))->toBase64() }}" alt="user profile">
-                @endif
+               
                 <br><br>
 
                 <!-- Update Button -->
-                <div class="col-md-offset-3 col-md-6">
+                <div class="col-md-2">
                   {!! Form::submit('Update', ['class' => 'btn btn-wave btn-block']) !!}
                 </div>
               </div>

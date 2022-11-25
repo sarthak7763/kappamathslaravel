@@ -4,7 +4,7 @@
 
 @section('content')
   <div class="margin-bottom">
-    <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><button type="button" class="btn btn-wave">Add SubTopic</button></a>
+    <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-wave">Add SubTopic</a>
   </div>
 
   <div class="box">

@@ -98,27 +98,29 @@
       </div>
     </div>
     <div class="content-block box">
-      <div class="box-body table-responsive">
-        <table id="usersTable" class="table table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>User Image</th>
-              <th>Student Name</th>
-              <th>Email</th>
-              <th>Username</th>
-              <th>Mobile No.</th>
-              <th>User Role</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-           @if ($users)
-          <tbody>
+      <div class="box-body">
+        <div class="table-responsive">
+          <table id="usersTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>User Image</th>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Mobile No.</th>
+                <th>User Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+             @if ($users)
+            <tbody>
 
-          </tbody>
-           @endif
-        </table>
+            </tbody>
+             @endif
+          </table>
+        </div>
       </div>
     </div>
   @endif

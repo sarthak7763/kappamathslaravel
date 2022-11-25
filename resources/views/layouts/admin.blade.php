@@ -92,8 +92,8 @@ $setting = App\Setting::first();
     <section class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
-        <div style="display: inline-flex;" class="pull-left info">
-          <h4 style="margin:15px;font-size: 23px;">{{$setting->welcome_txt}}</h4>
+        <div class="pull-left info">
+          <h4>{{$setting->welcome_txt}}</h4>
         </div>
       </div>
       <!-- Sidebar Menu -->
@@ -177,6 +177,7 @@ $setting = App\Setting::first();
   </div>
   <!-- /.content-wrapper -->
   <!-- Main Footer -->
+  <div class="footer-info">
   <footer class="main-footer">   
       @php
       $copyright = \DB::table('copyrighttexts')->first()->name;
@@ -188,6 +189,7 @@ $setting = App\Setting::first();
 
     </strong>
   </footer>
+</div>
 </div>
 @endif
 <!-- ./wrapper -->

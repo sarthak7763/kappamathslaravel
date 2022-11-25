@@ -37,14 +37,8 @@ class BaseController extends Controller
     {
     	$response = [
             'status_code' => 400,
-            'message' => $error,
+            'message' => $errorMessages['error'],
         ];
-
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages['error'];
-        }
-
 
         return response()->json($response, $code);
     }
@@ -53,14 +47,8 @@ class BaseController extends Controller
     {
         $response = [
             'status_code' => 500,
-            'message' => $error,
+            'message' => $errorMessages['error'],
         ];
-
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages['error'];
-        }
-
 
         return response()->json($response, $code);
     }
@@ -69,13 +57,8 @@ class BaseController extends Controller
     {
         $response = [
             'status_code' => 400,
-            'message' => $error,
+            'message' => $errorMessages['error'],
         ];
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
 
         return response()->json($response, $code);
     }
@@ -84,13 +67,8 @@ class BaseController extends Controller
     {
         $response = [
             'status_code' => 401,
-            'message' => $error,
+            'message' => $errorMessages['error'],
         ];
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
 
         return response()->json($response, $code);
     }
@@ -99,13 +77,8 @@ class BaseController extends Controller
     {
         $response = [
             'status_code' => 403,
-            'message' => $error,
+            'message' => $errorMessages['error'],
         ];
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
 
         return response()->json($response, $code);
     }

@@ -11,31 +11,32 @@
 <form method="post" action="{{route('getquizlist')}}">
   <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
 <div class="row">
-  <div class="col-md-6">
-
-    <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
-              <label for="">Course: </label>
-              <span class="required">*</span>
-             <select class="form-control" name="course" id="course">
-              <option value="">Select</option>
-              @foreach($subjectlist as $list)
-                <option value="{{$list['id']}}">{{$list['title']}}</option>
-              @endforeach
-             </select>
-              <small class="text-danger">{{ $errors->first('course') }}</small>
-            </div>
-
-
-            <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
-              <label for="">Topics: </label>
-              <span class="required">*</span>
-             <select class="form-control" name="topic" id="subject_category">
-              
-             </select>
-              <small class="text-danger">{{ $errors->first('topic') }}</small>
-            </div>
-
-             <div class="form-group{{ $errors->has('sub_topic') ? ' has-error' : '' }}">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
+            <label for="">Course: </label>
+            <span class="required">*</span>
+           <select class="form-control" name="course" id="course">
+            <option value="">Select</option>
+            @foreach($subjectlist as $list)
+              <option value="{{$list['id']}}">{{$list['title']}}</option>
+            @endforeach
+           </select>
+            <small class="text-danger">{{ $errors->first('course') }}</small>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
+            <label for="">Topics: </label>
+            <span class="required">*</span>
+           <select class="form-control" name="topic" id="subject_category">
+           </select>
+            <small class="text-danger">{{ $errors->first('topic') }}</small>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group{{ $errors->has('sub_topic') ? ' has-error' : '' }}">
               <label for="">Sub Topics: </label>
               <span class="required">*</span>
              <select class="form-control" name="sub_topic" id="course_topic">
@@ -43,8 +44,9 @@
              </select>
               <small class="text-danger">{{ $errors->first('sub_topic') }}</small>
             </div>
-
-            <div class="form-group{{ $errors->has('quiz_type') ? ' has-error' : '' }}">
+      </div>
+      <div class="col-md-6">
+        <div class="form-group{{ $errors->has('quiz_type') ? ' has-error' : '' }}">
               <label for="">Quiz Type: </label>
               <span class="required">*</span>
              <select class="form-control" name="quiz_type" id="quiz_type">
@@ -54,6 +56,17 @@
              </select>
               <small class="text-danger">{{ $errors->first('quiz_type') }}</small>
             </div>
+      </div>
+    </div>
+
+    
+
+
+            
+
+             
+
+            
 
   </div>
 </div>

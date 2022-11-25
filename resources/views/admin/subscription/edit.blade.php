@@ -38,27 +38,22 @@
 @endif
 
           <div class="col-md-6">
-
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
               <small class="text-danger">{{ $errors->first('title') }}</small>
             </div>
-
-            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-              {!! Form::label('description', 'Description') !!}
-              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $errors->first('description') }}</small>
-            </div>
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
               {!! Form::label('price', 'Price') !!}
               <span class="required">*</span>
               {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Price']) !!}
               <small class="text-danger">{{ $errors->first('price') }}</small>
             </div>
-
+          </div>
+          <div class="col-md-6">  
             <div class="form-group{{ $errors->has('subscription_date') ? ' has-error' : '' }}">
               <label for="">Subscription Date: </label>
               <span class="required">*</span>
@@ -70,7 +65,8 @@
              </select>
               <small class="text-danger">{{ $errors->first('subscription_date') }}</small>
             </div>
-
+          </div>
+          <div class="col-md-6">  
             <div class="form-group{{ $errors->has('subscription_plan') ? ' has-error' : '' }}">
               <label for="">Subscription Plan Month: </label>
               <span class="required">*</span>
@@ -82,11 +78,19 @@
              </select>
               <small class="text-danger">{{ $errors->first('subscription_plan') }}</small>
             </div>
-
+          </div>  
+           <div class="col-md-6">
+            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+              {!! Form::label('description', 'Description') !!}
+              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{ $errors->first('description') }}</small>
+            </div>
+          </div>  
+          <div class="col-md-6">  
             <label for="">Status: </label>
              <input {{ $subscription->subscription_status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
              <label for="toggle2"></label>
-
+             
           </div>
         </div>
 
