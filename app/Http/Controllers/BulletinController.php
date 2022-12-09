@@ -24,14 +24,6 @@ class BulletinController extends Controller
           if($request->ajax()){
 
             return DataTables::of($bulletins)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('question', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('question',function($row){
                 return $row->question;
@@ -179,19 +171,19 @@ class BulletinController extends Controller
         $bulletinsdata=Bulletin::where('question',$request->question)->first();
         if($bulletinsdata)
         {
-        	return back()->with('deleted','Bulletin already exists.');
+        	return back()->with('error','Bulletin already exists.');
         }
         else{
         	try{
 		         $quiz = Bulletin::create($input);
-		           return back()->with('added', 'Bulletin has been added');
+		           return redirect('/admin/bulletin/')->with('success', 'Bulletin has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -207,12 +199,12 @@ class BulletinController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -243,7 +235,7 @@ class BulletinController extends Controller
            return view('admin.bulletins.edit',compact('bulletins'));
         }
         catch(\Exception $e){
-                  return redirect('admin/bulletin/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/bulletin/')->with('error','Something went wrong.');     
                }
     }
 
@@ -264,7 +256,7 @@ class BulletinController extends Controller
 
           $bulletins = Bulletin::find($id);
           if(is_null($bulletins)){
-           return redirect('admin/bulletin')->with('deleted','Something went wrong.');
+           return redirect('admin/bulletin')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -283,11 +275,11 @@ class BulletinController extends Controller
                 $subscriptiondata=Bulletin::where('question',$request->question)->first();
                 if($subscriptiondata)
                 {
-                    return back()->with('deleted','Bulletin already exists.');
+                    return back()->with('error','Bulletin already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             $bulletins->question=$request->question;
@@ -297,9 +289,9 @@ class BulletinController extends Controller
 
          try{
             $bulletins->save();
-          return back()->with('updated','Bulletin updated !');
+          return redirect('/admin/bulletin/')->with('success','Bulletin updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -316,12 +308,12 @@ class BulletinController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -341,18 +333,18 @@ class BulletinController extends Controller
         $bulletins = Bulletin::find($id);
 
         if(is_null($bulletins)){
-           return redirect('admin/bulletin')->with('deleted','Something went wrong.');
+           return redirect('admin/bulletin')->with('error','Something went wrong.');
         }
 
         try{
             $bulletins->delete();
-           return back()->with('deleted', 'Bulletin has been deleted');
+           return back()->with('success', 'Bulletin has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -364,7 +356,7 @@ class BulletinController extends Controller
         $bulletins = Bulletin::find($id);
 
         if(is_null($bulletins)){
-           return redirect('admin/bulletin')->with('deleted','Something went wrong.');
+           return redirect('admin/bulletin')->with('error','Something went wrong.');
         }
 
 
@@ -376,14 +368,14 @@ class BulletinController extends Controller
 
         try{
             $bulletins->save();
-           return back()->with('updated','Bulletin updated !');
+           return back()->with('success','Bulletin updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 

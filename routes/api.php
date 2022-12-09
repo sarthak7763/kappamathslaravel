@@ -82,6 +82,18 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('submitobjectivequizquestion', [QuizDashboardController::class, 'submitobjectivequizquestion']);
 
+    Route::post('skipobjectivequizquestion', [QuizDashboardController::class, 'skipobjectivequizquestion']);
+
+    Route::post('objectivequizquestionexplaination', [QuizDashboardController::class, 'getobjectivequizquestionexplaination']);
+
+    Route::post('objectivequizquestiondetails', [QuizDashboardController::class, 'getobjectivequizquestiondetails']);
+
+    Route::post('gettheoryquestions', [QuizDashboardController::class, 'getsubtopictheoryquizquestions']);
+
+     Route::post('theoryquizquestionexplaination', [QuizDashboardController::class, 'gettheoryquizquestionexplaination']);
+
+    Route::post('theoryquizquestiondetails', [QuizDashboardController::class, 'gettheoryquizquestiondetails']);
+
     //quiz dashboard controller end
 
     //practice dashboard controller start
@@ -89,6 +101,18 @@ Route::middleware('auth:api')->group(function () {
     Route::get('practice-dashboard', [PracticeDashboardController::class, 'getpracticedashboardinfo']);
 
     //practice dashboard controller end
+
+    //quiz result controller start
+
+        Route::post('quiz-result', [QuizResultController::class, 'getquizresultminisummary']);
+
+        Route::post('quiz-result-summary', [QuizResultController::class, 'viewquizresultquestionsummary']);
+
+        Route::get('manage-result', [QuizResultController::class, 'manageuserresult']);
+
+        Route::post('view-result', [QuizResultController::class, 'viewuserresult']);
+
+    // quiz result controller end
 
 });
 

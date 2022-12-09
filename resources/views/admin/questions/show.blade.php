@@ -1,8 +1,21 @@
 @extends('layouts.admin', [
-  'page_header' => "Questions / {$topic->title} "
+  'page_header' => "Objective Questions / {$topic->title} "
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
 
   <!-- Buttons -->
   <div class="margin-bottom">
@@ -195,7 +208,7 @@
 
     var table = $('#questionsTable').DataTable({
       processing: true,
-      serverSide: true,
+      serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -212,7 +225,7 @@
       {data: 'd', name: 'd'},
       {data: 'answer', name: 'answer'},
       {data: 'question_status', name: 'status'},
-      {data: 'action', name: 'action',searchable: false}
+      {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
     });

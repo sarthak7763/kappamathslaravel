@@ -41,6 +41,8 @@ Route::post('/login/checkwebuserlogin','Auth\LoginController@checkwebuserlogin')
   Route::resource('/admin/users', 'UsersController');
   Route::post('/admin/users/changestatus','UsersController@changestatus')->name('userchangestatus');
 
+  Route::get('/admin/users/result/{id}','UsersController@userresult');
+
   Route::get('/admin/profile', function(){
     if (Auth::check()) {
       return view('admin.users.profile');
@@ -157,6 +159,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::post('/admin/questions/getquizlist','QuestionsController@getquizlist')->name('getquizlist');
 
+  Route::get('/admin/questions/showquiz/{id}','QuestionsController@showquiz')->name('questions.showquiz');
+
   Route::post('/admin/questions/storeobjectivequiz','QuestionsController@storeobjectivequiz')->name('storeobjectivequiz');
 
   Route::post('/admin/questions/storetheoryquiz','QuestionsController@storetheoryquiz')->name('storetheoryquiz');
@@ -185,6 +189,7 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/cms-pages', 'CmsPagesController');
   Route::post('/admin/cms-pages/changestatus','CmsPagesController@changestatus')->name('cmspageschangestatus');
+
 
 });
 

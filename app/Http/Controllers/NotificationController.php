@@ -24,14 +24,6 @@ class NotificationController extends Controller
           if($request->ajax()){
 
             return DataTables::of($notifications)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('title', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('title',function($row){
                 return $row->title;
@@ -165,7 +157,8 @@ class NotificationController extends Controller
         try{
        $input = $request->all();
         $request->validate([
-          'title' => 'required|string'
+          'title' => 'required|string',
+          'message'=>'required'
         ]);
 
         if(isset($request->status)){
@@ -178,19 +171,19 @@ class NotificationController extends Controller
         $notificationsdata=Notifications::where('title',$request->title)->first();
         if($notificationsdata)
         {
-        	return back()->with('deleted','Title already exists.');
+        	return back()->with('error','Title already exists.');
         }
         else{
         	try{
 		         $quiz = Notifications::create($input);
-		           return back()->with('added', 'Notification has been added');
+		           return redirect('/admin/notifications/')->with('success', 'Notification has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -206,12 +199,12 @@ class NotificationController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -242,7 +235,7 @@ class NotificationController extends Controller
            return view('admin.notifications.edit',compact('notifications'));
         }
         catch(\Exception $e){
-                  return redirect('admin/notifications/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/notifications/')->with('error','Something went wrong.');     
                }
     }
 
@@ -257,12 +250,13 @@ class NotificationController extends Controller
     {
         try{
         $request->validate([
-          'title' => 'required|string'
+          'title' => 'required|string',
+          'message'=>'required'
         ]);
 
           $notifications = Notifications::find($id);
           if(is_null($notifications)){
-           return redirect('admin/notifications')->with('deleted','Something went wrong.');
+           return redirect('admin/notifications')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -281,11 +275,11 @@ class NotificationController extends Controller
                 $subscriptiondata=Notifications::where('title',$request->title)->first();
                 if($subscriptiondata)
                 {
-                    return back()->with('deleted','Title already exists.');
+                    return back()->with('error','Title already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             $notifications->title=$request->title;
@@ -295,9 +289,9 @@ class NotificationController extends Controller
 
          try{
             $notifications->save();
-          return back()->with('updated','Notification updated !');
+          return redirect('/admin/notifications/')->with('success','Notification updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -314,12 +308,12 @@ class NotificationController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -339,18 +333,18 @@ class NotificationController extends Controller
         $notifications = Notifications::find($id);
 
         if(is_null($notifications)){
-           return redirect('admin/notifications')->with('deleted','Something went wrong.');
+           return redirect('admin/notifications')->with('error','Something went wrong.');
         }
 
         try{
             $notifications->delete();
-           return back()->with('deleted', 'Notification has been deleted');
+           return back()->with('success', 'Notification has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -362,7 +356,7 @@ class NotificationController extends Controller
         $notifications = Notifications::find($id);
 
         if(is_null($notifications)){
-           return redirect('admin/notifications')->with('deleted','Something went wrong.');
+           return redirect('admin/notifications')->with('error','Something went wrong.');
         }
 
 
@@ -374,14 +368,14 @@ class NotificationController extends Controller
 
         try{
             $notifications->save();
-           return back()->with('updated','Notification updated !');
+           return back()->with('success','Notification updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 

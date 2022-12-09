@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Edit Notification
@@ -16,28 +30,7 @@
 
       <div class="row">
 
-        @if ($message = Session::get('error'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('deleted'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('added'))
-<div class="alert alert-success alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{{ $message }}</strong>
-</div>
-@endif
-
-          <div class="col-md-6">
+          <div class="col-md-12">
 
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Title') !!}
@@ -47,9 +40,10 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
               {!! Form::label('message', 'Message') !!}
+              <span class="required">*</span>
               {!! Form::textarea('message', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Message']) !!}
               <small class="text-danger">{{ $errors->first('message') }}</small>
             </div>
@@ -64,7 +58,7 @@
         </div>
 
         <div class="btn-group pull-right">
-          {!! Form::submit("Save", ['class' => 'btn btn-wave']) !!}
+          {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
         </div>
       {!! Form::close() !!}
   </div>

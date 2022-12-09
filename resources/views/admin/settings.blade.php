@@ -130,14 +130,14 @@
                   <small class="text-danger">{{ $errors->first('logo') }}</small>
                 </div>
                 <div class="logo-block">
-                  <img src="{{asset('/images/logo/'. $setting->logo)}}" class="img-responsive"  alt="{{$setting->welcome_txt}}">
+                  <img src="{{asset('/images/logo/'. $setting->logo)}}" class="img-responsive" width="15%"  alt="{{$setting->welcome_txt}}">
                 </div>
             </div>
             <div class="col-md-2">
-            <div class="btn-block mt-0"> 
-              {!! Form::submit("Save Setting", ['class' => 'btn btn-wave btn-block']) !!}
+              <div class="btn-block mt-0"> 
+                {!! Form::submit("Save Setting", ['class' => 'btn btn-wave btn-block']) !!}
+              </div>
             </div>
-          </div>
           </div>
           
 

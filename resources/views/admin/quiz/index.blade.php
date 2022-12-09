@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+  
   <div class="margin-bottom">
     <a href="{{route('quiz-topics.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-wave btn-floating">Add Quiz</a>
   </div>
@@ -54,7 +68,7 @@ $(function () {
 
     var table = $('#topicsTable').DataTable({
       processing: true,
-      serverSide: true,
+      serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -73,7 +87,7 @@ $(function () {
       {data: 'per_q_mark', name: 'per_q_mark'},
       {data: 'timer', name: 'timer'},
       {data: 'quiz_status', name: 'quiz_status'},
-      {data: 'action', name: 'action',searchable: false}
+      {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
     });

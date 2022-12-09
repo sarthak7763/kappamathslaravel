@@ -12,6 +12,7 @@ use App\Subjectcategory;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Validation\ValidationException;
 
 class QuestionsController extends Controller
 {
@@ -171,9 +172,30 @@ class QuestionsController extends Controller
 	  return view('admin.questions.quizlist', compact('topics','subjectlist','filterarray'));
 
   }
-   catch(\Exception $e){
-                     return redirect('admin/questions/')->with('deleted','Something went wrong.'); 
+  catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return redirect('/admin/questions/')->with('error',$listmessage);
+                        }
+                        else{
+                            return redirect('/admin/questions/')->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return redirect('/admin/questions/')->with('error','Something went wrong.');
+                    }
+
                }
+
 
     }
 
@@ -191,7 +213,7 @@ class QuestionsController extends Controller
         	$quiztopicdata=Quiztopic::find($topicid);
 	      	if(is_null($quiztopicdata))
 	      	{
-	      		return redirect('admin/questions/')->with('deleted','Something went wrong.');
+	      		return redirect('admin/questions/')->with('error','Something went wrong.');
 	      	}
 	      	else{
 	      		if($quiztopicdata->quiz_type=="1")
@@ -205,7 +227,7 @@ class QuestionsController extends Controller
 	      	}
         }
         else{
-        	return redirect('admin/questions/')->with('deleted','Something went wrong.');
+        	return redirect('admin/questions/')->with('error','Something went wrong.');
         }     
     }
 
@@ -230,16 +252,16 @@ class QuestionsController extends Controller
 
       if ($validator->fails()) 
       {
-        return back()->withErrors('deleted','Invalid file format Please use xlsx and csv file format !');
+        return back()->withErrors('error','Invalid file format Please use xlsx and csv file format !');
       }
 
       if($request->hasFile('question_file'))
       {
         // return $request->file('question_file');
         Excel::import(new QuestionsImport, $request->file('question_file'));
-        return back()->with('added', 'Question Imported Successfully');
+        return back()->with('success', 'Question Imported Successfully');
       }
-        return back()->with('deleted', 'Request data does not have any files to import');
+        return back()->with('error', 'Request data does not have any files to import');
     }
 
     /**
@@ -259,7 +281,8 @@ class QuestionsController extends Controller
           'c' => 'required',
           'd' => 'required',
           'answer' => 'required',
-          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png'
+          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png',
+          'sort_order'=>'required'
         ]);
 
          // return $request;
@@ -280,7 +303,7 @@ class QuestionsController extends Controller
         $quiztopicdata=Quiztopic::find($topicid);
         if(is_null($quiztopicdata))
       	{
-      		return redirect('admin/questions/')->with('deleted','Something went wrong.');
+      		return redirect('admin/questions/')->with('error','Something went wrong.');
       	}
       	else{
   			try{
@@ -292,21 +315,42 @@ class QuestionsController extends Controller
                 $question->c=$request->c;
                 $question->d=$request->d;
                 $question->answer=$request->answer;
-                $question->code_snippet=$request->code_snippet;
+                $question->code_snippet="";
                 $question->answer_exp=$request->answer_exp;
                 $question->question_img=$question_img;
                 $question->question_video_link=$request->question_video_link;
                 $question->question_status=1;
+                $question->sort_order=$request->sort_order;
                 $question->save();
-	          return redirect('admin/questions/'.$topicid)->with('added','Question has been added.');
+	          return redirect('admin/questions/'.$topicid)->with('success','Question has been added.');
 
 	        }catch(\Exception $e){
-	           return back()->with('deleted',$e->getMessage());
+	           return back()->with('error',$e->getMessage());
 	        }
       	}
       }
       catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
                }
     }
 
@@ -317,7 +361,8 @@ class QuestionsController extends Controller
           'topic_id' => 'required',
           'question' => 'required',
           'answer_exp' => 'required',
-          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png'
+          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png',
+          'sort_order'=>'required'
         ]);
 
          // return $request;
@@ -338,7 +383,7 @@ class QuestionsController extends Controller
         $quiztopicdata=Quiztopic::find($topicid);
         if(is_null($quiztopicdata))
       	{
-      		return redirect('admin/questions/')->with('deleted','Something went wrong.');
+      		return redirect('admin/questions/')->with('error','Something went wrong.');
       	}
       	else{
   			try{
@@ -350,20 +395,41 @@ class QuestionsController extends Controller
                 $question->c='-';
                 $question->d='-';
                 $question->answer='-';
-                $question->code_snippet=$request->code_snippet;
+                $question->code_snippet="";
                 $question->answer_exp=$request->answer_exp;
                 $question->question_img=$question_img;
                 $question->question_video_link=$request->question_video_link;
                 $question->question_status=1;
+                $question->sort_order=$request->sort_order;
                 $question->save();
-	          return redirect('admin/questions/'.$topicid)->with('added','Question has been added.');
+	          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been added.');
 	        }catch(\Exception $e){
-	           return back()->with('deleted',$e->getMessage());
+	           return back()->with('error',$e->getMessage());
 	        }
       	}
       }
       catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
                }
     }
 
@@ -377,19 +443,11 @@ class QuestionsController extends Controller
     {
         $topic = Quiztopic::findOrFail($id);
         
-        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','a','b','c','d','e','f','answer','question_status');
+        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','a','b','c','d','answer','question_status');
 
         if($request->ajax())
         {
           return DataTables::of($questions)
-
-          ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('question', 'LIKE', '%'.$search.'%');
-            }
-        })
-
           ->addIndexColumn()
           ->addColumn('question',function($row){
               return $row->question;
@@ -510,6 +568,119 @@ class QuestionsController extends Controller
         return view('admin.questions.show', compact('topic', 'questions'));
     }
 
+    public function showquiz(request $request,$id)
+    {
+        $topic = Quiztopic::findOrFail($id);
+        
+        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','question_status');
+
+        if($request->ajax())
+        {
+          return DataTables::of($questions)
+          ->addIndexColumn()
+          ->addColumn('question',function($row){
+              return $row->question;
+          })
+          ->addColumn('question_status',function($row){
+
+            if($row->question_status=="1")
+            {
+                $statusvalue="Active";
+            }
+            else{
+                $statusvalue="suspend";
+            }
+
+                return $statusvalue;
+            })
+
+          ->addColumn('action', function($row){
+
+            if($row->question_status=="1")
+            {
+                $checked="checked";
+            }
+            else{
+                $checked="";
+            }
+
+              $btn = '<div class="admin-table-action-block">
+
+                  <a href="' . route('questions.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+                
+                 <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->question_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
+
+              //       $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+              //   <div class="modal-dialog modal-sm">
+              //     <!-- Modal content-->
+              //     <div class="modal-content">
+              //       <div class="modal-header">
+              //         <button type="button" class="close" data-dismiss="modal">&times;</button>
+              //         <div class="delete-icon"></div>
+              //       </div>
+              //       <div class="modal-body text-center">
+              //         <h4 class="modal-heading">Are You Sure ?</h4>
+              //         <p>Do you really want to delete these records? This process cannot be undone.</p>
+              //       </div>
+              //       <div class="modal-footer">
+              //         <form method="POST" action="' . route("questions.destroy", $row->id) . '">
+              //           ' . method_field("DELETE") . '
+              //           ' . csrf_field() . '
+              //             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
+              //             <button type="submit" class="btn btn-danger">Yes</button>
+              //         </form>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>';
+
+
+              $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                  <div class="modal-dialog modal-sm">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="delete-icon"></div>
+                      </div>
+
+                       <form method="POST" action="' . route("questionchangestatus") . '">
+                          ' . method_field("POST") . '
+                          ' . csrf_field() . '
+                      <div class="modal-body text-center">
+                        <h4 class="modal-heading">Are You Sure ?</h4>
+                        <p>Do you really want to Change the  status of this record? This process cannot be undone.</p>
+
+                        <div class="row">
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Status: </label>
+                             <input '.$checked.' type="checkbox" class="toggle-input statusvalue" name="status" id="toggle_status'.$row->id.'">
+                             <label for="toggle_status'.$row->id.'"></label>
+                            <br>
+                          </div>
+                          </div>
+                          </div>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="hidden" name="id" value="'.$row->id.'">
+                            <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                </div>';
+
+              return $btn;
+          })
+          ->rawColumns(['question','action'])
+          ->make(true);
+        }
+        return view('admin.questions.showquiz', compact('topic', 'questions'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -538,6 +709,7 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, $id)
     {
+      try{
         $request->validate([
           'topic_id' => 'required',
           'question' => 'required',
@@ -546,11 +718,12 @@ class QuestionsController extends Controller
           'c' => 'required',
           'd' => 'required',
           'answer' => 'required',
+          'sort_order'=>'required'
         ]);
 
         $question = Question::find($id);
         if(is_null($question)){
-		   return redirect('admin/questions')->with('deleted','Something went wrong.');
+		   return redirect('admin/questions')->with('error','Something went wrong.');
 		}
 
         $input = $request->all();
@@ -576,10 +749,11 @@ class QuestionsController extends Controller
             $question->c=$request->c;
             $question->d=$request->d;
             $question->answer=$request->answer;
-            $question->code_snippet=$request->code_snippet;
+            $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_img=$question_img;
             $question->question_video_link=$request->question_video_link;
+            $question->sort_order=$request->sort_order;
           }
           else{
             $question->question=$request->question;
@@ -588,34 +762,62 @@ class QuestionsController extends Controller
             $question->c=$request->c;
             $question->d=$request->d;
             $question->answer=$request->answer;
-            $question->code_snippet=$request->code_snippet;
+            $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_video_link=$request->question_video_link;
+            $question->sort_order=$request->sort_order;
           }
 
           $question->save();
 
-          return redirect('admin/questions/'.$topicid)->with('added','Question has been added.');
+          return redirect('admin/questions/'.$topicid)->with('success','Question has been updated.');
         }
         catch(\Exception $e)
         {
-          return back()->with('deleted',$e->getMessage());
+          return back()->with('error',$e->getMessage());
         }
+
+      }
+      catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
+               }
 
         
     }
 
     public function updatetheoryquiz(Request $request, $id)
     {
+      try{
         $request->validate([
           'topic_id' => 'required',
           'question' => 'required',
           'answer_exp' =>'required',
+          'sort_order'=>'required'
         ]);
 
         $question = Question::find($id);
         if(is_null($question)){
-       return redirect('admin/questions')->with('deleted','Something went wrong.');
+       return redirect('admin/questions')->with('error','Something went wrong.');
     }
 
         $input = $request->all();
@@ -641,10 +843,11 @@ class QuestionsController extends Controller
             $question->c='-';
             $question->d='-';
             $question->answer='-';
-            $question->code_snippet=$request->code_snippet;
+            $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_img=$question_img;
             $question->question_video_link=$request->question_video_link;
+            $question->sort_order=$request->sort_order;
           }
           else{
             $question->question=$request->question;
@@ -653,19 +856,44 @@ class QuestionsController extends Controller
             $question->c='-';
             $question->d='-';
             $question->answer='-';
-            $question->code_snippet=$request->code_snippet;
+            $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_video_link=$request->question_video_link;
+            $question->sort_order=$request->sort_order;
           }
 
           $question->save();
 
-          return redirect('admin/questions/'.$topicid)->with('added','Question has been added.');
+          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been updated.');
         }
         catch(\Exception $e)
         {
-          return back()->with('deleted',$e->getMessage());
+          return back()->with('error',$e->getMessage());
         }
+      }
+      catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
+               }
 
         
     }
@@ -678,6 +906,7 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
+      try{
         $question = Question::find($id);
 
         if ($question->question_img != null) {
@@ -685,12 +914,15 @@ class QuestionsController extends Controller
         }
         try{
           $question->delete();
-          return back()->with('deleted', 'Question has been deleted');
+          return back()->with('success', 'Question has been deleted');
         }
         catch(\Exception $e)
         {
-          return back()->with('deleted',$e->getMessage());
+          return back()->with('error',$e->getMessage());
         }
+      }catch(\Exception $e){
+                  return back()->with('error','Something went wrong.');     
+               }
         
     }
 
@@ -701,7 +933,7 @@ class QuestionsController extends Controller
         $question = Question::find($id);
 
         if(is_null($question)){
-       return redirect('admin/questions')->with('deleted','Something went wrong.');
+       return redirect('admin/questions')->with('error','Something went wrong.');
     }
 
         if(isset($request->status)){
@@ -712,14 +944,14 @@ class QuestionsController extends Controller
 
         try{
             $question->save();
-           return back()->with('updated','Question updated !');
+           return back()->with('success','Question updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
   }
 

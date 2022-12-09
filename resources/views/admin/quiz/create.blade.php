@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Add Quiz
@@ -16,7 +30,6 @@
             
         <div class="row">
           <div class="col-md-6">
-
             <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
               <label for="">Course: </label>
               <span class="required">*</span>
@@ -28,71 +41,79 @@
              </select>
               <small class="text-danger">{{ $errors->first('course') }}</small>
             </div>
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
               <label for="">Topics: </label>
               <span class="required">*</span>
-             <select class="form-control" name="topic" id="subject_category">
-              
-             </select>
+              <select class="form-control" name="topic" id="subject_category">              
+              </select>
               <small class="text-danger">{{ $errors->first('topic') }}</small>
             </div>
-
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('sub_topic') ? ' has-error' : '' }}">
               <label for="">Sub Topics: </label>
               <span class="required">*</span>
-             <select class="form-control" name="sub_topic" id="course_topic">
-              
+             <select class="form-control" name="sub_topic" id="course_topic">              
              </select>
               <small class="text-danger">{{ $errors->first('sub_topic') }}</small>
             </div>
-
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('quiz_type') ? ' has-error' : '' }}">
               <label for="">Quiz Type: </label>
               <span class="required">*</span>
-             <select class="form-control" name="quiz_type" id="quiz_type">
-              <option value="">Select</option>
+              <select class="form-control" name="quiz_type" id="quiz_type">
+                <option value="">Select</option>
                 <option value="1">Objective Quiz</option>
                 <option value="2">Theory Quiz</option>
-             </select>
+              </select>
               <small class="text-danger">{{ $errors->first('quiz_type') }}</small>
             </div>
-
+          </div>
+          <div class="col-md-6">  
             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Quiz Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Title']) !!}
               <small class="text-danger">{{ $errors->first('title') }}</small>
             </div>
-            <div class="form-group{{ $errors->has('per_q_mark') ? ' has-error' : '' }}">
-              {!! Form::label('per_q_mark', 'Per Question Mark') !!}
+          </div>
+          <div class="col-md-6">  
+            <div class="form-group{{ $errors->has('per_question_mark') ? ' has-error' : '' }}">
+              {!! Form::label('per_question_mark', 'Per Question Mark') !!}
               <span class="required">*</span>
-              {!! Form::number('per_q_mark', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Per Question Mark']) !!}
-              <small class="text-danger">{{ $errors->first('per_q_mark') }}</small>
+              {!! Form::number('per_question_mark', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Per Question Mark','min'=>'0']) !!}
+              <small class="text-danger">{{ $errors->first('per_question_mark') }}</small>
             </div>
+          </div> 
+          <div class="col-md-6"> 
             <div class="form-group{{ $errors->has('timer') ? ' has-error' : '' }}">
               {!! Form::label('timer', 'Quiz Time (in minutes)') !!}
-              {!! Form::number('timer', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Total Time (In Minutes)']) !!}
+              {!! Form::number('timer', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Total Time (In Minutes)','min'=>'0']) !!}
               <small class="text-danger">{{ $errors->first('timer') }}</small>
             </div>
-
+          </div>
+          <div class="col-md-6">  
             <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
-                  <label for="">Status: </label>
-                 <input type="checkbox" class="toggle-input" name="status" id="toggle2">
-                 <label for="toggle2"></label>
-                <br>
-              </div>
+              <label for="">Status: </label>
+               <input type="checkbox" class="toggle-input" name="status" id="toggle2">
+               <label for="toggle2"></label>
+              <br>
+            </div>
+          </div>  
 
-          <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-              {!! Form::label('description', 'Description') !!}
-              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Description']) !!}
-              <small class="text-danger">{{ $errors->first('description') }}</small>
-          </div>   
+          <div class="col-md-12">
+            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                {!! Form::label('description', 'Description') !!}
+                {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Description']) !!}
+                <small class="text-danger">{{ $errors->first('description') }}</small>
+            </div>   
           </div>
         </div>
         <div class="btn-group pull-right">
-          {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+          {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
         </div>
       {!! Form::close() !!}
   </div>

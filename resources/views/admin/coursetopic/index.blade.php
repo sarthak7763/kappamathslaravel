@@ -3,6 +3,21 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
+  
   <div class="margin-bottom">
     <a href="{{route('course-topic.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-wave">Add SubTopic</a>
   </div>
@@ -51,7 +66,7 @@ $(function () {
 
     var table = $('#coursetopicTable').DataTable({
       processing: true,
-      serverSide: true,
+      serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -61,13 +76,13 @@ $(function () {
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},
-      {data: 'subject', name: 'subject',searchable: false},
-      {data: 'category', name: 'category',searchable: false},
-      {data: 'topic_name', name: 'title',searchable: true},
-      {data: 'topic_video_id', name: 'topic_video_id',searchable: false},
+      {data: 'subject', name: 'subject',},
+      {data: 'category', name: 'category'},
+      {data: 'topic_name', name: 'title'},
+      {data: 'topic_video_id', name: 'topic_video_id'},
       {data: 'topic_status', name: 'status'},
       {data: 'sort_order', name: 'sort_order'},
-      {data: 'action', name: 'action',searchable: false}
+      {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
     });

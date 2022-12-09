@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Add Page
@@ -16,28 +30,7 @@
 
       <div class="row">
 
-        @if ($message = Session::get('error'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('deleted'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('added'))
-<div class="alert alert-success alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{{ $message }}</strong>
-</div>
-@endif
-
-          <div class="col-md-6">
+          <div class="col-md-12">
 
              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
               {!! Form::label('name', 'Name') !!}
@@ -50,6 +43,7 @@
 
             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
               {!! Form::label('description', 'Description') !!}
+              <span class="required">*</span>
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
               <small class="text-danger">{{ $errors->first('description') }}</small>
             </div>

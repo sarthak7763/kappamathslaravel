@@ -104,7 +104,7 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin')) ? 'active' : '' }}"><a href="{{url('/admin')}}" title="Dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
-          <li class="{{ (request()->is('admin/users*')) ? 'active' : '' }}"><a href="{{url('/admin/users')}}" title="Students"><i class="fa fa-users"></i> <span>Students</span></a></li>
+          <li class="{{ (request()->is('admin/users*')) ? 'active' : '' }}"><a href="{{url('/admin/users')}}" title="Users"><i class="fa fa-users"></i> <span>Users</span></a></li>
 
           <li class="{{ (request()->is('admin/subject*')) ? 'active' : '' }}"><a href="{{url('admin/subject')}}" title="Courses"><i class="fa fa-gears"></i> <span>Courses</span></a></li> 
 

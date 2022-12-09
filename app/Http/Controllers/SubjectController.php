@@ -24,14 +24,6 @@ class SubjectController extends Controller
           if($request->ajax()){
 
             return DataTables::of($subject)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('title', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('title',function($row){
                 return $row->title;
@@ -150,6 +142,8 @@ class SubjectController extends Controller
     public function create()
     {
         //
+
+      return view('admin.subject.create');
     }
 
     /**
@@ -163,8 +157,7 @@ class SubjectController extends Controller
         try{
        $input = $request->all();
         $request->validate([
-          'title' => 'required|string',
-          'image' => 'required|mimes:jpeg,png,jpg'
+          'title' => 'required|string'
         ]);
 
         if(isset($request->status)){
@@ -175,6 +168,34 @@ class SubjectController extends Controller
 
 
         if ($file = $request->file('image')) {
+
+            try{
+            $request->validate([
+              'image' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'subject_'.time().$file->getClientOriginalName(); 
             $file->move('images/subjects/', $name);
             $image = $name;
@@ -189,19 +210,19 @@ class SubjectController extends Controller
         $subjectdata=Subject::where('title',$request->title)->first();
         if($subjectdata)
         {
-        	return back()->with('deleted','Title already exists.');
+        	return back()->with('error','Title already exists.');
         }
         else{
         	try{
 		         $quiz = Subject::create($input);
-		           return back()->with('added', 'Course has been added');
+		           return redirect('admin/subject/')->with('success', 'Course has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -209,7 +230,7 @@ class SubjectController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0].'<br>';
+                            $listmessage.=$list[0].'<br/>';
                         }
 
                         if($listmessage!="")
@@ -217,12 +238,12 @@ class SubjectController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -272,7 +293,7 @@ class SubjectController extends Controller
 
           $subject = Subject::find($id);
           if(is_null($subject)){
-           return redirect('admin/subject')->with('deleted','Something went wrong.');
+           return redirect('admin/subject')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -282,6 +303,34 @@ class SubjectController extends Controller
           }
 
         if ($file = $request->file('image')) {
+
+            try{
+            $request->validate([
+              'image' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'subject_'.time().$file->getClientOriginalName(); 
             $file->move('images/subjects/', $name);
             $subjectimage = $name;
@@ -308,11 +357,11 @@ class SubjectController extends Controller
                 $subjectdata=Subject::where('title',$request->title)->first();
                 if($subjectdata)
                 {
-                    return back()->with('deleted','Title already exists.');
+                    return back()->with('error','Title already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             if($subjectimage!="")
@@ -331,9 +380,9 @@ class SubjectController extends Controller
 
          try{
             $subject->save();
-          return back()->with('updated','Course updated !');
+          return redirect('/admin/subject/')->with('success','Course updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -342,7 +391,7 @@ class SubjectController extends Controller
                     $listmessage="";
                     foreach($e->errors() as $list)
                     {
-                        $listmessage.=$list[0].'<br>';
+                        $listmessage.=$list[0].'<br/>';
                     }
 
                     if($listmessage!="")
@@ -350,12 +399,12 @@ class SubjectController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -375,18 +424,18 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         if(is_null($subject)){
-           return redirect('admin/subject')->with('deleted','Something went wrong.');
+           return redirect('admin/subject')->with('error','Something went wrong.');
         }
 
         try{
             $subject->delete();
-           return back()->with('deleted', 'Course has been deleted');
+           return back()->with('success', 'Course has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -398,7 +447,7 @@ class SubjectController extends Controller
         $subject = Subject::find($id);
 
         if(is_null($subject)){
-           return redirect('admin/subject')->with('deleted','Something went wrong.');
+           return redirect('admin/subject')->with('error','Something went wrong.');
         }
 
 
@@ -410,14 +459,14 @@ class SubjectController extends Controller
 
         try{
             $subject->save();
-           return back()->with('updated','Course updated !');
+           return back()->with('success','Course updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 

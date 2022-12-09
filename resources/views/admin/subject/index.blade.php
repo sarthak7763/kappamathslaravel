@@ -3,66 +3,25 @@
 ])
 
 @section('content')
-  <div class="margin-bottom">
-    <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Course</button>
-  </div>
-  <!-- Create Modal -->
-  <div id="createModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Course</h4>
-        </div>
-        {!! Form::open(['method' => 'POST','enctype'=>'multipart/form-data','action' => 'SubjectController@store']) !!}
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                  {!! Form::label('title', 'Title') !!}
-                  <span class="required">*</span>
-                  {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
-                  <small class="text-danger">{{ $errors->first('title') }}</small>
-                </div>
 
-
-                 <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                  {!! Form::label('description', 'Description') !!}
-                  {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description', 'rows' => '8']) !!}
-                  <small class="text-danger">{{ $errors->first('description') }}</small>
-                </div>
-
-          <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-            {!! Form::label('image', 'Add Image') !!}
-            <span class="required">*</span>
-            {!! Form::file('image') !!}
-            <small class="text-danger">{{ $errors->first('image') }}</small>
-            <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
-          </div>
-
-          <div id="preview_image_div">
-            <img id="preview-image" src="/images/noimage.jpg" style="height: auto;width: 50%;">
-          </div>
-
-              <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
-                  <label for="">Status: </label>
-                 <input type="checkbox" class="toggle-input" name="status" id="toggle2">
-                 <label for="toggle2"></label>
-                <br>
-              </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <div class="btn-group pull-right">
-              {!! Form::reset("Reset", ['class' => 'btn btn-default']) !!}
-              {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
-            </div>
-          </div>
-        {!! Form::close() !!}
-      </div>
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
     </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
+
+  <div class="margin-bottom">
+    <a href="{{route('subject.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Course</a>
   </div>
+
   <div class="box">
 
 @if ($message = Session::get('error'))
@@ -134,7 +93,7 @@ $(function () {
 
     var table = $('#categoryTable').DataTable({
       processing: true,
-      serverSide: true,
+      serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -143,10 +102,10 @@ $(function () {
       ajax: "{{ route('subject.index') }}",
       columns: [
 
-      {data: 'id', name: 'id',orderable: true, searchable: false},
-      {data: 'title', name: 'title',searchable: true,orderable: true},
-      {data: 'description', name: 'description',orderable: false},
-      {data: 'status', name: 'status',orderable: true},
+      {data: 'id', name: 'id',orderable: false, searchable: false},
+      {data: 'title', name: 'title'},
+      {data: 'description', name: 'description'},
+      {data: 'status', name: 'status'},
       {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]

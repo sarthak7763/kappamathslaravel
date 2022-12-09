@@ -19,19 +19,11 @@ class SubscriptionController extends Controller
      */
     public function index(Request $request)
     {
-        $subscription = \DB::table('subscriptions')->select('id','title','description','price','subscription_date','subscription_plan','subscription_status');
+        $subscription = \DB::table('subscriptions')->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
 
           if($request->ajax()){
 
             return DataTables::of($subscription)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('title', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('title',function($row){
                 return $row->title;
@@ -40,7 +32,7 @@ class SubscriptionController extends Controller
                 return $row->price;
             })
             ->addColumn('subscription_date',function($row){
-                return $row->subscription_date.' '.$row->subscription_plan;
+                return $row->subscription_tenure.' '.$row->subscription_plan;
             })
             ->addColumn('status',function($row){
 
@@ -176,7 +168,7 @@ class SubscriptionController extends Controller
         $request->validate([
           'title' => 'required|string',
           'price' => 'required',
-          'subscription_date' => 'required',
+          'subscription_tenure' => 'required',
           'subscription_plan' => 'required'
         ]);
 
@@ -190,19 +182,19 @@ class SubscriptionController extends Controller
         $subscriptiondata=Subscription::where('title',$request->title)->first();
         if($subscriptiondata)
         {
-        	return back()->with('deleted','Title already exists.');
+        	return back()->with('error','Title already exists.');
         }
         else{
         	try{
 		         $quiz = Subscription::create($input);
-		           return back()->with('added', 'Subscription Plan has been added');
+		           return redirect('/admin/subscription/')->with('success', 'Subscription Plan has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -210,7 +202,7 @@ class SubscriptionController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0].'<br>';
+                            $listmessage.=$list[0].'<br/>';
                         }
 
                         if($listmessage!="")
@@ -218,12 +210,12 @@ class SubscriptionController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -260,7 +252,7 @@ class SubscriptionController extends Controller
            return view('admin.subscription.edit',compact('subscription','montharray'));
         }
         catch(\Exception $e){
-                  return redirect('admin/subscription/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/subscription/')->with('error','Something went wrong.');     
                }
     }
 
@@ -277,13 +269,13 @@ class SubscriptionController extends Controller
         $request->validate([
           'title' => 'required|string',
           'price' => 'required',
-          'subscription_date' => 'required',
+          'subscription_tenure' => 'required',
           'subscription_plan' => 'required'
         ]);
 
           $subscription = Subscription::find($id);
           if(is_null($subscription)){
-           return redirect('admin/subscription')->with('deleted','Something went wrong.');
+           return redirect('admin/subscription')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -296,7 +288,7 @@ class SubscriptionController extends Controller
         {
             $subscription->description = $request->description;
             $subscription->price = $request->price;
-            $subscription->subscription_date = $request->subscription_date;
+            $subscription->subscription_tenure = $request->subscription_tenure;
             $subscription->subscription_plan = $request->subscription_plan;
             $subscription->subscription_status=$statusvalue;
         }
@@ -305,11 +297,11 @@ class SubscriptionController extends Controller
                 $subscriptiondata=Subscription::where('title',$request->title)->first();
                 if($subscriptiondata)
                 {
-                    return back()->with('deleted','Title already exists.');
+                    return back()->with('error','Title already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             $subscription->title=$request->title;
@@ -322,9 +314,9 @@ class SubscriptionController extends Controller
 
          try{
             $subscription->save();
-          return back()->with('updated','Subscription Plan updated !');
+          return redirect('admin/subscription/')->with('success','Subscription Plan updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -333,7 +325,7 @@ class SubscriptionController extends Controller
                     $listmessage="";
                     foreach($e->errors() as $list)
                     {
-                        $listmessage.=$list[0].'<br>';
+                        $listmessage.=$list[0].'<br/>';
                     }
 
                     if($listmessage!="")
@@ -341,12 +333,12 @@ class SubscriptionController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -366,18 +358,18 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
 
         if(is_null($subscription)){
-           return redirect('admin/subscription')->with('deleted','Something went wrong.');
+           return redirect('admin/subscription')->with('error','Something went wrong.');
         }
 
         try{
             $subscription->delete();
-           return back()->with('deleted', 'Course has been deleted');
+           return back()->with('success', 'Subscription has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -389,7 +381,7 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
 
         if(is_null($subscription)){
-           return redirect('admin/subscription')->with('deleted','Something went wrong.');
+           return redirect('admin/subscription')->with('error','Something went wrong.');
         }
 
 
@@ -401,14 +393,14 @@ class SubscriptionController extends Controller
 
         try{
             $subscription->save();
-           return back()->with('updated','Subscription Plan updated !');
+           return back()->with('success','Subscription Plan updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 

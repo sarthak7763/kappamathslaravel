@@ -24,7 +24,7 @@ class ProfileController extends BaseController
 		        	$user->image=url('/').'/images/user/'.$user->image;
 		        }
 		        else{
-		        	$user->image=url('/').'/images/user/profile.png';
+		        	$user->image=url('/').'/images/user/profile_placeholder.png';
 		        }
 
 		        $success['userdet']=$user;
@@ -131,7 +131,7 @@ class ProfileController extends BaseController
 		        	$userdet->image=url('/').'/images/user/'.$userdet->image;
 		        }
 		        else{
-		        	$userdet->image=url('/').'/images/user/profile.png';
+		        	$userdet->image=url('/').'/images/user/profile_placeholder.png';
 		        }     
 
 		        $success['userdet']=$userdet;
@@ -184,7 +184,7 @@ class ProfileController extends BaseController
 		        	$userdet->image=url('/').'/images/user/'.$userdet->image;
 		        }
 		        else{
-		        	$userdet->image=url('/').'/images/user/profile.png';
+		        	$userdet->image=url('/').'/images/user/profile_placeholder.png';
 		        }
 
 			    $success['userdet']=$userdet;

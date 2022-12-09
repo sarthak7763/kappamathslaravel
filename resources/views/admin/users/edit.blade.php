@@ -3,10 +3,24 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
  <div class="box">
     <div class="box-body">
         <h3>Edit User: {{ $user->name }}
-          <a href="{{url()->previous()}}" class="btn btn-gray pull-right"><i class="fa fa-arrow-left"></i> Back</a></h3>
+          <a href="{{ route('users.index') }}" class="btn btn-gray pull-right"><i class="fa fa-arrow-left"></i> Back</a></h3>
       <hr>
 
       {!! Form::model($user, ['files' => true, 'method' => 'PATCH', 'action' => ['UsersController@update', $user->id]]) !!}
@@ -22,13 +36,13 @@
               <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 {!! Form::label('email', 'Email address') !!}
                 <span class="required">*</span>
-                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@example.com', 'required' => 'required']) !!}
+                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@example.com','readonly'=>'readonly']) !!}
                 <small class="text-danger">{{ $errors->first('email') }}</small>
               </div>
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 {!! Form::label('password', 'Password') !!}
                 <span class="required">*</span>
-                {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Change Your Password']) !!}
+                {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Change Your Password','readonly'=>'readonly']) !!}
                 <small class="text-danger">{{ $errors->first('password') }}</small>
               </div>
 
@@ -45,6 +59,7 @@
               </div>
               <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                     {!! Form::label('username', 'Enter Username') !!}
+                    <span class="required">*</span>
                     {!! Form::text('username', null, ['class' => 'form-control', 'placeholder'=>'Enter Your Username']) !!}
                     <small class="text-danger">{{ $errors->first('username') }}</small>
                   </div>

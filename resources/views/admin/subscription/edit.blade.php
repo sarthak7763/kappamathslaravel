@@ -3,9 +3,23 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="box">
     <div class="box-body">
-        <h3>Add Subscription Plan
+        <h3>Edit Subscription Plan
           <a href="{{ route('subscription.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> Back
           </a>
@@ -15,27 +29,6 @@
       {!! Form::model($subscription, ['method' => 'PATCH','enctype'=>'multipart/form-data', 'action' => ['SubscriptionController@update', $subscription->id]]) !!}
 
       <div class="row">
-
-        @if ($message = Session::get('error'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('deleted'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('added'))
-<div class="alert alert-success alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{{ $message }}</strong>
-</div>
-@endif
 
           <div class="col-md-6">
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -54,21 +47,8 @@
             </div>
           </div>
           <div class="col-md-6">  
-            <div class="form-group{{ $errors->has('subscription_date') ? ' has-error' : '' }}">
-              <label for="">Subscription Date: </label>
-              <span class="required">*</span>
-             <select class="form-control" name="subscription_date">
-              <option value="">Select</option>
-              @for($i=1;$i<=10;$i++)
-                <option <?php if($subscription->subscription_date==$i){echo "selected";} ?> value="{{$i}}">{{$i}}</option>
-              @endfor
-             </select>
-              <small class="text-danger">{{ $errors->first('subscription_date') }}</small>
-            </div>
-          </div>
-          <div class="col-md-6">  
             <div class="form-group{{ $errors->has('subscription_plan') ? ' has-error' : '' }}">
-              <label for="">Subscription Plan Month: </label>
+              <label for="">Subscription Plan: </label>
               <span class="required">*</span>
              <select class="form-control" name="subscription_plan">
               <option value="">Select</option>
@@ -78,7 +58,17 @@
              </select>
               <small class="text-danger">{{ $errors->first('subscription_plan') }}</small>
             </div>
-          </div>  
+          </div> 
+
+          <div class="col-md-6">  
+            <div class="form-group{{ $errors->has('subscription_tenure') ? ' has-error' : '' }}">
+              <label for="">Subscription Tenure: </label>
+              <span class="required">*</span>
+             {!! Form::text('subscription_tenure', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Subscription Tenure']) !!}
+              <small class="text-danger">{{ $errors->first('subscription_tenure') }}</small>
+            </div>
+          </div>
+           
            <div class="col-md-6">
             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
               {!! Form::label('description', 'Description') !!}
@@ -95,7 +85,7 @@
         </div>
 
         <div class="btn-group pull-right">
-          {!! Form::submit("Save", ['class' => 'btn btn-wave']) !!}
+          {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
         </div>
       {!! Form::close() !!}
   </div>

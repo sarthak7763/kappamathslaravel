@@ -9,6 +9,8 @@ use App\Subjectcategory;
 use Exception;
 use Yajra\Datatables\DataTables;
 use DB;
+use Illuminate\Validation\ValidationException;
+use Validator;
 
 class CoursetopicController extends Controller
 {
@@ -24,14 +26,6 @@ class CoursetopicController extends Controller
           if($request->ajax()){
 
             return DataTables::of($coursetopic)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('topic_name', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('subject',function($row){
                 if($row->subject!="" && $row->subject!="0")
@@ -298,6 +292,34 @@ class CoursetopicController extends Controller
         }
 
         if ($file = $request->file('topic_img')) {
+
+            try{
+            $request->validate([
+              'topic_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'topic_'.time().$file->getClientOriginalName(); 
             $file->move('images/topics/', $name);
             $topic_img = $name;
@@ -310,17 +332,17 @@ class CoursetopicController extends Controller
         $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
         if($coursetopicdata)
         {
-        	return back()->with('deleted','Title already exists.');
+        	return back()->with('error','Title already exists.');
         }
         else{
             try{
                 $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose course.');
+                    return back()->with('error','Please choose course.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 
@@ -328,10 +350,10 @@ class CoursetopicController extends Controller
                 $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose topic.');
+                    return back()->with('error','Please choose topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
                if($topic_img!="" || $request->topic_video_id)
@@ -347,26 +369,45 @@ class CoursetopicController extends Controller
                       $coursetopic->topic_status = $statusvalue;
                       $coursetopic->sort_order=$request->sort_order;
                       $coursetopic->save();
-                     return back()->with('added', 'Sub Topic has been added');
+                     return redirect('/admin/course-topic/')->with('success', 'Sub Topic has been added');
                   }catch(\Exception $e){
-                    return back()->with('deleted',$e->getMessage());     
+                    return back()->with('error',$e->getMessage());     
                  }
                }
                else{
-                return back()->with('deleted','Please choose image or enter video id to continue the process.');
+                return back()->with('error','Please choose image or enter video id to continue the process.');
                }  
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
-        }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+        }
+        catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error',$e->getMessage());
+                    }
+
                }
 
-
-         
     }
 
     /**
@@ -451,6 +492,34 @@ class CoursetopicController extends Controller
 		}
 
           if ($file = $request->file('topic_img')) {
+
+            try{
+            $request->validate([
+              'topic_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'topic_'.time().$file->getClientOriginalName(); 
             $file->move('images/topics/', $name);
             $topic_img = $name;
@@ -469,20 +538,20 @@ class CoursetopicController extends Controller
                 $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose course.');
+                    return back()->with('error','Please choose course.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             try{
                 $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose topic.');
+                    return back()->with('error','Please choose topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 
@@ -514,11 +583,11 @@ class CoursetopicController extends Controller
 		        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
 		        if($coursetopicdata)
 		        {
-		        	return back()->with('deleted','Title already exists.');
+		        	return back()->with('error','Title already exists.');
 		        }
 		    }
 		    catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             if($topic_img!="")
@@ -544,15 +613,35 @@ class CoursetopicController extends Controller
           }
          try{
             $coursetopic->save();
-          return back()->with('updated','Topic updated !');
+          return redirect('/admin/course-topic/')->with('success','Topic updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
-       }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
-               }
+       }
+       catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
 
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error',$e->getMessage());
+                    }
+
+               }
           
     }
 
@@ -568,19 +657,19 @@ class CoursetopicController extends Controller
         $coursetopic = Coursetopic::find($id);
 
         if(is_null($coursetopic)){
-		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
+		   return redirect('admin/course-topic')->with('error','Something went wrong.');
 		}
 
         try{
             $coursetopic->delete();
-           return back()->with('deleted', 'Topic has been deleted');
+           return back()->with('success', 'Topic has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
        }
        catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -592,7 +681,7 @@ class CoursetopicController extends Controller
         $coursetopic = Coursetopic::find($id);
 
         if(is_null($coursetopic)){
-		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
+		   return redirect('admin/course-topic')->with('error','Something went wrong.');
 		}
 
         if(isset($request->status)){
@@ -603,14 +692,14 @@ class CoursetopicController extends Controller
 
         try{
             $coursetopic->save();
-           return back()->with('updated','Topic updated !');
+           return back()->with('success','Topic updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
   }
 

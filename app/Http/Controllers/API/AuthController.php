@@ -99,6 +99,14 @@ class AuthController extends BaseController
             ]);
 
             $token = $user->createToken('Laravel8PassportAuth')->accessToken;
+
+            if($user->image!="")
+            {
+                $user->image=url('/').'/images/user/'.$user->image;
+            }
+            else{
+                $user->image=url('/').'/images/user/profile_placeholder.png';
+            }
             
             $success['token'] =  $token; 
             $success['name'] =  $request->name;
@@ -162,6 +170,14 @@ class AuthController extends BaseController
 
                     $userdet->device_id=$request->fcm_token;
                     $userdet->save();
+
+                    if($user->image!="")
+                    {
+                        $user->image=url('/').'/images/user/'.$user->image;
+                    }
+                    else{
+                        $user->image=url('/').'/images/user/profile_placeholder.png';
+                    }
 
                     $success['token'] =  $token; 
                     $success['name'] =  $user->name;

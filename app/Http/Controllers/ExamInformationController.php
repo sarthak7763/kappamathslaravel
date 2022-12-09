@@ -24,14 +24,6 @@ class ExamInformationController extends Controller
           if($request->ajax()){
 
             return DataTables::of($examinformation)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('question', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('question',function($row){
                 return $row->question;
@@ -179,19 +171,19 @@ class ExamInformationController extends Controller
         $examinformationdata=Examinformation::where('question',$request->question)->first();
         if($examinformationdata)
         {
-        	return back()->with('deleted','Exam Information already exists.');
+        	return back()->with('error','Exam Information already exists.');
         }
         else{
         	try{
 		         $quiz = Examinformation::create($input);
-		           return back()->with('added', 'Exam Information has been added');
+		           return redirect('/admin/exam-information/')->with('success', 'Exam Information has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -207,12 +199,12 @@ class ExamInformationController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -243,7 +235,7 @@ class ExamInformationController extends Controller
            return view('admin.examinformation.edit',compact('examinformation'));
         }
         catch(\Exception $e){
-                  return redirect('admin/exam-information/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/exam-information/')->with('error','Something went wrong.');     
                }
     }
 
@@ -264,7 +256,7 @@ class ExamInformationController extends Controller
 
           $examinformation = Examinformation::find($id);
           if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('deleted','Something went wrong.');
+           return redirect('admin/exam-information')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -283,11 +275,11 @@ class ExamInformationController extends Controller
                 $examinformationdata=Examinformation::where('question',$request->question)->first();
                 if($examinformationdata)
                 {
-                    return back()->with('deleted','Exam Information already exists.');
+                    return back()->with('error','Exam Information already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             $examinformation->question=$request->question;
@@ -297,9 +289,9 @@ class ExamInformationController extends Controller
 
          try{
             $examinformation->save();
-          return back()->with('updated','Exam Information updated !');
+          return redirect('admin/exam-information/')->with('success','Exam Information updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -316,12 +308,12 @@ class ExamInformationController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -341,18 +333,18 @@ class ExamInformationController extends Controller
         $examinformation = Examinformation::find($id);
 
         if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('deleted','Something went wrong.');
+           return redirect('admin/exam-information')->with('error','Something went wrong.');
         }
 
         try{
             $examinformation->delete();
-           return back()->with('deleted', 'Exam Information has been deleted');
+           return back()->with('success', 'Exam Information has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -364,7 +356,7 @@ class ExamInformationController extends Controller
         $examinformation = Examinformation::find($id);
 
         if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('deleted','Something went wrong.');
+           return redirect('admin/exam-information')->with('error','Something went wrong.');
         }
 
 
@@ -376,14 +368,14 @@ class ExamInformationController extends Controller
 
         try{
             $examinformation->save();
-           return back()->with('updated','Exam Information updated !');
+           return back()->with('success','Exam Information updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 

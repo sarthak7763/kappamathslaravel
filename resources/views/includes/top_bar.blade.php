@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+w<nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="logo-main-block">
           @if ($setting)

@@ -1,13 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => "Top Students / {$topic->title}",
-  'dash' => '',
-  'course'=>'',
-  'quiz' => '',
-  'users' => '',
-  'questions' => '',
-  'top_re' => '',
-  'all_re' => 'active',
-  'sett' => ''
+  'page_header' => "Top Students / {$topic->title}"
 ])
 
 @section('content')

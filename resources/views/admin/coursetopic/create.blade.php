@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Add SubTopic
@@ -15,9 +29,11 @@
       {!! Form::open(['method' => 'POST', 'action' => 'CoursetopicController@store','enctype'=>'multipart/form-data']) !!}
 
       <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
 
+            <div class="row">
 
+              <div class="col-md-6">
              <div class="form-group{{ $errors->has('course') ? ' has-error' : '' }}">
               <label for="">Course: </label>
               <span class="required">*</span>
@@ -29,7 +45,9 @@
              </select>
               <small class="text-danger">{{ $errors->first('course') }}</small>
             </div>
+          </div>
 
+            <div class="col-md-6">
             <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
               <label for="">Topics: </label>
               <span class="required">*</span>
@@ -38,34 +56,44 @@
              </select>
               <small class="text-danger">{{ $errors->first('topic') }}</small>
             </div>
+          </div>
 
+            <div class="col-md-6">
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Topic Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
               <small class="text-danger">{{ $errors->first('title') }}</small>
             </div>
+          </div>
 
-            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-              {!! Form::label('description', 'Description') !!}
-              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $errors->first('description') }}</small>
-            </div>
-
+          <div class="col-md-6">
              <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
               {!! Form::label('sort_order', 'Sort Order') !!}
               <span class="required">*</span>
               {!! Form::text('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order']) !!}
               <small class="text-danger">{{ $errors->first('sort_order') }}</small>
             </div>
+          </div>
 
+            <div class="col-md-6">
+            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+              {!! Form::label('description', 'Description') !!}
+              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{ $errors->first('description') }}</small>
+            </div>
+          </div>   
+
+            <div class="col-md-6">
             <div class="form-group{{ $errors->has('topic_video_id') ? ' has-error' : '' }}">
               {!! Form::label('topic_video_id', 'Topic Video ID') !!}
               <span class="required">*</span>
               {!! Form::text('topic_video_id', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Vimeo Video ID']) !!}
               <small class="text-danger">{{ $errors->first('topic_video_id') }}</small>
             </div>
+          </div>
 
+            <div class="col-md-6">
             <div class="form-group{{ $errors->has('topic_img') ? ' has-error' : '' }}">
             {!! Form::label('topic_img', 'Add Image') !!}
             {!! Form::file('topic_img') !!}
@@ -74,18 +102,21 @@
           </div>
 
           <div id="preview_image_div">
-            <img id="preview-image" src="/images/noimage.jpg" style="height: auto;width: 50%;">
+            <img id="preview-image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
           </div>
+        </div>
 
+          <div class="col-md-6">
             <label for="">Status: </label>
              <input type="checkbox" class="toggle-input" name="status" id="toggle2">
              <label for="toggle2"></label>
-
+           </div>
+           </div>
           </div>
         </div>
 
         <div class="btn-group pull-right">
-          {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+          {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
         </div>
       {!! Form::close() !!}
   </div>

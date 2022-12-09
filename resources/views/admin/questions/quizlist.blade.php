@@ -4,6 +4,19 @@
 
 @section('content')
 
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
 <div class="row">
   <div class="col-md-4">
     <div class="quiz-card">
@@ -68,7 +81,11 @@
                 </ul>
               </div>
             </div>
+            @if($topic['quiz_type']=="1")
             <a href="{{route('questions.show', $topic['id'])}}" class="btn btn-wave">Add Questions</a>
+            @else
+            <a href="{{route('questions.showquiz', $topic['id'])}}" class="btn btn-wave">Add Questions</a>
+            @endif
           </div>
         </div>
       @endforeach

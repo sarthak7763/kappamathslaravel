@@ -3,32 +3,25 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
   <div class="margin-bottom">
     <a href="{{route('exam-information.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Exam Information</a>
   </div>
 
   <div class="box">
-
-    @if ($message = Session::get('error'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('deleted'))
-<div class="alert alert-danger alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{!! $message !!}</strong>
-</div>
-@endif
-
-@if ($message = Session::get('added'))
-<div class="alert alert-success alert-block">
-  <button type="button" class="close" data-dismiss="alert">×</button> 
-        <strong>{{ $message }}</strong>
-</div>
-@endif
 
     <div class="box-body table-responsive">
       <table id="coursetopicTable" class="table table-hover table-striped">
@@ -70,7 +63,7 @@ $(function () {
 
     var table = $('#coursetopicTable').DataTable({
       processing: true,
-      serverSide: true,
+      serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
@@ -80,10 +73,10 @@ $(function () {
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},
-      {data: 'question', name: 'title',searchable: true},
-      {data: 'answer', name: 'price',searchable: true},
+      {data: 'question', name: 'title'},
+      {data: 'answer', name: 'price'},
       {data: 'status', name: 'status'},
-      {data: 'action', name: 'action',searchable: false}
+      {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
     });

@@ -8,6 +8,8 @@ use App\Coursetopic;
 use App\Subject;
 use App\Subjectcategory;
 use DataTables;
+use Illuminate\Validation\ValidationException;
+use Validator;
 class QuizTopicController extends Controller
 {
     /**
@@ -23,14 +25,6 @@ class QuizTopicController extends Controller
           if($request->ajax()){
 
             return DataTables::of($topics)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('title', 'LIKE', '%'.$search.'%');
-            }
-        })
-            
             ->addIndexColumn()
             ->addColumn('subject',function($row){
                 if($row->subject!="" && $row->subject!="0")
@@ -354,7 +348,7 @@ class QuizTopicController extends Controller
                         $listmessage="";
                         foreach($e->errors() as $list)
                         {
-                            $listmessage.=$list[0];
+                            $listmessage.=$list[0].'<br/>';
                         }
 
                         if($listmessage!="")
@@ -391,7 +385,7 @@ class QuizTopicController extends Controller
           'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
-          'per_q_mark' => 'required'    
+          'per_question_mark' => 'required'    
         ]);
 
         if(isset($request->status)){
@@ -404,10 +398,10 @@ class QuizTopicController extends Controller
             $subjectdata=Subject::where('id',$request->course)->first();
             if(!$subjectdata)
             {
-                return back()->with('deleted','Please choose course.');
+                return back()->with('error','Please choose course.');
             }
           }catch(\Exception $e){
-                return back()->with('deleted','Something went wrong.');     
+                return back()->with('error','Something went wrong.');     
              }
 
 
@@ -415,10 +409,10 @@ class QuizTopicController extends Controller
                 $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose topic.');
+                    return back()->with('error','Please choose topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 
@@ -426,10 +420,27 @@ class QuizTopicController extends Controller
                 $coursetopicdata=Coursetopic::where('id',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->first();
                 if(!$coursetopicdata)
                 {
-                    return back()->with('deleted','Please choose Course Topic.');
+                    return back()->with('error','Please choose Course Topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
+               }
+
+                try{
+                $quiztopicdata=Quiztopic::where('course_topic',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->where('quiz_type',$request->quiz_type)->first();
+                if($quiztopicdata)
+                {
+                    if($request->quiz_type=="1")
+                    {
+                      return back()->with('error','Objective Quiz already added in this subtopic.');
+                    }
+                    else{
+                      return back()->with('error','Theory Quiz already added in this subtopic.');
+                    }
+                    
+                }
+            }catch(\Exception $e){
+                  return back()->with('error','Something went wrong.');     
                }
 
 
@@ -441,20 +452,41 @@ class QuizTopicController extends Controller
           $quiztopic->quiz_type=$request->quiz_type;
           $quiztopic->title = $request->title;
           $quiztopic->description = $request->description;
-          $quiztopic->per_q_mark = $request->per_q_mark;
+          $quiztopic->per_q_mark = $request->per_question_mark;
           $quiztopic->timer=$request->timer;
           $quiztopic->quiz_status = $statusvalue;
           $quiztopic->save();
 
-           return back()->with('added', 'Quiz Topic has been added');
+           return redirect('/admin/quiz-topics/')->with('success', 'Quiz Topic has been added');
         }catch(\Exception $e){
-          return back()->with('deleted',$e->getMessage());
+          return back()->with('error',$e->getMessage());
            
        }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
                }
+     
        
     }
 
@@ -488,6 +520,7 @@ class QuizTopicController extends Controller
           }
 
         $quiztopic = Quiztopic::findOrFail($id);
+        $quiztopic->per_question_mark=$quiztopic->per_q_mark;
         $subject=$quiztopic->subject;
         $category=$quiztopic->category;
         $course_topic=$quiztopic->course_topic;
@@ -519,12 +552,12 @@ class QuizTopicController extends Controller
         }
       }
       catch(\Exception $e){
-                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/quiz-topics/')->with('error','Something went wrong.');     
                }
 
           return view('admin.quiz.edit', compact('subjectlist','quiztopic','subjectcategorylist','subjectcourselist'));
       }catch(\Exception $e){
-                  return redirect('admin/quiz-topics/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/quiz-topics/')->with('error','Something went wrong.');     
                }
 
     }
@@ -545,14 +578,14 @@ class QuizTopicController extends Controller
           'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
-          'per_q_mark' => 'required'
+          'per_question_mark' => 'required'
           
         ]);
 
           $quiztopic = Quiztopic::find($id);
 
           if(is_null($quiztopic)){
-       return redirect('admin/quiz-topics')->with('deleted','Something went wrong11.');
+       return redirect('admin/quiz-topics')->with('error','Something went wrong11.');
     }
 
           if(isset($request->status)){
@@ -565,32 +598,52 @@ class QuizTopicController extends Controller
                 $subjectdata=Subject::where('id',$request->course)->first();
                 if(!$subjectdata)
                 {
-                    return back()->with('deleted','Please choose course.');
+                    return back()->with('error','Please choose course.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong12.');     
+                  return back()->with('error','Something went wrong12.');     
                }
 
             try{
                 $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
                 if(!$categorydata)
                 {
-                    return back()->with('deleted','Please choose topic.');
+                    return back()->with('error','Please choose topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong13.');     
+                  return back()->with('error','Something went wrong13.');     
                }
 
                try{
                 $coursetopicdata=Coursetopic::where('id',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->first();
                 if(!$coursetopicdata)
                 {
-                    return back()->with('deleted','Please choose Course Topic.');
+                    return back()->with('error','Please choose Course Topic.');
                 }
             }catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong14.');     
+                  return back()->with('error','Something went wrong14.');     
                }
 
+
+               if($quiztopic->quiz_type!=$request->quiz_type)
+               {
+                    try{
+                  $quiztopicdata=Quiztopic::where('course_topic',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->where('quiz_type',$request->quiz_type)->first();
+                  if($quiztopicdata)
+                  {
+                      if($request->quiz_type=="1")
+                      {
+                        return back()->with('error','Objective Quiz already added in this subtopic.');
+                      }
+                      else{
+                        return back()->with('error','Theory Quiz already added in this subtopic.');
+                      }
+                      
+                  }
+              }catch(\Exception $e){
+                    return back()->with('error','Something went wrong.');     
+                 }
+               }
 
          try{
             $quiztopic->subject=$request->course;
@@ -599,20 +652,41 @@ class QuizTopicController extends Controller
             $quiztopic->quiz_type=$request->quiz_type;
             $quiztopic->title = $request->title;
             $quiztopic->description = $request->description;
-            $quiztopic->per_q_mark = $request->per_q_mark;
+            $quiztopic->per_q_mark = $request->per_question_mark;
             $quiztopic->timer=$request->timer;
             $quiztopic->quiz_status = $statusvalue;
             $quiztopic->save();
 
-          return back()->with('updated','Quiz Topic updated !');
+          return redirect('/admin/quiz-topics/')->with('success','Quiz Topic updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
        }
        catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong15.');     
-               } 
+                  
+                  if($e instanceof ValidationException){
+                        $listmessage="";
+                        foreach($e->errors() as $list)
+                        {
+                            $listmessage.=$list[0].'<br/>';
+                        }
+
+                        if($listmessage!="")
+                        {
+                            return back()->with('error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong12.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong11.');
+                    }
+
+               }
+        
     }
 
     /**
@@ -627,19 +701,19 @@ class QuizTopicController extends Controller
         $quiztopic = Quiztopic::find($id);
 
          if(is_null($quiztopic)){
-       return redirect('admin/quiz-topics')->with('deleted','Something went wrong.');
+       return redirect('admin/quiz-topics')->with('error','Something went wrong.');
     }
 
         try{
             $quiztopic->delete();
-           return back()->with('deleted', 'Topic has been deleted');
+           return back()->with('success', 'Topic has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
        }
        catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -651,7 +725,7 @@ class QuizTopicController extends Controller
         $quiztopic = Quiztopic::find($id);
 
         if(is_null($quiztopic)){
-       return redirect('admin/quiz-topics')->with('deleted','Something went wrong.');
+       return redirect('admin/quiz-topics')->with('error','Something went wrong.');
     }
 
         if(isset($request->status)){
@@ -662,14 +736,14 @@ class QuizTopicController extends Controller
 
         try{
             $quiztopic->save();
-           return back()->with('updated','Quiz Topic updated !');
+           return back()->with('success','Quiz Topic updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
   }
 

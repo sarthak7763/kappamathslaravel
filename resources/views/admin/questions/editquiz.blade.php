@@ -3,6 +3,21 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
+  
   <div class="box">
     <div class="box-body">
         <h3>Edit Question
@@ -25,16 +40,6 @@
               <small class="text-danger">{{ $errors->first('question') }}</small>
             </div>
           </div>
-
-        <div class="col-md-12">
-          <div class="col-md-6">
-            <div class="form-group{{ $errors->has('code_snippet') ? ' has-error' : '' }}">
-                {!! Form::label('code_snippet', 'Code Snippets') !!}
-                {!! Form::textarea('code_snippet', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Code Snippets', 'rows' => '5']) !!}
-                <small class="text-danger">{{ $errors->first('code_snippet') }}</small>
-            </div>
-          </div>
-
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer_ex') ? ' has-error' : '' }}">
                 {!! Form::label('answer_exp', 'Answer Explanation') !!}
@@ -64,6 +69,14 @@
                     <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                   </div>
                 </div>
+
+                <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
+                        {!! Form::label('sort_order', 'Sort Order') !!}
+                        {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
+                        <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                      </div>
+                    </div>
 
               </div>
             </div>

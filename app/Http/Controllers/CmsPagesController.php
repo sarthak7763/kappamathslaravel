@@ -25,14 +25,6 @@ class CmsPagesController extends Controller
           if($request->ajax()){
 
             return DataTables::of($cmspages)
-
-            ->filter(function ($row) use ($request) { 
-            if ($request->input('search.value') != "") {
-                $search=$request->input('search.value');
-                $row->where('name', 'LIKE', '%'.$search.'%');
-            }
-        })
-
             ->addIndexColumn()
             ->addColumn('name',function($row){
                 return $row->name;
@@ -163,7 +155,8 @@ class CmsPagesController extends Controller
         try{
        $input = $request->all();
         $request->validate([
-          'name' => 'required|string'
+          'name' => 'required|string',
+          'description'=>'required'
         ]);
 
         if(isset($request->status)){
@@ -178,19 +171,19 @@ class CmsPagesController extends Controller
         $cmspagesdata=Cmspages::where('name',$request->name)->first();
         if($cmspagesdata)
         {
-        	return back()->with('deleted','CMS page already exists.');
+        	return back()->with('error','CMS page already exists.');
         }
         else{
         	try{
 		         $quiz = Cmspages::create($input);
-		           return back()->with('added', 'CMS page has been added');
+		           return redirect('/admin/cms-pages/')->with('success', 'CMS page has been added');
 		        }catch(\Exception $e){
-		          return back()->with('deleted',$e->getMessage());     
+		          return back()->with('error',$e->getMessage());     
 		       }
         }
     }
     catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
     }catch(\Exception $e){
@@ -206,12 +199,12 @@ class CmsPagesController extends Controller
                             return back()->with('error',$listmessage);
                         }
                         else{
-                            return back()->with('deleted','Something went wrong.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }      
                }
          
@@ -242,7 +235,7 @@ class CmsPagesController extends Controller
            return view('admin.cmspages.edit',compact('cmspages'));
         }
         catch(\Exception $e){
-                  return redirect('admin/cms-pages/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/cms-pages/')->with('error','Something went wrong.');     
                }
     }
 
@@ -257,12 +250,13 @@ class CmsPagesController extends Controller
     {
         try{
         $request->validate([
-          'name' => 'required|string'
+          'name' => 'required|string',
+          'description'=>'required'
         ]);
 
           $cmspages = Cmspages::find($id);
           if(is_null($cmspages)){
-           return redirect('admin/cms-pages')->with('deleted','Something went wrong.');
+           return redirect('admin/cms-pages')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -281,11 +275,11 @@ class CmsPagesController extends Controller
                 $cmspagesdata=Cmspages::where('name',$request->name)->first();
                 if($cmspagesdata)
                 {
-                    return back()->with('deleted','CMS Page already exists.');
+                    return back()->with('error','CMS Page already exists.');
                 }
             }
             catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
             $slug = Str::slug($request->name);
@@ -297,9 +291,9 @@ class CmsPagesController extends Controller
 
          try{
             $cmspages->save();
-          return back()->with('updated','CMS Page updated !');
+          return redirect('/admin/cms-pages/')->with('success','CMS Page updated !');
          }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
@@ -316,12 +310,12 @@ class CmsPagesController extends Controller
                         return back()->with('error',$listmessage);
                     }
                     else{
-                        return back()->with('deleted','Something went wrong.');
+                        return back()->with('error','Something went wrong.');
                     }
                     
                 }
                 else{
-                    return back()->with('deleted','Something went wrong.');
+                    return back()->with('error','Something went wrong.');
                 }
 
             }
@@ -341,18 +335,18 @@ class CmsPagesController extends Controller
         $cmspages = Cmspages::find($id);
 
         if(is_null($cmspages)){
-           return redirect('admin/cms-pages')->with('deleted','Something went wrong.');
+           return redirect('admin/cms-pages')->with('error','Something went wrong.');
         }
 
         try{
             $cmspages->delete();
-           return back()->with('deleted', 'CMS page has been deleted');
+           return back()->with('success', 'CMS page has been deleted');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
         
     }
@@ -364,7 +358,7 @@ class CmsPagesController extends Controller
         $cmspages = Cmspages::find($id);
 
         if(is_null($cmspages)){
-           return redirect('admin/cms-pages')->with('deleted','Something went wrong.');
+           return redirect('admin/cms-pages')->with('error','Something went wrong.');
         }
 
 
@@ -376,14 +370,14 @@ class CmsPagesController extends Controller
 
         try{
             $cmspages->save();
-           return back()->with('updated','CMS Page updated !');
+           return back()->with('success','CMS Page updated !');
         }catch(\Exception $e){
-            return back()->with('deleted',$e->getMessage());
+            return back()->with('error',$e->getMessage());
          }
 
      }
      catch(\Exception $e){
-                  return back()->with('deleted','Something went wrong.');     
+                  return back()->with('error','Something went wrong.');     
                }
 
 
