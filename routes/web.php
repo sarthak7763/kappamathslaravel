@@ -92,21 +92,12 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::delete('delete/sheet/quiz/{id}','TopicController@deleteperquizsheet')->name('del.per.quiz.sheet');
 
-  Route::get('/admin', function()
-  {
-    $user = User::where('role', '!=', 'A')->count();
-    $question = Question::count();
-    $quiz = Quiztopic::count();
-    $user_latest = User::where('id', '!=', Auth::id())->orderBy('created_at', 'desc')->get();
-    return view('admin.dashboard', compact('user', 'question', 'quiz', 'user_latest'));
-    //remove the answer line comment
-    // return view('admin.dashboard', compact('user', 'question', 'answer', 'quiz', 'user_latest'));
-
-  });
+  Route::any('/admin','DashboardController@index');
 
   Route::delete('reset/response/{topicid}/{userid}','AllReportController@delete');
 
-  Route::resource('/admin/all_reports', 'AllReportController');
+  Route::any('/admin/all_reports', 'AllReportController@index');
+
   Route::resource('/admin/top_report', 'TopReportController');
 
   Route::resource('/admin/quiz-topics', 'QuizTopicController');
@@ -189,6 +180,9 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/cms-pages', 'CmsPagesController');
   Route::post('/admin/cms-pages/changestatus','CmsPagesController@changestatus')->name('cmspageschangestatus');
+
+  Route::get('/admin/home_banner/','HomeBannerController@index');
+  Route::post('/admin/home_banner/submithomebannerinfo','HomeBannerController@submithomebannerinfo')->name('submithomebannerinfo');
 
 
 });

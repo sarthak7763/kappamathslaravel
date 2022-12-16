@@ -66,6 +66,8 @@
 
 $(function () {
 
+    var filter_start_date="{{Request::input('filter_start_date')}}";
+    var filter_end_date="{{Request::input('filter_end_date')}}";
     var table = $('#topicsTable').DataTable({
       processing: true,
       serverSide: false,
@@ -73,8 +75,15 @@ $(function () {
       autoWidth: false,
       scrollCollapse: true,
 
+      ajax: {
+            url: "{{ route('quiz-topics.index') }}",
+            type: "GET",
+            data: {
+                "filter_start_date": filter_start_date,
+                "filter_end_date": filter_end_date
+            }
+        },
 
-      ajax: "{{ route('quiz-topics.index') }}",
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},

@@ -29,7 +29,6 @@
        {!! Form::model($question, ['method' => 'PATCH', 'action' => ['QuestionsController@update', $question->id], 'files' => true]) !!}
                      
         <div class="row">
-          <div class="col-md-12">
           <div class="col-md-6">
             {!! Form::hidden('topic_id', $topic->id) !!}
             <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">
@@ -38,6 +37,8 @@
               {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
               <small class="text-danger">{{ $errors->first('question') }}</small>
             </div>
+          </div>  
+          <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
                 {!! Form::label('answer', 'Correct Answer') !!}
                 <span class="required">*</span>
@@ -45,7 +46,6 @@
                 <small class="text-danger">{{ $errors->first('answer') }}</small>
             </div>
           </div>
-          <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('a') ? ' has-error' : '' }}">
               {!! Form::label('a', 'A - Option') !!}
@@ -54,7 +54,6 @@
               <small class="text-danger">{{ $errors->first('a') }}</small>
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('b') ? ' has-error' : '' }}">
               {!! Form::label('b', 'B - Option') !!}
@@ -63,9 +62,6 @@
               <small class="text-danger">{{ $errors->first('b') }}</small>
             </div>
           </div>
-        </div>
-
-        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('c') ? ' has-error' : '' }}">
               {!! Form::label('c', 'C - Option') !!}
@@ -74,7 +70,6 @@
               <small class="text-danger">{{ $errors->first('c') }}</small>
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('d') ? ' has-error' : '' }}">
               {!! Form::label('d', 'D - Option') !!}
@@ -83,9 +78,6 @@
               <small class="text-danger">{{ $errors->first('d') }}</small>
             </div>
           </div>
-        </div>
-
-        <div class="col-md-12">
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer_ex') ? ' has-error' : '' }}">
                 {!! Form::label('answer_exp', 'Answer Explanation') !!}
@@ -93,8 +85,6 @@
                 <small class="text-danger">{{ $errors->first('answer_ex') }}</small>
             </div>
           </div>
-        </div>
-
           <div class="col-md-12">
             <div class="extras-block">
               <h4 class="extras-heading">Images And Video For Question</h4>
@@ -115,24 +105,26 @@
                     <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                   </div>
                 </div>
-
                 <div class="col-md-6">
-                      <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
-                        {!! Form::label('sort_order', 'Sort Order') !!}
-                        {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
-                        <small class="text-danger">{{ $errors->first('sort_order') }}</small>
-                      </div>
-                    </div>
-
+                  <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
+                    {!! Form::label('sort_order', 'Sort Order') !!}
+                    {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
+                    <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="btn-group pull-right">
+                    {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
+      </div>
+ 
     
     
-        <div class="btn-group pull-right">
-          {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
-        </div>
+        
     
     {!! Form::close() !!}
   </div>

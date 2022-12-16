@@ -19,9 +19,35 @@ class QuizTopicController extends Controller
      */
     public function index(Request $request)
     {
-        $topics = Quiztopic::all();
+        if($request->filter_start_date!="" && $request->filter_end_date!="")
+        {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
 
-        $topics = \DB::table('quiztopics')->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $topics = \DB::table('quiztopics')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
+
+        }
+        elseif($request->filter_start_date!="" && $request->filter_end_date=="")
+        {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $topics = \DB::table('quiztopics')->where('created_at','>=',$filter_start_date)->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
+        }
+        elseif($request->filter_start_date=="" && $request->filter_end_date!="")
+        {
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $topics = \DB::table('quiztopics')->where('created_at','<=',$filter_end_date)->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
+        }
+        else{
+          $topics = \DB::table('quiztopics')->select('id','subject','category','course_topic','quiz_type','title','description','per_q_mark','timer','quiz_status');
+        }
+        
           if($request->ajax()){
 
             return DataTables::of($topics)

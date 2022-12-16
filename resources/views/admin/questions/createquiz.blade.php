@@ -21,7 +21,6 @@
         <form method="post" action="{{route('storetheoryquiz')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-12">
               <div class="col-md-6">
                 {!! Form::hidden('topic_id', $quiztopicdata->id) !!}
                 <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">                  
@@ -38,8 +37,7 @@
                     <small class="text-danger">{{ $errors->first('answer_exp') }}</small>
                 </div>
               </div>
-            </div>
-              <div class="col-md-12">
+
                 <div class="extras-block">
                   <h4 class="extras-heading">Video And Image For Question</h4>
                   <div class="row">
@@ -67,15 +65,17 @@
                         <small class="text-danger">{{ $errors->first('sort_order') }}</small>
                       </div>
                     </div>
-
+                    <div class="col-md-6">
+                      <div class="btn-group pull-right">
+                        {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
+                      </div>
+                    </div>
                   </div>
-                </div>
+          
               </div>
             </div>
           
-            <div class="btn-group pull-right">
-              {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
-            </div>
+            
 
         {!! Form::close() !!}
 

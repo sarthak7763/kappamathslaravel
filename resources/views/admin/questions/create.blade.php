@@ -22,7 +22,6 @@
         <form method="post" action="{{route('storeobjectivequiz')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-12">
               <div class="col-md-6">
                 {!! Form::hidden('topic_id', $quiztopicdata->id) !!}
                 <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">                  
@@ -31,15 +30,8 @@
                   {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
                   <small class="text-danger">{{ $errors->first('question') }}</small>
                 </div>
-                <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
-                    {!! Form::label('answer', 'Correct Answer') !!}
-                    <span class="required">*</span>
-                    {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
-                    <small class="text-danger">{{ $errors->first('answer') }}</small>
-                </div>
               </div>
-            </div>
-            <div class="col-md-12">
+              
               <div class="col-md-6">
                 <div class="form-group{{ $errors->has('a') ? ' has-error' : '' }}">
                   {!! Form::label('a', 'A - Option') !!}
@@ -56,9 +48,7 @@
                   <small class="text-danger">{{ $errors->first('b') }}</small>
                 </div>
               </div>
-            </div>
-              <div class="col-md-12">
-                <div class="col-md-6">
+              <div class="col-md-6">
                 <div class="form-group{{ $errors->has('c') ? ' has-error' : '' }}">
                   {!! Form::label('c', 'C - Option') !!}
                   <span class="required">*</span>
@@ -73,26 +63,26 @@
                   {!! Form::textarea('d', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
                   <small class="text-danger">{{ $errors->first('d') }}</small>
                 </div>
-
               </div>
-            </div>
-
-            <div class="col-md-12">
-              
-              <div class="col-md-6">
-                <div class="form-group{{ $errors->has('answer_exp') ? ' has-error' : '' }}">
-                    {!! Form::label('answer_exp', 'Answer Explanation') !!}
-                    {!! Form::textarea('answer_exp', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Answer Explanation', 'rows' => '4']) !!}
-                    <small class="text-danger">{{ $errors->first('answer_exp') }}</small>
+              <div class="col-md-6">  
+                <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
+                    {!! Form::label('answer', 'Correct Answer') !!}
+                    <span class="required">*</span>
+                    {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
+                    <small class="text-danger">{{ $errors->first('answer') }}</small>
                 </div>
               </div>
-            </div>
-
-              <div class="col-md-12">
-                <div class="extras-block">
-                  <h4 class="extras-heading">Video And Image For Question</h4>
-                  <div class="row">
-                    <div class="col-md-6">
+              <div class="col-md-6">
+                <div class="form-group{{ $errors->has('answer_exp') ? ' has-error' : '' }}">
+                  {!! Form::label('answer_exp', 'Answer Explanation') !!}
+                  {!! Form::textarea('answer_exp', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Answer Explanation', 'rows' => '4']) !!}
+                  <small class="text-danger">{{ $errors->first('answer_exp') }}</small>
+                </div>
+              </div>
+              <div class="extras-block col-md-12">
+                <h4 class="extras-heading">Video And Image For Question</h4>
+                <div class="row">
+                  <div class="col-md-6">
                       <div class="form-group{{ $errors->has('question_video_link') ? ' has-error' : '' }}">
                         {!! Form::label('question_video_link', 'Add Video To Question') !!}
                         {!! Form::text('question_video_link', null, ['class' => 'form-control', 'placeholder'=>'https://myvideolink.com/embed/..']) !!}
@@ -100,7 +90,14 @@
                         <p class="help">YouTube And Vimeo Video Support (Only Embed Code Link)</p>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                   <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
+                        {!! Form::label('sort_order', 'Sort Order') !!}
+                        {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
+                        <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
                       <div class="form-group{{ $errors->has('question_img') ? ' has-error' : '' }}">
                         {!! Form::label('question_img', 'Add Image To Question') !!}
                         {!! Form::file('question_img') !!}
@@ -108,24 +105,21 @@
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                     </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
-                        {!! Form::label('sort_order', 'Sort Order') !!}
-                        {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
-                        <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                    
+                   
+                    
+                    <div class="col-md-12">
+                      <div class="btn-group pull-right">
+                        {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
-            </div>
+
             
             <div class="row">
-            <div class="btn-group pull-right">
-              {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
-            </div>
+            
           </div>
 
         {!! Form::close() !!}
@@ -213,3 +207,13 @@ tinymce.init({
 
   </script>
   @endsection
+
+
+<style>
+  .tox-tinymce {
+    width: 100% !important;
+  }
+  .btn.btn-wave {
+    margin-bottom: 50px;
+  }
+</style>

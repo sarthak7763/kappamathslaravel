@@ -216,7 +216,7 @@ a:focus {
   margin-bottom: 0;
   margin-left: 230px;
   border: none;
-  min-height: 50px;
+  min-height: 60px;
   border-radius: 0;
 }
 .layout-top-nav .main-header .navbar {
@@ -267,8 +267,12 @@ a:focus {
   float: left;
   background-color: transparent;
   background-image: none;
-  padding: 15px 15px;
+  padding: 20px;
   font-family: fontAwesome;
+}
+.navbar-nav > li > a {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .main-header .sidebar-toggle:before {
   content: "\f0c9";
@@ -303,7 +307,7 @@ a:focus {
   transition: width 0.3s ease-in-out;
   display: block;
   float: left;
-  height: 50px;
+  height: 60px;
   font-size: 20px;
   line-height: 50px;
   text-align: center;
@@ -528,6 +532,7 @@ a:focus {
   text-align: center;
   width: 100%;
   border-bottom: 1px solid #ffffff1c;
+  padding-top: 8px;
 }
 .user-panel > .info h4 {
   font-size: 20px;
@@ -649,6 +654,7 @@ a:focus {
   }
   .sidebar-mini.sidebar-collapse .main-header .logo {
     width: 50px;
+    padding: 10px;
   }
   .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
     display: block;
@@ -1503,12 +1509,17 @@ a:focus {
  * Component: Small Box
  * --------------------
  */
+.form-block {
+  position: relative;
+  z-index: 9;
+}
 .small-box {
   border-radius: 2px;
   position: relative;
   display: block;
   margin-bottom: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 .small-box > .inner {
   padding: 10px;
@@ -5089,9 +5100,9 @@ table.text-center th {
 .delete-modal .delete-icon {
   position: relative;
   margin: 0 auto;
-  margin-top: 30px;
-  width: 85px;
-  height: 85px;
+  margin-top: 10px;
+  width: 55px;
+  height: 55px;
   border: 3px solid #FF4061;
   border-radius: 100%;
   text-align: center;
@@ -5101,7 +5112,7 @@ table.text-center th {
   top: 50%;
   left: 50%;
   content: "";
-  width: 35px;
+  width: 28px;
   height: 3px;
   background-color: #FF4061;
   transform: translate(-50%,-50%) rotate(-45deg);
@@ -5111,7 +5122,7 @@ table.text-center th {
   top: 50%;
   left: 50%;
   content: "";
-  width: 35px;
+  width: 28px;
   height: 3px;
   background-color: #FF4061;
   transform: translate(-50%,-50%) rotate(45deg);
@@ -5195,9 +5206,6 @@ table.text-center th {
   border: none !important;
   color: #26a69a;
 }
-.ad-logo {
-  margin: 7px auto;
-}
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
   background-color: #00b1da !important;
   border: none;
@@ -5276,9 +5284,12 @@ body.sidebar-collapse.skin-black .sidebar-menu > li.active > a {
   border-top: 1px solid rgab(0,0,0,0.1);
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
-img.ad-logo {
-  width: 28px;
-  margin-top: 13px;
+.skin-black.sidebar-mini .logo-lg .ad-logo {
+  width: 48px;
+  margin: 8px auto;
+}
+.skin-black.sidebar-mini.sidebar-collapse .logo-lg .ad-logo {
+  width: 30px;
 }
 span.required {
   color: #FF0000;
@@ -5301,3 +5312,8 @@ span.required {
 }
 
 
+@media (max-width: 767px) {
+  .form-block .form-control {
+    margin-bottom: 20px;
+  }
+}

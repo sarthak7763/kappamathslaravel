@@ -58,13 +58,31 @@
 
 @media (max-width: 767px) {
   .skin-black .main-header > .logo {
-    background-color: #222222;
+    background-color: #042a60;
     color: #ffffff;
     border-bottom: 0 solid transparent;
     border-right: none;
   }
   .skin-black .main-header > .logo:hover {
     background-color: #1f1f1f;
+  }
+  .main-header .logo .logo-lg {
+    padding-top: 7px;
+  }
+  .btn.btn-primary.btn-floating {
+    margin-bottom: 5px;
+  }
+  .content-header > h1 {
+    margin-top: 10px;
+  }
+  #usersTable_length {
+    padding-top: 10px;
+  }
+  .btn-group.pull-right {
+    margin-bottom: 20px;
+  }
+  #manageresultTable_wrapper {
+    margin-top: 10px;
   }
 }
 .skin-black .main-header li.user-header {

@@ -19,7 +19,34 @@ class SubscriptionController extends Controller
      */
     public function index(Request $request)
     {
+      if($request->filter_start_date!="" && $request->filter_end_date!="")
+      {
+        $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+      }
+      elseif($request->filter_start_date!="" && $request->filter_end_date=="")
+      {
+        $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+      }
+      elseif($request->filter_start_date=="" && $request->filter_end_date!="")
+      {
+        $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+        $subscription = \DB::table('subscriptions')->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+      }
+      else{
         $subscription = \DB::table('subscriptions')->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+      }
+        
 
           if($request->ajax()){
 

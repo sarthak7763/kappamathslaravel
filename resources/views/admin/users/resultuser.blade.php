@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students'
+  'page_header' => 'Users'
 ])
 
 @section('content')
@@ -26,7 +26,7 @@
     <div class="content-block box">
       <div class="box-body">
         <div class="table-responsive">
-          <table id="usersTable" class="table table-striped">
+          <table id="manageuserresultTable" class="table table-striped">
             <thead>
               <tr>
                 <th>#</th>
@@ -62,4 +62,22 @@
       </div>
     </div>
   @endif
+@endsection
+
+@section('scripts')
+
+<script>
+
+ $(function () {
+    var table = $('#manageuserresultTable').DataTable({
+      processing: true,
+      serverSide: false,
+      responsive: true,
+      autoWidth: false,
+      scrollCollapse: true
+    });
+
+  });
+
+</script>
 @endsection

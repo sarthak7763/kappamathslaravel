@@ -17,51 +17,65 @@
       </div>
   @endif
 
+  @if($filter_start_date!="")
   @php
-  	$filter_user=Request::input('filter_user');
-  	$filter_result_date=Request::input('filter_result_date');
+    $filter_start_date=date('m/d/Y',strtotime($filter_start_date));
   @endphp
+  @endif
 
+  @if($filter_end_date!="")
+  @php
+    $filter_end_date=date('m/d/Y',strtotime($filter_end_date));
+  @endphp
+  @endif
 
   <div class="row">
   	<div class="col-md-12">
-  		<form method="get" action="{{route('all_reports.index')}}" autocomplete="off">
-  		<div class="col-md-6">
-        <div class="form-group">
-            <label for="">User Name: </label>
-           <select class="form-control" name="filter_user" id="filter_user">
-            <option value="">Select</option>
-            	@foreach($usernamelist as $row)
-                          <option {{ $filter_user ==$row['id'] ? "selected" : "" }} value="{{$row['id']}}">{{$row['name']}} ({{$row['username']}})</option>
-                          @endforeach
-                       </select>
-            <small class="text-danger"></small>
+  		<form method="post" action="{{url('/admin/all_reports/')}}" autocomplete="off">
+        @csrf
+        <div class="row">  
+      		<div class="col-md-5">
+            <div class="form-group">
+              <label for="">User Name: </label>
+              <select class="form-control" name="filter_user" id="filter_user">
+                <option value="">Select</option>
+                @foreach($usernamelist as $row)
+                <option {{ $filter_user ==$row['id'] ? "selected" : "" }} value="{{$row['id']}}">{{$row['name']}} ({{$row['username']}})</option>
+                @endforeach
+              </select>
+              <small class="text-danger"></small>
+            </div>
           </div>
-      </div>
-
-       <div class="col-md-6">
-        <div class="form-group">
-            <label for="">Result Date: </label>
-           	<input type="text"  name="filter_result_date" id="datepicker" class="form-control" value="{{$filter_result_date}}">
-            <small class="text-danger"></small>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Start Date: </label>
+             	<input type="text"  name="filter_result_date[]" id="datepicker_start" class="form-control" value="{{$filter_start_date}}">
+              <small class="text-danger"></small>
+            </div>
           </div>
-      </div>
-
-      <div class="col-md-6">
-      	<div class="btn-group pull-right">
-		  <input class="btn btn-wave" type="submit" value="Submit">
-		</div>
-      </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="">End Date: </label>
+              <input type="text" name="filter_result_date[]" value="{{$filter_end_date}}" id="datepicker_end" class="form-control">
+              <small class="text-danger"></small>
+            </div>
+          </div>
+          <div class="col-md-1">
+          	<div class="btn-group pull-right" style="margin-top: 26px;">
+    		      <input class="btn btn-wave" type="submit" value="Submit">
+    		    </div>
+          </div>
+        </div>  
   		</form>
   	</div>
   </div>
 
   <div class="row">
-
-  	<div class="content-block box">
+    <div class="col-md-12">
+  	  <div class="content-block box">
       <div class="box-body">
         <div class="table-responsive">
-          <table id="usersTable" class="table table-striped">
+          <table id="manageresultTable" class="table table-striped">
             <thead>
               <tr>
                 <th>#</th>
@@ -97,8 +111,8 @@
           </table>
         </div>
       </div>
-    </div>
-    
+      </div>
+    </div>    
   </div>
 @endsection
 
@@ -109,9 +123,24 @@
 
 <script>
 
- $("#datepicker").datepicker({
+ $("#datepicker_start").datepicker({
 format: "mm/dd/yy"
 });
+
+ $("#datepicker_end").datepicker({
+format: "mm/dd/yy"
+});
+
+ $(function () {
+    var table = $('#manageresultTable').DataTable({
+      processing: true,
+      serverSide: false,
+      responsive: true,
+      autoWidth: false,
+      scrollCollapse: true
+    });
+
+  });
 
 </script>
 @endsection

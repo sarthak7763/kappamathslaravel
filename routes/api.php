@@ -50,7 +50,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('course-list', [DashboardController::class, 'getallcourseslist']);
 
-    Route::post('course-topics', [DashboardController::class, 'getcoursetopicslist']);
+    Route::post('course-topics', [DashboardController::class, 'getcoursetopicssubtopicsearchlist']);
 
     Route::post('course-sub-topics', [DashboardController::class, 'getcoursetopicsandsubtopicslist']);
 

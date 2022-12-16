@@ -98,7 +98,7 @@ $setting = App\Setting::first();
       </div>
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">Main Sections</li>
+       <!--  <li class="header">Main Sections</li> -->
         @if ($auth->role == 'A')
           <!-- Optionally, you can add icons to the links -->
 
@@ -106,39 +106,45 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/users*')) ? 'active' : '' }}"><a href="{{url('/admin/users')}}" title="Users"><i class="fa fa-users"></i> <span>Users</span></a></li>
 
-          <li class="{{ (request()->is('admin/subject*')) ? 'active' : '' }}"><a href="{{url('admin/subject')}}" title="Courses"><i class="fa fa-gears"></i> <span>Courses</span></a></li> 
+          <li class="{{ (request()->is('admin/subject*')) ? 'active' : '' }}"><a href="{{url('admin/subject')}}" title="Courses">
+             <i class="fa fa-book" aria-hidden="true"></i> <span>Courses</span></a></li> 
 
-          <li class="{{ (request()->is('admin/course-category*')) ? 'active' : '' }}"><a href="{{url('admin/course-category')}}" title="Course Topics"><i class="fa fa-gears"></i> <span>Course Topics</span></a></li> 
+          <li class="{{ (request()->is('admin/course-category*')) ? 'active' : '' }}"><a href="{{url('admin/course-category')}}" title="Course Topics"><i class="fa fa-th-list" aria-hidden="true"></i><span>Course Topics</span></a></li> 
 
-          <li class="{{ (request()->is('admin/course-topic*')) ? 'active' : '' }}"><a href="{{url('admin/course-topic')}}" title="Course Sub Topics"><i class="fa fa-gears"></i> <span>Course Sub Topics</span></a></li> 
+          <li class="{{ (request()->is('admin/course-topic*')) ? 'active' : '' }}"><a href="{{url('admin/course-topic')}}" title="Course Sub Topics"><i class="fa fa-desktop" aria-hidden="true"></i>
+         <span>Course Sub Topics</span></a></li> 
 
-          <li class="{{ (request()->is('admin/quiz-topics*')) ? 'active' : '' }}"><a href="{{url('admin/quiz-topics')}}" title="Quiz"><i class="fa fa-gears"></i> <span>Quiz</span></a></li>
+          <li class="{{ (request()->is('admin/quiz-topics*')) ? 'active' : '' }}"><a href="{{url('admin/quiz-topics')}}" title="Quiz">
+            <i class="fa fa-cogs" aria-hidden="true"></i>    <span>Quiz</span></a></li>
 
-          <li class="{{ (request()->is('admin/questions*')) ? 'active' : '' }}"><a href="{{url('admin/questions')}}" title="Questions"><i class="fa fa-question-circle-o"></i> <span>Questions</span></a></li> 
+          <li class="{{ (request()->is('admin/questions*')) ? 'active' : '' }}"><a href="{{url('admin/questions')}}" title="Questions">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions</span></a></li> 
 
-          <li class="{{ (request()->is('admin/all_reports*')) ? 'active' : '' }}"><a href="{{url('/admin/all_reports')}}" title="Student Report"><i class="fa fa-file-text-o"></i> <span>Student Report</span></a></li>
+          <li class="{{ (request()->is('admin/all_reports*')) ? 'active' : '' }}"><a href="{{url('/admin/all_reports')}}" title="Student Report"><i class="fa fa-bug" aria-hidden="true"></i>  <span>Student Report</span></a></li>
 
-          <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-file-text-o"></i> <span>Manage Subscription</span></a></li>
+          <li class="{{ (request()->is('admin/home_banner*')) ? 'active' : '' }}"><a href="{{url('/admin/home_banner')}}" title="Home Banner"><i class="fa fa-home" aria-hidden="true"></i> <span>Home Banner</span></a></li>
 
-          <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage Exam Information"><i class="fa fa-file-text-o"></i> <span>Manage Exam Information</span></a></li>
+          <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription</span></a></li>
 
-          <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-file-text-o"></i> <span>Manage Bulletins</span></a></li>
+          <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage Exam Information"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage Exam Information</span></a></li>
 
-          <li class="{{ (request()->is('admin/notifications*')) ? 'active' : '' }}"><a href="{{url('/admin/notifications')}}" title="Manage Notifications"><i class="fa fa-file-text-o"></i> <span>Manage Notifications</span></a></li>
+          <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Manage Bulletins</span></a></li>
+
+          <li class="{{ (request()->is('admin/notifications*')) ? 'active' : '' }}"><a href="{{url('/admin/notifications')}}" title="Manage Notifications"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>Manage Notifications</span></a></li>
 
           <li class="{{ (request()->is('admin/cms-pages*')) ? 'active' : '' }}"><a href="{{url('/admin/cms-pages')}}" title="Manage CMS Pages"><i class="fa fa-file-text-o"></i> <span>Manage CMS Pages</span></a></li>
 
-          <li class="{{ (request()->is('admin/contact-subject*')) ? 'active' : '' }}"><a href="{{url('/admin/contact-subject')}}" title="Contact Subject"><i class="fa fa-file-text-o"></i> <span>Contact Subject</span></a></li>
+          <li class="{{ (request()->is('admin/contact-subject*')) ? 'active' : '' }}"><a href="{{url('/admin/contact-subject')}}" title="Contact Subject"><i class="fa fa-list" aria-hidden="true"></i> <span>Contact Subject</span></a></li>
 
-          <li class="{{ (request()->is('admin/contact-enquiry*')) ? 'active' : '' }}"><a href="{{url('/admin/contact-enquiry')}}" title="Contact Enquiry"><i class="fa fa-file-text-o"></i> <span>Contact Enquiry</span></a></li>
+          <li class="{{ (request()->is('admin/contact-enquiry*')) ? 'active' : '' }}"><a href="{{url('/admin/contact-enquiry')}}" title="Contact Enquiry"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Contact Enquiry</span></a></li>
 
-          <li class="{{ (request()->is('admin/top_report*')) ? 'active' : '' }}"><a href="{{url('/admin/top_report')}}" title="Top Student Report"><i class="fa fa-user"></i> <span>Top Student Report</span></a></li>
+          <li class="{{ (request()->is('admin/top_report*')) ? 'active' : '' }}"><a href="{{url('/admin/top_report')}}" title="Top Student Report"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Top Student Report</span></a></li>
            
           <li class="{{ (request()->is('admin/settings*')) ? 'active' : '' }}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li>   
 
           <li class="{{ Nav::isRoute('admin.payment') }}"><a href="{{route('admin.payment')}} " title="Payment History"><i class="fa fa-money"></i> <span>Payment History</span></a></li>
 
-          <li><a href="{{url('/admin/profile')}}" title="My Profile"><i class="fa fa-file-text-o"></i> <span>My Profile</span></a></li>
+          <li><a href="{{url('/admin/profile')}}" title="My Profile"><i class="fa fa-user" aria-hidden="true"></i> <span>My Profile</span></a></li>
 
           @endif
 

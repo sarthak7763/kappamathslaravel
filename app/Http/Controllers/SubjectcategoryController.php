@@ -20,7 +20,34 @@ class SubjectcategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $subjectcategory = \DB::table('subject_category')->select('id','subject','category_name','category_status');
+        if($request->filter_start_date!="" && $request->filter_end_date!="")
+        {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $subjectcategory = \DB::table('subject_category')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','subject','category_name','category_status');
+        }
+        elseif($request->filter_start_date!="" && $request->filter_end_date=="")
+        {
+           $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $subjectcategory = \DB::table('subject_category')->where('created_at','>=',$filter_start_date)->select('id','subject','category_name','category_status');
+        }
+        elseif($request->filter_start_date=="" && $request->filter_end_date!="")
+        {
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $subjectcategory = \DB::table('subject_category')->where('created_at','<=',$filter_end_date)->select('id','subject','category_name','category_status');
+        }
+        else{
+          $subjectcategory = \DB::table('subject_category')->select('id','subject','category_name','category_status');
+        }
+        
 
           if($request->ajax()){
 

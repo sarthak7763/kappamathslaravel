@@ -61,15 +61,23 @@
 
 $(function () {
 
+    var filter_start_date="{{Request::input('filter_start_date')}}";
+    var filter_end_date="{{Request::input('filter_end_date')}}";
     var table = $('#coursetopicTable').DataTable({
       processing: true,
       serverSide: false,
       responsive: true,
       autoWidth: false,
       scrollCollapse: true,
+      ajax: {
+            url: "{{ route('course-category.index') }}",
+            type: "GET",
+            data: {
+                "filter_start_date": filter_start_date,
+                "filter_end_date": filter_end_date
+            }
+        },
 
-
-      ajax: "{{ route('course-category.index') }}",
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},

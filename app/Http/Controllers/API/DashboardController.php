@@ -11,6 +11,7 @@ use App\Subject;
 use App\Subjectcategory;
 use App\Coursetopic;
 use App\Quiztopic;
+use App\Homebanner;
 use Validator;
 use Hash;
 
@@ -67,7 +68,30 @@ class DashboardController extends BaseController
 	        		$courselist=[];
 	        	}
 
+	        	$homebannerdata=Homebanner::orderBy('id','DESC')->get()->first();
+		          if($homebannerdata)
+		          {
+		            $homebannerdataarray=$homebannerdata->toArray();
+		            $home_banner=array(
+		              'banner_type'=>$homebannerdataarray['banner_type'],
+		              'title'=>$homebannerdataarray['title'],
+		              'sub_title'=>$homebannerdataarray['sub_title'],
+		              'event_date'=>$homebannerdataarray['event_date'],
+		              'event_link'=>$homebannerdataarray['event_link']
+		            );
+		          }
+		          else{
+		            $home_banner=[];
+		          }
+
+		          $package_info=array(
+		          	'name'=>'free trial',
+		          	'days'=>'10'
+		          );
+
 	        	$success['courselist'] =  $courselist;
+	        	$success['home_banner'] =  $home_banner;
+	        	$success['package_info'] =  $package_info;
                 return $this::sendResponse($success, 'Courses List.');
 		        
 	        }
@@ -97,14 +121,21 @@ class DashboardController extends BaseController
 		        }
 
 	        	$courseid=$request->course_id;
+	        	$search=$request->search;
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
 
-
-		        $coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_status','1')->get();
+		        if(isset($search) && $search!="")
+		        {
+		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_name', 'like', '%'.$search.'%')->where('category_status','1')->get();
+		        }
+		        else{
+		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_status','1')->get();
+		        }
+		        
 		        if($coursetopicsdata)
 		        {
 		        	$coursetopicsdataarray=$coursetopicsdata->toArray();
@@ -137,9 +168,20 @@ class DashboardController extends BaseController
 		        				$subtopicslist=[];
 		        			}
 
+		        	if($list['category_image']!="")
+			        {
+			        	$topic_image=url('/').'/images/subjectcategory/'.$list['category_image'];
+			        }
+			        else{
+			        	$topic_image='';
+			        }
+
 		        			$topicslist[]=array(
+		        				'course_name'=>$subject->title,
 		        				'topic_id'=>$list['id'],
 		        				'topic_name'=>$list['category_name'],
+		        				'topic_description'=>$list['category_description'],
+		        				'topic_image'=>$topic_image,
 		        				'sub_topics'=>$subtopicslist
 		        			);
 		        		}
@@ -152,6 +194,7 @@ class DashboardController extends BaseController
 		        	$topicslist=[];
 		        }
 
+		        $success['course_name']=$subject->title;
 		        $success['topicslist'] =  $topicslist;
                 return $this::sendResponse($success, 'Sub Topics List.');
 	        }
@@ -165,7 +208,7 @@ class DashboardController extends BaseController
     }
 
 
-    public function getcoursetopicslist(Request $request)
+    public function getcoursetopicssubtopicsearchlist(Request $request)
     {
     	try{
 	        $user=auth()->user();
@@ -173,22 +216,16 @@ class DashboardController extends BaseController
 	        {
 
 		        $validator = Validator::make($request->all(), [
-		            'course_id' => 'required'
+		            'search' => 'required'
 		        ]);
 
 		        if($validator->fails()){
 		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
 		        }
 
-	        	$courseid=$request->course_id;
+	        	$search=$request->search;
 
-	        	$subject = Subject::find($courseid);
-		          if(is_null($subject)){
-		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-		        }
-
-
-		        $coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_status','1')->get();
+		        $coursetopicsdata=Subjectcategory::where('category_status','1')->where('category_name', 'like', '%'.$search.'%')->get();
 		        if($coursetopicsdata)
 		        {
 		        	$coursetopicsdataarray=$coursetopicsdata->toArray();
@@ -197,9 +234,20 @@ class DashboardController extends BaseController
 		        		$topicslist=[];
 		        		foreach($coursetopicsdataarray as $list)
 		        		{
+		        			if($list['category_description']!="")
+		        			{
+		        				$textstatus=1;
+		        			}
+		        			else{
+		        				$textstatus=0;
+		        			}
+
 		        			$topicslist[]=array(
 		        				'topic_id'=>$list['id'],
-		        				'topic_name'=>$list['category_name']
+		        				'topic_name'=>$list['category_name'],
+		        				'type'=>'topic',
+		        				'video'=>0,
+		        				'text'=>$textstatus
 		        			);
 		        		}
 		        	}
@@ -211,7 +259,50 @@ class DashboardController extends BaseController
 		        	$topicslist=[];
 		        }
 
+		        $coursesubtopicsdata=Coursetopic::where('topic_status','1')->where('topic_name', 'like', '%'.$search.'%')->get();
+		        if($coursesubtopicsdata)
+		        {
+		        	$coursesubtopicsdataarray=$coursesubtopicsdata->toArray();
+		        	if($coursesubtopicsdataarray)
+		        	{
+		        		$subtopicslist=[];
+		        		foreach($coursesubtopicsdataarray as $row)
+		        		{
+		        			if($row['topic_video_id']!="")
+		        			{
+		        				$videostatus=1;
+		        			}
+		        			else{
+		        				$videostatus=0;
+		        			}
+
+		        			if($row['topic_description']!="")
+		        			{
+		        				$textstatus=1;
+		        			}
+		        			else{
+		        				$textstatus=0;
+		        			}
+		        			
+		        			$subtopicslist[]=array(
+		        				'sub_topic_id'=>$row['id'],
+		        				'sub_topic_name'=>$row['topic_name'],
+		        				'type'=>'subtopic',
+		        				'video'=>$videostatus,
+		        				'text'=>$textstatus
+		        			);
+		        		}
+		        	}
+		        	else{
+		        		$subtopicslist=[];
+		        	}
+		        }
+		        else{
+		        	$subtopicslist=[];
+		        }
+
 		        $success['topicslist'] =  $topicslist;
+		        $success['subtopicslist'] =  $subtopicslist;
                 return $this::sendResponse($success, 'Topics List.');
 	        }
 	        else{
@@ -364,7 +455,7 @@ class DashboardController extends BaseController
 			        	$next_topic_key=$coursetopicsdetailnextdata['id'];
 			        }
 			        else{
-			        	$next_topic_key="0";
+			        	$next_topic_key=0;
 			        }
 
 			        $coursesubtopicsdetailprevious=Coursetopic::where('subject',$courseid)->where('category',$topicid)->where('sort_order','<',$sort_order)->where('topic_status',1)->orderBy('sort_order','DESC')->get()->first();
@@ -374,7 +465,7 @@ class DashboardController extends BaseController
 			        	$previous_topic_key=$coursetopicsdetailpreviousdata['id'];
 			        }
 			        else{
-			        	$previous_topic_key="0";
+			        	$previous_topic_key=0;
 			        }
 
 			        $quiztopicdata=Quiztopic::where('subject',$courseid)->where('category',$topicid)->where('course_topic',$subtopicid)->where('quiz_status','1')->get();

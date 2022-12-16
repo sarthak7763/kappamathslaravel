@@ -26,8 +26,33 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-       
+       if($request->filter_start_date!="" && $request->filter_end_date!="")
+       {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $users = \DB::table('users')->where('role','!=' , 'A')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','name','email','username','mobile','role','status');
+       }
+       elseif($request->filter_start_date!="" && $request->filter_end_date=="")
+       {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $users = \DB::table('users')->where('role','!=' , 'A')->where('created_at','>=',$filter_start_date)->select('id','name','email','username','mobile','role','status');
+       }
+       elseif($request->filter_start_date=="" && $request->filter_end_date!="")
+       {
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $users = \DB::table('users')->where('role','!=' , 'A')->where('created_at','<=',$filter_end_date)->select('id','name','email','username','mobile','role','status');
+       }
+       else{
         $users = \DB::table('users')->where('role','!=' , 'A')->select('id','name','email','username','mobile','role','status');
+       }
+        
 
         if($request->ajax()){
           return DataTables::of($users)
@@ -211,6 +236,12 @@ class UsersController extends Controller
                   return back()->with('error','Something went wrong.');     
                }
 
+               if(isset($request->status)){
+                $userstatus = "1";
+              }else{
+                $userstatus = "0";
+              }
+
           $user = new User;
           $user->name = $request->name;
           $user->email = $request->email;
@@ -219,6 +250,7 @@ class UsersController extends Controller
           $user->address="";
           $user->role = 'S';
           $user->city="";
+          $user->status=$userstatus;
 
           if($request->password !="")
           {
@@ -321,6 +353,13 @@ class UsersController extends Controller
 
         $input = $request->all();
 
+        if(isset($request->status)){
+          $userstatus = "1";
+        }else{
+          $userstatus = "0";
+        }
+
+
         if ($file = $request->file('image')) {
                 $name = 'user_'.time(); 
                 $file->move('images/user/', $name);
@@ -341,12 +380,15 @@ class UsersController extends Controller
               $user->address = "";
               $user->city = "";
               $user->image = $image;
+              $user->status=$userstatus;
+
             }
             else{
               $user->name = $request->name;
               $user->mobile = $request->mobile;
               $user->address = "";
               $user->city = "";
+              $user->status=$userstatus;
             }
             
           }
@@ -372,6 +414,7 @@ class UsersController extends Controller
                 $user->city = "";
                 $user->email=$request->email;
                 $user->image = $image;
+                $user->status=$userstatus;
             }
             else{
                 $user->name = $request->name;
@@ -379,6 +422,7 @@ class UsersController extends Controller
                 $user->address = "";
                 $user->city = "";
                 $user->email=$request->email;
+                $user->status=$userstatus;
             } 
 
           }
@@ -394,12 +438,14 @@ class UsersController extends Controller
               $user->address = "";
               $user->city = "";
               $user->image = $image;
+              $user->status=$userstatus;
             }
             else{
               $user->name = $request->name;
               $user->mobile = $request->mobile;
               $user->address = "";
               $user->city = "";
+              $user->status=$userstatus;
             }
             
           }
@@ -425,6 +471,7 @@ class UsersController extends Controller
                 $user->city = "";
                 $user->email=$request->email;
                 $user->image = $image;
+                $user->status=$userstatus;
             }
             else{
                 $user->name = $request->name;
@@ -432,6 +479,7 @@ class UsersController extends Controller
                 $user->address = "";
                 $user->city = "";
                 $user->email=$request->email;
+                $user->status=$userstatus;
             }
           }
           elseif($user->email==$request->email && $user->username!=$request->username)
@@ -455,6 +503,7 @@ class UsersController extends Controller
                     $user->city = "";
                     $user->username=$request->username;
                     $user->image = $image;
+                    $user->status=$userstatus;
                  }
                  else{
                       $user->name = $request->name;
@@ -462,6 +511,7 @@ class UsersController extends Controller
                       $user->address = "";
                       $user->city = "";
                       $user->username=$request->username;
+                      $user->status=$userstatus;
                  } 
           }
             else{
@@ -496,6 +546,7 @@ class UsersController extends Controller
                   $user->username=$request->username;
                   $user->email = $request->email;
                   $user->image = $image;
+                  $user->status=$userstatus;
               } 
               else{
                   $user->name = $request->name;
@@ -504,6 +555,7 @@ class UsersController extends Controller
                   $user->city = "";
                   $user->username=$request->username;
                   $user->email = $request->email;
+                  $user->status=$userstatus;
               }  
           }
         }

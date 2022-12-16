@@ -21,7 +21,35 @@ class CoursetopicController extends Controller
      */
     public function index(Request $request)
     {
-        $coursetopic = \DB::table('coursetopics')->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
+        if($request->filter_start_date!="" && $request->filter_end_date!="")
+        {
+          
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+
+          $coursetopic = \DB::table('coursetopics')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
+        }
+        elseif($request->filter_start_date!="" && $request->filter_end_date=="")
+        {
+          $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
+
+          $coursetopic = \DB::table('coursetopics')->where('created_at','>=',$filter_start_date)->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
+        }
+        elseif($request->filter_start_date=="" && $request->filter_end_date!="")
+        {
+          $filter_end_date=date('Y-m-d',strtotime($request->filter_end_date));
+
+          $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
+          
+          $coursetopic = \DB::table('coursetopics')->where('created_at','<=',$filter_end_date)->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
+        }
+        else{
+          $coursetopic = \DB::table('coursetopics')->select('id','subject','category','topic_name','topic_video_id','topic_status','sort_order');
+        }
+        
 
           if($request->ajax()){
 
