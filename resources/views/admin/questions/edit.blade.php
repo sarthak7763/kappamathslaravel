@@ -17,6 +17,76 @@
       </div>
   @endif
 
+  @php 
+  $topic_id_error="";
+  $question_error="";
+  $a_error="";
+  $b_error="";
+  $c_error="";
+  $d_error="";
+  $answer_error="";
+  $question_img_error="";
+  $sort_order_error="";
+
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['topic_id']))
+      @php $topic_id_error=$validationmessage['topic_id']; @endphp
+      @else
+      @php $topic_id_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['question']))
+      @php $question_error=$validationmessage['question']; @endphp
+      @else
+      @php $question_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['a']))
+      @php $a_error=$validationmessage['a']; @endphp
+      @else
+      @php $a_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['b']))
+      @php $b_error=$validationmessage['b']; @endphp
+      @else
+      @php $b_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['c']))
+      @php $c_error=$validationmessage['c']; @endphp
+      @else
+      @php $c_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['d']))
+      @php $d_error=$validationmessage['d']; @endphp
+      @else
+      @php $d_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['answer']))
+      @php $answer_error=$validationmessage['answer']; @endphp
+      @else
+      @php $answer_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['question_img']))
+      @php $question_img_error=$validationmessage['question_img']; @endphp
+      @else
+      @php $question_img_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['sort_order']))
+      @php $sort_order_error=$validationmessage['sort_order']; @endphp
+      @else
+      @php $sort_order_error=""; @endphp
+      @endif
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Edit Question
@@ -35,7 +105,7 @@
               {!! Form::label('question', 'Question') !!}
               <span class="required">*</span>
               {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
-              <small class="text-danger">{{ $errors->first('question') }}</small>
+              <small class="text-danger">{{ $question_error }}</small>
             </div>
           </div>  
           <div class="col-md-6">
@@ -43,7 +113,7 @@
                 {!! Form::label('answer', 'Correct Answer') !!}
                 <span class="required">*</span>
                 {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
-                <small class="text-danger">{{ $errors->first('answer') }}</small>
+                <small class="text-danger">{{ $answer_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -51,7 +121,7 @@
               {!! Form::label('a', 'A - Option') !!}
               <span class="required">*</span>
               {!! Form::textarea('a', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
-              <small class="text-danger">{{ $errors->first('a') }}</small>
+              <small class="text-danger">{{ $a_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -59,7 +129,7 @@
               {!! Form::label('b', 'B - Option') !!}
               <span class="required">*</span>
               {!! Form::textarea('b', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
-              <small class="text-danger">{{ $errors->first('b') }}</small>
+              <small class="text-danger">{{ $b_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -67,7 +137,7 @@
               {!! Form::label('c', 'C - Option') !!}
               <span class="required">*</span>
               {!! Form::textarea('c', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
-              <small class="text-danger">{{ $errors->first('c') }}</small>
+              <small class="text-danger">{{ $c_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -75,7 +145,7 @@
               {!! Form::label('d', 'D - Option') !!}
               <span class="required">*</span>
               {!! Form::textarea('d', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
-              <small class="text-danger">{{ $errors->first('d') }}</small>
+              <small class="text-danger">{{ $d_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -101,7 +171,7 @@
                   <div class="form-group{{ $errors->has('question_img') ? ' has-error' : '' }}">
                     {!! Form::label('question_img', 'Add Image In Question') !!}
                     {!! Form::file('question_img') !!}
-                    <small class="text-danger">{{ $errors->first('question_img') }}</small>
+                    <small class="text-danger">{{ $question_img_error }}</small>
                     <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                   </div>
                 </div>
@@ -109,7 +179,7 @@
                   <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
                     {!! Form::label('sort_order', 'Sort Order') !!}
                     {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
-                    <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                    <small class="text-danger">{{ $sort_order_error }}</small>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -185,25 +255,25 @@
     xhr.send(formData);
 });
     
-tinymce.init({
-  selector: 'textarea',
-  width: 600,
-  height: 300,
-  plugins: [
-    'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-    'searchreplace wordcount visualblocks code fullscreen insertdatetime media nonbreaking',
-    'table emoticons template paste help'
-  ],
-  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-    'forecolor backcolor emoticons | help | image code',
+// tinymce.init({
+//   selector: 'textarea',
+//   width: 600,
+//   height: 300,
+//   plugins: [
+//     'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+//     'searchreplace wordcount visualblocks code fullscreen insertdatetime media nonbreaking',
+//     'table emoticons template paste help'
+//   ],
+//   toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+//     'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+//     'forecolor backcolor emoticons | help | image code',
 
-    images_upload_url: '<?=url('/')?>/admin/postAcceptor',
-    images_upload_handler: image_upload_handler_callback,
+//     images_upload_url: '<?=url('/')?>/admin/postAcceptor',
+//     images_upload_handler: image_upload_handler_callback,
 
-  menubar: 'favs file edit view insert format tools table help',
-  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-});
+//   menubar: 'favs file edit view insert format tools table help',
+//   content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+// });
 
 
   </script>

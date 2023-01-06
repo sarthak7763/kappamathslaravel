@@ -17,6 +17,41 @@
       </div>
   @endif
 
+  @php 
+  $name_error="";
+  $email_error="";
+  $password_error="";
+  $username_error="";
+  $mobile_error=""; 
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['name']))
+      @php $name_error=$validationmessage['name']; @endphp
+      @else
+      @php $name_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['email']))
+      @php $email_error=$validationmessage['email']; @endphp
+      @else
+      @php $email_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['password']))
+      @php $password_error=$validationmessage['password']; @endphp
+      @else
+      @php $password_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['username']))
+      @php $username_error=$validationmessage['username']; @endphp
+      @else
+      @php $username_error=""; @endphp
+      @endif
+  @endif
+
   @if ($auth)
 
     <!-- Is user is admin -->
@@ -32,8 +67,8 @@
                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                   {!! Form::label('name', 'Name') !!}
                   <span class="required">*</span>
-                  {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter Your Name']) !!}
-                  <small class="text-danger">{{ $errors->first('name') }}</small>
+                  {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Enter Your Name']) !!}
+                  <small class="text-danger">{{$name_error}}</small>
                 </div>
               </div>  
               <div class="col-md-6">
@@ -42,7 +77,7 @@
                   {!! Form::label('email', 'Email address') !!}
                   <span class="required">*</span>
                   {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@example.com',  'readonly' => 'readonly']) !!}
-                  <small class="text-danger">{{ $errors->first('email') }}</small>
+                  <small class="text-danger">{{$email_error}}</small>
                 </div>
               </div>  
 
@@ -52,7 +87,7 @@
                   {!! Form::label('password', 'Password') !!}
                   <span class="required">*</span>
                   {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Change Your Password', 'readonly' => 'readonly']) !!}
-                  <small class="text-danger">{{ $errors->first('password') }}</small>
+                  <small class="text-danger">{{$password_error}}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -60,7 +95,7 @@
                 <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
                   {!! Form::label('mobile', 'Mobile No.') !!}
                   {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'eg: +91-123-456-7890']) !!}
-                  <small class="text-danger">{{ $errors->first('mobile') }}</small>
+                  <small class="text-danger">{{$mobile_error}}</small>
                 </div>
               </div>
                 <div class="col-md-6">

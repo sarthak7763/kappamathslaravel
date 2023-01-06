@@ -270,15 +270,15 @@ class CoursetopicController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0];
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
+                    if(count($listmessage) > 0)
                         {
-                          $data=array('code'=>'400','message'=>$listmessage);
+                         return back()->with('valid_error',$listmessage);
                         }
                         else{
                         $data=array('code'=>'400','message'=>'Something went wrong.');
@@ -310,13 +310,33 @@ class CoursetopicController extends Controller
               'course'=>'required',
               'topic'=>'required',
               'title' => 'required|string',
-              'sort_order'=>'required'
+              'sort_order'=>'required',
+              'topic_video_id'=>'required'
         ]);
 
         if(isset($request->status)){
           $statusvalue = "1";
         }else{
           $statusvalue = "0";
+        }
+
+        if($request->topic_video_id!="")
+        {
+            $curlSession = curl_init();
+              curl_setopt($curlSession, CURLOPT_URL, 'https://player.vimeo.com/video/'.$request->topic_video_id.'/config');
+              curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
+              curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+
+              $jsonData = json_decode(curl_exec($curlSession));
+              curl_close($curlSession);
+
+              if(isset($jsonData->message))
+              {
+                  return back()->with('error',$jsonData->message);
+              }
+        }
+        else{
+          return back()->with('error','Please enter valid Video ID');
         }
 
         if ($file = $request->file('topic_img')) {
@@ -328,16 +348,16 @@ class CoursetopicController extends Controller
           }
           catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
-
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                      $listmessage=[];
+                      foreach($e->errors() as $key=>$list)
+                      {
+                          $listmessage[$key]=$list[0];
+                      }
+  
+                      if(count($listmessage) > 0)
+                          {
+                           return back()->with('valid_error',$listmessage);
+                          }
                         else{
                             return back()->with('error','Something went wrong.');
                         }
@@ -384,27 +404,21 @@ class CoursetopicController extends Controller
                   return back()->with('error','Something went wrong.');     
                }
 
-               if($topic_img!="" || $request->topic_video_id)
-               {
-                    try{
-                      $coursetopic = new Coursetopic;
-                      $coursetopic->subject=$request->course;
-                      $coursetopic->category = $request->topic;
-                      $coursetopic->topic_name = $request->title;
-                      $coursetopic->topic_description = $request->description;
-                      $coursetopic->topic_image = $topic_img;
-                      $coursetopic->topic_video_id=$request->topic_video_id;
-                      $coursetopic->topic_status = $statusvalue;
-                      $coursetopic->sort_order=$request->sort_order;
-                      $coursetopic->save();
-                     return redirect('/admin/course-topic/')->with('success', 'Sub Topic has been added');
-                  }catch(\Exception $e){
-                    return back()->with('error',$e->getMessage());     
-                 }
-               }
-               else{
-                return back()->with('error','Please choose image or enter video id to continue the process.');
-               }  
+                try{
+                  $coursetopic = new Coursetopic;
+                  $coursetopic->subject=$request->course;
+                  $coursetopic->category = $request->topic;
+                  $coursetopic->topic_name = $request->title;
+                  $coursetopic->topic_description = $request->description;
+                  $coursetopic->topic_image = $topic_img;
+                  $coursetopic->topic_video_id=$request->topic_video_id;
+                  $coursetopic->topic_status = $statusvalue;
+                  $coursetopic->sort_order=$request->sort_order;
+                  $coursetopic->save();
+                 return redirect('/admin/course-topic/')->with('success', 'Sub Topic has been added');
+              }catch(\Exception $e){
+                return back()->with('error',$e->getMessage());     
+             }  
         }
     }
     catch(\Exception $e){
@@ -415,15 +429,15 @@ class CoursetopicController extends Controller
         catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
+                    if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                         return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');
@@ -510,7 +524,8 @@ class CoursetopicController extends Controller
           'course'=>'required',
           'topic'=>'required',
           'title' => 'required|string',
-          'sort_order'=>'required'
+          'sort_order'=>'required',
+          'topic_video_id'=>'required'
         ]);
 
           $coursetopic = Coursetopic::find($id);
@@ -518,6 +533,26 @@ class CoursetopicController extends Controller
          if(is_null($coursetopic)){
 		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
 		}
+
+        if($request->topic_video_id!="")
+        {
+            $curlSession = curl_init();
+              curl_setopt($curlSession, CURLOPT_URL, 'https://player.vimeo.com/video/'.$request->topic_video_id.'/config');
+              curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
+              curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+
+              $jsonData = json_decode(curl_exec($curlSession));
+              curl_close($curlSession);
+
+              if(isset($jsonData->message))
+              {
+                  return back()->with('error',$jsonData->message);
+              }
+        }
+        else{
+          return back()->with('error','Please enter valid Video ID');
+        }
+
 
           if ($file = $request->file('topic_img')) {
 
@@ -528,16 +563,16 @@ class CoursetopicController extends Controller
           }
           catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
-
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                      $listmessage=[];
+                      foreach($e->errors() as $key=>$list)
+                      {
+                          $listmessage[$key]=$list[0];
+                      }
+  
+                      if(count($listmessage) > 0)
+                          {
+                           return back()->with('valid_error',$listmessage);
+                          }
                         else{
                             return back()->with('error','Something went wrong.');
                         }
@@ -650,15 +685,15 @@ class CoursetopicController extends Controller
        catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
+                    if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                         return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');

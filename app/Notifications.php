@@ -9,6 +9,6 @@ class Notifications extends Model
 
     protected $table="notifications";
     protected $fillable = [
-      'title','message','status'
+      'title','message','status','image'
     ];
 }

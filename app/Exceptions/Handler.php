@@ -86,6 +86,7 @@ class Handler extends ExceptionHandler
 
         if($exception instanceof ViewException)
         {
+            print_r($exception->getMessage()); die;
             return response()->view('errors.500');
         }
 

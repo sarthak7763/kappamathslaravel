@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students'
+  'page_header' => 'Users'
 ])
 
 @section('content')
@@ -51,7 +51,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Student Name</th>
+                <th>Name</th>
                 <th>Email</th>
                 <th>Username</th>
                 <th>Mobile No.</th>

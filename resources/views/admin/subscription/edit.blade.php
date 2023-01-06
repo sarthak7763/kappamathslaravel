@@ -16,7 +16,41 @@
           {!! session()->get('error')!!}        
       </div>
   @endif
+  @php 
+  $title_error="";
+  $price_error="";
+  $subscription_tenure_error="";
+  $subscription_plan_error="";
+  @endphp
 
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['title']))
+      @php $title_error=$validationmessage['title']; @endphp
+      @else
+      @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['price']))
+      @php $price_error=$validationmessage['price']; @endphp
+      @else
+      @php $price_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['subscription_tenure']))
+      @php $subscription_tenure_error=$validationmessage['subscription_tenure']; @endphp
+      @else
+      @php $subscription_tenure_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['subscription_plan']))
+      @php $subscription_plan_error=$validationmessage['subscription_plan']; @endphp
+      @else
+      @php $subscription_plan_error=""; @endphp
+      @endif
+
+      
+  @endif
   <div class="box">
     <div class="box-body">
         <h3>Edit Subscription Plan
@@ -35,7 +69,7 @@
               {!! Form::label('title', 'Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
-              <small class="text-danger">{{ $errors->first('title') }}</small>
+              <small class="text-danger">{{ $title_error }}</small>
             </div>
           </div>  
           <div class="col-md-6">
@@ -43,7 +77,7 @@
               {!! Form::label('price', 'Price') !!}
               <span class="required">*</span>
               {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Price']) !!}
-              <small class="text-danger">{{ $errors->first('price') }}</small>
+              <small class="text-danger">{{ $price_error }}</small>
             </div>
           </div>
           <div class="col-md-6">  
@@ -56,7 +90,7 @@
                 <option <?php if($subscription->subscription_plan==$key){echo "selected";} ?> value="{{$key}}">{{$list}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('subscription_plan') }}</small>
+              <small class="text-danger">{{ $errors->first('subscription_plan_error') }}</small>
             </div>
           </div> 
 
@@ -65,7 +99,7 @@
               <label for="">Subscription Tenure: </label>
               <span class="required">*</span>
              {!! Form::text('subscription_tenure', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Subscription Tenure']) !!}
-              <small class="text-danger">{{ $errors->first('subscription_tenure') }}</small>
+              <small class="text-danger">{{ $subscription_tenure_error }}</small>
             </div>
           </div>
            

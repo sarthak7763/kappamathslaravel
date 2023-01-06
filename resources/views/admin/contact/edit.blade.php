@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'CMS Pages'
+  'page_header' => 'Contact Subject'
 ])
 
 @section('content')
@@ -17,12 +17,10 @@
       </div>
   @endif
 
-
-
   @php 
   $name_error="";
   $description_error="";
-
+  $image_error="";
   @endphp
 
   @if (session()->has('valid_error'))
@@ -33,22 +31,18 @@
       @php $name_error=""; @endphp
       @endif
 
-      @if($validationmessage!="" && isset($validationmessage['description']))
-      @php $description_error=$validationmessage['description']; @endphp
-      @else
-      @php $description_error=""; @endphp
-      @endif
+    
   @endif
   <div class="box">
     <div class="box-body">
-        <h3>Edit CMS Pages
-          <a href="{{ route('cms-pages.index') }}" class="btn btn-gray pull-right">
+        <h3>Edit Subject
+          <a href="{{ route('contact-subject.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> Back
           </a>
         </h3>
       <hr>
 
-      {!! Form::model($cmspages, ['method' => 'PATCH','enctype'=>'multipart/form-data', 'action' => ['CmsPagesController@update', $cmspages->id]]) !!}
+      {!! Form::model($contactsubject, ['method' => 'PATCH','enctype'=>'multipart/form-data', 'action' => ['ContactController@update', $contactsubject->id]]) !!}
 
       <div class="row">
 
@@ -58,20 +52,13 @@
               {!! Form::label('name', 'Name') !!}
               <span class="required">*</span>
               {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Name']) !!}
-              <small class="text-danger">{{ $name_error}}</small>
+              <small class="text-danger">{{ $name_error }}</small>
             </div>
-          </div>  
-          <div class="col-md-12">
-            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-              {!! Form::label('description', 'Description') !!}
-              <span class="required">*</span>
-              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $description_error }}</small>
-            </div>
-          </div>  
+          </div>
+
           <div class="col-md-6">
             <label for="">Status: </label>
-             <input {{ $cmspages->status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
+             <input {{ $contactsubject->status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
              <label for="toggle2"></label>
 
           </div>

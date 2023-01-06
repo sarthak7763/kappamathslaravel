@@ -17,6 +17,77 @@
       </div>
   @endif
 
+  @php 
+  $topic_id_error="";
+  $question_error="";
+  $a_error="";
+  $b_error="";
+  $c_error="";
+  $d_error="";
+  $answer_error="";
+  $question_img_error="";
+  $sort_order_error="";
+
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['topic_id']))
+      @php $topic_id_error=$validationmessage['topic_id']; @endphp
+      @else
+      @php $topic_id_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['question']))
+      @php $question_error=$validationmessage['question']; @endphp
+      @else
+      @php $question_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['a']))
+      @php $a_error=$validationmessage['a']; @endphp
+      @else
+      @php $a_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['b']))
+      @php $b_error=$validationmessage['b']; @endphp
+      @else
+      @php $b_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['c']))
+      @php $c_error=$validationmessage['c']; @endphp
+      @else
+      @php $c_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['d']))
+      @php $d_error=$validationmessage['d']; @endphp
+      @else
+      @php $d_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['answer']))
+      @php $answer_error=$validationmessage['answer']; @endphp
+      @else
+      @php $answer_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['question_img']))
+      @php $question_img_error=$validationmessage['question_img']; @endphp
+      @else
+      @php $question_img_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['sort_order']))
+      @php $sort_order_error=$validationmessage['sort_order']; @endphp
+      @else
+      @php $sort_order_error=""; @endphp
+      @endif
+  @endif
+  
+
 
   <!-- Add Question Modal -->
         <form method="post" action="{{route('storeobjectivequiz')}}" enctype="multipart/form-data">
@@ -28,7 +99,7 @@
                   {!! Form::label('question', 'Question') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
-                  <small class="text-danger">{{ $errors->first('question') }}</small>
+                  <small class="text-danger">{{ $question_error }}</small>
                 </div>
               </div>
               
@@ -37,7 +108,7 @@
                   {!! Form::label('a', 'A - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('a', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
-                  <small class="text-danger">{{ $errors->first('a') }}</small>
+                  <small class="text-danger">{{ $a_error }}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -45,7 +116,7 @@
                   {!! Form::label('b', 'B - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('b', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
-                  <small class="text-danger">{{ $errors->first('b') }}</small>
+                  <small class="text-danger">{{ $b_error }}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -53,7 +124,7 @@
                   {!! Form::label('c', 'C - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('c', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
-                  <small class="text-danger">{{ $errors->first('c') }}</small>
+                  <small class="text-danger">{{ $c_error }}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -61,7 +132,7 @@
                   {!! Form::label('d', 'D - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('d', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
-                  <small class="text-danger">{{ $errors->first('d') }}</small>
+                  <small class="text-danger">{{ $d_error }}</small>
                 </div>
               </div>
               <div class="col-md-6">  
@@ -69,7 +140,7 @@
                     {!! Form::label('answer', 'Correct Answer') !!}
                     <span class="required">*</span>
                     {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
-                    <small class="text-danger">{{ $errors->first('answer') }}</small>
+                    <small class="text-danger">{{ $answer_error }}</small>
                 </div>
               </div>
               <div class="col-md-6">
@@ -94,14 +165,14 @@
                       <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
                         {!! Form::label('sort_order', 'Sort Order') !!}
                         {!! Form::text('sort_order', null, ['class' => 'form-control']) !!}
-                        <small class="text-danger">{{ $errors->first('sort_order') }}</small>
+                        <small class="text-danger">{{ $sort_order_error }}</small>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group{{ $errors->has('question_img') ? ' has-error' : '' }}">
                         {!! Form::label('question_img', 'Add Image To Question') !!}
                         {!! Form::file('question_img') !!}
-                        <small class="text-danger">{{ $errors->first('question_img') }}</small>
+                        <small class="text-danger">{{ $question_img_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                     </div>

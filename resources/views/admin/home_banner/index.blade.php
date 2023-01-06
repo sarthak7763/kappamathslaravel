@@ -17,6 +17,41 @@
       </div>
   @endif
 
+  @php 
+  $banner_type_error="";
+  $title_error="";
+  $sub_title_error="";
+  $event_date="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['banner_type']))
+      @php $banner_type_error=$validationmessage['banner_type']; @endphp
+      @else
+      @php $banner_type_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['title']))
+      @php $title_error=$validationmessage['title']; @endphp
+      @else
+      @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['sub_title']))
+      @php $sub_title_error=$validationmessage['sub_title']; @endphp
+      @else
+      @php $sub_title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['event_date']))
+      @php $event_date=$validationmessage['event_date']; @endphp
+      @else
+      @php $event_date=""; @endphp
+      @endif
+
+  
+  @endif
   
   <div class="box">
     <div class="box-body">
@@ -35,21 +70,21 @@
               <option {{ $homebannerarray['banner_type'] =='Core' ? "selected" : "" }} value="Core">Core</option>
               <option {{ $homebannerarray['banner_type'] =='Elective' ? "selected" : "" }} value="Elective">Elective</option>
              </select>
-              <small class="text-danger">{{ $errors->first('banner_type') }}</small>
+              <small class="text-danger">{{ $banner_type_error }}</small>
             </div>
 
              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Title') !!}
               <span class="required">*</span>
               <input class="form-control" placeholder="Please Enter Title" name="title" type="text" id="title" value="{{$homebannerarray['title']}}">
-              <small class="text-danger">{{ $errors->first('title') }}</small>
+              <small class="text-danger">{{  $title_error }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('sub_title') ? ' has-error' : '' }}">
               {!! Form::label('sub_title', 'Sub Title') !!}
               <input class="form-control" placeholder="Please Enter Sub Title" name="sub_title" type="text" id="sub_title" value="{{$homebannerarray['sub_title']}}">
 
-              <small class="text-danger">{{ $errors->first('sub_title') }}</small>
+              <small class="text-danger">{{ $sub_title_error }}</small>
             </div>
           </div>
 
@@ -57,7 +92,7 @@
             <div class="form-group{{ $errors->has('event_date') ? ' has-error' : '' }}">
             {!! Form::label('event_date', 'Event Date') !!}
             <input class="form-control" placeholder="Please Enter Event Date" name="event_date" type="text" id="event_date" value="{{$homebannerarray['event_date']}}">
-            <small class="text-danger">{{ $errors->first('event_date') }}</small>
+            <small class="text-danger">{{ $event_date}}</small>
           </div>
 
           <div class="form-group{{ $errors->has('event_link') ? ' has-error' : '' }}">

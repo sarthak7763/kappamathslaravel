@@ -175,16 +175,16 @@ class QuestionsController extends Controller
   catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return redirect('/admin/questions/')->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return redirect('/admin/questions/')->with('error','Something went wrong.');
                         }
@@ -332,16 +332,16 @@ class QuestionsController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }
@@ -411,16 +411,16 @@ class QuestionsController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }
@@ -781,16 +781,16 @@ class QuestionsController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }
@@ -874,16 +874,16 @@ class QuestionsController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }

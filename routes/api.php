@@ -44,6 +44,10 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('updateuseremailnotificationsettings', [ProfileController::class, 'updateuseremailnotificationsettings']);
 
+    Route::post('updatecoursetopicongoingstatus', [ProfileController::class, 'updatecoursetopicongoingstatus']);
+
+    Route::post('subscribed-courses', [ProfileController::class, 'mysubscribecourselist']);
+
     //profile controller end
 
     //dashboard controller start
@@ -64,7 +68,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('subscriptions', [PagesController::class, 'getallsubscriptionlist']);
 
-    Route::post('exam-information', [PagesController::class, 'getallexaminformationlist']);
+    Route::post('faq', [PagesController::class, 'getallfaqlist']);
 
     Route::post('notifications', [PagesController::class, 'getallnotificationslist']);
 
@@ -73,6 +77,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('cms-pages', [PagesController::class, 'getcmspagecontent']);
 
     Route::post('contact-subject', [PagesController::class, 'getcontactsubjectlist']);
+
+    Route::post('send-enquiry', [PagesController::class, 'sendcontactenquiry']);
 
     //pages controller end
 

@@ -17,6 +17,27 @@
       </div>
   @endif
 
+  @php 
+  $title_error="";
+  $description_error="";
+  $image_error="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['title']))
+      @php $title_error=$validationmessage['title']; @endphp
+      @else
+      @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['image']))
+      @php $image_error=$validationmessage['image']; @endphp
+      @else
+      @php $image_error=""; @endphp
+      @endif
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Edit Course: {{ $subject->title }}
@@ -35,12 +56,12 @@
               {!! Form::label('title', 'Course Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
-              <small class="text-danger">{{ $errors->first('title') }}</small>
+              <small class="text-danger">{{$title_error}}</small>
             </div>
             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                 {!! Form::label('description', 'Description') !!}
                 {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-                <small class="text-danger">{{ $errors->first('description') }}</small>
+                <small class="text-danger">{{$description_error}}</small>
               </div>
           </div>  
 
@@ -48,7 +69,7 @@
                <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
                 {!! Form::label('image', 'Add Image') !!}
                 {!! Form::file('image') !!}
-                <small class="text-danger">{{ $errors->first('image') }}</small>
+                <small class="text-danger">{{$image_error}}</small>
                 <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
               </div>
                <div id="preview_image_div">

@@ -40,6 +40,25 @@ class QuizResultController extends BaseController
 	        	if($quiztopicdetail)
 	        	{
 	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+	        		
+		        	$subtopicid=$quiztopicdetaildata['course_topic'];
+		        	$category=$quiztopicdetaildata['category'];
+
+		        	$coursetopic = Coursetopic::find($subtopicid);
+			         if(is_null($coursetopic)){
+					   $sub_topic_title="";
+					}
+					else{
+						$sub_topic_title=$coursetopic->topic_name;
+					}
+
+					$subjectcategory = Subjectcategory::find($category);
+			         if(is_null($subjectcategory)){
+					   $topic_title="";
+					}
+					else{
+						$topic_title=$subjectcategory->category_name;
+					}
 
 	        		$quizresultmarksdetail=Resultmarks::where('user_id',$user->id)->where('topic_id',$quiztopicdetaildata['id'])->where('result_marks_date',$result_date)->get()->first();
 
@@ -85,10 +104,12 @@ class QuizResultController extends BaseController
 	        				$total_score=0;
 	        			}
 	        			else{
-	        				$total_score=($result_marks/$total_marks)*100;
+	        				$total_score=round(($result_marks/$total_marks)*100);
 	        			}
 
 		        		$resultarray=array(
+		        			'sub_topic_title'=>$sub_topic_title,
+		        			'topic_title'=>$topic_title,
 		        			'total_questions'=>$quizresultmarksdetaildata['total_questions'],
 		        			'correct_questions'=>$correct_questions,
 		        			'incorrect_questions'=>$incorrect_questions,
@@ -96,11 +117,13 @@ class QuizResultController extends BaseController
 		        			'total_score'=>$total_score,
 		        			'total_time'=>$quizresultmarksdetaildata['result_timer'],
 		        			'result_date'=>$quizresultmarksdetaildata['result_marks_date'],
-		        			'topic_id'=>$quizid
+		        			'topic_id'=>(int)$quizid
 		        		);
 	        		}
 	        		else{
 		        		$resultarray=array(
+		        			'sub_topic_title'=>$sub_topic_title,
+		        			'topic_title'=>$topic_title,
 		        			'total_questions'=>0,
 		        			'correct_questions'=>$correct_questions,
 		        			'incorrect_questions'=>$incorrect_questions,
@@ -108,7 +131,7 @@ class QuizResultController extends BaseController
 		        			'total_score'=>0,
 		        			'total_time'=>0,
 		        			'result_date'=>$result_date,
-		        			'topic_id'=>$quizid
+		        			'topic_id'=>(int)$quizid
 		        		);
 	        		}
 
@@ -179,11 +202,13 @@ class QuizResultController extends BaseController
 	        				if($questiondet)
 	        				{
 	        					$questiondetarray=$questiondet->toArray();
+	        					$question_id=$questiondetarray['id'];
 	        					$question=$questiondetarray['question'];
 	        					$correct_answer=$questiondetarray['answer'];
 	        					$answer_explaination=$questiondetarray['answer_exp'];
 	        				}
 	        				else{
+	        					$question_id="";
 	        					$question="";
 	        					$correct_answer="";
 	        					$answer_explaination="";
@@ -191,9 +216,11 @@ class QuizResultController extends BaseController
 	        				}
 
 	        				$quiz_result[]=array(
-	        					'question'=>$question,
+	        					'quiz_id'=>(int)$quizid,
+	        					'question_id'=>(int)$question_id,
+	        					'question'=>strip_tags($question),
 	        					'correct_answer'=>$correct_answer,
-	        					'answer_explaination'=>$answer_explaination,
+	        					'answer_explaination'=>strip_tags($answer_explaination),
 	        					'user_answer'=>$list['user_answer'],
 	        					'answer_status'=>$list['answer']
 	        				);
@@ -307,7 +334,7 @@ class QuizResultController extends BaseController
         				$total_score=0;
         			}
         			else{
-        				$total_score=($result_marks/$total_marks)*100;
+        				$total_score=round(($result_marks/$total_marks)*100);
         			}
 
         			$result_marks_date=date('d M, Y',strtotime($list['result_marks_date']));
@@ -322,7 +349,7 @@ class QuizResultController extends BaseController
 		        			'total_score'=>$total_score,
 		        			'total_time'=>$list['result_timer'],
 		        			'result_date'=>$result_marks_date,
-		        			'topic_id'=>$quizid
+		        			'topic_id'=>(int)$quizid
 		        		);
 	        	}
 
@@ -436,7 +463,7 @@ class QuizResultController extends BaseController
         				$total_score=0;
         			}
         			else{
-        				$total_score=($result_marks/$total_marks)*100;
+        				$total_score=round(($result_marks/$total_marks)*100);
         			}
 
         			$result_marks_date=date('d M, Y',strtotime($result_date));

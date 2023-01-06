@@ -119,16 +119,16 @@ class HomeBannerController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                    $listmessage=[];
+                      foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0].'<br/>';
+                        $listmessage[$key]=$list[0];
                         }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                       if(count($listmessage) > 0)
+                       {
+                        return back()->with('valid_error',$listmessage);
+                       }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }

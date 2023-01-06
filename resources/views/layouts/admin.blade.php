@@ -126,9 +126,9 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription</span></a></li>
 
-          <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage Exam Information"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage Exam Information</span></a></li>
+          <!-- <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage Exam Information"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage Exam Information</span></a></li> -->
 
-          <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Manage Bulletins</span></a></li>
+          <!-- <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Manage Bulletins</span></a></li> -->
 
           <li class="{{ (request()->is('admin/notifications*')) ? 'active' : '' }}"><a href="{{url('/admin/notifications')}}" title="Manage Notifications"><i class="fa fa-bell-o" aria-hidden="true"></i> <span>Manage Notifications</span></a></li>
 
@@ -140,7 +140,7 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/top_report*')) ? 'active' : '' }}"><a href="{{url('/admin/top_report')}}" title="Top Student Report"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Top Student Report</span></a></li>
            
-          <li class="{{ (request()->is('admin/settings*')) ? 'active' : '' }}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li>   
+         <!--  <li class="{{ (request()->is('admin/settings*')) ? 'active' : '' }}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li> -->   
 
           <li class="{{ Nav::isRoute('admin.payment') }}"><a href="{{route('admin.payment')}} " title="Payment History"><i class="fa fa-money"></i> <span>Payment History</span></a></li>
 

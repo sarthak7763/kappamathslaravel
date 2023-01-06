@@ -167,6 +167,45 @@ class NotificationController extends Controller
           $input['status'] = "0";
         }
 
+        if ($file = $request->file('image')) {
+
+            try{
+            $request->validate([
+              'image' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'notifications_'.time().$file->getClientOriginalName(); 
+            $file->move('images/notifications/', $name);
+            $image = $name;
+        }
+        else{
+            $image="";
+        }
+
+        $input['image']=$image;
+
         try{
         $notificationsdata=Notifications::where('title',$request->title)->first();
         if($notificationsdata)
@@ -188,15 +227,15 @@ class NotificationController extends Controller
 
     }catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0].'<br>';
+                            $listmessage[$key]=$list[0];
                         }
 
-                        if($listmessage!="")
+                        if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                            return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');
@@ -265,10 +304,56 @@ class NotificationController extends Controller
             $statusvalue = 0;
           }
 
+          if ($file = $request->file('image')) {
+
+            try{
+            $request->validate([
+              'image' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'subject_'.time().$file->getClientOriginalName(); 
+            $file->move('images/notifications/', $name);
+            $notificationimage = $name;
+        }
+        else{
+            $notificationimage="";
+        }
+
         if($notifications->title==$request->title)
         {
-            $notifications->message = $request->message;
-            $notifications->status=$statusvalue;
+            if($notificationimage!="")
+            {
+              $notifications->message = $request->message;
+              $notifications->image=$notificationimage;
+              $notifications->status=$statusvalue;
+            }
+            else{
+              $notifications->message = $request->message;
+              $notifications->status=$statusvalue;
+            }
+            
         }
         else{
             try{
@@ -282,9 +367,19 @@ class NotificationController extends Controller
                   return back()->with('error','Something went wrong.');     
                }
 
-            $notifications->title=$request->title;
-            $notifications->message = $request->message;
-            $notifications->status=$statusvalue;
+            if($notificationimage!="")
+            {
+              $notifications->title=$request->title;
+              $notifications->message = $request->message;
+              $notifications->image=$notificationimage;
+              $notifications->status=$statusvalue;
+            }
+            else{
+              $notifications->title=$request->title;
+              $notifications->message = $request->message;
+              $notifications->status=$statusvalue;
+            }
+            
         } 
 
          try{
@@ -297,15 +392,15 @@ class NotificationController extends Controller
      }
      catch(\Exception $e){          
               if($e instanceof ValidationException){
-                    $listmessage="";
-                    foreach($e->errors() as $list)
+                $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
                     {
-                        $listmessage.=$list[0].'<br>';
+                        $listmessage[$key]=$list[0];
                     }
 
-                    if($listmessage!="")
+                    if(count($listmessage) > 0)
                     {
-                        return back()->with('error',$listmessage);
+                        return back()->with('valid_error',$listmessage);
                     }
                     else{
                         return back()->with('error','Something went wrong.');

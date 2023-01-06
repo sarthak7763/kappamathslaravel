@@ -181,11 +181,19 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::resource('/admin/cms-pages', 'CmsPagesController');
   Route::post('/admin/cms-pages/changestatus','CmsPagesController@changestatus')->name('cmspageschangestatus');
 
+  Route::resource('/admin/contact-subject', 'ContactController');
+  Route::post('/admin/contact-subject/changestatus','ContactController@changestatus')->name('contactsubjectchangestatus');
+
+  Route::get('/admin/contact-enquiry','ContactController@contactenquiry')->name('contactenquirypage');
+
   Route::get('/admin/home_banner/','HomeBannerController@index');
   Route::post('/admin/home_banner/submithomebannerinfo','HomeBannerController@submithomebannerinfo')->name('submithomebannerinfo');
 
-
 });
+
+Route::get('/cms-pages/{slug}','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
+
+Route::get('/cms-pages','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
 
 
 

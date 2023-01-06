@@ -243,8 +243,8 @@ class DashboardController extends BaseController
 		        			}
 
 		        			$topicslist[]=array(
-		        				'topic_id'=>$list['id'],
-		        				'topic_name'=>$list['category_name'],
+		        				'id'=>$list['id'],
+		        				'name'=>$list['category_name'],
 		        				'type'=>'topic',
 		        				'video'=>0,
 		        				'text'=>$textstatus
@@ -285,8 +285,8 @@ class DashboardController extends BaseController
 		        			}
 		        			
 		        			$subtopicslist[]=array(
-		        				'sub_topic_id'=>$row['id'],
-		        				'sub_topic_name'=>$row['topic_name'],
+		        				'id'=>$row['id'],
+		        				'name'=>$row['topic_name'],
 		        				'type'=>'subtopic',
 		        				'video'=>$videostatus,
 		        				'text'=>$textstatus
@@ -301,9 +301,11 @@ class DashboardController extends BaseController
 		        	$subtopicslist=[];
 		        }
 
-		        $success['topicslist'] =  $topicslist;
-		        $success['subtopicslist'] =  $subtopicslist;
-                return $this::sendResponse($success, 'Topics List.');
+		        $finalsearch_array=array_merge($topicslist,$subtopicslist);
+
+
+		        $success['search_array'] =  $finalsearch_array;
+                return $this::sendResponse($success, 'Topics and Subtopics Search List.');
 	        }
 	        else{
 	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']); 
@@ -438,21 +440,13 @@ class DashboardController extends BaseController
 		        	{
 		        		$coursesubtopicsdetaildata=$coursesubtopicsdetail->toArray();
 
-		        	if($coursesubtopicsdetaildata['topic_image']!="")
-			        {
-			        	$sub_topic_image=url('/').'/images/topics/'.$coursesubtopicsdetaildata['topic_image'];
-			        }
-			        else{
-			        	$sub_topic_image='';
-			        }
-
 			        $sort_order=$coursesubtopicsdetaildata['sort_order'];
 
 			        $coursesubtopicsdetailnext=Coursetopic::where('subject',$courseid)->where('category',$topicid)->where('sort_order','>',$sort_order)->where('topic_status',1)->orderBy('sort_order','ASC')->get()->first();
 			        if($coursesubtopicsdetailnext)
 			        {
 			        	$coursetopicsdetailnextdata=$coursesubtopicsdetailnext->toArray();
-			        	$next_topic_key=$coursetopicsdetailnextdata['id'];
+			        	$next_topic_key=(int)$coursetopicsdetailnextdata['id'];
 			        }
 			        else{
 			        	$next_topic_key=0;
@@ -462,7 +456,7 @@ class DashboardController extends BaseController
 			        if($coursesubtopicsdetailprevious)
 			        {
 			        	$coursetopicsdetailpreviousdata=$coursesubtopicsdetailprevious->toArray();
-			        	$previous_topic_key=$coursetopicsdetailpreviousdata['id'];
+			        	$previous_topic_key=(int)$coursetopicsdetailpreviousdata['id'];
 			        }
 			        else{
 			        	$previous_topic_key=0;
@@ -492,6 +486,36 @@ class DashboardController extends BaseController
 			        	$quizarray=[];
 			        }
 
+			        if($coursesubtopicsdetaildata['topic_video_id']!="")
+			        {
+			        	$curlSession = curl_init();
+					    curl_setopt($curlSession, CURLOPT_URL, 'https://player.vimeo.com/video/'.$coursesubtopicsdetaildata['topic_video_id'].'/config');
+					    curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
+					    curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+
+				    	$jsonData = json_decode(curl_exec($curlSession));
+				    	curl_close($curlSession);
+
+					    if(isset($jsonData->message))
+					    {
+					    	return $this::sendError('Unauthorised Exception.', ['error'=>$jsonData->message]);
+					    }
+					    else{
+					    	$subtopicvideourl=$jsonData->request->files->progressive[0]->url;
+					    }
+			        }
+			        else{
+			        	$subtopicvideourl="";
+			        }
+
+			        if($coursesubtopicsdetaildata['topic_image']!="")
+			        {
+			        	$sub_topic_image=url('/').'/images/topics/'.$coursesubtopicsdetaildata['topic_image'];
+			        }
+			        else{
+			        	$sub_topic_image=$jsonData->video->thumbs->base;
+			        }  
+				    
 		        		$subtopicdetail=array(
 		        				'course_name'=>$subject->title,
 		        				'topic_name'=>$coursetopicsdetaildata['category_name'],
@@ -499,7 +523,7 @@ class DashboardController extends BaseController
 		        				'sub_topic_name'=>$coursesubtopicsdetaildata['topic_name'],
 		        				'sub_topic_description'=>$coursesubtopicsdetaildata['topic_description'],
 		        				'sub_topic_image'=>$sub_topic_image,
-		        				'sub_topic_video_id'=>$coursesubtopicsdetaildata['topic_video_id'],
+		        				'sub_topic_video_id'=>$subtopicvideourl,
 		        				'quiz_topics'=>$quizarray,
 		        				'previous_topic_key'=>$previous_topic_key,
 		        				'next_topic_key'=>$next_topic_key

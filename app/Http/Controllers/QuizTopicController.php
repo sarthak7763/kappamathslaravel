@@ -299,16 +299,16 @@ class QuizTopicController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0];
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                          $data=array('code'=>'400','message'=>$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                         $data=array('code'=>'400','message'=>'Something went wrong.');
                         }
@@ -371,16 +371,16 @@ class QuizTopicController extends Controller
       catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                          $data=array('code'=>'400','message'=>$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                         $data=array('code'=>'400','message'=>'Something went wrong.');
                         }
@@ -411,7 +411,8 @@ class QuizTopicController extends Controller
           'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
-          'per_question_mark' => 'required'    
+          'per_question_mark' => 'required',
+          'questions_limit' => 'required'
         ]);
 
         if(isset($request->status)){
@@ -492,16 +493,16 @@ class QuizTopicController extends Controller
      catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }
@@ -692,16 +693,16 @@ class QuizTopicController extends Controller
        catch(\Exception $e){
                   
                   if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
-                        {
-                            $listmessage.=$list[0].'<br/>';
-                        }
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
 
-                        if($listmessage!="")
-                        {
-                            return back()->with('error',$listmessage);
-                        }
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
                         else{
                             return back()->with('error','Something went wrong12.');
                         }

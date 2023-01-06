@@ -17,6 +17,28 @@
       </div>
   @endif
 
+
+
+  @php 
+  $name_error="";
+  $description_error="";
+
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['name']))
+      @php $name_error=$validationmessage['name']; @endphp
+      @else
+      @php $name_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['description']))
+      @php $description_error=$validationmessage['description']; @endphp
+      @else
+      @php $description_error=""; @endphp
+      @endif
+  @endif
   <div class="box">
     <div class="box-body">
         <h3>Add Page
@@ -38,14 +60,14 @@
               {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Name']) !!}
 
               <input type="hidden" name="slug" value="">
-              <small class="text-danger">{{ $errors->first('name') }}</small>
+              <small class="text-danger">{{ $name_error }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
               {!! Form::label('description', 'Description') !!}
               <span class="required">*</span>
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $errors->first('description') }}</small>
+              <small class="text-danger">{{ $description_error }}</small>
             </div>
 
             <label for="">Status: </label>

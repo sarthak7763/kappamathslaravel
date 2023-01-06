@@ -188,15 +188,15 @@ class CmsPagesController extends Controller
 
     }catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0].'<br>';
+                            $listmessage[$key]=$list[0];
                         }
 
-                        if($listmessage!="")
+                        if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                            return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');
@@ -299,15 +299,15 @@ class CmsPagesController extends Controller
      }
      catch(\Exception $e){          
               if($e instanceof ValidationException){
-                    $listmessage="";
-                    foreach($e->errors() as $list)
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
                     {
-                        $listmessage.=$list[0].'<br>';
+                        $listmessage[$key]=$list[0];
                     }
 
-                    if($listmessage!="")
+                    if(count($listmessage) > 0)
                     {
-                        return back()->with('error',$listmessage);
+                        return back()->with('valid_error',$listmessage);
                     }
                     else{
                         return back()->with('error','Something went wrong.');
@@ -381,5 +381,30 @@ class CmsPagesController extends Controller
                }
 
 
+    }
+
+    public function viewcmspagecontent($slug="")
+    {
+      if(isset($slug) && $slug!="")
+      {
+        $cmspagedata=Cmspages::where('slug',$slug)->get()->first();
+        if($cmspagedata)
+        {
+          $cmspagedataarray=$cmspagedata->toArray();
+          $pagedet=array(
+            'name'=>$cmspagedataarray['name'],
+            'description'=>$cmspagedataarray['description']
+          );
+
+          return view('admin.cmspages.viewcmspage',compact('pagedet'));
+        }
+        else{
+          return view('errors.404');
+        }
+
+      }
+      else{
+        return view('errors.404');
+      }
     }
 }

@@ -12,6 +12,7 @@ use App\Notifications;
 use App\Subscription;
 use App\Cmspages;
 use App\Contactsubject;
+use App\Contactenquiry;
 use Validator;
 use Hash;
 
@@ -34,10 +35,10 @@ class PagesController extends BaseController
 	        			foreach($subscriptiondataarray as $list)
 	        			{
 
-	        				$subscription_date=$list['subscription_date'].' '.$list['subscription_plan'];
+	        				$subscription_date=$list['subscription_tenure'].' '.$list['subscription_plan'];
 
 	        				$subscriptionlist[]=array(
-	        					'subscription_id'=>base64_encode($list['id']),
+	        					'subscription_id'=>$list['id'],
 	        					'title'=>$list['title'],
 	        					'price'=>$list['price'],
 	        					'subscription_date'=>$subscription_date,
@@ -62,11 +63,11 @@ class PagesController extends BaseController
 	        }  
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
     }
 
-    public function getallexaminformationlist()
+    public function getallfaqlist()
     {
     	try{
 	        $user=auth()->user();
@@ -78,13 +79,13 @@ class PagesController extends BaseController
 	        		$examinformationdataarray=$examinformationdata->toArray();
 	        		if($examinformationdataarray)
 	        		{
-	        			$examinformationlist=[];
+	        			$faqlist=[];
 	        			foreach($examinformationdataarray as $list)
 	        			{
 	        				$createddate=date('d M, Y',strtotime($list['created_at']));
 
-	        				$examinformationlist[]=array(
-	        					'exam_information_id'=>base64_encode($list['id']),
+	        				$faqlist[]=array(
+	        					'faq_id'=>$list['id'],
 	        					'question'=>$list['question'],
 	        					'answer'=>$list['answer'],
 	        					'date'=>$createddate
@@ -92,14 +93,14 @@ class PagesController extends BaseController
 	        			}
 	        		}
 	        		else{
-	        			$examinformationlist=[];
+	        			$faqlist=[];
 	        		}
 	        	}
 	        	else{
-	        		$examinformationlist=[];
+	        		$faqlist=[];
 	        	}
 
-	        	$success['examinformationlist'] =  $examinformationlist;
+	        	$success['faqlist'] =  $faqlist;
                 return $this::sendResponse($success, 'Exam Information List.');
 		        
 	        }
@@ -128,10 +129,19 @@ class PagesController extends BaseController
 	        			foreach($notificationdataarray as $list)
 	        			{
 	        				$createddate=date('d M, Y',strtotime($list['created_at']));
+
+	        				if($list['image']!="")
+					        {
+					        	$notification_image=url('/').'/images/notifications/'.$list['image'];
+					        }
+					        else{
+					        	$notification_image='';
+					        }
 	        				
 	        				$notificationlist[]=array(
-	        					'exam_information_id'=>base64_encode($list['id']),
+	        					'notification_id'=>$list['id'],
 	        					'title'=>$list['title'],
+	        					'image'=>$notification_image,
 	        					'message'=>$list['message'],
 	        					'date'=>$createddate
 	        				);
@@ -147,52 +157,6 @@ class PagesController extends BaseController
 
 	        	$success['notificationlist'] =  $notificationlist;
                 return $this::sendResponse($success, 'Notification List.');
-		        
-	        }
-	        else{
-	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']); 
-	        }  
-    	}
-    	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-               }
-    }
-
-    public function getallbulletinslist()
-    {
-    	try{
-	        $user=auth()->user();
-	        if($user)
-	        {
-	        	$bulletindata=Bulletin::where('status','1')->get();
-	        	if($bulletindata)
-	        	{
-	        		$bulletindataarray=$bulletindata->toArray();
-	        		if($bulletindataarray)
-	        		{
-	        			$bulletinlist=[];
-	        			foreach($bulletindataarray as $list)
-	        			{
-	        				$createddate=date('d M, Y',strtotime($list['created_at']));
-	        				
-	        				$bulletinlist[]=array(
-	        					'bulletin_id'=>base64_encode($list['id']),
-	        					'question'=>$list['question'],
-	        					'answer'=>$list['answer'],
-	        					'date'=>$createddate
-	        				);
-	        			}
-	        		}
-	        		else{
-	        			$bulletinlist=[];
-	        		}
-	        	}
-	        	else{
-	        		$bulletinlist=[];
-	        	}
-
-	        	$success['bulletinlist'] =  $bulletinlist;
-                return $this::sendResponse($success, 'Bulletin List.');
 		        
 	        }
 	        else{
@@ -259,7 +223,7 @@ class PagesController extends BaseController
 	        				$createddate=date('d M, Y',strtotime($list['created_at']));
 	        				
 	        				$contactsubjectlist[]=array(
-	        					'subject_id'=>base64_encode($list['id']),
+	        					'subject_id'=>$list['id'],
 	        					'name'=>$list['name']
 	        				);
 	        			}
@@ -281,6 +245,64 @@ class PagesController extends BaseController
 	        }  
     	}
     	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+               }
+    }
+
+    public function sendcontactenquiry(Request $request)
+    {
+    	try{
+	        $user=auth()->user();
+	        if($user)
+	        {
+
+		        $validator = Validator::make($request->all(), [
+		            'name' =>'required',
+		            'number'=>'required',
+		            'email'=>'required',
+		            'subject'=>'required',
+		            'message'=>'required'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+	        	$name=$request->name;
+	        	$number=$request->number;
+	        	$email=$request->email;
+	        	$subject=$request->subject;
+	        	$message=$request->message;
+
+	        	try{
+
+	        	$contactsubject = Contactsubject::find($subject);
+		          if(is_null($contactsubject)){
+		           return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        }
+
+                  $contactenquiry = new Contactenquiry;
+                  $contactenquiry->name=$name;
+                  $contactenquiry->email = $email;
+                  $contactenquiry->number = $number;
+                  $contactenquiry->subject = $subject;
+                  $contactenquiry->message = $message;
+                  $contactenquiry->status=1;
+                  $contactenquiry->save();
+
+                  $success=[];
+                	return $this::sendResponse($success, 'successfully send.');
+                 
+              }catch(\Exception $e){
+                return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);     
+             }
+
+		    }
+		    else{
+		    	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+		    }
+		}
+		catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
     }

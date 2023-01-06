@@ -279,15 +279,15 @@ class UsersController extends Controller
       }
       catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0].'<br/>';
+                            $listmessage[$key]=$list[0];
                         }
 
-                        if($listmessage!="")
+                        if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                            return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');
@@ -583,15 +583,15 @@ class UsersController extends Controller
       }
       catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0].'<br/>';
+                            $listmessage[$key]=$list[0];
                         }
 
-                        if($listmessage!="")
+                        if(count($listmessage) > 0)
                         {
-                            return back()->with('error',$listmessage);
+                            return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('error','Something went wrong.');
@@ -607,8 +607,6 @@ class UsersController extends Controller
 
     public function updateprofile(Request $request, $id)
     {
-      print_r('hy');
-      die;
         try{
         $request->validate([
           'name' => 'required|string',

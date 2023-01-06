@@ -17,6 +17,35 @@
       </div>
   @endif
 
+    @php
+  $course_error=""; 
+  $title_error="";
+  $description_error="";
+  $image_error="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+
+      @if($validationmessage!="" && isset($validationmessage['course']))
+      @php $course_error=$validationmessage['course']; @endphp
+      @else
+      @php $course_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['title']))
+      @php $title_error=$validationmessage['title']; @endphp
+      @else
+      @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['topic_img']))
+      @php $image_error=$validationmessage['topic_img']; @endphp
+      @else
+      @php $image_error=""; @endphp
+      @endif
+  @endif
+
   
   <div class="box">
     <div class="box-body">
@@ -42,20 +71,20 @@
                 <option {{ $subjectcategory->subject ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['title']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('course') }}</small>
+              <small class="text-danger">{{ $course_error }}</small>
             </div>
 
             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
               {!! Form::label('title', 'Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
-              <small class="text-danger">{{ $errors->first('title') }}</small>
+              <small class="text-danger">{{ $title_error }}</small>
             </div>
 
               <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
               {!! Form::label('description', 'Description') !!}
               {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $errors->first('description') }}</small>
+              <small class="text-danger">{{ $description_error }}</small>
             </div>
           </div>
           <div class="col-md-6">  
@@ -63,7 +92,7 @@
             <div class="form-group{{ $errors->has('topic_img') ? ' has-error' : '' }}">
             {!! Form::label('topic_img', 'Add Image') !!}
             {!! Form::file('topic_img') !!}
-            <small class="text-danger">{{ $errors->first('topic_img') }}</small>
+            <small class="text-danger">{{$image_error}}</small>
             <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
           </div>
 

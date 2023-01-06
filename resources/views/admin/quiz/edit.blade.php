@@ -17,6 +17,63 @@
       </div>
   @endif
 
+  @php 
+  $course_error="";
+  $topic_error="";
+  $sub_topic_error="";
+  $quizType_error="";
+  $title_error="";
+  $perQuestionMark_error="";
+  $questions_limit_error="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+
+     @if($validationmessage!="" && isset($validationmessage['course']))
+      @php $course_error=$validationmessage['course']; @endphp
+      @else
+      @php $course_error=""; @endphp
+      @endif
+
+
+      @if($validationmessage!="" && isset($validationmessage['topic']))
+      @php $topic_error=$validationmessage['topic']; @endphp
+      @else
+      @php $topic_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['sub_topic']))
+      @php $sub_topic_error=$validationmessage['sub_topic']; @endphp
+      @else
+      @php $sub_topic_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['quiz_type']))
+      @php $quizType_error=$validationmessage['quiz_type']; @endphp
+      @else
+      @php $quizType_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['title']))
+      @php $title_error=$validationmessage['title']; @endphp
+      @else
+      @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['per_question_mark']))
+      @php $perQuestionMark_error=$validationmessage['per_question_mark']; @endphp
+      @else
+      @php $perQuestionMark_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['questions_limit']))
+      @php $questions_limit_error=$validationmessage['questions_limit']; @endphp
+      @else
+      @php $questions_limit_error=""; @endphp
+      @endif 
+  @endif
+
   <div class="box">
     <div class="box-body">
         <h3>Edit Quiz: {{ $quiztopic->title }}
@@ -39,7 +96,7 @@
                 <option {{ $quiztopic->subject ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['title']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('course') }}</small>
+              <small class="text-danger">{{ $course_error }}</small>
             </div>
           </div>  
           <div class="col-md-6">
@@ -52,7 +109,7 @@
                 <option {{ $quiztopic->category ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['category_name']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('topic') }}</small>
+              <small class="text-danger">{{ $topic_error }}</small>
             </div>
           </div>
           <div class="col-md-6">  
@@ -65,7 +122,7 @@
                 <option {{ $quiztopic->course_topic ==$list['id'] ? "selected" : "" }} value="{{$list['id']}}">{{$list['topic_name']}}</option>
               @endforeach
              </select>
-              <small class="text-danger">{{ $errors->first('sub_topic') }}</small>
+              <small class="text-danger">{{ $sub_topic_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -77,7 +134,7 @@
                 <option {{ $quiztopic->quiz_type =="1" ? "selected" : "" }}  value="1">Objective Quiz</option>
                 <option {{ $quiztopic->quiz_type =="2" ? "selected" : "" }}  value="2">Theory Quiz</option>
              </select>
-              <small class="text-danger">{{ $errors->first('quiz_type') }}</small>
+              <small class="text-danger">{{ $quizType_error }}</small>
             </div>
           </div>  
           <div class="col-md-6">
@@ -85,7 +142,7 @@
               {!! Form::label('title', 'Quiz Title') !!}
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Title']) !!}
-              <small class="text-danger">{{ $errors->first('title') }}</small>
+              <small class="text-danger">{{ $title_error }}</small>
             </div>
           </div>
           <div class="col-md-6">  
@@ -93,7 +150,7 @@
               {!! Form::label('per_question_mark', 'Per Question Mark') !!}
               <span class="required">*</span>
               {!! Form::number('per_question_mark', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Per Question Mark','min'=>'0']) !!}
-              <small class="text-danger">{{ $errors->first('per_question_mark') }}</small>
+              <small class="text-danger">{{ $perQuestionMark_error }}</small>
             </div>
           </div>
           <div class="col-md-6">
@@ -101,6 +158,14 @@
               {!! Form::label('timer', 'Quiz Time (in minutes)') !!}
               {!! Form::number('timer', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Quiz Total Time (In Minutes)','min'=>'0']) !!}
               <small class="text-danger">{{ $errors->first('timer') }}</small>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group{{ $errors->has('questions_limit') ? ' has-error' : '' }}">
+              {!! Form::label('questions_limit', 'Questions Limit') !!}
+              {!! Form::number('questions_limit', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Questions limit','min'=>'0']) !!}
+              <small class="text-danger">{{ $questions_limit_error }}</small>
             </div>
           </div>
           <div class="col-md-6">  
