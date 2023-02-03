@@ -8,7 +8,7 @@ class Result extends Model
 {
   protected $table="results";
     protected $fillable = [
-      'topic_id', 'user_id', 'question_id', 'user_answer', 'answer','marks','result_date'
+      'topic_id', 'user_id', 'question_id', 'user_answer', 'answer','marks','result_date','result_marks_id'
     ];
     
 

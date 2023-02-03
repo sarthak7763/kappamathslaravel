@@ -20,7 +20,7 @@
   @if ($auth->role == 'A')
 
   <div class="margin-bottom">
-       <h3>{{$user->name}} ({{$user->username}}) Result Details</h3>
+       <h3>{{$name}} ({{$username}}) Result Details</h3>
     </div>
 
     <div class="content-block box">

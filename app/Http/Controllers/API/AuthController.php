@@ -22,7 +22,7 @@ class AuthController extends BaseController
             ]);
 
         if($validator->fails()){
-            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
         }
 
         try{
@@ -60,7 +60,7 @@ class AuthController extends BaseController
         ]);
 
         if($validator->fails()){
-            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);      
         }
 
         try{
@@ -121,7 +121,7 @@ class AuthController extends BaseController
         
     }
     catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
 
 }
@@ -140,7 +140,7 @@ class AuthController extends BaseController
         ]);
    
         if($validator->fails()){
-            return $this::sendValidationError('Validation Error.', $validator->messages()->all()[0]);       
+            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);      
         }
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';

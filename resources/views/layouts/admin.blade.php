@@ -118,7 +118,10 @@ $setting = App\Setting::first();
             <i class="fa fa-cogs" aria-hidden="true"></i>    <span>Quiz</span></a></li>
 
           <li class="{{ (request()->is('admin/questions*')) ? 'active' : '' }}"><a href="{{url('admin/questions')}}" title="Questions">
-            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions</span></a></li> 
+            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions</span></a></li>
+
+            <li class="{{ (request()->is('admin/questions_import_module*')) ? 'active' : '' }}"><a href="{{url('admin/questions_import_module')}}" title="Questions Import Module">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions Import Module</span></a></li> 
 
           <li class="{{ (request()->is('admin/all_reports*')) ? 'active' : '' }}"><a href="{{url('/admin/all_reports')}}" title="Student Report"><i class="fa fa-bug" aria-hidden="true"></i>  <span>Student Report</span></a></li>
 
@@ -126,7 +129,7 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription</span></a></li>
 
-          <!-- <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage Exam Information"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage Exam Information</span></a></li> -->
+          <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage FAQ"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage FAQ</span></a></li>
 
           <!-- <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Manage Bulletins</span></a></li> -->
 

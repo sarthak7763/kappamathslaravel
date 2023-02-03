@@ -30,6 +30,7 @@
             <th>Course</th>
             <th>Topic</th>
             <th>Sub Topic</th>
+            <th>Quiz ID</th>
             <th>Quiz Type</th>
             <th>Quiz Title</th>
             <th>Description</th>
@@ -90,6 +91,7 @@ $(function () {
       {data: 'subject', name: 'subject'},
       {data: 'category', name: 'category'},
       {data: 'course_topic', name: 'course_topic'},
+      {data: 'quiz_id', name: 'quiz_id'},
       {data: 'quiz_type', name: 'quiz_type'},
       {data: 'title', name: 'title'},
       {data: 'description', name: 'description'},

@@ -17,27 +17,21 @@
       </div>
   @endif
 
-  @if($filter_start_date!="")
+  @if($filter_date!="")
   @php
-    $filter_start_date=date('m/d/Y',strtotime($filter_start_date));
-  @endphp
-  @endif
-
-  @if($filter_end_date!="")
-  @php
-    $filter_end_date=date('m/d/Y',strtotime($filter_end_date));
+    $filter_date=date('m/d/Y',strtotime($filter_date));
   @endphp
   @endif
 
   <div class="row">
     <div class="col-md-12">
-      <form method="post" action="{{url('/admin/all_reports/')}}" autocomplete="off">
+      <form method="post" action="{{url('/admin/top_report/')}}" autocomplete="off">
         @csrf
         <div class="row">  
           <div class="col-md-5">
             <div class="form-group">
               <label for="">Start Date: </label>
-              <input type="text"  name="filter_date" id="datepicker_start" class="form-control" value="{{$filter_start_date}}">
+              <input type="text"  name="filter_date" id="datepicker_start" class="form-control" value="{{$filter_date}}">
               <small class="text-danger"></small>
             </div>
           </div>
@@ -46,6 +40,15 @@
               <input class="btn btn-wave" type="submit" value="Submit">
             </div>
           </div>
+
+          @if($clear_filter=="1")
+          <div class="col-md-2">
+            <div class="btn-group pull-right" style="margin-top: 26px;">
+              <button class="btn btn-wave clearfilterbtn" type="button">Clear Filter</button>
+            </div>
+          </div>
+          @endif
+
         </div>  
       </form>
     </div>
@@ -103,6 +106,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+  $(document).on('click','.clearfilterbtn',function(){
+  window.location.href="{{url('/')}}/admin/top_report";
+});
+
 
  $("#datepicker_start").datepicker({
 format: "mm/dd/yy"

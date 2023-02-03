@@ -98,7 +98,7 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::any('/admin/all_reports', 'AllReportController@index');
 
-  Route::resource('/admin/top_report', 'TopReportController');
+  Route::any('/admin/top_report', 'TopReportController@index');
 
   Route::resource('/admin/quiz-topics', 'QuizTopicController');
 
@@ -109,7 +109,13 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::post('/admin/quiz-topics/changestatus','QuizTopicController@changestatus')->name('quiztopicchangestatus');
 
   Route::resource('/admin/questions', 'QuestionsController');
-  Route::post('/admin/questions/import_questions', 'QuestionsController@importExcelToDB')->name('import_questions');
+
+  Route::get('/admin/questions_import_module','QuestionsController@questions_import_module')->name('questions_import_module');
+
+  Route::post('/admin/questions/import_theory_questions', 'QuestionsController@importTheoryquestionExcelToDB')->name('import_theory_questions');
+
+  Route::post('/admin/questions/import_objective_questions', 'QuestionsController@importObjectivequestionExcelToDB')->name('import_objective_questions');
+  
   Route::resource('/admin/answers', 'AnswersController');
   Route::resource('/admin/settings', 'SettingController');
 
@@ -189,11 +195,17 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::get('/admin/home_banner/','HomeBannerController@index');
   Route::post('/admin/home_banner/submithomebannerinfo','HomeBannerController@submithomebannerinfo')->name('submithomebannerinfo');
 
+  Route::get('/admin/get_objective_question_sample_export','QuestionsController@get_objective_question_sample_export')->name('get_objective_question_sample_export');
+
+   Route::get('/admin/get_theory_question_sample_export','QuestionsController@get_theory_question_sample_export')->name('get_theory_question_sample_export');
+
 });
 
 Route::get('/cms-pages/{slug}','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
 
 Route::get('/cms-pages','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
+
+
 
 
 

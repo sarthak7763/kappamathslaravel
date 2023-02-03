@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\PagesController;
 use App\Http\Controllers\API\PracticeDashboardController;
+use App\Http\Controllers\API\PracticeQuizDashboardController;
 use App\Http\Controllers\API\QuizDashboardController;
 use App\Http\Controllers\API\QuizResultController;
 
@@ -46,7 +47,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('updatecoursetopicongoingstatus', [ProfileController::class, 'updatecoursetopicongoingstatus']);
 
-    Route::post('subscribed-courses', [ProfileController::class, 'mysubscribecourselist']);
+    Route::get('subscribed-courses', [ProfileController::class, 'mysubscribecourselist']);
 
     //profile controller end
 
@@ -106,7 +107,27 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('practice-dashboard', [PracticeDashboardController::class, 'getpracticedashboardinfo']);
 
+    Route::post('practice-dashboard-topics', [PracticeDashboardController::class, 'getcoursetopicsbyquiztype']);
+
     //practice dashboard controller end
+
+    //practice quiz dashboard controller start
+
+    Route::post('practice-objective-quiz', [PracticeQuizDashboardController::class, 'getpracticeobjectivequiz']);
+
+    Route::post('practice-objective-quiz-explaination', [PracticeQuizDashboardController::class, 'getpracticeobjectivequizquestionexplaination']);
+
+    Route::post('practice-objective-quiz-details', [PracticeQuizDashboardController::class, 'getpracticeobjectivequizquestiondetails']);
+
+    Route::post('submit-practice-objective-quiz', [PracticeQuizDashboardController::class, 'submitpracticeobjectivequizquestion']);
+
+    Route::post('practice-theory-quiz', [PracticeQuizDashboardController::class, 'getpracticetheoryquizquestions']);
+
+    Route::post('practice-theory-quiz-explaination', [PracticeQuizDashboardController::class, 'getpracticetheoryquizquestionexplaination']);
+
+    Route::post('practice-theory-quiz-details', [PracticeQuizDashboardController::class, 'getpracticetheoryquizquestiondetails']);
+
+    //practice quiz dashboard controller end
 
     //quiz result controller start
 

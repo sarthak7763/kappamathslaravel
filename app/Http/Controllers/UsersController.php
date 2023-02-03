@@ -16,6 +16,7 @@ use App\Subjectcategory;
 use App\Coursetopic;
 use App\Quiztopic;
 use App\Question;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -100,7 +101,7 @@ class UsersController extends Controller
                     <a href="' . route('users.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>';
 
                     $btn.='
-                    <a href="'.url('/admin/users/result/' . $row->id ).'" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Result</a>';
+                    <a href="'.url('/admin/users/result/' . $row->username ).'" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Result</a>';
                   }
                   else{
                     $btn.='
@@ -787,115 +788,181 @@ class UsersController extends Controller
     public function userresult($id)
     {
       try{
-          $user = User::find($id);
+          $userdet = User::where('username',$id)->get()->first();
 
-          if(is_null($user)){
-           return redirect('admin/users')->with('error','Something went wrong.');
+        if($userdet){
+           $userdetarr=$userdet->toArray();
+           $userid=$userdetarr['id'];
+           $name=$userdetarr['name'];
+           $username=$userdetarr['username'];
+        }
+        else{
+          return redirect('admin/users')->with('error','Something went wrong.');
         }
 
-        $quizresultmarks=Resultmarks::where('user_id',$user->id)->orderBy('result_marks_date','desc')->get();
+        $quizresultmarks=Resultmarks::where('user_id',$userid)->orderBy('result_marks_date','desc')->get();
         if($quizresultmarks)
         {
           $quizresultmarksarray=$quizresultmarks->toArray();
 
           $user_result=[];
-            foreach($quizresultmarksarray as $list)
+          foreach($quizresultmarksarray as $list)
+          {
+            $random_question_idsdb=$list['random_question_ids'];
+
+            $quiz_topiciddb=$list['topic_id'];
+              $searchForValue = ',';
+            if( strpos($quiz_topiciddb, $searchForValue) !== false ) {
+                 $quiz_topiciddbarray=explode(',',$quiz_topiciddb);
+            }
+            else{
+              $quiz_topiciddbarray=array($quiz_topiciddb);
+            }
+
+
+            $sub_topic_titlearr=[];
+            $topic_tile_arr=[];
+            foreach($quiz_topiciddbarray as $arrid)
             {
-              $quizid=$list['topic_id'];
-              $result_date=$list['result_marks_date'];
-
-              $quiztopicdetail=Quiztopic::where('id',$quizid)->get()->first();
-              if($quiztopicdetail)
+              $quizdet=Quiztopic::where('id',$arrid)->get()->first();
+              if($quizdet)
               {
-                $quiztopicdetaildata=$quiztopicdetail->toArray();
-                $subtopicid=$quiztopicdetaildata['course_topic'];
-                $category=$quiztopicdetaildata['category'];
+                $quizdetarr=$quizdet->toArray();
+                $course_topicid=$quizdetarr['course_topic'];
+                $category=$quizdetarr['category'];
 
-                $coursetopic = Coursetopic::find($subtopicid);
-                 if(is_null($coursetopic)){
-               $sub_topic_title="";
-            }
-            else{
-              $sub_topic_title=$coursetopic->topic_name;
-            }
+                $coursetopicdet=Coursetopic::where('id',$course_topicid)->get()->first();
+                if($coursetopicdet)
+                {
+                  $coursetopicarr=$coursetopicdet->toArray();
+                  $sub_topic_titlearr[]=$coursetopicarr['topic_name'];
+                }
 
-            $subjectcategory = Subjectcategory::find($category);
-                 if(is_null($subjectcategory)){
-               $topic_title="";
-            }
-            else{
-              $topic_title=$subjectcategory->category_name;
+                $subjectcategorydet=Subjectcategory::where('id',$category)->get()->first();
+                if($subjectcategorydet)
+                {
+                  $subjectcategoryarr=$subjectcategorydet->toArray();
+                  $topic_tile_arr[]=$subjectcategoryarr['category_name'];
+                }
+              }
             }
 
-              }
-              else{
-                $sub_topic_title="";
-                $topic_title="";
-              }
+          if(count($sub_topic_titlearr) > 0)
+          {
+            $sub_topic_title=implode(',',$sub_topic_titlearr);
+          }
+          else{
+            $sub_topic_title="";
+          }
 
-              $quizcorrectresultdetail=Result::where('user_id',$user->id)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','1')->get();
+          if(count($topic_tile_arr) > 0)
+          {
+            $topic_title=implode(',',$topic_tile_arr);
+          }
+          else{
+            $topic_title="";
+          }
 
-              if($quizcorrectresultdetail)
+
+          $random_question_idsarray=json_decode($random_question_idsdb,true);
+              $random_question_ids=[];
+              foreach($random_question_idsarray as $listval)
               {
-                $correct_questions=$quizcorrectresultdetail->count();
-              }
-              else{
-                $correct_questions=0;
+                foreach($listval as $rowval)
+                {
+                  $random_question_ids[]=$rowval;
+                }
               }
 
-              $quizincorrectresultdetail=Result::where('user_id',$user->id)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','2')->get();
-
-              if($quizincorrectresultdetail)
+              $attempt_question_idsdb=$list['question_ids'];
+              if($attempt_question_idsdb!="")
               {
-                $incorrect_questions=$quizincorrectresultdetail->count();
+                $attempt_question_idsarray=json_decode($attempt_question_idsdb,true);
+
+                $attempt_question_ids=[];
+                foreach($attempt_question_idsarray as $listvalnew)
+                {
+                  foreach($listvalnew as $rowvalnew)
+                  {
+                    $attempt_question_ids[]=$rowvalnew;
+                  }
+                }
+
+                if(count($attempt_question_ids) > 0)
+                {
+                  $questions_array_diff=array_values(array_diff($random_question_ids, $attempt_question_ids));
+
+                  if(count($questions_array_diff) == 0)
+                  {
+                    $quizcorrectresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','1')->get();
+
+                    if($quizcorrectresultdetail)
+                    {
+                      $correct_questions=$quizcorrectresultdetail->count();
+                    }
+                    else{
+                      $correct_questions=0;
+                    }
+
+                    $quizincorrectresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','2')->get();
+
+                    if($quizincorrectresultdetail)
+                    {
+                      $incorrect_questions=$quizincorrectresultdetail->count();
+                    }
+                    else{
+                      $incorrect_questions=0;
+                    }
+
+
+                    $quizskipresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','0')->get();
+
+                    if($quizskipresultdetail)
+                    {
+                      $skip_questions=$quizskipresultdetail->count();
+                    }
+                    else{
+                      $skip_questions=0;
+                    }
+
+                    $total_marks=$list['total_marks'];
+                    $result_marks=$list['marks'];
+
+                    if($total_marks==0)
+                    {
+                      $total_score=0;
+                    }
+                    else{
+                      $total_score=round(($result_marks/$total_marks)*100);
+                    }
+
+                    $result_marks_date=date('d M, Y',strtotime($list['result_marks_date']));
+
+                    $user_result[]=array(
+                    'sub_topic_title'=>$sub_topic_title,
+                    'topic_title'=>$topic_title,
+                    'total_questions'=>$list['total_questions'],
+                    'correct_questions'=>$correct_questions,
+                    'incorrect_questions'=>$incorrect_questions,
+                    'skip_questions'=>$skip_questions,
+                    'total_score'=>$total_score,
+                    'total_time'=>$list['result_timer'],
+                    'result_date'=>$result_marks_date,
+                    'result_id'=>(int)$list['id'],
+                    'result_type'=>$list['result_type']
+                  );
+                    
+                  }
+                }
               }
-              else{
-                $incorrect_questions=0;
-              }
 
-              $quizskipresultdetail=Result::where('user_id',$user->id)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','0')->get();
-
-              if($quizskipresultdetail)
-              {
-                $skip_questions=$quizskipresultdetail->count();
-              }
-              else{
-                $skip_questions=0;
-              }
-
-              $total_marks=$list['total_marks'];
-              $result_marks=$list['marks'];
-
-              if($total_marks==0)
-              {
-                $total_score=0;
-              }
-              else{
-                $total_score=($result_marks/$total_marks)*100;
-              }
-
-              $result_marks_date=date('d M, Y',strtotime($list['result_marks_date']));
-
-              $user_result[]=array(
-                  'sub_topic_title'=>$sub_topic_title,
-                  'topic_title'=>$topic_title,
-                  'total_questions'=>$list['total_questions'],
-                  'correct_questions'=>$correct_questions,
-                  'incorrect_questions'=>$incorrect_questions,
-                  'skip_questions'=>$skip_questions,
-                  'total_score'=>$total_score,
-                  'total_time'=>$list['result_timer'],
-                  'result_date'=>$result_marks_date,
-                  'topic_id'=>$quizid
-                );
-            }
-
+          }
         }
         else{
           $user_result=[];
         }
 
-        return view('admin.users.resultuser',compact('user_result','user'));
+        return view('admin.users.resultuser',compact('user_result','name','username'));
 
       }
       catch(\Exception $e){

@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\QuestionsImport;
+use App\Imports\TheoryQuestionsImport;
+use App\Imports\ObjectiveQuestionsImport;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Quiztopic;
 use App\Coursetopic;
 use App\Subject;
 use App\Subjectcategory;
+use App\User;
 use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\ValidationException;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ObjectiveQuestionSampleExport;
+use App\Exports\TheoryQuestionSampleExport;
 
 class QuestionsController extends Controller
 {
@@ -23,6 +28,7 @@ class QuestionsController extends Controller
      */
     public function index(Request $request)
     {
+
       try{
 
         $subjectalldata=Subject::where('status','1')->get();
@@ -232,39 +238,6 @@ class QuestionsController extends Controller
     }
 
     /**
-     * Import a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function importExcelToDB(Request $request)
-    {
-       $validator = Validator::make(
-        [
-            'question_file' => $request->question_file,
-            'extension' => strtolower($request->question_file->getClientOriginalExtension()),
-        ],
-        [
-            'question_file' => 'required',
-            'extension' => 'required|in:xlsx,xls,csv',
-        ]
-      );
-
-      if ($validator->fails()) 
-      {
-        return back()->withErrors('error','Invalid file format Please use xlsx and csv file format !');
-      }
-
-      if($request->hasFile('question_file'))
-      {
-        // return $request->file('question_file');
-        Excel::import(new QuestionsImport, $request->file('question_file'));
-        return back()->with('success', 'Question Imported Successfully');
-      }
-        return back()->with('error', 'Request data does not have any files to import');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -280,9 +253,7 @@ class QuestionsController extends Controller
           'b' => 'required',
           'c' => 'required',
           'd' => 'required',
-          'answer' => 'required',
-          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png',
-          'sort_order'=>'required'
+          'answer' => 'required'
         ]);
 
          // return $request;
@@ -290,6 +261,34 @@ class QuestionsController extends Controller
         $input = $request->all();
 
         if ($file = $request->file('question_img')) {
+
+            try{
+            $request->validate([
+              'question_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'question_'.time().$file->getClientOriginalName();  
             $file->move('images/questions/', $name);
             $question_img = $name;
@@ -297,6 +296,74 @@ class QuestionsController extends Controller
         }
         else{
         	$question_img="";
+        }
+
+        if ($file = $request->file('answer_explaination_img')) {
+
+            try{
+            $request->validate([
+              'answer_explaination_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'answer_'.time().$file->getClientOriginalName();  
+            $file->move('images/questions/', $name);
+            $answer_explaination_img = $name;
+
+        }
+        else{
+          $answer_explaination_img="";
+        }
+
+        if($request->question_video_link!="")
+        {
+            $checkvideo=checkvimeovideoid($request->question_video_link);
+            if($checkvideo['code']=="400")
+            {
+              return back()->with('error',$checkvideo['message']);
+            }
+            else{
+              $question_video_link=$request->question_video_link;
+            }
+        }
+        else{
+          $question_video_link="";
+        }
+
+        if($request->answer_explaination_video_link!="")
+        {
+            $checkanswervideo=checkvimeovideoid($request->answer_explaination_video_link);
+            if($checkanswervideo['code']=="400")
+            {
+              return back()->with('error',$checkanswervideo['message']);
+            }
+            else{
+              $answer_explaination_video_link=$request->answer_explaination_video_link;
+            }
+        }
+        else{
+          $answer_explaination_video_link="";
         }
 
         $topicid=$request->topic_id;
@@ -318,9 +385,10 @@ class QuestionsController extends Controller
                 $question->code_snippet="";
                 $question->answer_exp=$request->answer_exp;
                 $question->question_img=$question_img;
-                $question->question_video_link=$request->question_video_link;
+                $question->question_video_link=$question_video_link;
+                $question->answer_explaination_img=$answer_explaination_img;
+                $question->answer_explaination_video_link=$answer_explaination_video_link;
                 $question->question_status=1;
-                $question->sort_order=$request->sort_order;
                 $question->save();
 	          return redirect('admin/questions/'.$topicid)->with('success','Question has been added.');
 
@@ -360,23 +428,115 @@ class QuestionsController extends Controller
         $request->validate([
           'topic_id' => 'required',
           'question' => 'required',
-          'answer_exp' => 'required',
-          'question_img' => 'sometimes|image|mimes:jpg,jpeg,png',
-          'sort_order'=>'required'
+          'answer_exp' => 'required'
         ]);
-
-         // return $request;
 
         $input = $request->all();
 
         if ($file = $request->file('question_img')) {
+
+            try{
+            $request->validate([
+              'question_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
             $name = 'question_'.time().$file->getClientOriginalName();  
             $file->move('images/questions/', $name);
             $question_img = $name;
 
         }
         else{
-        	$question_img="";
+          $question_img="";
+        }
+
+        if ($file = $request->file('answer_explaination_img')) {
+
+            try{
+            $request->validate([
+              'answer_explaination_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'answer_'.time().$file->getClientOriginalName();  
+            $file->move('images/questions/', $name);
+            $answer_explaination_img = $name;
+
+        }
+        else{
+          $answer_explaination_img="";
+        }
+
+        if($request->question_video_link!="")
+        {
+            $checkvideo=checkvimeovideoid($request->question_video_link);
+            if($checkvideo['code']=="400")
+            {
+              return back()->with('error',$checkvideo['message']);
+            }
+            else{
+              $question_video_link=$request->question_video_link;
+            }
+        }
+        else{
+          $question_video_link="";
+        }
+
+        if($request->answer_explaination_video_link!="")
+        {
+            $checkanswervideo=checkvimeovideoid($request->answer_explaination_video_link);
+            if($checkanswervideo['code']=="400")
+            {
+              return back()->with('error',$checkanswervideo['message']);
+            }
+            else{
+              $answer_explaination_video_link=$request->answer_explaination_video_link;
+            }
+        }
+        else{
+          $answer_explaination_video_link="";
         }
 
         $topicid=$request->topic_id;
@@ -398,9 +558,10 @@ class QuestionsController extends Controller
                 $question->code_snippet="";
                 $question->answer_exp=$request->answer_exp;
                 $question->question_img=$question_img;
-                $question->question_video_link=$request->question_video_link;
+                $question->question_video_link=$question_video_link;
+                $question->answer_explaination_img=$answer_explaination_img;
+                $question->answer_explaination_video_link=$answer_explaination_video_link;
                 $question->question_status=1;
-                $question->sort_order=$request->sort_order;
                 $question->save();
 	          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been added.');
 	        }catch(\Exception $e){
@@ -717,8 +878,7 @@ class QuestionsController extends Controller
           'b' => 'required',
           'c' => 'required',
           'd' => 'required',
-          'answer' => 'required',
-          'sort_order'=>'required'
+          'answer' => 'required'
         ]);
 
         $question = Question::find($id);
@@ -730,18 +890,115 @@ class QuestionsController extends Controller
         $topicid=$question->topic_id;
 
         if ($file = $request->file('question_img')) {
-            $name = 'question_'.time().$file->getClientOriginalName();
+
+            try{
+            $request->validate([
+              'question_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'question_'.time().$file->getClientOriginalName();  
             $file->move('images/questions/', $name);
             $question_img = $name;
+
         }
         else{
-        	$question_img="";
+          $question_img="";
+        }
+
+        if ($file = $request->file('answer_explaination_img')) {
+
+            try{
+            $request->validate([
+              'answer_explaination_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'answer_'.time().$file->getClientOriginalName();  
+            $file->move('images/questions/', $name);
+            $answer_explaination_img = $name;
+
+        }
+        else{
+          $answer_explaination_img="";
+        }
+
+        if($request->question_video_link!="")
+        {
+            $checkvideo=checkvimeovideoid($request->question_video_link);
+            if($checkvideo['code']=="400")
+            {
+              return back()->with('error',$checkvideo['message']);
+            }
+            else{
+              $question_video_link=$request->question_video_link;
+            }
+        }
+        else{
+          $question_video_link="";
+        }
+
+        if($request->answer_explaination_video_link!="")
+        {
+            $checkanswervideo=checkvimeovideoid($request->answer_explaination_video_link);
+            if($checkanswervideo['code']=="400")
+            {
+              return back()->with('error',$checkanswervideo['message']);
+            }
+            else{
+              $answer_explaination_video_link=$request->answer_explaination_video_link;
+            }
+        }
+        else{
+          $answer_explaination_video_link="";
         }
 
         try
         {
           
-          if($question_img!="")
+          if($question_img!="" && $answer_explaination_img!="")
           {
             $question->question=$request->question;
             $question->a=$request->a;
@@ -752,8 +1009,37 @@ class QuestionsController extends Controller
             $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_img=$question_img;
-            $question->question_video_link=$request->question_video_link;
-            $question->sort_order=$request->sort_order;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_img=$answer_explaination_img;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          }
+          elseif($question_img!="" && $answer_explaination_img=="")
+          {
+            $question->question=$request->question;
+            $question->a=$request->a;
+            $question->b=$request->b;
+            $question->c=$request->c;
+            $question->d=$request->d;
+            $question->answer=$request->answer;
+            $question->code_snippet="";
+            $question->answer_exp=$request->answer_exp;
+            $question->question_img=$question_img;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          }
+          elseif($question_img=="" && $answer_explaination_img!="")
+          {
+            $question->question=$request->question;
+            $question->a=$request->a;
+            $question->b=$request->b;
+            $question->c=$request->c;
+            $question->d=$request->d;
+            $question->answer=$request->answer;
+            $question->code_snippet="";
+            $question->answer_exp=$request->answer_exp;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_img=$answer_explaination_img;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
           }
           else{
             $question->question=$request->question;
@@ -764,8 +1050,8 @@ class QuestionsController extends Controller
             $question->answer=$request->answer;
             $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$request->question_video_link;
-            $question->sort_order=$request->sort_order;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
           }
 
           $question->save();
@@ -811,8 +1097,7 @@ class QuestionsController extends Controller
         $request->validate([
           'topic_id' => 'required',
           'question' => 'required',
-          'answer_exp' =>'required',
-          'sort_order'=>'required'
+          'answer_exp' =>'required'
         ]);
 
         $question = Question::find($id);
@@ -824,18 +1109,116 @@ class QuestionsController extends Controller
         $topicid=$question->topic_id;
 
         if ($file = $request->file('question_img')) {
-            $name = 'question_'.time().$file->getClientOriginalName();
+
+            try{
+            $request->validate([
+              'question_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'question_'.time().$file->getClientOriginalName();  
             $file->move('images/questions/', $name);
             $question_img = $name;
+
         }
         else{
           $question_img="";
         }
 
+        if ($file = $request->file('answer_explaination_img')) {
+
+            try{
+            $request->validate([
+              'answer_explaination_img' => 'required|mimes:jpeg,png,jpg'
+            ]);
+          }
+          catch(\Exception $e){
+                    if($e instanceof ValidationException){
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
+                        {
+                            $listmessage[$key]=$list[0];
+                        }
+
+                        if(count($listmessage) > 0)
+                        {
+                            return back()->with('valid_error',$listmessage);
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }
+                        
+                    }
+                    else{
+                        return back()->with('error','Something went wrong.');
+                    }      
+               }
+
+            $name = 'answer_'.time().$file->getClientOriginalName();  
+            $file->move('images/questions/', $name);
+            $answer_explaination_img = $name;
+
+        }
+        else{
+          $answer_explaination_img="";
+        }
+
+        if($request->question_video_link!="")
+        {
+            $checkvideo=checkvimeovideoid($request->question_video_link);
+            if($checkvideo['code']=="400")
+            {
+              return back()->with('error',$checkvideo['message']);
+            }
+            else{
+              $question_video_link=$request->question_video_link;
+            }
+        }
+        else{
+          $question_video_link="";
+        }
+
+        if($request->answer_explaination_video_link!="")
+        {
+            $checkanswervideo=checkvimeovideoid($request->answer_explaination_video_link);
+            if($checkanswervideo['code']=="400")
+            {
+              return back()->with('error',$checkanswervideo['message']);
+            }
+            else{
+              $answer_explaination_video_link=$request->answer_explaination_video_link;
+            }
+        }
+        else{
+          $answer_explaination_video_link="";
+        }
+
+
         try
         {
           
-          if($question_img!="")
+          if($question_img!="" && $answer_explaination_img!="")
           {
             $question->question=$request->question;
             $question->a='-';
@@ -846,8 +1229,37 @@ class QuestionsController extends Controller
             $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
             $question->question_img=$question_img;
-            $question->question_video_link=$request->question_video_link;
-            $question->sort_order=$request->sort_order;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_img=$answer_explaination_img;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          }
+          elseif($question_img!="" && $answer_explaination_img=="")
+          {
+            $question->question=$request->question;
+            $question->a='-';
+            $question->b='-';
+            $question->c='-';
+            $question->d='-';
+            $question->answer='-';
+            $question->code_snippet="";
+            $question->answer_exp=$request->answer_exp;
+            $question->question_img=$question_img;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          }
+          elseif($question_img=="" && $answer_explaination_img!="")
+          {
+            $question->question=$request->question;
+            $question->a='-';
+            $question->b='-';
+            $question->c='-';
+            $question->d='-';
+            $question->answer='-';
+            $question->code_snippet="";
+            $question->answer_exp=$request->answer_exp;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_img=$answer_explaination_img;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
           }
           else{
             $question->question=$request->question;
@@ -858,8 +1270,8 @@ class QuestionsController extends Controller
             $question->answer='-';
             $question->code_snippet="";
             $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$request->question_video_link;
-            $question->sort_order=$request->sort_order;
+            $question->question_video_link=$question_video_link;
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
           }
 
           $question->save();
@@ -977,5 +1389,118 @@ class QuestionsController extends Controller
       echo json_encode(array('location' => $question_img));
 
   }
+
+  public function questions_import_module(Request $request)
+    {   
+      return view('admin.questions.import_module');    
+    }
+
+     /**
+     * Import a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function importObjectivequestionExcelToDB(Request $request)
+    {
+
+      $validator = Validator::make(
+        [
+            'question_file' => $request->question_file,
+            'extension' => strtolower($request->question_file->getClientOriginalExtension()),
+        ],
+        [
+            'question_file' => 'required',
+            'extension' => 'required|in:xlsx,xls,csv',
+        ]
+      );
+
+      if ($validator->fails()) 
+      {
+        return back()->withErrors('error','Invalid file format Please use xlsx and csv file format !');
+      }
+
+      if($request->hasFile('question_file'))
+      {
+        try{
+          Excel::import(new ObjectiveQuestionsImport, $request->file('question_file'));
+        }
+        catch(\Exception $e){
+             return back()->with('error','Something went wrong.');
+          }
+
+        return back()->with('success', 'Question Imported Successfully');
+      }
+        return back()->with('error', 'Request data does not have any files to import');
+    }
+
+
+    public function importTheoryquestionExcelToDB(Request $request)
+    {
+
+      $validator = Validator::make(
+        [
+            'question_file' => $request->question_file,
+            'extension' => strtolower($request->question_file->getClientOriginalExtension()),
+        ],
+        [
+            'question_file' => 'required',
+            'extension' => 'required|in:xlsx,xls,csv',
+        ]
+      );
+
+      if ($validator->fails()) 
+      {
+        return back()->withErrors('error','Invalid file format Please use xlsx and csv file format !');
+      }
+
+      if($request->hasFile('question_file'))
+      {
+        try{
+          Excel::import(new TheoryQuestionsImport, $request->file('question_file'));
+        }
+        catch(\Exception $e){
+             return back()->with('error',$e->getMessage());
+          }
+
+        return back()->with('success', 'Question Imported Successfully');
+      }
+        return back()->with('error', 'Request data does not have any files to import');
+    }
+
+  public function get_objective_question_sample_export()
+    {
+        $questionarray[]=array(
+          'quiz_id'=>'',
+          'question'=>'',
+          'a'=>'',
+          'b'=>'',
+          'c'=>'',
+          'd'=>'',
+          'answer'=>'',
+          'answer_explaination'=>'',
+          'question_image'=>'',
+          'question_video_link'=>'',
+          'answer_explaination_image'=>'',
+          'answer_explaination_video_link'=>''
+        );
+
+      return Excel::download(new ObjectiveQuestionSampleExport($questionarray), 'objective_question_sample_export.xls');
+    }
+
+    public function get_theory_question_sample_export()
+    {
+        $questionarray[]=array(
+          'quiz_id'=>'',
+          'question'=>'',
+          'answer_explaination'=>'',
+          'question_image'=>'',
+          'question_video_link'=>'',
+          'answer_explaination_image'=>'',
+          'answer_explaination_video_link'=>''
+        );
+
+       return Excel::download(new TheoryQuestionSampleExport($questionarray), 'theory_question_sample_export.xls');
+    }
 
 }

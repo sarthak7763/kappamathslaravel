@@ -65,6 +65,15 @@
     		      <input class="btn btn-wave" type="submit" value="Submit">
     		    </div>
           </div>
+
+          @if($clear_filter=="1")
+          <div class="col-md-1">
+            <div class="btn-group pull-right" style="margin-top: 26px;">
+              <button class="btn btn-wave clearfilterbtn" type="button">Clear Filter</button>
+            </div>
+          </div>
+          @endif
+
         </div>  
   		</form>
   	</div>
@@ -122,6 +131,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+$(document).on('click','.clearfilterbtn',function(){
+  window.location.href="{{url('/')}}/admin/all_reports";
+});
 
  $("#datepicker_start").datepicker({
 format: "mm/dd/yy"

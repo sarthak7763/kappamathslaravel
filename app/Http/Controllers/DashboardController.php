@@ -29,12 +29,20 @@ class DashboardController extends Controller
     {
     	if($request->date_filter_start!="" || $request->date_filter_end!="")
     	{
+            $current_date=date('Y-m-d');
+
     		$new_filter_date_start=$request->date_filter_start;
             $new_filter_date_end=$request->date_filter_end;
 
             if($request->date_filter_start!="")
             {
                 $filter_date_start=date('Y-m-d',strtotime($request->date_filter_start));
+
+                if($filter_date_start > $current_date)
+                {
+                    return back()->with('error','Alert! cannot select future dates.');
+                }
+
             }
             else{
                 $filter_date_start="";
@@ -44,7 +52,14 @@ class DashboardController extends Controller
             {
                 $filter_date_end=date('Y-m-d',strtotime($request->date_filter_end));
 
-                $filter_date_end=date('Y-m-d', strtotime("+1 day", strtotime($filter_date_end)));
+                if($filter_date_start!="")
+                {
+                    if($filter_date_end < $filter_date_start)
+                    {
+                        return back()->with('error','End date must be greater than or equal to start date.');
+                    }
+                }
+                
             }
             else{
                 $filter_date_end="";
@@ -52,6 +67,7 @@ class DashboardController extends Controller
 
             if($filter_date_start!="" && $filter_date_end!="")
             {
+                $clear_filter=1;
                 $user=User::where('role','S')->where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->count();
 
                 $topic = Subjectcategory::where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->count();
@@ -67,6 +83,7 @@ class DashboardController extends Controller
             }
             elseif($filter_date_start!="" && $filter_date_end=="")
             {
+                $clear_filter=1;
                 $user=User::where('role','S')->where('created_at','>=',$filter_date_start)->count();
 
                 $topic = Subjectcategory::where('created_at','>=',$filter_date_start)->count();
@@ -82,6 +99,7 @@ class DashboardController extends Controller
             }
             elseif($filter_date_start=="" && $filter_date_end!="")
             {
+                $clear_filter=1;
                 $user=User::where('role','S')->where('created_at','<=',$filter_date_end)->count();
 
                 $topic = Subjectcategory::where('created_at','<=',$filter_date_end)->count();
@@ -96,6 +114,7 @@ class DashboardController extends Controller
             
             }
             else{
+                $clear_filter=0;
                 $new_filter_date_start="";
                 $new_filter_date_end="";
                 $user = User::where('role','S')->count();
@@ -107,6 +126,7 @@ class DashboardController extends Controller
             }
     	}
     	else{
+            $clear_filter=0;
     		$new_filter_date_start="";
             $new_filter_date_end="";
     		$user = User::where('role','S')->count();
@@ -116,7 +136,7 @@ class DashboardController extends Controller
     		$subscription=Subscription::count();
     		$revenue="5000";
     	}
-    	return view('admin.dashboard', compact('user','topic','subtopic','quiz','subscription','revenue','new_filter_date_start','new_filter_date_end'));
+    	return view('admin.dashboard', compact('user','topic','subtopic','quiz','subscription','revenue','new_filter_date_start','new_filter_date_end','clear_filter'));
     }
 
 }

@@ -15,75 +15,47 @@ use App\Resultmarks;
 
 class TopReportController extends Controller
 {
-     public function index(Request $request)
+    public function index(Request $request)
     {
-    	if(count($request->all()) > 0)
-    	{
+    	try{
+		if(count($request->all()) > 0)
+		{
 			if($request->filter_date!="")
 			{
+				$clear_filter=1;
+				$currentdate=date('Y-m-d');
 				$filter_date=date('Y-m-d',strtotime($request->filter_date));
 
-				$resultmarksdata=Resultmarks::where('result_marks_date',$filter_date)->orderBy('marks','desc')->limit('5')->get();
-
+				if($filter_date > $currentdate)
+    			{
+    				return back()->with('error','Alert! cannot select future dates.');
+    			}
+    			else{
+    				$resultmarksdata=Resultmarks::where('result_marks_date',$filter_date)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
+    			}	
 			}
 			else{
+				$clear_filter=0;
 				$currentdate=date('Y-m-d');
-				$filter_start_date="";
-				$filter_end_date="";
-				$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->orderBy('marks','desc')->limit('5')->get();
+				$filter_date="";
+				$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
 			}
-    	}
+		}
     	else{
+    		$clear_filter=0;
     		$currentdate=date('Y-m-d');
-    		$filter_start_date="";
-    		$filter_end_date="";
-    		$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->orderBy('marks','desc')->limit('5')->get();
+    		$filter_date="";
+    		$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
     	}
 
     	if($resultmarksdata)
     	{
     		$resultmarksdataarray=$resultmarksdata->toArray();
-
     		$result_data=[];
     		$usernamelist=[];
     		foreach($resultmarksdataarray as $list)
     		{
-    			$userid=$list['user_id'];
-    			$quizid=$list['topic_id'];
-	        	$result_date=$list['result_marks_date'];
-
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
-	        		$subtopicid=$quiztopicdetaildata['course_topic'];
-	        		$category=$quiztopicdetaildata['category'];
-
-	        		$coursetopic = Coursetopic::find($subtopicid);
-			         if(is_null($coursetopic)){
-					   $sub_topic_title="";
-					}
-					else{
-						$sub_topic_title=$coursetopic->topic_name;
-						$sub_topic_id=$coursetopic->id;
-					}
-
-					$subjectcategory = Subjectcategory::find($category);
-			         if(is_null($subjectcategory)){
-					   $topic_title="";
-					}
-					else{
-						$topic_title=$subjectcategory->category_name;
-						$topic_id=$subjectcategory->id;
-					}
-
-	        	}
-	        	else{
-	        		$sub_topic_title="";
-	        		$topic_title="";
-	        	}
-
-	        	$userdet=User::where('id',$userid)->get()->first();
+    			$userdet=User::where('id',$userid)->get()->first();
 	        	if($userdet)
 	        	{
 	        		$userdetdata=$userdet->toArray();
@@ -95,70 +67,164 @@ class TopReportController extends Controller
 	        		$name="";
 	        	}
 
-	        	$quizcorrectresultdetail=Result::where('user_id',$userid)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','1')->get();
+	        	$quiz_topiciddb=$list['topic_id'];
+                $searchForValue = ',';
+                if( strpos($quiz_topiciddb, $searchForValue) !== false ) {
+                     $quiz_topiciddbarray=explode(',',$quiz_topiciddb);
+                }
+                else{
+                  $quiz_topiciddbarray=array($quiz_topiciddb);
+                }
 
-	        		if($quizcorrectresultdetail)
-	        		{
-	        			$correct_questions=$quizcorrectresultdetail->count();
-	        		}
-	        		else{
-	        			$correct_questions=0;
-	        		}
+            $sub_topic_titlearr=[];
+            $topic_tile_arr=[];
+            foreach($quiz_topiciddbarray as $arrid)
+            {
+              $quizdet=Quiztopic::where('id',$arrid)->get()->first();
+              if($quizdet)
+              {
+                $quizdetarr=$quizdet->toArray();
+                $course_topicid=$quizdetarr['course_topic'];
+                $category=$quizdetarr['category'];
 
-	        		$quizincorrectresultdetail=Result::where('user_id',$userid)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','2')->get();
+                $coursetopicdet=Coursetopic::where('id',$course_topicid)->get()->first();
+                if($coursetopicdet)
+                {
+                  $coursetopicarr=$coursetopicdet->toArray();
+                  $sub_topic_titlearr[]=$coursetopicarr['topic_name'];
+                }
 
-	        		if($quizincorrectresultdetail)
-	        		{
-	        			$incorrect_questions=$quizincorrectresultdetail->count();
-	        		}
-	        		else{
-	        			$incorrect_questions=0;
-	        		}
+                $subjectcategorydet=Subjectcategory::where('id',$category)->get()->first();
+                if($subjectcategorydet)
+                {
+                  $subjectcategoryarr=$subjectcategorydet->toArray();
+                  $topic_tile_arr[]=$subjectcategoryarr['category_name'];
+                }
+              }
+            }
 
-	        		$quizskipresultdetail=Result::where('user_id',$userid)->where('topic_id',$quizid)->where('result_date',$result_date)->where('answer','0')->get();
+            if(count($sub_topic_titlearr) > 0)
+          {
+            $sub_topic_title=implode(',',$sub_topic_titlearr);
+          }
+          else{
+            $sub_topic_title="";
+          }
 
-	        		if($quizskipresultdetail)
-	        		{
-	        			$skip_questions=$quizskipresultdetail->count();
-	        		}
-	        		else{
-	        			$skip_questions=0;
-	        		}
+          if(count($topic_tile_arr) > 0)
+          {
+            $topic_title=implode(',',$topic_tile_arr);
+          }
+          else{
+            $topic_title="";
+          }
 
-	        		$total_marks=$list['total_marks'];
-        			$result_marks=$list['marks'];
+          $random_question_idsdb=$list['random_question_ids'];
+          $random_question_idsarray=json_decode($random_question_idsdb,true);
+              $random_question_ids=[];
+              foreach($random_question_idsarray as $listval)
+              {
+                foreach($listval as $rowval)
+                {
+                  $random_question_ids[]=$rowval;
+                }
+              }
 
-        			if($total_marks==0)
-        			{
-        				$total_score=0;
-        			}
-        			else{
-        				$total_score=($result_marks/$total_marks)*100;
-        			}
+              $attempt_question_idsdb=$list['question_ids'];
+              if($attempt_question_idsdb!="")
+              {
+              	$attempt_question_idsarray=json_decode($attempt_question_idsdb,true);
+                $attempt_question_ids=[];
+                foreach($attempt_question_idsarray as $listvalnew)
+                {
+                  foreach($listvalnew as $rowvalnew)
+                  {
+                    $attempt_question_ids[]=$rowvalnew;
+                  }
+                }
 
-        			$result_marks_date=date('d M, Y',strtotime($list['result_marks_date']));
+                if(count($attempt_question_ids) > 0)
+                {
+                	$questions_array_diff=array_values(array_diff($random_question_ids, $attempt_question_ids));
+                	if(count($questions_array_diff) == 0)
+                	{
+                		$quizcorrectresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','1')->get();
 
-        			$result_data[]=array(
-        					'name'=>$name,
-        					'username'=>$username,
-	        				'sub_topic_title'=>$sub_topic_title,
-	        				'topic_title'=>$topic_title,
-		        			'total_questions'=>$list['total_questions'],
-		        			'correct_questions'=>$correct_questions,
-		        			'incorrect_questions'=>$incorrect_questions,
-		        			'skip_questions'=>$skip_questions,
-		        			'total_score'=>$total_score,
-		        			'total_time'=>$list['result_timer'],
-		        			'result_date'=>$result_marks_date
-		        		);
+	                    if($quizcorrectresultdetail)
+	                    {
+	                      $correct_questions=$quizcorrectresultdetail->count();
+	                    }
+	                    else{
+	                      $correct_questions=0;
+	                    }
+
+	                $quizincorrectresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','2')->get();
+
+                    if($quizincorrectresultdetail)
+                    {
+                      $incorrect_questions=$quizincorrectresultdetail->count();
+                    }
+                    else{
+                      $incorrect_questions=0;
+                    }
+
+
+                    $quizskipresultdetail=Result::where('user_id',$userid)->where('result_marks_id',$list['id'])->where('answer','0')->get();
+
+                    if($quizskipresultdetail)
+                    {
+                      $skip_questions=$quizskipresultdetail->count();
+                    }
+                    else{
+                      $skip_questions=0;
+                    }
+
+                    $total_marks=$list['total_marks'];
+                    $result_marks=$list['marks'];
+
+                    if($total_marks==0)
+                    {
+                      $total_score=0;
+                    }
+                    else{
+                      $total_score=round(($result_marks/$total_marks)*100);
+                    }
+
+                    $result_marks_date=date('d M, Y',strtotime($list['result_marks_date']));
+
+                    $result_data[]=array(
+                            'name'=>$name,
+                            'username'=>$username,
+                            'sub_topic_title'=>$sub_topic_title,
+                            'topic_title'=>$topic_title,
+                            'total_questions'=>$list['total_questions'],
+                            'correct_questions'=>$correct_questions,
+                            'incorrect_questions'=>$incorrect_questions,
+                            'skip_questions'=>$skip_questions,
+                            'total_score'=>$total_score,
+                            'total_time'=>$list['result_timer'],
+                            'result_date'=>$result_marks_date,
+                            'result_id'=>(int)$list['id'],
+                            'result_type'=>$list['result_type']
+                        );
+                	}
+                }
+              }
+
     		}
-
     	}
     	else{
     		$result_data=[];
     	}
 
-        return view('admin.top_reports.index',compact('result_data','filter_start_date','filter_end_date'));
+    	return view('admin.top_reports.index',compact('result_data','filter_date','clear_filter'));
+
     }
+    catch(\Exception $e){
+                  return back()->with('error',$e->getMessage());     
+               }
+
+}
+
 
 }

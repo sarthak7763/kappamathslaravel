@@ -3,6 +3,20 @@
 ])
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+  
 <!---->
   <div class="dashboard-block">
     <div class="row">
@@ -26,6 +40,13 @@
           <div class="col-md-4" style="margin-top: 24px;">
               <input type="submit" name="submit" class="form-control" value="Submit">
           </div>
+
+          @if($clear_filter=="1")
+          <div class="col-md-4" style="margin-top: 24px;">
+              <button type="button" class="form-control clearfilterbtn">Clear Filter</button>
+          </div>
+          @endif
+
         </form>
         </div>
       </div>
@@ -209,6 +230,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+
+  $(document).on('click','.clearfilterbtn',function(){
+  window.location.href="{{url('/')}}/admin";
+});
 
  $("#datepicker_start").datepicker({
 format: "mm/dd/yy"

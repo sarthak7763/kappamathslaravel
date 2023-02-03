@@ -109,6 +109,9 @@ class QuizTopicController extends Controller
 
                 return $coursetopicname;
             })
+            ->addColumn('quiz_id',function($row){
+                return $row->id;
+            })
             ->addColumn('quiz_type',function($row){
 
             if($row->quiz_type=="1")
@@ -482,6 +485,7 @@ class QuizTopicController extends Controller
           $quiztopic->per_q_mark = $request->per_question_mark;
           $quiztopic->timer=$request->timer;
           $quiztopic->quiz_status = $statusvalue;
+          $quiztopic->questions_limit=$request->questions_limit;
           $quiztopic->save();
 
            return redirect('/admin/quiz-topics/')->with('success', 'Quiz Topic has been added');
@@ -605,7 +609,8 @@ class QuizTopicController extends Controller
           'sub_topic'=>'required',
           'quiz_type'=>'required',
           'title' => 'required|string',
-          'per_question_mark' => 'required'
+          'per_question_mark' => 'required',
+          'questions_limit' => 'required'
           
         ]);
 
@@ -682,6 +687,7 @@ class QuizTopicController extends Controller
             $quiztopic->per_q_mark = $request->per_question_mark;
             $quiztopic->timer=$request->timer;
             $quiztopic->quiz_status = $statusvalue;
+            $quiztopic->questions_limit=$request->questions_limit;
             $quiztopic->save();
 
           return redirect('/admin/quiz-topics/')->with('success','Quiz Topic updated !');

@@ -322,18 +322,11 @@ class CoursetopicController extends Controller
 
         if($request->topic_video_id!="")
         {
-            $curlSession = curl_init();
-              curl_setopt($curlSession, CURLOPT_URL, 'https://player.vimeo.com/video/'.$request->topic_video_id.'/config');
-              curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
-              curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-
-              $jsonData = json_decode(curl_exec($curlSession));
-              curl_close($curlSession);
-
-              if(isset($jsonData->message))
-              {
-                  return back()->with('error',$jsonData->message);
-              }
+            $checkvideo=checkvimeovideoid($request->topic_video_id);
+            if($checkvideo['code']=="400")
+            {
+              return back()->with('error',$checkvideo['message']);
+            }
         }
         else{
           return back()->with('error','Please enter valid Video ID');

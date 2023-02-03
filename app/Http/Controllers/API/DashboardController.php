@@ -12,6 +12,7 @@ use App\Subjectcategory;
 use App\Coursetopic;
 use App\Quiztopic;
 use App\Homebanner;
+use App\Resultmarks;
 use Validator;
 use Hash;
 
@@ -242,12 +243,22 @@ class DashboardController extends BaseController
 		        				$textstatus=0;
 		        			}
 
+		        			$subject = Subject::find($list['subject']);
+					         if(is_null($subject)){
+					           $course_name="";
+					        }
+					        else{
+					        	$course_name=$subject->title;
+					        }
+
 		        			$topicslist[]=array(
 		        				'id'=>$list['id'],
+		        				'course_id'=>$list['subject'],
 		        				'name'=>$list['category_name'],
 		        				'type'=>'topic',
 		        				'video'=>0,
-		        				'text'=>$textstatus
+		        				'text'=>$textstatus,
+		        				'course_name'=>$course_name
 		        			);
 		        		}
 		        	}
@@ -268,6 +279,15 @@ class DashboardController extends BaseController
 		        		$subtopicslist=[];
 		        		foreach($coursesubtopicsdataarray as $row)
 		        		{
+
+		        			$subject = Subject::find($row['subject']);
+					         if(is_null($subject)){
+					           $course_name="";
+					        }
+					        else{
+					        	$course_name=$subject->title;
+					        }
+
 		        			if($row['topic_video_id']!="")
 		        			{
 		        				$videostatus=1;
@@ -286,10 +306,13 @@ class DashboardController extends BaseController
 		        			
 		        			$subtopicslist[]=array(
 		        				'id'=>$row['id'],
+		        				'course_id'=>$row['subject'],
+		        				'topic_id'=>$row['category'],
 		        				'name'=>$row['topic_name'],
 		        				'type'=>'subtopic',
 		        				'video'=>$videostatus,
-		        				'text'=>$textstatus
+		        				'text'=>$textstatus,
+		        				'course_name'=>$course_name
 		        			);
 		        		}
 		        	}
@@ -408,7 +431,9 @@ class DashboardController extends BaseController
     public function getsubtopicdetails(Request $request)
     {
     	try{
+    		$user=auth()->user();
 
+    		if($user){
     		$validator = Validator::make($request->all(), [
 		            'course_id'=>'required',
 		            'topic_id'=>'required',
@@ -462,29 +487,89 @@ class DashboardController extends BaseController
 			        	$previous_topic_key=0;
 			        }
 
-			        $quiztopicdata=Quiztopic::where('subject',$courseid)->where('category',$topicid)->where('course_topic',$subtopicid)->where('quiz_status','1')->get();
+			        $quiztopicdata=Quiztopic::where('subject',$courseid)->where('category',$topicid)->where('course_topic',$subtopicid)->where('quiz_status','1')->where('quiz_type','1')->get()->first();
+
 			        if($quiztopicdata)
 			        {
 			        	$quiztopicdataarray=$quiztopicdata->toArray();
-			        	if($quiztopicdataarray)
+			        	$quizid=$quiztopicdataarray['id'];
+			        	$result_date=date('Y-m-d H:i:s');
+
+			        	$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->whereRaw('FIND_IN_SET(?, topic_id)', $quizid)->where('result_type','1')->get()->first();
+			        	if($randomquizresultmarks)
 			        	{
-			        		$quizarray=[];
-			        		foreach($quiztopicdataarray as $key=>$list)
+			        		$resultmarksdetail=$randomquizresultmarks->toArray();
+
+			        		$random_question_idsdb=$resultmarksdetail['random_question_ids'];
+
+			        		$random_question_idsarray=json_decode($random_question_idsdb,true);
+
+			        		$random_question_ids=[];
+			        		foreach($random_question_idsarray as $listval)
 			        		{
-			        			$quizarray[]=array(
-			        				'quiz_id'=>$list['id'],
-			        				'quiz_title'=>$list['title'],
-			        				'quiz_type'=>$list['quiz_type']
-			        			);
+			        			foreach($listval as $rowval)
+			        			{
+			        				$random_question_ids[]=$rowval;
+			        			}
 			        		}
+
+			        		$attempt_question_idsdb=$resultmarksdetail['question_ids'];
+			        		if($attempt_question_idsdb!="")
+			        		{
+			        			$attempt_question_idsarray=json_decode($attempt_question_idsdb,true);
+
+			        	$attempt_question_ids=[];
+		        		foreach($attempt_question_idsarray as $listvalnew)
+		        		{
+		        			foreach($listvalnew as $rowvalnew)
+		        			{
+		        				$attempt_question_ids[]=$rowvalnew;
+		        			}
+		        		}
+
+		        		if(count($attempt_question_ids) > 0)
+		        		{
+		        			$questions_array_diff=array_values(array_diff($random_question_ids, $attempt_question_ids));
+
+		        			if(count($questions_array_diff) == 0)
+		        			{
+		        				$result_marks_end_date=$resultmarksdetail['result_marks_end_date'];
+
+		        				$quiz_retake_datetime = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($result_marks_end_date)));
+
+		        				$quiz_retake_time=date('h:i a',strtotime($quiz_retake_datetime));
+
+		        				$quiz_complete_status=0;
+
+		        			}
+		        			else{
+		        				$quiz_complete_status=1;
+			        			$quiz_retake_time=0;
+		        			}
+		        		}
+		        		else{
+		        			$quiz_complete_status=1;
+			        		$quiz_retake_time=0;
+		        		}
+
+			        		}
+			        		else{
+			        			$quiz_complete_status=1;
+			        			$quiz_retake_time=0;
+			        		}
+
 			        	}
 			        	else{
-			        		$quizarray=[];
+			        		$quiz_complete_status=1;
+			        		$quiz_retake_time=0;
 			        	}
 			        }
 			        else{
-			        	$quizarray=[];
+			        	$quiz_complete_status=1;
+			        	$quiz_retake_time=0;
 			        }
+
+			        
 
 			        if($coursesubtopicsdetaildata['topic_video_id']!="")
 			        {
@@ -501,7 +586,13 @@ class DashboardController extends BaseController
 					    	return $this::sendError('Unauthorised Exception.', ['error'=>$jsonData->message]);
 					    }
 					    else{
-					    	$subtopicvideourl=$jsonData->request->files->progressive[0]->url;
+					    	if(count($jsonData->request->files->progressive) >0)
+					    	{
+					    		$subtopicvideourl=$jsonData->request->files->progressive[0]->url;
+					    	}
+					    	else{
+					    		return $this::sendError('Unauthorised Exception.', ['error'=>'Invalid Video']);
+					    	}
 					    }
 			        }
 			        else{
@@ -524,9 +615,10 @@ class DashboardController extends BaseController
 		        				'sub_topic_description'=>$coursesubtopicsdetaildata['topic_description'],
 		        				'sub_topic_image'=>$sub_topic_image,
 		        				'sub_topic_video_id'=>$subtopicvideourl,
-		        				'quiz_topics'=>$quizarray,
 		        				'previous_topic_key'=>$previous_topic_key,
-		        				'next_topic_key'=>$next_topic_key
+		        				'next_topic_key'=>$next_topic_key,
+		        				'quiz_complete_status'=>$quiz_complete_status,
+		        				'quiz_retake_time'=>$quiz_retake_time
 
 		        			);
 
@@ -542,7 +634,10 @@ class DashboardController extends BaseController
 		        else{
 		        	return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
-
+		    }
+		    else{
+		    	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+		    }
     	}
     	catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    

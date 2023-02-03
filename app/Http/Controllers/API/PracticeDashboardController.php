@@ -11,13 +11,14 @@ use App\Subject;
 use App\Subjectcategory;
 use App\Coursetopic;
 use App\Quiztopic;
+use App\Question;
+use App\Resultmarks;
 use Validator;
 use Hash;
 
 class PracticeDashboardController extends BaseController
 {
-
-	public function getpracticedashboardinfo()
+	public function getpracticedashboardinfo(Request $request)
     {
     	try{
 	        $user=auth()->user();
@@ -32,6 +33,76 @@ class PracticeDashboardController extends BaseController
 	        			$courselist=[];
 	        			foreach($subjectdataarray as $list)
 	        			{
+
+	        				$result_date=date('Y-m-d H:i:s');
+	        				$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->where('subject',$list['id'])->where('result_type','2')->get()->first();
+
+	        				if($randomquizresultmarks)
+	        				{
+	        					$resultmarksdetail=$randomquizresultmarks->toArray();
+
+	        					$random_question_idsdb=$resultmarksdetail['random_question_ids'];
+
+	        					$random_question_idsarray=json_decode($random_question_idsdb,true);
+
+			        		$random_question_ids=[];
+			        		foreach($random_question_idsarray as $listval)
+			        		{
+			        			foreach($listval as $rowval)
+			        			{
+			        				$random_question_ids[]=$rowval;
+			        			}
+			        		}
+
+			        		$attempt_question_idsdb=$resultmarksdetail['question_ids'];
+			        		if($attempt_question_idsdb!="")
+			        		{
+			        			$attempt_question_idsarray=json_decode($attempt_question_idsdb,true);
+
+			        		$attempt_question_ids=[];
+			        		foreach($attempt_question_idsarray as $listvalnew)
+			        		{
+			        			foreach($listvalnew as $rowvalnew)
+			        			{
+			        				$attempt_question_ids[]=$rowvalnew;
+			        			}
+			        		}
+
+			        		if(count($attempt_question_ids) > 0)
+			        		{
+			        			$questions_array_diff=array_values(array_diff($random_question_ids, $attempt_question_ids));
+			        			if(count($questions_array_diff) == 0)
+			        			{
+			        				$result_marks_end_date=$resultmarksdetail['result_marks_end_date'];
+
+		        				$quiz_retake_datetime = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($result_marks_end_date)));
+
+		        				$quiz_retake_time=date('h:i a',strtotime($quiz_retake_datetime));
+
+		        				$quiz_complete_status=0;
+			        			}
+			        			else{
+			        				$quiz_complete_status=1;
+			        				$quiz_retake_time=0;
+			        			}
+			        		}
+			        		else{
+			        			$quiz_complete_status=1;
+			        			$quiz_retake_time=0;
+			        		}
+
+			        		}
+			        		else{
+			        			$quiz_complete_status=1;
+			        			$quiz_retake_time=0;
+			        		}
+
+
+	        				}
+	        				else{
+	        					$quiz_complete_status=1;
+			        			$quiz_retake_time=0;
+	        				}
 
 	        				$courseobjectivetopicsdata=Quiztopic::where('subject',$list['id'])->where('quiz_type','1')->where('quiz_status','1')->get();
 
@@ -88,11 +159,13 @@ class PracticeDashboardController extends BaseController
 	        			$coursetheorytopics=count($course_theory_topicsarray);
 
 	        				$courselist[]=array(
-	        					'course_id'=>base64_encode($list['id']),
+	        					'course_id'=>$list['id'],
 	        					'title'=>$list['title'],
 	        					'objective_topics'=>$courseobjectivetopics,
 	        					'theory_topics'=>$coursetheorytopics,
-	        					'description'=>$list['description']
+	        					'description'=>$list['description'],
+	        					'quiz_retake_time'=>$quiz_retake_time,
+	        					'quiz_complete_status'=>$quiz_complete_status
 	        				);
 	        			}
 	        		}
@@ -116,7 +189,7 @@ class PracticeDashboardController extends BaseController
                }
 	}
 
-	public function getcoursetopicsbyquiztype()
+	public function getcoursetopicsbyquiztype(Request $request)
 	{
 		try{
 	        $user=auth()->user();
@@ -128,8 +201,6 @@ class PracticeDashboardController extends BaseController
 		        ]);
 
 	        	$courseid=$request->course_id;
-	        	$courseid=base64_decode($courseid);
-
 	        	$quiz_type=$request->quiz_type;
 
 	        	$subject = Subject::find($courseid);
@@ -156,14 +227,42 @@ class PracticeDashboardController extends BaseController
 						$course_topics=[];
 						foreach($course_topicsarray  as $list)
 						{
-							$topicdetail=Subjectcategory::where('subject',$courseid)->where('id',$list)->where('category_status','1')->get();
+							$topicdetail=Subjectcategory::where('subject',$courseid)->where('id',$list)->where('category_status','1')->get()->first();
 
 						if($topicdetail){
 
 							$topicdetaildata=$topicdetail->toArray();
+							
+							$coursetopicsdata=Coursetopic::where('subject',$courseid)->where('category',$list)->where('topic_status','1')->get();
+							if($coursetopicsdata)
+							{
+								$coursetopicsdataarray=$coursetopicsdata->toArray();
+								if($coursetopicsdataarray)
+								{
+									$subtopiclist=[];
+									foreach($coursetopicsdataarray as $row)
+									{
+										$subtopiclist[]=array(
+											'subtopic_id'=>$row['id'],
+											'subtopic_name'=>$row['topic_name']
+										);
+									}
+								}
+								else{
+									$subtopiclist=[];
+								}
+							}
+							else{
+								$subtopiclist=[];
+							}
+
+							
+
 					           $course_topics[]=array(
-					        		'topic_id'=>base64_encode($topicdetaildata['id']),
-					        		'topic_name'=>$topicdetaildata['category_name']
+					        		'topic_id'=>$topicdetaildata['id'],
+					        		'topic_name'=>$topicdetaildata['category_name'],
+					        		'subtopic'=>$subtopiclist,
+					        		'quiz_type'=>$quiz_type
 					        	);
 					        }
 						}
@@ -185,32 +284,8 @@ class PracticeDashboardController extends BaseController
 	        }
 	    }
 	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
 
 	}
-
-	public function getcoursesubtopicslistbyquiztype()
-	{
-		try{
-	        $user=auth()->user();
-	        if($user)
-	        {
-	        	$request->validate([
-		            'course_id'=>'required',
-		            'topics_id'=>'required'
-		        ]);
-	        }
-	        else{
-	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-	        }
-	    }
-	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-               }
-
-	}
-
-
-
 }
