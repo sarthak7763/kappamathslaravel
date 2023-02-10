@@ -1485,7 +1485,7 @@ class QuestionsController extends Controller
           'answer_explaination_video_link'=>''
         );
 
-      return Excel::download(new ObjectiveQuestionSampleExport($questionarray), 'objective_question_sample_export.xls');
+      return Excel::download(new ObjectiveQuestionSampleExport($questionarray), 'objective_question_sample_export.xlsx');
     }
 
     public function get_theory_question_sample_export()
@@ -1500,7 +1500,7 @@ class QuestionsController extends Controller
           'answer_explaination_video_link'=>''
         );
 
-       return Excel::download(new TheoryQuestionSampleExport($questionarray), 'theory_question_sample_export.xls');
+       return Excel::download(new TheoryQuestionSampleExport($questionarray), 'theory_question_sample_export.xlsx');
     }
 
 }

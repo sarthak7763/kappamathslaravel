@@ -31,6 +31,7 @@ class PracticeDashboardController extends BaseController
 	        		if($subjectdataarray)
 	        		{
 	        			$courselist=[];
+	        			$quiz_topic_array=[];
 	        			foreach($subjectdataarray as $list)
 	        			{
 
@@ -103,7 +104,9 @@ class PracticeDashboardController extends BaseController
 	        					$quiz_complete_status=1;
 			        			$quiz_retake_time=0;
 	        				}
-
+	        				
+	        				$quiz_topic_array=[];
+	        				
 	        				$courseobjectivetopicsdata=Quiztopic::where('subject',$list['id'])->where('quiz_type','1')->where('quiz_status','1')->get();
 
 	        				if($courseobjectivetopicsdata)
@@ -116,7 +119,7 @@ class PracticeDashboardController extends BaseController
 	        						$courseobjectivetopicsarray[]=$row['category'];
 	        					}
 
-	        					if(count($courseobjectivetopicsarray) > 0)
+		        				if(count($courseobjectivetopicsarray) > 0)
 	        					{
 	        						$course_objective_topicsarray = array_unique($courseobjectivetopicsarray);
 	        					}
@@ -129,10 +132,13 @@ class PracticeDashboardController extends BaseController
 	        					$course_objective_topicsarray=[];
 	        				}
 
-	        			$courseobjectivetopics=count($course_objective_topicsarray);
+	        				$quiz_topic_array[]=array(
+	        					'topics'=>count($course_objective_topicsarray),
+	        					'image'=>'',
+	        					'quz_type'=>1
+	        				);
 
 	        				$coursetheorytopicsdata=Quiztopic::where('subject',$list['id'])->where('quiz_type','2')->where('quiz_status','1')->get();
-
 	        				if($coursetheorytopicsdata)
 	        				{
 	        					$coursetheorytopicsdataarray=$coursetheorytopicsdata->toArray();
@@ -156,13 +162,17 @@ class PracticeDashboardController extends BaseController
 	        					$course_theory_topicsarray=[];
 	        				}
 
-	        			$coursetheorytopics=count($course_theory_topicsarray);
+	        				$quiz_topic_array[]=array(
+	        					'topics'=>count($course_theory_topicsarray),
+	        					'image'=>'',
+	        					'quz_type'=>2
+	        				);
+
 
 	        				$courselist[]=array(
 	        					'course_id'=>$list['id'],
 	        					'title'=>$list['title'],
-	        					'objective_topics'=>$courseobjectivetopics,
-	        					'theory_topics'=>$coursetheorytopics,
+	        					'quiz_topic_array'=>$quiz_topic_array,
 	        					'description'=>$list['description'],
 	        					'quiz_retake_time'=>$quiz_retake_time,
 	        					'quiz_complete_status'=>$quiz_complete_status

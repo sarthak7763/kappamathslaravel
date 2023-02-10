@@ -7,7 +7,9 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Mail\UserForgotMail;
 use Validator;
+use Mail;
 
 class ForgotController extends BaseController
 {
@@ -51,6 +53,13 @@ class ForgotController extends BaseController
 
             $newforgototp=base64_encode($user_forgot_otp);
             $forgotlink=url('/').'/user/forgot-password/'.$newforgototp;
+
+            $details = [
+              'name' =>$userdet->name,
+              'link' =>$forgotlink
+            ];
+   
+          \Mail::to($request->email)->send(new \App\Mail\UserForgotMail($details));
 
             $success['email'] =  $request->email; 
             $success['link'] =  $forgotlink;
