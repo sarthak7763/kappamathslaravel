@@ -195,6 +195,11 @@
 @section('scripts')
 <script type="text/javascript">
 
+  $('#course').attr("disabled", true);
+  $('#subject_category').attr("disabled", true);
+  $('#course_topic').attr("disabled", true);
+  $('#quiz_type').attr("disabled", true);
+
   $(document).on('change','#course',function(){
     var course=$(this).val();
     if(course!="")

@@ -135,7 +135,8 @@ class PracticeDashboardController extends BaseController
 	        				$quiz_topic_array[]=array(
 	        					'topics'=>count($course_objective_topicsarray),
 	        					'image'=>'',
-	        					'quz_type'=>1
+	        					'quz_type'=>1,
+	        					'type'=>'Objective'
 	        				);
 
 	        				$coursetheorytopicsdata=Quiztopic::where('subject',$list['id'])->where('quiz_type','2')->where('quiz_status','1')->get();
@@ -165,7 +166,8 @@ class PracticeDashboardController extends BaseController
 	        				$quiz_topic_array[]=array(
 	        					'topics'=>count($course_theory_topicsarray),
 	        					'image'=>'',
-	        					'quz_type'=>2
+	        					'quz_type'=>2,
+	        					'type'=>'Theory'
 	        				);
 
 

@@ -604,10 +604,6 @@ class QuizTopicController extends Controller
     {
       try{
         $request->validate([
-          'course'=>'required',
-          'topic'=>'required',
-          'sub_topic'=>'required',
-          'quiz_type'=>'required',
           'title' => 'required|string',
           'per_question_mark' => 'required',
           'questions_limit' => 'required'
@@ -626,62 +622,7 @@ class QuizTopicController extends Controller
             $statusvalue = 0;
           }
 
-          try{
-                $subjectdata=Subject::where('id',$request->course)->first();
-                if(!$subjectdata)
-                {
-                    return back()->with('error','Please choose course.');
-                }
-            }catch(\Exception $e){
-                  return back()->with('error','Something went wrong12.');     
-               }
-
-            try{
-                $categorydata=Subjectcategory::where('id',$request->topic)->where('subject',$request->course)->first();
-                if(!$categorydata)
-                {
-                    return back()->with('error','Please choose topic.');
-                }
-            }catch(\Exception $e){
-                  return back()->with('error','Something went wrong13.');     
-               }
-
-               try{
-                $coursetopicdata=Coursetopic::where('id',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->first();
-                if(!$coursetopicdata)
-                {
-                    return back()->with('error','Please choose Course Topic.');
-                }
-            }catch(\Exception $e){
-                  return back()->with('error','Something went wrong14.');     
-               }
-
-
-               if($quiztopic->quiz_type!=$request->quiz_type)
-               {
-                    try{
-                  $quiztopicdata=Quiztopic::where('course_topic',$request->sub_topic)->where('subject',$request->course)->where('category',$request->topic)->where('quiz_type',$request->quiz_type)->first();
-                  if($quiztopicdata)
-                  {
-                      if($request->quiz_type=="1")
-                      {
-                        return back()->with('error','Objective Quiz already added in this subtopic.');
-                      }
-                      else{
-                        return back()->with('error','Theory Quiz already added in this subtopic.');
-                      }
-                      
-                  }
-              }catch(\Exception $e){
-                    return back()->with('error','Something went wrong.');     
-                 }
-               }
-
          try{
-            $quiztopic->subject=$request->course;
-            $quiztopic->category = $request->topic;
-            $quiztopic->course_topic=$request->sub_topic;
-            $quiztopic->quiz_type=$request->quiz_type;
             $quiztopic->title = $request->title;
             $quiztopic->description = $request->description;
             $quiztopic->per_q_mark = $request->per_question_mark;

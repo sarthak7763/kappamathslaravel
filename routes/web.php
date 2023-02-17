@@ -110,7 +110,7 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/questions', 'QuestionsController');
 
-  Route::get('/admin/questions_import_module','QuestionsController@questions_import_module')->name('questions_import_module');
+  Route::get('/admin/import_questions_module','QuestionsController@import_questions_module')->name('import_questions_module');
 
   Route::post('/admin/questions/import_theory_questions', 'QuestionsController@importTheoryquestionExcelToDB')->name('import_theory_questions');
 
@@ -174,6 +174,9 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/subscription', 'SubscriptionController');
   Route::post('/admin/subscription/changestatus','SubscriptionController@changestatus')->name('subscriptionchangestatus');
+
+  Route::resource('/admin/theory-excel-instructions', 'TheoryExcelController');
+  Route::post('/admin/theory-excel-instructions/changestatus','TheoryExcelController@changestatus')->name('theoryexcelchangestatus');
 
   Route::resource('/admin/notifications', 'NotificationController');
   Route::post('/admin/notifications/changestatus','NotificationController@changestatus')->name('notificationchangestatus');

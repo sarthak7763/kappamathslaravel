@@ -25,36 +25,41 @@ class TopReportController extends Controller
 				$clear_filter=1;
 				$currentdate=date('Y-m-d');
 				$filter_date=date('Y-m-d',strtotime($request->filter_date));
+        $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_date)));
 
 				if($filter_date > $currentdate)
     			{
     				return back()->with('error','Alert! cannot select future dates.');
     			}
     			else{
-    				$resultmarksdata=Resultmarks::where('result_marks_date',$filter_date)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
+    				$resultmarksdata=Resultmarks::where('result_marks_date','>=',$filter_date)->where('result_marks_date','<',$filter_end_date)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
     			}	
 			}
 			else{
 				$clear_filter=0;
 				$currentdate=date('Y-m-d');
+        $current_end_date=date('Y-m-d', strtotime("+1 day", strtotime($currentdate)));
 				$filter_date="";
-				$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
+				$resultmarksdata=Resultmarks::where('result_marks_date','>=',$currentdate)->where('result_marks_date','<',$current_end_date)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
 			}
 		}
     	else{
     		$clear_filter=0;
     		$currentdate=date('Y-m-d');
+        $current_end_date=date('Y-m-d', strtotime("+1 day", strtotime($currentdate)));
     		$filter_date="";
-    		$resultmarksdata=Resultmarks::where('result_marks_date',$currentdate)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
+    		$resultmarksdata=Resultmarks::where('result_marks_date','>=',$currentdate)->where('result_marks_date','<',$current_end_date)->where('marks','!=','0')->orderBy('marks','desc')->limit('5')->get();
     	}
 
     	if($resultmarksdata)
     	{
     		$resultmarksdataarray=$resultmarksdata->toArray();
+
     		$result_data=[];
     		$usernamelist=[];
     		foreach($resultmarksdataarray as $list)
     		{
+          $userid=$list['user_id'];
     			$userdet=User::where('id',$userid)->get()->first();
 	        	if($userdet)
 	        	{

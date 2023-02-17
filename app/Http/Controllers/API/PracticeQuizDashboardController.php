@@ -229,12 +229,12 @@ class PracticeQuizDashboardController extends BaseController
 				        }
 
 				        $questionslist=array(
-				        		'course_id'=>$courseid,
+				        		'course_id'=>(int)$courseid,
 		        				'course_name'=>"",
 		        				'topic_name'=>"",
 		        				'sub_topic_name'=>"",
 		        				'quiz_name'=>"",
-		        				'quiz_type'=>"",
+		        				'quiz_type'=>1,
 		        				'quiz_id'=>$questiondataarray['topic_id'],
 		        				'question_id'=>$questiondataarray['id'],
 		        				'question'=>strip_tags($questiondataarray['question']), 

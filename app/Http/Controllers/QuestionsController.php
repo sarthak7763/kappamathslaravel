@@ -11,6 +11,8 @@ use App\Coursetopic;
 use App\Subject;
 use App\Subjectcategory;
 use App\User;
+use App\Theoryexcelinstructions;
+
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\ValidationException;
@@ -18,6 +20,11 @@ use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ObjectiveQuestionSampleExport;
 use App\Exports\TheoryQuestionSampleExport;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class QuestionsController extends Controller
 {
@@ -1390,7 +1397,7 @@ class QuestionsController extends Controller
 
   }
 
-  public function questions_import_module(Request $request)
+  public function import_questions_module(Request $request)
     {   
       return view('admin.questions.import_module');    
     }
@@ -1456,15 +1463,60 @@ class QuestionsController extends Controller
 
       if($request->hasFile('question_file'))
       {
-        try{
-          Excel::import(new TheoryQuestionsImport, $request->file('question_file'));
-        }
-        catch(\Exception $e){
-             return back()->with('error',$e->getMessage());
+          $quiztopicsdata = Quiztopic::where('quiz_type',"2")->where('quiz_status','1')->get();
+          if($quiztopicsdata)
+          {
+            $quiztopicsdatalist=$quiztopicsdata->toArray();
+
+            $quizid_arr=[];
+            foreach($quiztopicsdatalist as $list)
+            {
+              $quizid_arr[]=$list['id'];
+            }
+          }
+          else{
+            $quizid_arr=[];
           }
 
-        return back()->with('success', 'Question Imported Successfully');
+          $excelinstructionscount=Theoryexcelinstructions::count();
+          $headercount=2;
+          $intstartrow=(int)$excelinstructionscount+(int)$headercount+1;
+
+          $theoryquestionsimport = new TheoryQuestionsImport($quizid_arr,$intstartrow);
+
+          $theoryquestionsimport->onlySheets('TheoryQuizSample');
+
+          $failurearray=[];
+
+          try{
+            Excel::import($theoryquestionsimport, $request->file('question_file'));
+          }
+          catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+           $failures = $e->failures();
+           foreach ($failures as $failure) {
+               $failurearray[]=array(
+                'row'=>$failure->row(),
+                'attribute'=>$failure->attribute(),
+                'errors'=>$failure->errors()[0]
+               );
+           }
       }
+
+        if(count($failurearray) > 0)
+        {
+          $listmessage="";
+          foreach($failurearray as $list)
+          {
+              $listmessage.=$list['errors'].' at row'.$list['row'].'<br>';
+          }
+
+          return back()->with('error', $listmessage);
+        }
+        else{
+          return back()->with('success', 'Question Imported Successfully');
+        }
+      }
+
         return back()->with('error', 'Request data does not have any files to import');
     }
 
@@ -1490,17 +1542,92 @@ class QuestionsController extends Controller
 
     public function get_theory_question_sample_export()
     {
-        $questionarray[]=array(
-          'quiz_id'=>'',
-          'question'=>'',
-          'answer_explaination'=>'',
-          'question_image'=>'',
-          'question_video_link'=>'',
-          'answer_explaination_image'=>'',
-          'answer_explaination_video_link'=>''
-        );
 
-       return Excel::download(new TheoryQuestionSampleExport($questionarray), 'theory_question_sample_export.xlsx');
+       $quiztopicsdata = Quiztopic::where('quiz_type',"2")->where('quiz_status','1')->get();
+       if($quiztopicsdata)
+       {
+          $quiztopicsdatalist=$quiztopicsdata->toArray();
+          $quiz_topic_arr=[];
+          $quizid_arr=[];
+          foreach($quiztopicsdatalist as $list)
+          {
+            $subjectdata=Subject::where('id',$list['subject'])->first();
+            if(!empty($subjectdata))
+            {
+                $subjectdataarray=$subjectdata->toArray();
+                $subjectname=$subjectdataarray['title'];
+            }
+            else{
+                $subjectname="-";
+            }
+
+            $categorydata=Subjectcategory::where('id',$list['category'])->first();
+              if(!empty($categorydata))
+              {
+                  $categorydataarray=$categorydata->toArray();
+                  $categoryname=$categorydataarray['category_name'];
+              }
+              else{
+                  $categoryname="-";
+              }
+
+              $course_topicdata=Coursetopic::where('id',$list['course_topic'])->first();
+                if(!empty($course_topicdata))
+                {
+                    $course_topicdataarray=$course_topicdata->toArray();
+                    $coursetopicname=$course_topicdataarray['topic_name'];
+                }
+                else{
+                    $coursetopicname="-";
+                }
+
+                $quizid_arr[]=$list['id'];
+
+                $quiz_topic_arr[]=array(
+                  'quiz_id'=>$list['id'],
+                  'quiz_title'=>$list['title'],
+                  'course'=>$subjectname,
+                  'course_topic'=>$categoryname,
+                  'course_sub_topic'=>$coursetopicname
+                );
+          }
+       }
+       else{
+          $quiz_topic_arr=[];
+          $quizid_arr=[];
+       }
+
+       
+       $theoryexcelinstructionsdata=Theoryexcelinstructions::all();
+       if($theoryexcelinstructionsdata)
+       {
+          $questionarray=[];
+          foreach($theoryexcelinstructionsdata as $arr)
+          {
+            $questionarray[]=array(
+              'quiz_id'=>$arr['quiz_id'],
+              'question'=>$arr['question'],
+              'answer_explaination'=>$arr['answer_explaination'],
+              'question_image'=>$arr['question_image'],
+              'question_video_link'=>$arr['question_video_link'],
+              'answer_explaination_image'=>$arr['answer_explaination_image'],
+              'answer_explaination_video_link'=>$arr['answer_explaination_video_link']
+            );
+          }
+       }
+       else{
+          $questionarray[]=array(
+            'quiz_id'=>'',
+            'question'=>'',
+            'answer_explaination'=>'',
+            'question_image'=>'',
+            'question_video_link'=>'',
+            'answer_explaination_image'=>'',
+            'answer_explaination_video_link'=>''
+          );
+       }
+
+       return Excel::download(new TheoryQuestionSampleExport($questionarray,$quiz_topic_arr,$quizid_arr), 'theory_question_sample_export.xlsx');
     }
 
 }
