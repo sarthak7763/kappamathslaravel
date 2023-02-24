@@ -194,7 +194,7 @@ class AuthController extends BaseController
             }
 
         } else {
-            return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Invalid email or password.']);
+            return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Invalid '.$fieldType.' or password.']);
         }
     }
     catch(\Exception $e){

@@ -34,6 +34,8 @@ Route::post('/login/checkwebuserlogin','Auth\LoginController@checkwebuserlogin')
     return redirect()->route('login');
 });
 
+  Route::get('/user/forgot-password/','Userforgotpassword@index');
+
   Route::get('/user/forgot-password/{code}','Userforgotpassword@index');
   
   Route::post('/resetuserpassword','Userforgotpassword@resetuserpassword')->name('resetuserpassword');
@@ -178,8 +180,13 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::resource('/admin/theory-excel-instructions', 'TheoryExcelController');
   Route::post('/admin/theory-excel-instructions/changestatus','TheoryExcelController@changestatus')->name('theoryexcelchangestatus');
 
+  Route::resource('/admin/objective-excel-instructions', 'ObjectiveExcelController');
+  Route::post('/admin/objective-excel-instructions/changestatus','ObjectiveExcelController@changestatus')->name('objectiveexcelchangestatus');
+
   Route::resource('/admin/notifications', 'NotificationController');
   Route::post('/admin/notifications/changestatus','NotificationController@changestatus')->name('notificationchangestatus');
+
+  Route::post('/admin/notifications/sendNotification','NotificationController@sendNotification')->name('sendNotification');
 
   Route::resource('/admin/exam-information', 'ExamInformationController');
   Route::post('/admin/exam-information/changestatus','ExamInformationController@changestatus')->name('examinformationchangestatus');

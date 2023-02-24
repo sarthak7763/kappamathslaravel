@@ -42,7 +42,8 @@ class Userforgotpassword extends Controller
     {
       try{
         $request->validate([
-          'password' => 'required|min:8'
+          'password' => 'required|min:8|confirmed',
+          'password_confirmation' => 'required|min:8'
         ]);
 
         
@@ -83,15 +84,15 @@ class Userforgotpassword extends Controller
       }
       catch(\Exception $e){
                     if($e instanceof ValidationException){
-                        $listmessage="";
-                        foreach($e->errors() as $list)
+                        $listmessage=[];
+                        foreach($e->errors() as $key=>$list)
                         {
-                            $listmessage.=$list[0];
+                            $listmessage[$key]=$list[0];
                         }
-
-                        if($listmessage!="")
+                        
+                        if(count($listmessage) > 0)
                         {
-                            return back()->with('deleted',$listmessage);
+                            return back()->with('valid_error',$listmessage);
                         }
                         else{
                             return back()->with('deleted','Something went wrong.');

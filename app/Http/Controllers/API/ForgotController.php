@@ -34,7 +34,7 @@ class ForgotController extends BaseController
                     }
 
                 }catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong3']);    
                }
 
                $userid=$checkmail->id;
@@ -64,15 +64,15 @@ class ForgotController extends BaseController
             $success['email'] =  $request->email; 
             $success['link'] =  $forgotlink;
 
-            return $this::sendResponse($success, 'Please check your email. We have sent OTP to reset password to your account.');
+            return $this::sendResponse($success, 'Please check your email. We have sent link to reset password to your account.');
         }
         catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
         
     }
     catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong1']);    
                }
 
 }

@@ -2,16 +2,21 @@
 
 namespace App\Exports;
 
+use App\Question;
 use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ObjectiveQuestionSampleExport implements FromArray, WithHeadings
+class ObjectiveQuestionSampleExport implements FromArray, WithMultipleSheets
 {
     protected $questionarray;
+    protected $quiz_topic_arr;
+    protected $quizid_arr;
 
-    public function __construct(array $questionarray)
+    public function __construct(array $questionarray,array $quiz_topic_arr,array $quizid_arr)
     {
         $this->questionarray = $questionarray;
+        $this->quiz_topic_arr = $quiz_topic_arr;
+        $this->quizid_arr = $quizid_arr;
     }
 
     public function array(): array
@@ -19,21 +24,15 @@ class ObjectiveQuestionSampleExport implements FromArray, WithHeadings
         return $this->questionarray;
     }
 
-    public function headings(): array
+    public function sheets(): array
     {
-        return [
-            "quiz_id",
-            "question",
-            "a",
-            "b",
-            "c",
-            "d",
-            "answer",
-            "answer_explaination",
-            "question_image",
-            "question_video_link",
-            "answer_explaination_image",
-            "answer_explaination_video_link"
+        $sheets = [
+            new ObjectiveQuizQuestionsSampleExport($this->questionarray,$this->quizid_arr),
+            new ObjectiveQuizTopicsExport($this->quiz_topic_arr),
         ];
+
+        return $sheets;
     }
+
+
 }

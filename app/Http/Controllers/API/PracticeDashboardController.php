@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\User;
 use App\Subject;
 use App\Subjectcategory;
@@ -132,9 +133,10 @@ class PracticeDashboardController extends BaseController
 	        					$course_objective_topicsarray=[];
 	        				}
 
+	        				$imageslug=Str::slug($list['title']).'-objective';
 	        				$quiz_topic_array[]=array(
 	        					'topics'=>count($course_objective_topicsarray),
-	        					'image'=>'',
+	        					'image'=>$imageslug,
 	        					'quz_type'=>1,
 	        					'type'=>'Objective'
 	        				);
@@ -163,9 +165,10 @@ class PracticeDashboardController extends BaseController
 	        					$course_theory_topicsarray=[];
 	        				}
 
+	        				$imageslug=Str::slug($list['title']).'-theory';
 	        				$quiz_topic_array[]=array(
 	        					'topics'=>count($course_theory_topicsarray),
-	        					'image'=>'',
+	        					'image'=>$imageslug,
 	        					'quz_type'=>2,
 	        					'type'=>'Theory'
 	        				);

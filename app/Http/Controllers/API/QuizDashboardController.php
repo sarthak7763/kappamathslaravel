@@ -718,14 +718,23 @@ class QuizDashboardController extends BaseController
 	        	$result_date=date('Y-m-d H:i:s');
 
 	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
+
 	        	if($quiztopicdetail)
 	        	{
 	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+
 	        		$course_id=$quiztopicdetaildata['subject'];
 	        		$topic_id=$quiztopicdetaildata['category'];
 	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
 
+	        		if(isset($request->result_id) && $request->result_id!="")
+	        		{
+	        		$randomquizresultmarks=Resultmarks::where('id',$request->result_id)->where('result_type','1')->get()->first();
+	        		}
+	        		else{
 	        		$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->whereRaw('FIND_IN_SET(?, topic_id)', $quizid)->where('result_type','1')->get()->first();
+	        		}
+
 	        		if($randomquizresultmarks)
 	        		{
 	        			$randomquizresultmarksarray=$randomquizresultmarks->toArray();
@@ -823,15 +832,15 @@ class QuizDashboardController extends BaseController
 
 		        		}
 		        		else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong4']);
+		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        		}
 	        		}
 	        		else{
-	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong3']);
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        		}
 	        	}
 	        	else{
-	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong2']);
+	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        	}
 		    }
 		    else{
@@ -839,7 +848,7 @@ class QuizDashboardController extends BaseController
 		    }
 		}
 		catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong1']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
 	}
 
@@ -975,15 +984,15 @@ class QuizDashboardController extends BaseController
 
 		        		}
 		        		else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong5']);
+		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        		}
 	        		}
 	        		else{
-	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong6']);
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        		}
 	        	}
 	        	else{
-	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong7']);
+	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        	}
 		    }
 		    else{
@@ -991,7 +1000,7 @@ class QuizDashboardController extends BaseController
 		    }
 		}
 		catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong8']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
 	}
 
@@ -1083,8 +1092,24 @@ class QuizDashboardController extends BaseController
                 				}
                 				else{
                 					$theoryquizresultarray=$theoryquizresultdata->toArray();
-                					$random_questionsdb=$theoryquizresultarray['random_questions'];
-                					$random_question_ids=json_decode($random_questionsdb,true);
+
+                					$theoryquizresultid=$theoryquizresultarray['id'];
+
+                				$theoryquizresultupdate = Theoryquizresult::find($theoryquizresultid);
+
+                				if(is_null($theoryquizresultupdate))
+                				{
+                				$random_questionsdb=$theoryquizresultarray['random_questions'];
+
+                				$random_question_ids=json_decode($random_questionsdb,true);
+                				}
+                				else{
+                				$theoryquizresultupdate->topic_id=$quiztopicdetaildata['id'];
+
+						        $theoryquizresultupdate->random_questions=json_encode($random_question_ids);
+						        $theoryquizresultupdate->save();
+                				}
+
                 				}
 
                 			$newfinalquestionid=$random_question_ids[0];

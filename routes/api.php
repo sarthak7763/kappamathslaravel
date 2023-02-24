@@ -113,6 +113,8 @@ Route::middleware('auth:api')->group(function () {
 
     //practice quiz dashboard controller start
 
+     Route::post('deleteresultanswer', [PracticeQuizDashboardController::class, 'deleteresultanswer']);
+
     Route::post('practice-objective-quiz', [PracticeQuizDashboardController::class, 'getpracticeobjectivequiz']);
 
     Route::post('practice-objective-quiz-explaination', [PracticeQuizDashboardController::class, 'getpracticeobjectivequizquestionexplaination']);

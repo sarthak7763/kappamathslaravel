@@ -62,57 +62,92 @@ class TheoryQuizQuestionsSampleExport implements FromArray, WithHeadings,WithEve
                 $row_count = 20;
                 $column_count = 7;
 
-                // set dropdown column
-                $column_one='A';
-                $column_two='D';
-                $column_three='E';
-                $column_four='F';
-                $column_five='G';
-                $column_six='B';
                 // set dropdown options
                 $options = $this->quizid_arr;
 
                 $sheet = $event->sheet->getDelegate();
 
                 $sheet->getStyle('A1')->getFont()
-                ->setSize(22)
+                ->setSize(20)
                 ->setBold(true)
                 ->getColor()->setRGB('000000');
 
                 $sheet->getStyle('A2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('A2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('B2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('B2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('C2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('C2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('D2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('D2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('E2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('E2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('F2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('F2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');
 
                 $sheet->getStyle('G2')->getFont()
                 ->setSize(12)
                 ->setBold(true)
-                ->getColor()->setRGB('000000');    
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('G2')
+                ->getFill()
+    			->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+    			->getStartColor()
+    			->setARGB('042a60');    
 
                 // set columns to autosize
                 for ($i = 1; $i <= $column_count; $i++) {

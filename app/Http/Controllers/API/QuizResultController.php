@@ -323,6 +323,8 @@ class QuizResultController extends BaseController
 
 	        				$success['quiz_result'] =  $quiz_result;
         					$success['sub_topic_title']=$sub_topic_title;
+
+        					$success['result_id']=(int)$result_id;
             				return $this::sendResponse($success, 'Quiz Result Questions summary.');
 
 		        			}

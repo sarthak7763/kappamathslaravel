@@ -10,13 +10,42 @@
 @endsection
 
 @section('content')
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
+  @php 
+  $password_error="";
+  $password_confirm_error="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['password']))
+      @php $password_error=$validationmessage['password']; @endphp
+      @else
+      @php $password_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['password_confirmation']))
+      @php $password_confirm_error=$validationmessage['password_confirmation']; @endphp
+      @else
+      @php $password_confirm_error=""; @endphp
+      @endif
+  @endif
+
   <div style="margin-top: -25px;" class="">
     <div class="container">
-      @if (Session::has('error'))
-        <div class="alert alert-danger sessionmodal">
-          {{session('error')}}
-        </div>
-      @endif
       <div class="login-page">
         <div class="logo">
           @if ($setting)
@@ -35,13 +64,9 @@
                              <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-8">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password">
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                               <small class="text-danger">{{$password_error}}</small>
                             </div>
                           </div>
                            
@@ -51,13 +76,9 @@
                           <div class="row">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
                             <div class="col-md-8">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
 
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
+                                <small class="text-danger">{{$password_confirm_error}}</small>
                             </div>
                           </div>
                             

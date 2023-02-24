@@ -27,237 +27,79 @@ class PracticeQuizDashboardController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$request->validate([
-		            'course_id'=>'required'
+
+		        $validator = Validator::make($request->all(), [
+		            'course_id' => 'required',
+		            'subtopic_id'=>'required'
 		        ]);
 
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+
 		        $courseid=$request->course_id;
+		        $subtopic_id=$request->subtopic_id;
 
 		        $subject = Subject::find($courseid);
 		          if(is_null($subject)){
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
 
+		        if(isset($subtopic_id) && $subtopic_id!="")
+		        {
+		        	$newsubtopic_id=json_decode($subtopic_id);
+		        	if(count($newsubtopic_id)==0)
+	        		{
+	        			return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
+	        		}
+		        }
+		        else{
+		        	return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
+		        }
+
 	        	$result_date=date('Y-m-d H:i:s');
-	        	$result_end_date = date("Y-m-d H:i:s", strtotime('+12 hours', strtotime($result_date)));
+	        	$result_end_date = date("Y-m-d H:i:s", strtotime('+1 day', strtotime($result_date)));
 
 	        	$quizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->where('subject',$courseid)->where('result_type','2')->get()->first();
+
 	        	if($quizresultmarks==null)
 	        	{
-	        		$subtopic_id=$request->subtopic_id;
-	        		if(count($subtopic_id) > 0)
+	        		$resultdata=$this->insertpracticequizresult($user->id,$courseid,$result_date,$result_end_date,$newsubtopic_id);
+	        		if($resultdata)
 	        		{
-
-	        		$quiztopicsid=[];
-	        		foreach ($subtopic_id as $key => $value) {
-
-	        			$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
-	        			if($coursesubtopicsdetail)
+	        			if($resultdata['code']=="200")
 	        			{
-	        				$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','1')->where('quiz_status','1')->get()->first();
-		        			if($quiztopicdata)
-		        			{
-		        				$quiztopicdataarray=$quiztopicdata->toArray();
-		        				if($quiztopicdataarray)
-		        				{
-		        					$quiztopicsid[]=$quiztopicdataarray['id'];
-		        				}
-		        			}
+	        				$success['questionslist'] =$resultdata['message'];
+                			return $this::sendResponse($success, 'Questions List.');
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>$resultdata['message']]);
 	        			}
 	        		}
-
-	        		if(count($quiztopicsid) > 0)
-	        		{
-	        			$random_question_ids_arr=[];
-	        			$random_question_ids=[];
-	        			$total_score=0;
-	        			$result_timer=0;
-	        			$total_questions=0;
-	        			foreach($quiztopicsid as $row)
-	        			{
-	        				$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','1')->get()->first();
-	        				if($quiztopicdetail)
-	        				{
-	        					$quiztopicdetaildata=$quiztopicdetail->toArray();
-
-		        				if($quiztopicdetaildata['questions_limit']!="")
-		        				{
-		        					$total_questions_limit=$quiztopicdetaildata['questions_limit'];
-		        				}
-		        				else{
-		        					$total_questions_limit=0;
-		        				}
-
-		        			$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')
-	        						->inRandomOrder()
-                						->limit($total_questions_limit)
-                							->get();
-
-                				if($random_questionsdata)
-                				{
-                					$random_questionsdataarray=$random_questionsdata->toArray();
-
-                				foreach($random_questionsdataarray as $list)
-                				{
-                					$random_question_ids_arr[$quiztopicdetaildata['id']][]=$list['id'];
-
-                					$random_question_ids[]=$list['id'];
-                				}
-
-                				}
-
-                				if(isset($random_question_ids_arr[$quiztopicdetaildata['id']]))
-                				{
-                					$random_questions_final_list=$random_question_ids_arr[$quiztopicdetaildata['id']];
-
-                				$total_score+=count($random_questions_final_list)*$quiztopicdetaildata['per_q_mark'];
-
-                				$total_questions+=count($random_questions_final_list);
-
-
-                				$result_timer+=$quiztopicdetaildata['timer'];
-
-                				}
-                				else{
-                					$total_score+=0;
-                					$result_timer+=0;
-                					$total_questions+=0;
-                				}
-	        				}
-	        			}
-
-	        			$finalquiztopicids=implode(',',$quiztopicsid);
-	        			$current_score=0;
-	        			$current_quiz=1;
-	        			$newfinalquestionid=$random_question_ids[0];
-
-	        			try{
-        					$resultmarks = new Resultmarks;
-		                    $resultmarks->topic_id=$finalquiztopicids;
-		                    $resultmarks->subject=$courseid;
-		                    $resultmarks->user_id=$user->id;
-		                    $resultmarks->marks=0;
-		                    $resultmarks->result_timer=$result_timer;
-		                    $resultmarks->total_questions=$total_questions;
-		                    $resultmarks->total_marks=$total_score;
-		                    $resultmarks->result_marks_date=$result_date;
-		                    $resultmarks->result_marks_end_date=$result_end_date;
-		                    $resultmarks->result_type=2;
-		                    $resultmarks->random_question_ids=json_encode($random_question_ids_arr);
-		                    $resultmarks->save();
-        				}
-        				catch(\Exception $e){
-		                    return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);     
-		                 }
-
-	        		}
 	        		else{
-	        		return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
-	        		}
-
-	        		}
-	        		else{
-	        			return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        		}
 	        	}
 	        	else{
 	        		$quizresultmarksarray=$quizresultmarks->toArray();
-                	$resultid=$quizresultmarksarray['id'];
 
-                	$total_score=$quizresultmarksarray['total_marks'];
-                	$total_questions=$quizresultmarksarray['total_questions'];
-                	$current_score=$quizresultmarksarray['marks'];
-
-                	$random_question_ids_db=$quizresultmarksarray['random_question_ids'];
-
-		        	$random_question_ids_arr=json_decode($random_question_ids_db,true);
-
-		        	$newrandom_question_ids=[];
-        			foreach($random_question_ids_arr as $arrval)
-        			{
-        				foreach($arrval as $value)
-        				{
-        					$newrandom_question_ids[]=$value;
-        				}
-        			}
-
-        			$attempt_question_ids_db=$quizresultmarksarray['question_ids'];
-        			if($attempt_question_ids_db!="")
-        			{
-        				$attempt_question_ids_arr=json_decode($attempt_question_ids_db,true);
-
-        				$attempt_question_ids=[];
-	        			foreach($attempt_question_ids_arr as $rowval)
+	        		$resultdata=$this->updatepracticequizresult($user->id,$courseid,$result_date,$result_end_date,$newsubtopic_id);
+	        		if($resultdata)
+	        		{
+	        			if($resultdata['code']=="200")
 	        			{
-	        				foreach($rowval as $rowvalue)
-	        				{
-	        					$attempt_question_ids[]=$rowvalue;
-	        				}
+	        				$success['questionslist'] =$resultdata['message'];
+                			return $this::sendResponse($success, 'Questions List.');
 	        			}
-
-	        			$questions_array_diff=array_values(array_diff($newrandom_question_ids, $attempt_question_ids));
-
-        				$newfinalquestionid=$questions_array_diff[0];
-
-        			}
-        			else{
-        				$newfinalquestionid=$newrandom_question_ids[0];
-        			}
-
-        			$currentquestionindex = array_keys($newrandom_question_ids,$newfinalquestionid);
-
-        			if(count($currentquestionindex) > 0)
-        			{
-        				$current_quiz=$currentquestionindex[0]+1;
-        			}
-        			else{
-        				$current_quiz=1;
-        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>$resultdata['message']]);
+	        			}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        		}
 	        	}
-
-	        	$questiondata=Question::where('id',$newfinalquestionid)->where('question_status','1')->get()->first();
-        			if($questiondata)
-        			{
-        				$questiondataarray=$questiondata->toArray();
-
-	        			if($questiondataarray['question_img']!="")
-				        {
-				        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
-				        }
-				        else{
-				        	$question_img='';
-				        }
-
-				        $questionslist=array(
-				        		'course_id'=>(int)$courseid,
-		        				'course_name'=>"",
-		        				'topic_name'=>"",
-		        				'sub_topic_name'=>"",
-		        				'quiz_name'=>"",
-		        				'quiz_type'=>1,
-		        				'quiz_id'=>$questiondataarray['topic_id'],
-		        				'question_id'=>$questiondataarray['id'],
-		        				'question'=>strip_tags($questiondataarray['question']), 
-		        				'a'=>strip_tags($questiondataarray['a']), 
-		        				'b'=>strip_tags($questiondataarray['b']),
-		        				'c'=>strip_tags($questiondataarray['c']),
-		        				'd'=>strip_tags($questiondataarray['d']),
-		        				'answer'=>strip_tags($questiondataarray['answer']),
-		        				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
-		        				'question_video_link'=>$questiondataarray['question_video_link'],
-		        				'question_img'=>$question_img,
-		        				'current_score'=>$current_score,
-		        				'total_score'=>$total_score,
-		        				'total_questions'=>$total_questions,
-		        				'current_quiz'=>$current_quiz
-		        			);
-        			}
-        			else{
-            			$questionslist=[];
-            		}
-
-                	$success['questionslist'] =  $questionslist;
-                	return $this::sendResponse($success, 'Questions List.');
 
 	        }
 	        else{
@@ -265,9 +107,324 @@ class PracticeQuizDashboardController extends BaseController
 	        }
 	    }
 	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
 
+	}
+
+	public function insertpracticequizresult($userid,$courseid,$result_date,$result_end_date,$newsubtopic_id)
+	{
+		$quiztopicsid=[];
+		foreach ($newsubtopic_id as $key => $value) {
+
+		$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
+		if($coursesubtopicsdetail)
+		{
+			$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','1')->where('quiz_status','1')->get()->first();
+			if($quiztopicdata)
+			{
+				$quiztopicdataarray=$quiztopicdata->toArray();
+				if($quiztopicdataarray)
+				{
+					$quiztopicsid[]=$quiztopicdataarray['id'];
+				}
+			}
+		}
+	  }
+
+	  if(count($quiztopicsid) > 0)
+	  {
+	  	$random_question_ids_arr=[];
+	    $random_question_ids=[];
+	    $total_score=0;
+	    $result_timer=0;
+	    $total_questions=0;
+
+	    foreach($quiztopicsid as $row)
+	    {
+	    	$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','1')->get()->first();
+	    	if($quiztopicdetail)
+	    	{
+	    		$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+	    		if($quiztopicdetaildata['questions_limit']!="")
+				{
+					$total_questions_limit=$quiztopicdetaildata['questions_limit'];
+				}
+				else{
+					$total_questions_limit=0;
+				}
+
+				$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')->inRandomOrder()->limit($total_questions_limit)->get();
+
+				if($random_questionsdata)
+				{
+					$random_questionsdataarray=$random_questionsdata->toArray();
+
+					foreach($random_questionsdataarray as $list)
+    				{
+    					$random_question_ids_arr[$quiztopicdetaildata['id']][]=$list['id'];
+
+    					$random_question_ids[]=$list['id'];
+    				}
+
+				}
+
+				if(isset($random_question_ids_arr[$quiztopicdetaildata['id']]))
+				{
+                	$random_questions_final_list=$random_question_ids_arr[$quiztopicdetaildata['id']];
+
+                	$total_score+=count($random_questions_final_list)*$quiztopicdetaildata['per_q_mark'];
+
+                	$total_questions+=count($random_questions_final_list);
+
+
+                	$result_timer+=$quiztopicdetaildata['timer'];
+
+                }
+                else{
+                	$total_score+=0;
+                	$result_timer+=0;
+                	$total_questions+=0;
+                }
+
+	    	}
+	    }
+
+	    $finalquiztopicids=implode(',',$quiztopicsid);
+		$current_score=0;
+		$current_quiz=1;
+		$newfinalquestionid=$random_question_ids[0];
+
+		try{
+			$resultmarks = new Resultmarks;
+            $resultmarks->topic_id=$finalquiztopicids;
+            $resultmarks->subject=$courseid;
+            $resultmarks->user_id=$userid;
+            $resultmarks->marks=0;
+            $resultmarks->result_timer=$result_timer;
+            $resultmarks->total_questions=$total_questions;
+            $resultmarks->total_marks=$total_score;
+            $resultmarks->result_marks_date=$result_date;
+            $resultmarks->result_marks_end_date=$result_end_date;
+            $resultmarks->result_type=2;
+            $resultmarks->random_question_ids=json_encode($random_question_ids_arr);
+            $resultmarks->save();
+            $result_id=$resultmarks->id;
+		}
+		catch(\Exception $e){
+            $data=array('code'=>'400','message'=>'Something went wrong');
+	  		return $data;    
+         }
+
+         $questiondata=Question::where('id',$newfinalquestionid)->where('question_status','1')->get()->first();
+         if($questiondata)
+         {
+         	$questiondataarray=$questiondata->toArray();
+
+         	if($questiondataarray['question_img']!="")
+	        {
+	        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
+	        }
+	        else{
+	        	$question_img='';
+	        }
+
+	        $questionslist=array(
+        		'course_id'=>(int)$courseid,
+				'course_name'=>"",
+				'topic_name'=>"",
+				'sub_topic_name'=>"",
+				'quiz_name'=>"",
+				'quiz_type'=>1,
+				'quiz_id'=>$questiondataarray['topic_id'],
+				'question_id'=>$questiondataarray['id'],
+				'question'=>strip_tags($questiondataarray['question']), 
+				'a'=>strip_tags($questiondataarray['a']), 
+				'b'=>strip_tags($questiondataarray['b']),
+				'c'=>strip_tags($questiondataarray['c']),
+				'd'=>strip_tags($questiondataarray['d']),
+				'answer'=>strip_tags($questiondataarray['answer']),
+				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+				'question_video_link'=>$questiondataarray['question_video_link'],
+				'question_img'=>$question_img,
+				'current_score'=>$current_score,
+				'total_score'=>$total_score,
+				'total_questions'=>$total_questions,
+				'current_quiz'=>$current_quiz,
+				'result_id'=>$result_id
+			);
+
+         }
+         else{
+         	$questionslist=[];
+         }
+
+         $data=array('code'=>'200','message'=>$questionslist);
+	  		return $data;
+
+	  }
+	  else{
+	  	$data=array('code'=>'400','message'=>'Please choose at least one sub_topic to start the test');
+	  	return $data;
+	  }
+	}
+
+	public function updatepracticequizresult($userid,$courseid,$result_date,$result_end_date,$newsubtopic_id)
+	{
+
+		$quiztopicsid=[];
+		foreach ($newsubtopic_id as $key => $value) {
+
+		$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
+		if($coursesubtopicsdetail)
+		{
+			$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','1')->where('quiz_status','1')->get()->first();
+			if($quiztopicdata)
+			{
+				$quiztopicdataarray=$quiztopicdata->toArray();
+				if($quiztopicdataarray)
+				{
+					$quiztopicsid[]=$quiztopicdataarray['id'];
+				}
+			}
+		}
+	  }
+
+	  if(count($quiztopicsid) > 0)
+	  {
+	  	$random_question_ids_arr=[];
+	    $random_question_ids=[];
+	    $total_score=0;
+	    $result_timer=0;
+	    $total_questions=0;
+
+	    foreach($quiztopicsid as $row)
+	    {
+	    	$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','1')->get()->first();
+	    	if($quiztopicdetail)
+	    	{
+	    		$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+	    		if($quiztopicdetaildata['questions_limit']!="")
+				{
+					$total_questions_limit=$quiztopicdetaildata['questions_limit'];
+				}
+				else{
+					$total_questions_limit=0;
+				}
+
+				$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')->inRandomOrder()->limit($total_questions_limit)->get();
+
+				if($random_questionsdata)
+				{
+					$random_questionsdataarray=$random_questionsdata->toArray();
+
+					foreach($random_questionsdataarray as $list)
+    				{
+    					$random_question_ids_arr[$quiztopicdetaildata['id']][]=$list['id'];
+
+    					$random_question_ids[]=$list['id'];
+    				}			
+				}
+
+				if(isset($random_question_ids_arr[$quiztopicdetaildata['id']]))
+				{
+					$random_questions_final_list=$random_question_ids_arr[$quiztopicdetaildata['id']];
+
+					$total_score+=count($random_questions_final_list)*$quiztopicdetaildata['per_q_mark'];
+
+					$total_questions+=count($random_questions_final_list);
+
+					$result_timer+=$quiztopicdetaildata['timer'];
+
+				}
+				else{
+					$total_score+=0;
+                	$result_timer+=0;
+                	$total_questions+=0;
+				}
+	    	}
+	    }
+
+	    $finalquiztopicids=implode(',',$quiztopicsid);
+	    $current_score=0;
+	    $current_quiz=1;
+	    $newfinalquestionid=$random_question_ids[0];
+
+	    try{
+			$resultmarks = new Resultmarks;
+            $resultmarks->topic_id=$finalquiztopicids;
+            $resultmarks->subject=$courseid;
+            $resultmarks->user_id=$userid;
+            $resultmarks->marks=0;
+            $resultmarks->result_timer=$result_timer;
+            $resultmarks->total_questions=$total_questions;
+            $resultmarks->total_marks=$total_score;
+            $resultmarks->result_marks_date=$result_date;
+            $resultmarks->result_marks_end_date=$result_end_date;
+            $resultmarks->result_type=2;
+            $resultmarks->random_question_ids=json_encode($random_question_ids_arr);
+            $resultmarks->save();
+            $result_id=$resultmarks->id;
+		}
+		catch(\Exception $e){
+            $data=array('code'=>'400','message'=>'Something went wrong.');
+	  		return $data;    
+         }
+
+
+         $questiondata=Question::where('id',$newfinalquestionid)->where('question_status','1')->get()->first();
+         if($questiondata)
+         {
+         	$questiondataarray=$questiondata->toArray();
+
+         	if($questiondataarray['question_img']!="")
+	        {
+	        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
+	        }
+	        else{
+	        	$question_img='';
+	        }
+
+	        $questionslist=array(
+        		'course_id'=>(int)$courseid,
+				'course_name'=>"",
+				'topic_name'=>"",
+				'sub_topic_name'=>"",
+				'quiz_name'=>"",
+				'quiz_type'=>1,
+				'quiz_id'=>$questiondataarray['topic_id'],
+				'question_id'=>$questiondataarray['id'],
+				'question'=>strip_tags($questiondataarray['question']), 
+				'a'=>strip_tags($questiondataarray['a']), 
+				'b'=>strip_tags($questiondataarray['b']),
+				'c'=>strip_tags($questiondataarray['c']),
+				'd'=>strip_tags($questiondataarray['d']),
+				'answer'=>strip_tags($questiondataarray['answer']),
+				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+				'question_video_link'=>$questiondataarray['question_video_link'],
+				'question_img'=>$question_img,
+				'current_score'=>$current_score,
+				'total_score'=>$total_score,
+				'total_questions'=>$total_questions,
+				'current_quiz'=>$current_quiz,
+				'result_id'=>$result_id
+			);
+
+         }
+         else{
+         	$questionslist=[];
+         }
+
+         $data=array('code'=>'200','message'=>$questionslist);
+	  		return $data;
+
+	  }
+	  else{
+	  	$data=array('code'=>'400','message'=>'Please choose at least one sub_topic to start the test');
+	  	return $data;
+	  }
 	}
 
 
@@ -281,7 +438,8 @@ class PracticeQuizDashboardController extends BaseController
 		            'quiz_id'=>'required',
 		            'question_id'=>'required',
 		            'answer'=>'required',
-		            'course_id'=>'required'
+		            'course_id'=>'required',
+		            'result_id'=>'required'
 		        ]);
 
 		        if($validator->fails()){
@@ -292,25 +450,26 @@ class PracticeQuizDashboardController extends BaseController
 	        	$questionid=$request->question_id;
 	        	$user_anwer=$request->answer;
 	        	$courseid=$request->course_id;
+	        	$result_id=$request->result_id;
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
 
-	        	$result_date=date('Y-m-d H:i:s');
+		        $result_date=date('Y-m-d H:i:s');
 
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
-	        		$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->whereRaw('FIND_IN_SET(?, topic_id)', $quizid)->where('subject',$courseid)->where('result_type','2')->get()->first();
+		        $quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
+		        if($quiztopicdetail)
+		        {
+		        	$quiztopicdetaildata=$quiztopicdetail->toArray();
 
-	        		if($randomquizresultmarks)
-	        		{
-	        			$randomquizresultmarksarray=$randomquizresultmarks->toArray();
+		        	$randomquizresultmarks=Resultmarks::where('id',$result_id)->where('result_type','2')->get()->first();
+		        	if($randomquizresultmarks)
+		        	{
+		        		$randomquizresultmarksarray=$randomquizresultmarks->toArray();
 
-	        			$random_question_ids_db=$randomquizresultmarksarray['random_question_ids'];
+		        		$random_question_ids_db=$randomquizresultmarksarray['random_question_ids'];
 
 		        		$random_question_ids_arr=json_decode($random_question_ids_db,true);
 
@@ -323,12 +482,12 @@ class PracticeQuizDashboardController extends BaseController
 	        				}
 	        			}
 
-		        		if(in_array($questionid, $random_questions_final_list))
-		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
-		        			if($questiondetail)
-		        			{
-		        				$questiondetaildata=$questiondetail->toArray();
+	        			if(in_array($questionid, $random_questions_final_list))
+	        			{
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				if($questiondetail)
+	        				{
+	        					$questiondetaildata=$questiondetail->toArray();
 
 		        				$currentquestionindex = array_keys($random_questions_final_list,$questionid);
 
@@ -388,55 +547,56 @@ class PracticeQuizDashboardController extends BaseController
 
 	        			if($questiondetaildata['answer']==$user_anwer)
 	        			{
-	        				$data=$this->submitcorrectquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
-	        				if($data['status']==400)
+	        				$submitdata=$this->submitcorrectquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
+	        				if($submitdata['status']==400)
 	        				{
-	        					return $this::sendError('Unauthorised Exception.', ['error'=>$data['message']]);
+	        					return $this::sendError('Unauthorised Exception.', ['error'=>$submitdata['message']]);
 	        				}
 	        				else{
-	        					$success['questiondet'] =  $data['message'];
+	        					$success['questiondet'] =  $submitdata['message'];
         						return $this::sendResponse($success, 'Questions Details.');
 	        				}
 	        			}
-	        			elseif($questiondetaildata['answer']!=$user_anwer){
-	        				$data=$this->submitwrongquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
-	        				if($data['status']==400)
+	        			elseif($questiondetaildata['answer']!=$user_anwer)
+	        			{
+	        				$submitdata=$this->submitwrongquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
+	        				if($submitdata['status']==400)
 	        				{
-	        					return $this::sendError('Unauthorised Exception.', ['error'=>$data['message']]);
+	        					return $this::sendError('Unauthorised Exception.', ['error'=>$submitdata['message']]);
 	        				}
 	        				else{
-	        					$success['questiondet'] =  $data['message'];
+	        					$success['questiondet'] =  $submitdata['message'];
         						return $this::sendResponse($success, 'Questions Details.');
 	        				}
 	        			}
 	        			else{
-	        				$data=$this->skipquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
-	        				if($data['status']==400)
+	        				$submitdata=$this->skipquizanswer($courseid,$user->id,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id);
+	        				if($submitdata['status']==400)
 	        				{
-	        					return $this::sendError('Unauthorised Exception.', ['error'=>$data['message']]);
+	        					return $this::sendError('Unauthorised Exception.', ['error'=>$submitdata['message']]);
 	        				}
 	        				else{
-	        					$success['questiondet'] =  $data['message'];
+	        					$success['questiondet'] =  $submitdata['message'];
         						return $this::sendResponse($success, 'Questions Details.');
 	        				}
 	        			}
 
-		        			}
-		        			else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-		        			}
-		        		}
-		        		else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-		        		}
-	        		}
-	        		else{
-	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        		}
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        	}
+	        				}
+	        				else{
+	        					return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        				}
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        			}
+		        	}
+		        	else{
+		        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        	}
+		        }
+		        else{
+		        	return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        }
 	        }
 	        else{
 	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
@@ -446,6 +606,8 @@ class PracticeQuizDashboardController extends BaseController
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
                }
 	}
+
+
 
 	public function submitcorrectquizanswer($courseid,$userid,$quiztopicdetaildata,$questiondetaildata,$result_date,$randomquizresultmarksarray,$previous_question_key,$next_question_key,$user_anwer,$previous_quiz_id,$next_quiz_id)
 	{
@@ -484,7 +646,8 @@ class PracticeQuizDashboardController extends BaseController
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
 			'previous_quiz_id'=>(int)$previous_quiz_id,
-			'next_quiz_id'=>(int)$next_quiz_id
+			'next_quiz_id'=>(int)$next_quiz_id,
+			'result_id'=>(int)$randomquizresultmarksarray['id']
 		);
 
 		}
@@ -588,7 +751,8 @@ class PracticeQuizDashboardController extends BaseController
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
 			'previous_quiz_id'=>(int)$previous_quiz_id,
-			'next_quiz_id'=>(int)$next_quiz_id
+			'next_quiz_id'=>(int)$next_quiz_id,
+			'result_id'=>(int)$randomquizresultmarksarray['id']
 		);
 
 		}
@@ -694,7 +858,8 @@ class PracticeQuizDashboardController extends BaseController
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
 			'previous_quiz_id'=>(int)$previous_quiz_id,
-			'next_quiz_id'=>(int)$next_quiz_id
+			'next_quiz_id'=>(int)$next_quiz_id,
+			'result_id'=>(int)$randomquizresultmarksarray['id']
 		);
 
 		}
@@ -762,18 +927,17 @@ class PracticeQuizDashboardController extends BaseController
 	}
 
 
-
 	public function getpracticeobjectivequizquestionexplaination(Request $request)
 	{
 		try{
 	        $user=auth()->user();
 	        if($user)
 	        {
-
-		        $validator = Validator::make($request->all(), [
+	        	$validator = Validator::make($request->all(), [
 		            'quiz_id'=>'required',
 		            'question_id'=>'required',
-		            'course_id'=>'required'
+		            'course_id'=>'required',
+		            'result_id'=>'required'
 		        ]);
 
 		        if($validator->fails()){
@@ -783,6 +947,7 @@ class PracticeQuizDashboardController extends BaseController
 		        $quizid=$request->quiz_id;
 	        	$questionid=$request->question_id;
 	        	$courseid=$request->course_id;
+	        	$result_id=$request->result_id;
 	        	$result_date=date('Y-m-d H:i:s');
 
 	        	$subject = Subject::find($courseid);
@@ -790,15 +955,16 @@ class PracticeQuizDashboardController extends BaseController
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
 
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+		        $quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
+		        if($quiztopicdetail)
+		        {
+		        	$quiztopicdetaildata=$quiztopicdetail->toArray();
+
 	        		$course_id=$quiztopicdetaildata['subject'];
 	        		$topic_id=$quiztopicdetaildata['category'];
 	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
 
-	        		$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->whereRaw('FIND_IN_SET(?, topic_id)', $quizid)->where('subject',$courseid)->where('result_type','2')->get()->first();
+	        		$randomquizresultmarks=Resultmarks::where('id',$result_id)->where('result_type','2')->get()->first();
 	        		if($randomquizresultmarks)
 	        		{
 	        			$randomquizresultmarksarray=$randomquizresultmarks->toArray();
@@ -816,27 +982,28 @@ class PracticeQuizDashboardController extends BaseController
 	        				}
 	        			}
 
-		        		if(in_array($questionid, $random_questions_final_list))
-		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
-		        			if($questiondetail)
-		        			{
-		        				$questiondetaildata=$questiondetail->toArray();
-
-		        				$questiondetaildata=$questiondetail->toArray();
-
-		        				$currentquestionindex = array_keys($random_questions_final_list,$questionid);
-
-		        		if(count($currentquestionindex) > 0)
+	        			if(in_array($questionid, $random_questions_final_list))
 	        			{
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+
+	        				if($questiondetail)
+	        				{
+	        					$questiondetaildata=$questiondetail->toArray();
+
+	        					$currentquestionindex = array_keys($random_questions_final_list,$questionid);
+	        				if(count($currentquestionindex) > 0)
+	        				{
 	        				$currentquestionindex=$currentquestionindex[0];
+
 	        				$current_quiz=$currentquestionindex+1;
+
 	        				$next_question_index=$currentquestionindex+1;
+
 	        				$previous_question_index=$currentquestionindex-1;
 
-	        				if(isset($random_questions_final_list[$previous_question_index]))
-	        				{
-	        					$previous_question_key=$random_questions_final_list[$previous_question_index];
+        					if(isset($random_questions_final_list[$previous_question_index]))
+        					{
+        						$previous_question_key=$random_questions_final_list[$previous_question_index];
 
 	        					$previous_question_data=Question::find($previous_question_key);
 	        					if(is_null($previous_question_data)){
@@ -845,16 +1012,15 @@ class PracticeQuizDashboardController extends BaseController
 						        else{
 						        	$previous_quiz_id=$previous_question_data->topic_id;
 						        }
-
-	        				}
-	        				else{
-	        					$previous_question_key=0;
+        					}
+        					else{
+        						$previous_question_key=0;
 	        					$previous_quiz_id=0;
-	        				}
+        					}
 
-	        				if(isset($random_questions_final_list[$next_question_index]))
-	        				{
-	        					$next_question_key=$random_questions_final_list[$next_question_index];
+        					if(isset($random_questions_final_list[$next_question_index]))
+        					{
+        						$next_question_key=$random_questions_final_list[$next_question_index];
 
 	        					$next_question_data=Question::find($next_question_key);
 	        					if(is_null($next_question_data)){
@@ -863,20 +1029,20 @@ class PracticeQuizDashboardController extends BaseController
 						        else{
 						        	$next_quiz_id=$next_question_data->topic_id;
 						        }
+        					}
+        					else{
+        						$next_question_key=0;
+	        					$next_quiz_id=0;
+        					}
+
 	        				}
 	        				else{
+	        					$current_quiz=0;
+	        					$previous_question_key=0;
+	        					$previous_quiz_id=0;
 	        					$next_question_key=0;
 	        					$next_quiz_id=0;
 	        				}
-
-	        			}
-	        			else{
-	        				$current_quiz=0;
-	        				$previous_question_key=0;
-	        				$previous_quiz_id=0;
-	        				$next_question_key=0;
-	        				$next_quiz_id=0;
-	        			}
 
 	        			if($questiondetaildata['question_img']!="")
 				        {
@@ -909,40 +1075,42 @@ class PracticeQuizDashboardController extends BaseController
 		        					'current_score'=>$current_score,
 			        				'total_score'=>$total_marks,
 			        				'total_questions'=>$total_questions,
-			        				'current_quiz'=>$current_quiz
+			        				'current_quiz'=>$current_quiz,
+			        				'result_id'=>(int)$result_id
 			        			);
 
 
-		        			}
-		        			else{
-		        				$questiondet=null;
-		        			}
+	        				}
+	        				else{
+	        					$questiondet=null;
+	        				}
 
-		        			$success['questiondet'] =  $questiondet;
+	        				$success['questiondet'] =  $questiondet;
         					return $this::sendResponse($success, 'Questions Details.');
 
-		        		}
-		        		else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-		        		}
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        			}
 	        		}
 	        		else{
 	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        		}
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        	}
-		    }
-		    else{
-		    	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-		    }
-		}
-		catch(\Exception $e){
+		        }
+		        else{
+		        	return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        }
+
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
-	}
 
+	}
 
 	public function getpracticeobjectivequizquestiondetails(Request $request)
 	{
@@ -950,11 +1118,11 @@ class PracticeQuizDashboardController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-
-		        $validator = Validator::make($request->all(), [
+	        	$validator = Validator::make($request->all(), [
 		            'quiz_id'=>'required',
 		            'question_id'=>'required',
-		            'course_id'=>'required'
+		            'course_id'=>'required',
+		            'result_id'=>'required'
 		        ]);
 
 		        if($validator->fails()){
@@ -964,6 +1132,7 @@ class PracticeQuizDashboardController extends BaseController
 		        $quizid=$request->quiz_id;
 	        	$questionid=$request->question_id;
 	        	$courseid=$request->course_id;
+	        	$result_id=$request->result_id;
 	        	$result_date=date('Y-m-d H:i:s');
 
 	        	$subject = Subject::find($courseid);
@@ -971,15 +1140,15 @@ class PracticeQuizDashboardController extends BaseController
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 		        }
 
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+		        $quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','1')->get()->first();
+		        if($quiztopicdetail)
+		        {
+		        	$quiztopicdetaildata=$quiztopicdetail->toArray();
 	        		$course_id=$quiztopicdetaildata['subject'];
 	        		$topic_id=$quiztopicdetaildata['category'];
 	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
 
-	        		$randomquizresultmarks=Resultmarks::where('user_id',$user->id)->whereRaw('"'.$result_date.'" between `result_marks_date` and `result_marks_end_date`')->whereRaw('FIND_IN_SET(?, topic_id)', $quizid)->where('subject',$courseid)->where('result_type','2')->get()->first();
+	        		$randomquizresultmarks=Resultmarks::where('id',$result_id)->where('result_type','2')->get()->first();
 	        		if($randomquizresultmarks)
 	        		{
 	        			$randomquizresultmarksarray=$randomquizresultmarks->toArray();
@@ -997,12 +1166,12 @@ class PracticeQuizDashboardController extends BaseController
 	        				}
 	        			}
 
-		        		if(in_array($questionid, $random_questions_final_list))
-		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
-		        			if($questiondetail)
-		        			{
-		        				$questiondetaildata=$questiondetail->toArray();
+	        			if(in_array($questionid, $random_questions_final_list))
+	        			{
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				if($questiondetail)
+	        				{
+	        					$questiondetaildata=$questiondetail->toArray();
 
 		        				$questiondetaildata=$questiondetail->toArray();
 
@@ -1095,552 +1264,54 @@ class PracticeQuizDashboardController extends BaseController
 		        					'current_score'=>$current_score,
 			        				'total_score'=>$total_marks,
 			        				'total_questions'=>$total_questions,
-			        				'current_quiz'=>$current_quiz
+			        				'current_quiz'=>$current_quiz,
+			        				'result_id'=>(int)$result_id
 			        			);
 
 
-		        			}
-		        			else{
-		        				$questiondet=null;
-		        			}
+	        				}
+	        				else{
+	        					$questiondet=null;
+	        				}
 
-		        			$success['questiondet'] =  $questiondet;
+	        				$success['questiondet'] =  $questiondet;
         					return $this::sendResponse($success, 'Questions Details.');
-
-		        		}
-		        		else{
-		        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-		        		}
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        			}
 	        		}
 	        		else{
 	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
 	        		}
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        	}
-		    }
-		    else{
-		    	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-		    }
-		}
-		catch(\Exception $e){
+		        }
+		        else{
+		        	return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        }
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
+
 	}
 
 
-	public function getpracticetheoryquizquestions(Request $request)
+	public function deleteresultanswer(Request $request)
 	{
-		try{
-	        $user=auth()->user();
-	        if($user)
-	        {
-	        	$subtopic_id=$request->subtopic_id;
-	        	$result_date=date('Y-m-d');
+		$user=auth()->user();
+		$quizid=$request->quiz_id;
+	    $questionid=$request->question_id;
+	    $courseid=$request->course_id;
+	    $result_id=$request->result_id;
 
-	        	if(count($subtopic_id) > 0)
-	        	{
-	        		$quiztopicsid=[];
-	        		foreach ($subtopic_id as $key => $value) {
-
-	        			$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
-	        			if($coursesubtopicsdetail)
-	        			{
-	        				$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','2')->where('quiz_status','1')->get()->first();
-		        			if($quiztopicdata)
-		        			{
-		        				$quiztopicdataarray=$quiztopicdata->toArray();
-		        				if($quiztopicdataarray)
-		        				{
-		        					$quiztopicsid[]=$quiztopicdataarray['id'];
-		        				}
-		        			}
-	        			}
-	        		}
-
-	        		if(count($quiztopicsid) > 0)
-	        		{
-	        			$random_question_ids=[];
-	        			foreach($quiztopicsid as $row)
-	        			{
-	        				$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','2')->get()->first();
-	        				if($quiztopicdetail)
-	        				{
-	        					$quiztopicdetaildata=$quiztopicdetail->toArray();
-
-		        				if($quiztopicdetaildata['questions_limit']!="")
-		        				{
-		        					$total_questions_limit=$quiztopicdetaildata['questions_limit'];
-		        				}
-		        				else{
-		        					$total_questions_limit=0;
-		        				}
-
-		        				$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')->inRandomOrder()->limit($total_questions_limit)->get();
-
-                				if($random_questionsdata)
-                				{
-                					$random_questionsdataarray=$random_questionsdata->toArray();
-
-                				foreach($random_questionsdataarray as $list)
-                				{
-                					$random_question_ids[]=$list['id'];
-                				}
-
-                				}
-	        				}
-	        			}
-
-	        			if(count($random_question_ids) > 0)
-	        			{
-	        				$finalquiztopicids=implode(',',$quiztopicsid);
-	        				$newfinalquestionid=$random_question_ids[0];
-
-	        				$theoryquizresultdata=Theoryquizresult::where('user_id',$user->id)->where('result_type','2')->where('result_date',$result_date)->get()->first();
-	        				if($theoryquizresultdata==null)
-                				{
-                					try{
-                					$theoryquizresult = new Theoryquizresult;
-				                    $theoryquizresult->topic_id=$finalquiztopicids;
-				                    $theoryquizresult->user_id=$user->id;
-				                    $theoryquizresult->result_type=2;
-				                    $theoryquizresult->result_date=$result_date;
-				                    $theoryquizresult->random_questions=json_encode($random_question_ids);
-				                    $theoryquizresult->save();
-                					}
-                					catch(\Exception $e){
-
-					                  return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-					               }	
-
-                				}
-                				else{
-                					$theoryquizresultarray=$theoryquizresultdata->toArray();
-                					$theoryquizresultid=$theoryquizresultarray['id'];
-
-                					try{
-                			$theoryquizresultupdate = Theoryquizresult::find($theoryquizresultid);
-						          if(is_null($theoryquizresultupdate)){
-						           return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-						        }
-						        else{
-						        	$theoryquizresultupdate->topic_id=$finalquiztopicids;
-						        	$theoryquizresultupdate->random_questions=json_encode($random_question_ids);
-						        	$theoryquizresultupdate->save();
-						        }
-                					}
-                					catch(\Exception $e){
-					                  return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-					               }
-                				}
-
-                			$questiondata=Question::where('id',$newfinalquestionid)->get()->first();
-
-                			if($questiondata)
-                			{
-                				$questiondataarray=$questiondata->toArray();
-
-
-                	$currentquestionindex = array_keys($random_question_ids,$newfinalquestionid);
-
-		        		if(count($currentquestionindex) > 0)
-	        			{
-	        				$currentquestionindex=$currentquestionindex[0];
-	        				$next_question_index=$currentquestionindex+1;
-	        				$previous_question_index=$currentquestionindex-1;
-
-	        				if(isset($random_question_ids[$previous_question_index]))
-	        				{
-	        					$previous_question_key=$random_question_ids[$previous_question_index];
-
-	        					$previous_question_data=Question::find($previous_question_key);
-	        					if(is_null($previous_question_data)){
-						           $previous_quiz_id=0;
-						        }
-						        else{
-						        	$previous_quiz_id=$previous_question_data->topic_id;
-						        }
-
-	        				}
-	        				else{
-	        					$previous_quiz_id=0;
-	        					$previous_question_key=0;
-	        				}
-
-	        				if(isset($random_question_ids[$next_question_index]))
-	        				{
-	        					$next_question_key=$random_question_ids[$next_question_index];
-
-	        					$next_question_data=Question::find($next_question_key);
-	        					if(is_null($next_question_data)){
-						           $next_quiz_id=0;
-						        }
-						        else{
-						        	$next_quiz_id=$next_question_data->topic_id;
-						        }
-	        				}
-	        				else{
-	        					$next_quiz_id=0;
-	        					$next_question_key=0;
-	        				}
-
-	        			}
-	        			else{
-	        				$previous_quiz_id=0;
-	        				$previous_question_key=0;
-	        				$next_question_key=0;
-	        				$next_quiz_id=0;
-	        			}
-
-	        			if($questiondataarray['question_img']!="")
-				        {
-				        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
-				        }
-				        else{
-				        	$question_img='';
-				        }
-
-				        $questionslist=array(
-			        				'course_name'=>"",
-			        				'topic_name'=>"",
-			        				'sub_topic_name'=>"",
-			        				'quiz_name'=>"",
-			        				'quiz_type'=>"",
-			        				'quiz_id'=>$questiondataarray['topic_id'],
-			        				'question_id'=>$questiondataarray['id'],
-			        				'question'=>strip_tags($questiondataarray['question']), 
-			        				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
-			        				'question_video_link'=>$questiondataarray['question_video_link'],
-			        				'question_img'=>$question_img,
-			        				'previous_question_key'=>(int)$previous_question_key,
-			        				'previous_quiz_id'=>(int)$previous_quiz_id,
-		        					'next_question_key'=>(int)$next_question_key,
-		        					'next_quiz_id'=>(int)$next_quiz_id
-
-			        			);
-
-                			}
-                			else{
-			        			$questionslist=null;
-			        		}
-
-			        		$success['questionslist'] =  $questionslist;
-                			return $this::sendResponse($success, 'Questions List.');
-
-	        			}
-	        			else{
-	        				return $this::sendError('Unauthorised Exception.', ['error'=>'No more questions available.']);
-	        			}		
-	        		}
-	        		else{
-	        			return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
-	        		}
-
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
-	        	}
-	        }
-	        else{
-	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-	        }
-	    }
-	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
-               }
+	    Result::where('topic_id',$quizid)->where('user_id',$user->id)->where('question_id',$questionid)->where('result_marks_id',$result_id)->delete();
 
 	}
 
-
-	public function getpracticetheoryquizquestionexplaination(Request $request)
-	{
-		try{
-	        $user=auth()->user();
-	        if($user)
-	        {
-	        	$validator = Validator::make($request->all(), [
-		            'quiz_id'=>'required',
-		            'question_id'=>'required'
-		        ]);
-
-		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
-		        }
-
-		        $quizid=$request->quiz_id;
-	        	$questionid=$request->question_id;
-	        	$result_date=date('Y-m-d');
-
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','2')->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
-	        		$course_id=$quiztopicdetaildata['subject'];
-	        		$topic_id=$quiztopicdetaildata['category'];
-	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
-
-	        		$theoryquizresultdata=Theoryquizresult::where('user_id',$user->id)->where('result_type','2')->where('result_date',$result_date)->get()->first();
-	        		if($theoryquizresultdata)
-	        		{
-	        			$theoryquizresultarray=$theoryquizresultdata->toArray();
-	        			$random_question_ids_db=$theoryquizresultarray['random_questions'];
-
-	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
-	        			if(in_array($questionid, $random_questions_final_list))
-	        			{
-	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
-	        				if($questiondetail)
-	        				{
-	        					$questiondetaildata=$questiondetail->toArray();
-
-	        					$currentquestionindex = array_keys($random_questions_final_list,$questionid);
-
-	        			if(count($currentquestionindex) > 0)
-	        			{
-	        				$currentquestionindex=$currentquestionindex[0];
-	        				$next_question_index=$currentquestionindex+1;
-	        				$previous_question_index=$currentquestionindex-1;
-
-	        				if(isset($random_questions_final_list[$previous_question_index]))
-	        				{
-	        					$previous_question_key=$random_questions_final_list[$previous_question_index];
-
-	        					$previous_question_data=Question::find($previous_question_key);
-	        					if(is_null($previous_question_data)){
-						           $previous_quiz_id=0;
-						        }
-						        else{
-						        	$previous_quiz_id=$previous_question_data->topic_id;
-						        }
-
-	        				}
-	        				else{
-	        					$previous_question_key=0;
-	        					$previous_quiz_id=0;
-	        				}
-
-	        				if(isset($random_questions_final_list[$next_question_index]))
-	        				{
-	        					$next_question_key=$random_questions_final_list[$next_question_index];
-
-	        					$next_question_data=Question::find($next_question_key);
-	        					if(is_null($next_question_data)){
-						           $next_quiz_id=0;
-						        }
-						        else{
-						        	$next_quiz_id=$next_question_data->topic_id;
-						        }
-	        				}
-	        				else{
-	        					$next_question_key=0;
-	        					$next_quiz_id=0;
-	        				}
-
-	        			}
-	        			else{
-	        				$previous_question_key=0;
-	        				$previous_quiz_id=0;
-	        				$next_question_key=0;
-	        				$next_quiz_id=0;
-	        			}
-
-	        			if($questiondetaildata['question_img']!="")
-				        {
-				        	$question_img=url('/').'/images/questions/'.$questiondetaildata['question_img'];
-				        }
-				        else{
-				        	$question_img='';
-				        }
-
-				        $questiondet=array(
-			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
-			        				'quiz_id'=>$quiztopicdetaildata['id'],
-			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>strip_tags($questiondetaildata['question']), 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
-			        				'question_img'=>$question_img,
-			        				'previous_question_key'=>(int)$previous_question_key,
-			        				'previous_quiz_id'=>(int)$previous_quiz_id,
-		        					'next_question_key'=>(int)$next_question_key,
-		        					'next_quiz_id'=>(int)$next_quiz_id
-			        			);
-
-				        	$success['questiondet'] =  $questiondet;
-        					return $this::sendResponse($success, 'Questions Details.');
-
-
-	        				}
-	        				else{
-	        					return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        				}
-	        			}
-	        			else{
-	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        			}
-	        		}
-	        		else{
-	        			return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
-	        		}
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
-	        	}
-	        }
-	        else{
-	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-	        }
-	    }
-	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
-               }
-	}
-
-
-	public function getpracticetheoryquizquestiondetails(Request $request)
-	{
-		try{
-	        $user=auth()->user();
-	        if($user)
-	        {
-	        	$validator = Validator::make($request->all(), [
-		            'quiz_id'=>'required',
-		            'question_id'=>'required'
-		        ]);
-
-		        if($validator->fails()){
-		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
-		        }
-
-		        $quizid=$request->quiz_id;
-	        	$questionid=$request->question_id;
-	        	$result_date=date('Y-m-d');
-
-	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','2')->get()->first();
-	        	if($quiztopicdetail)
-	        	{
-	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
-	        		$course_id=$quiztopicdetaildata['subject'];
-	        		$topic_id=$quiztopicdetaildata['category'];
-	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
-
-	        		$theoryquizresultdata=Theoryquizresult::where('user_id',$user->id)->where('result_type','2')->where('result_date',$result_date)->get()->first();
-	        		if($theoryquizresultdata)
-	        		{
-	        			$theoryquizresultarray=$theoryquizresultdata->toArray();
-	        			$random_question_ids_db=$theoryquizresultarray['random_questions'];
-
-	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
-	        			if(in_array($questionid, $random_questions_final_list))
-	        			{
-	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
-	        				if($questiondetail)
-	        				{
-	        					$questiondetaildata=$questiondetail->toArray();
-
-	        					$currentquestionindex = array_keys($random_questions_final_list,$questionid);
-
-	        			if(count($currentquestionindex) > 0)
-	        			{
-	        				$currentquestionindex=$currentquestionindex[0];
-	        				$next_question_index=$currentquestionindex+1;
-	        				$previous_question_index=$currentquestionindex-1;
-
-	        				if(isset($random_questions_final_list[$previous_question_index]))
-	        				{
-	        					$previous_question_key=$random_questions_final_list[$previous_question_index];
-
-	        					$previous_question_data=Question::find($previous_question_key);
-	        					if(is_null($previous_question_data)){
-						           $previous_quiz_id=0;
-						        }
-						        else{
-						        	$previous_quiz_id=$previous_question_data->topic_id;
-						        }
-
-	        				}
-	        				else{
-	        					$previous_question_key=0;
-	        					$previous_quiz_id=0;
-	        				}
-
-	        				if(isset($random_questions_final_list[$next_question_index]))
-	        				{
-	        					$next_question_key=$random_questions_final_list[$next_question_index];
-
-	        					$next_question_data=Question::find($next_question_key);
-	        					if(is_null($next_question_data)){
-						           $next_quiz_id=0;
-						        }
-						        else{
-						        	$next_quiz_id=$next_question_data->topic_id;
-						        }
-	        				}
-	        				else{
-	        					$next_question_key=0;
-	        					$next_quiz_id=0;
-	        				}
-
-	        			}
-	        			else{
-	        				$previous_question_key=0;
-	        				$previous_quiz_id=0;
-	        				$next_question_key=0;
-	        				$next_quiz_id=0;
-	        			}
-
-	        			if($questiondetaildata['question_img']!="")
-				        {
-				        	$question_img=url('/').'/images/questions/'.$questiondetaildata['question_img'];
-				        }
-				        else{
-				        	$question_img='';
-				        }
-
-				        $questiondet=array(
-			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
-			        				'quiz_id'=>$quiztopicdetaildata['id'],
-			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>strip_tags($questiondetaildata['question']), 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
-			        				'question_img'=>$question_img,
-			        				'previous_question_key'=>(int)$previous_question_key,
-			        				'previous_quiz_id'=>(int)$previous_quiz_id,
-		        					'next_question_key'=>(int)$next_question_key,
-		        					'next_quiz_id'=>(int)$next_quiz_id
-			        			);
-
-				        	$success['questiondet'] =  $questiondet;
-        					return $this::sendResponse($success, 'Questions Details.');
-
-
-	        				}
-	        				else{
-	        					return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        				}
-	        			}
-	        			else{
-	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
-	        			}
-	        		}
-	        		else{
-	        			return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
-	        		}
-	        	}
-	        	else{
-	        		return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
-	        	}
-	        }
-	        else{
-	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
-	        }
-	    }
-	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
-               }
-	}
 
 
 
