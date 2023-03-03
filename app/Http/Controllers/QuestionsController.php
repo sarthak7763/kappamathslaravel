@@ -381,28 +381,35 @@ class QuestionsController extends Controller
       		return redirect('admin/questions/')->with('error','Something went wrong.');
       	}
       	else{
-  			try{
-  				$question = new Question;
-                $question->topic_id=$request->topic_id;
-                $question->question=$request->question;
-                $question->a=$request->a;
-                $question->b=$request->b;
-                $question->c=$request->c;
-                $question->d=$request->d;
-                $question->answer=$request->answer;
-                $question->code_snippet="";
-                $question->answer_exp=$request->answer_exp;
-                $question->question_img=$question_img;
-                $question->question_video_link=$question_video_link;
-                $question->answer_explaination_img=$answer_explaination_img;
-                $question->answer_explaination_video_link=$answer_explaination_video_link;
-                $question->question_status=1;
-                $question->save();
-	          return redirect('admin/questions/'.$topicid)->with('success','Question has been added.');
+      		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+      		if($checkquizquestion)
+      		{
+      			return back()->with('error','Question already exists.');
+      		}
+      		else{
+	      			try{
+	  				$question = new Question;
+	                $question->topic_id=$request->topic_id;
+	                $question->question=$request->question;
+	                $question->a=$request->a;
+	                $question->b=$request->b;
+	                $question->c=$request->c;
+	                $question->d=$request->d;
+	                $question->answer=$request->answer;
+	                $question->code_snippet="";
+	                $question->answer_exp=$request->answer_exp;
+	                $question->question_img=$question_img;
+	                $question->question_video_link=$question_video_link;
+	                $question->answer_explaination_img=$answer_explaination_img;
+	                $question->answer_explaination_video_link=$answer_explaination_video_link;
+	                $question->question_status=1;
+	                $question->save();
+		          return redirect('admin/questions/'.$topicid)->with('success','Question has been added.');
 
-	        }catch(\Exception $e){
-	           return back()->with('error',$e->getMessage());
-	        }
+		        }catch(\Exception $e){
+		           return back()->with('error','Something went wrong.');
+		        }
+      		}
       	}
       }
       catch(\Exception $e){
@@ -419,12 +426,12 @@ class QuestionsController extends Controller
                         return back()->with('valid_error',$listmessage);
                     }
                         else{
-                            return back()->with('error','Something went wrong12.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('error','Something went wrong11.');
+                        return back()->with('error','Something went wrong.');
                     }
 
                }
@@ -554,27 +561,35 @@ class QuestionsController extends Controller
       		return redirect('admin/questions/')->with('error','Something went wrong.');
       	}
       	else{
-  			try{
-  				$question = new Question;
-                $question->topic_id=$request->topic_id;
-                $question->question=$request->question;
-                $question->a='-';
-                $question->b='-';
-                $question->c='-';
-                $question->d='-';
-                $question->answer='-';
-                $question->code_snippet="";
-                $question->answer_exp=$request->answer_exp;
-                $question->question_img=$question_img;
-                $question->question_video_link=$question_video_link;
-                $question->answer_explaination_img=$answer_explaination_img;
-                $question->answer_explaination_video_link=$answer_explaination_video_link;
-                $question->question_status=1;
-                $question->save();
-	          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been added.');
-	        }catch(\Exception $e){
-	           return back()->with('error',$e->getMessage());
-	        }
+
+      		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+      		if($checkquizquestion)
+      		{
+      			return back()->with('error','Question already exists.');
+      		}
+      		else{
+	      			try{
+	  				$question = new Question;
+	                $question->topic_id=$request->topic_id;
+	                $question->question=$request->question;
+	                $question->a='-';
+	                $question->b='-';
+	                $question->c='-';
+	                $question->d='-';
+	                $question->answer='-';
+	                $question->code_snippet="";
+	                $question->answer_exp=$request->answer_exp;
+	                $question->question_img=$question_img;
+	                $question->question_video_link=$question_video_link;
+	                $question->answer_explaination_img=$answer_explaination_img;
+	                $question->answer_explaination_video_link=$answer_explaination_video_link;
+	                $question->question_status=1;
+	                $question->save();
+		          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been added.');
+		        }catch(\Exception $e){
+		           return back()->with('error',$e->getMessage());
+		        }
+      		}
       	}
       }
       catch(\Exception $e){
@@ -1008,58 +1023,147 @@ class QuestionsController extends Controller
           
           if($question_img!="" && $answer_explaination_img!="")
           {
-            $question->question=$request->question;
-            $question->a=$request->a;
-            $question->b=$request->b;
-            $question->c=$request->c;
-            $question->d=$request->d;
-            $question->answer=$request->answer;
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_img=$question_img;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_img=$answer_explaination_img;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a=$request->a;
+	            $question->b=$request->b;
+	            $question->c=$request->c;
+	            $question->d=$request->d;
+	            $question->answer=$request->answer;
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_img=$question_img;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_img=$answer_explaination_img;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a=$request->a;
+		            $question->b=$request->b;
+		            $question->c=$request->c;
+		            $question->d=$request->d;
+		            $question->answer=$request->answer;
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_img=$question_img;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_img=$answer_explaination_img;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
           }
           elseif($question_img!="" && $answer_explaination_img=="")
           {
-            $question->question=$request->question;
-            $question->a=$request->a;
-            $question->b=$request->b;
-            $question->c=$request->c;
-            $question->d=$request->d;
-            $question->answer=$request->answer;
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_img=$question_img;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+	            $question->a=$request->a;
+	            $question->b=$request->b;
+	            $question->c=$request->c;
+	            $question->d=$request->d;
+	            $question->answer=$request->answer;
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_img=$question_img;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a=$request->a;
+		            $question->b=$request->b;
+		            $question->c=$request->c;
+		            $question->d=$request->d;
+		            $question->answer=$request->answer;
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_img=$question_img;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
           }
           elseif($question_img=="" && $answer_explaination_img!="")
           {
-            $question->question=$request->question;
-            $question->a=$request->a;
-            $question->b=$request->b;
-            $question->c=$request->c;
-            $question->d=$request->d;
-            $question->answer=$request->answer;
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_img=$answer_explaination_img;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a=$request->a;
+	            $question->b=$request->b;
+	            $question->c=$request->c;
+	            $question->d=$request->d;
+	            $question->answer=$request->answer;
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_img=$answer_explaination_img;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a=$request->a;
+		            $question->b=$request->b;
+		            $question->c=$request->c;
+		            $question->d=$request->d;
+		            $question->answer=$request->answer;
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_img=$answer_explaination_img;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
+            
           }
           else{
-            $question->question=$request->question;
-            $question->a=$request->a;
-            $question->b=$request->b;
-            $question->c=$request->c;
-            $question->d=$request->d;
-            $question->answer=$request->answer;
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a=$request->a;
+	            $question->b=$request->b;
+	            $question->c=$request->c;
+	            $question->d=$request->d;
+	            $question->answer=$request->answer;
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a=$request->a;
+		            $question->b=$request->b;
+		            $question->c=$request->c;
+		            $question->d=$request->d;
+		            $question->answer=$request->answer;
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
           }
 
           $question->save();
@@ -1228,58 +1332,149 @@ class QuestionsController extends Controller
           
           if($question_img!="" && $answer_explaination_img!="")
           {
-            $question->question=$request->question;
-            $question->a='-';
-            $question->b='-';
-            $question->c='-';
-            $question->d='-';
-            $question->answer='-';
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_img=$question_img;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_img=$answer_explaination_img;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a='-';
+	            $question->b='-';
+	            $question->c='-';
+	            $question->d='-';
+	            $question->answer='-';
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_img=$question_img;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_img=$answer_explaination_img;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a='-';
+		            $question->b='-';
+		            $question->c='-';
+		            $question->d='-';
+		            $question->answer='-';
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_img=$question_img;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_img=$answer_explaination_img;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
+            
           }
           elseif($question_img!="" && $answer_explaination_img=="")
           {
-            $question->question=$request->question;
-            $question->a='-';
-            $question->b='-';
-            $question->c='-';
-            $question->d='-';
-            $question->answer='-';
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_img=$question_img;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a='-';
+	            $question->b='-';
+	            $question->c='-';
+	            $question->d='-';
+	            $question->answer='-';
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_img=$question_img;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a='-';
+		            $question->b='-';
+		            $question->c='-';
+		            $question->d='-';
+		            $question->answer='-';
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_img=$question_img;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
+            
           }
           elseif($question_img=="" && $answer_explaination_img!="")
           {
-            $question->question=$request->question;
-            $question->a='-';
-            $question->b='-';
-            $question->c='-';
-            $question->d='-';
-            $question->answer='-';
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_img=$answer_explaination_img;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a='-';
+	            $question->b='-';
+	            $question->c='-';
+	            $question->d='-';
+	            $question->answer='-';
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_img=$answer_explaination_img;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestio)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a='-';
+		            $question->b='-';
+		            $question->c='-';
+		            $question->d='-';
+		            $question->answer='-';
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_img=$answer_explaination_img;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
+            
           }
           else{
-            $question->question=$request->question;
-            $question->a='-';
-            $question->b='-';
-            $question->c='-';
-            $question->d='-';
-            $question->answer='-';
-            $question->code_snippet="";
-            $question->answer_exp=$request->answer_exp;
-            $question->question_video_link=$question_video_link;
-            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	if($question->question==$request->question)
+          	{
+          		$question->a='-';
+	            $question->b='-';
+	            $question->c='-';
+	            $question->d='-';
+	            $question->answer='-';
+	            $question->code_snippet="";
+	            $question->answer_exp=$request->answer_exp;
+	            $question->question_video_link=$question_video_link;
+	            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          	}
+          	else{
+          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		if($checkquizquestion)
+          		{
+          			return back()->with('error','Question already exists.');
+          		}
+          		else{
+          			$question->question=$request->question;
+		            $question->a='-';
+		            $question->b='-';
+		            $question->c='-';
+		            $question->d='-';
+		            $question->answer='-';
+		            $question->code_snippet="";
+		            $question->answer_exp=$request->answer_exp;
+		            $question->question_video_link=$question_video_link;
+		            $question->answer_explaination_video_link=$answer_explaination_video_link;
+          		}
+          	}
           }
 
           $question->save();

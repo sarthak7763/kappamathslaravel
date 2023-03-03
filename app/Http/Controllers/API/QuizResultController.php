@@ -124,7 +124,8 @@ class QuizResultController extends BaseController
 				        		'total_score'=>$total_score,
 				        		'total_time'=>$resultmarksdetail['result_timer'],
 				        		'result_date'=>$result_marks_date,
-				        		'result_id'=>$result_id
+				        		'result_id'=>$result_id,
+				        		'result_type'=>$resultmarksdetail['result_type']
 				        		);
 		        			}
 		        			else{
@@ -136,7 +137,8 @@ class QuizResultController extends BaseController
 				        			'total_score'=>0,
 				        			'total_time'=>0,
 				        			'result_date'=>"",
-				        			'result_id'=>''
+				        			'result_id'=>'',
+				        			'result_type'=>''
 				        		);
 		        			}
 		        		}
@@ -149,7 +151,8 @@ class QuizResultController extends BaseController
 				        			'total_score'=>0,
 				        			'total_time'=>0,
 				        			'result_date'=>"",
-				        			'result_id'=>''
+				        			'result_id'=>'',
+				        			'result_type'=>''
 				        		);
 		        		}
 	        		}
@@ -162,7 +165,8 @@ class QuizResultController extends BaseController
 				        			'total_score'=>0,
 				        			'total_time'=>0,
 				        			'result_date'=>"",
-				        			'result_id'=>''
+				        			'result_id'=>'',
+				        			'result_type'=>''
 				        		);
 	        		}
 
@@ -296,7 +300,7 @@ class QuizResultController extends BaseController
 
 		        				}
 
-		        				$quizresultdata=Result::where('user_id',$user->id)->where('result_marks_id',$result_id)->get()->first();
+		        				$quizresultdata=Result::where('user_id',$user->id)->where('result_marks_id',$result_id)->where('question_id',$question_id)->get()->first();
 		        				if($quizresultdata)
 		        				{
 		        					$quizresultdataarray=$quizresultdata->toArray();
@@ -310,13 +314,16 @@ class QuizResultController extends BaseController
 		        				}
 
 	        				$quiz_result[]=array(
+	        					'result_type'=>(int)$resultmarksdetail['result_type'],
+	        					'course_id'=>"",
 	        					'quiz_id'=>$quiz_topiciddb,
 	        					'question_id'=>(int)$question_id,
 	        					'question'=>strip_tags($question),
 	        					'correct_answer'=>$correct_answer,
 	        					'answer_explaination'=>strip_tags($answer_explaination),
 	        					'user_answer'=>$user_answer,
-	        					'answer_status'=>$answer_status
+	        					'answer_status'=>$answer_status,
+	        					'result_id'=>(int)$result_id
 	        				);
 
 		        				}

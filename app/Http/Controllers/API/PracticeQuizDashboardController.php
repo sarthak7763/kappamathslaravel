@@ -170,6 +170,10 @@ class PracticeQuizDashboardController extends BaseController
 
 				}
 
+				$random_question_ids_arr =  array_map("unserialize", array_unique(array_map("serialize", $random_question_ids_arr)));
+
+				$random_question_ids=array_unique($random_question_ids);
+
 				if(isset($random_question_ids_arr[$quiztopicdetaildata['id']]))
 				{
                 	$random_questions_final_list=$random_question_ids_arr[$quiztopicdetaildata['id']];
@@ -327,6 +331,10 @@ class PracticeQuizDashboardController extends BaseController
     					$random_question_ids[]=$list['id'];
     				}			
 				}
+
+				$random_question_ids_arr =  array_map("unserialize", array_unique(array_map("serialize", $random_question_ids_arr)));
+
+				$random_question_ids=array_unique($random_question_ids);
 
 				if(isset($random_question_ids_arr[$quiztopicdetaildata['id']]))
 				{
@@ -1241,7 +1249,7 @@ class PracticeQuizDashboardController extends BaseController
 
 	        			$total_marks=$total_questions*$quiztopicdetaildata['per_q_mark'];
 
-	        			$questiondet=array(
+	        			$questionslist=array(
 		        		 			'course_id'=>$courseid,
 		        		 			'topic_id'=>$topic_id,
 		        		 			'sub_topic_id'=>$sub_topic_id,
@@ -1271,10 +1279,10 @@ class PracticeQuizDashboardController extends BaseController
 
 	        				}
 	        				else{
-	        					$questiondet=null;
+	        					$questionslist=null;
 	        				}
 
-	        				$success['questiondet'] =  $questiondet;
+	        				$success['questionslist'] =  $questionslist;
         					return $this::sendResponse($success, 'Questions Details.');
 	        			}
 	        			else{
@@ -1312,7 +1320,780 @@ class PracticeQuizDashboardController extends BaseController
 
 	}
 
+	public function getpracticetheoryquizquestions(Request $request)
+	{
+		try{
+	        $user=auth()->user();
+	        if($user)
+	        {
+	        	$validator = Validator::make($request->all(), [
+		            'course_id' => 'required',
+		            'subtopic_id'=>'required'
+		        ]);
 
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        $courseid=$request->course_id;
+		        $subtopic_id=$request->subtopic_id;
+
+		        $subject = Subject::find($courseid);
+		          if(is_null($subject)){
+		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		        }
+
+		        if(isset($subtopic_id) && $subtopic_id!="")
+		        {
+		        	$theorynewsubtopic_id=json_decode($subtopic_id);
+		        	if(count($theorynewsubtopic_id)==0)
+	        		{
+	        			return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
+	        		}
+		        }
+		        else{
+		        	return $this::sendError('Unauthorised.', ['error'=>'Please choose at least one sub_topic to start the test.']);
+		        }
+
+		        $result_date=date('Y-m-d');
+
+	        	$theoryquizresultdata=Theoryquizresult::where('user_id',$user->id)->where('result_type','2')->where('result_date',$result_date)->get()->first();
+
+	        	if($theoryquizresultdata==null)
+	        	{
+	        		$theoryresultdata=$this->insertpracticetheoryquizresult($user->id,$courseid,$result_date,$theorynewsubtopic_id);
+
+	        		if($theoryresultdata)
+	        		{
+	        			if($theoryresultdata['code']=="200")
+	        			{
+	        				$success['questionslist'] =$theoryresultdata['message'];
+                			return $this::sendResponse($success, 'Questions List.');
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>$theoryresultdata['message']]);
+	        			}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        		}
+	        	}
+	        	else{
+	        		$theoryquizresultdataarray=$theoryquizresultdata->toArray();
+
+	        		$theoryresultdata=$this->updatepracticetheoryquizresult($user->id,$courseid,$result_date,$theorynewsubtopic_id);
+
+	        		if($theoryresultdata)
+	        		{
+	        			if($theoryresultdata['code']=="200")
+	        			{
+	        				$success['questionslist'] =$theoryresultdata['message'];
+                			return $this::sendResponse($success, 'Questions List.');
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>$theoryresultdata['message']]);
+	        			}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        		}
+	        	}
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+	}
+
+	public function insertpracticetheoryquizresult($userid,$courseid,$result_date,$theorynewsubtopic_id)
+	{
+		$theoryquiztopicsid=[];
+		foreach ($theorynewsubtopic_id as $key => $value) {
+
+			$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
+			if($coursesubtopicsdetail)
+			{
+				$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','2')->where('quiz_status','1')->get()->first();
+    			if($quiztopicdata)
+    			{
+    				$quiztopicdataarray=$quiztopicdata->toArray();
+    				if($quiztopicdataarray)
+    				{
+    					$theoryquiztopicsid[]=$quiztopicdataarray['id'];
+    				}
+    			}
+			}
+		}
+
+		if(count($theoryquiztopicsid) > 0)
+		{
+			$random_question_ids_arr=[];
+	    	$random_question_ids=[];
+	    	$result_timer=0;
+	    	$total_questions=0;
+
+	    	foreach($theoryquiztopicsid as $row)
+	    	{
+	    		$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','2')->get()->first();
+	    		if($quiztopicdetail)
+	    		{
+	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+	    			$result_timer+=$quiztopicdetaildata['timer'];
+
+	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+		    		if($quiztopicdetaildata['questions_limit']!="")
+					{
+						$total_questions_limit=$quiztopicdetaildata['questions_limit'];
+					}
+					else{
+						$total_questions_limit=0;
+					}
+
+					$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')->inRandomOrder()->limit($total_questions_limit)->get();
+					if($random_questionsdata)
+					{
+						$random_questionsdataarray=$random_questionsdata->toArray();
+
+						foreach($random_questionsdataarray as $list)
+        				{
+        					$random_question_ids[]=$list['id'];
+        				}		
+					}
+
+
+	    		}
+	    	}
+
+	    	if(count($random_question_ids) > 0)
+	    	{
+
+				$random_question_ids=array_unique($random_question_ids);
+
+	    		$finalquiztopicids=implode(',',$theoryquiztopicsid);
+	        	$newfinalquestionid=$random_question_ids[0];
+
+	        	$total_questions=count($random_question_ids);
+
+	        	try{
+				$theoryquizresult = new Theoryquizresult;
+	            $theoryquizresult->topic_id=$finalquiztopicids;
+	            $theoryquizresult->user_id=$userid;
+	            $theoryquizresult->result_timer=$result_timer;
+	            $theoryquizresult->total_questions=$total_questions;
+	            $theoryquizresult->result_date=$result_date;
+	            $theoryquizresult->result_type=2;
+	            $theoryquizresult->random_questions=json_encode($random_question_ids);
+	            $theoryquizresult->save();
+	            $result_id=$theoryquizresult->id;
+			}
+			catch(\Exception $e){
+	            $data=array('code'=>'400','message'=>'Something went wrong.');
+		  		return $data;    
+	         }
+
+	         $questiondata=Question::where('id',$newfinalquestionid)->where('question_status','1')->get()->first();
+		     if($questiondata)
+	         {
+	         	$questiondataarray=$questiondata->toArray();
+
+	         	$currentquestionindex = array_keys($random_question_ids,$newfinalquestionid);
+	         	if(count($currentquestionindex) > 0)
+    			{
+    				$currentquestionindex=$currentquestionindex[0];
+    				$next_question_index=$currentquestionindex+1;
+    				$previous_question_index=$currentquestionindex-1;
+
+    				if(isset($random_question_ids[$previous_question_index]))
+    				{
+    					$previous_question_key=$random_question_ids[$previous_question_index];
+
+    					$previous_question_data=Question::find($previous_question_key);
+    					if(is_null($previous_question_data)){
+				           $previous_quiz_id=0;
+				        }
+				        else{
+				        	$previous_quiz_id=$previous_question_data->topic_id;
+				        }
+
+    				}
+    				else{
+    					$previous_quiz_id=0;
+    					$previous_question_key=0;
+    				}
+
+    				if(isset($random_question_ids[$next_question_index]))
+    				{
+    					$next_question_key=$random_question_ids[$next_question_index];
+
+    					$next_question_data=Question::find($next_question_key);
+    					if(is_null($next_question_data)){
+				           $next_quiz_id=0;
+				        }
+				        else{
+				        	$next_quiz_id=$next_question_data->topic_id;
+				        }
+    				}
+    				else{
+    					$next_quiz_id=0;
+    					$next_question_key=0;
+    				}
+
+    			}
+    			else{
+    				$previous_quiz_id=0;
+    				$previous_question_key=0;
+    				$next_question_key=0;
+    				$next_quiz_id=0;
+    			}
+
+	         	if($questiondataarray['question_img']!="")
+		        {
+		        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
+		        }
+		        else{
+		        	$question_img='';
+		        }
+
+		        $questionslist=array(
+	        		'course_id'=>(int)$courseid,
+					'course_name'=>"",
+					'topic_name'=>"",
+					'sub_topic_name'=>"",
+					'quiz_name'=>"",
+					'quiz_type'=>2,
+					'quiz_id'=>$questiondataarray['topic_id'],
+					'question_id'=>$questiondataarray['id'],
+					'question'=>strip_tags($questiondataarray['question']), 
+					'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+					'question_video_link'=>$questiondataarray['question_video_link'],
+					'question_img'=>$question_img,
+					'previous_question_key'=>(int)$previous_question_key,
+					'previous_quiz_id'=>(int)$previous_quiz_id,
+		        	'next_question_key'=>(int)$next_question_key,
+		        	'next_quiz_id'=>(int)$next_quiz_id,
+					'result_id'=>(int)$result_id,
+				);
+
+	         }
+	         else{
+	         	$questionslist=[];
+	         }
+
+         	$data=array('code'=>'200','message'=>$questionslist);
+	  		return $data;
+
+	    	}
+	    	else{
+	    		$data=array('code'=>'400','message'=>'No more questions available');
+	  			return $data;
+	    	}
+		}
+		else{
+			$data=array('code'=>'400','message'=>'Please choose at least one sub_topic to start the test');
+	  		return $data;
+		}
+	}
+
+
+	public function updatepracticetheoryquizresult($userid,$courseid,$result_date,$theorynewsubtopic_id)
+	{
+		$theoryquiztopicsid=[];
+		foreach ($theorynewsubtopic_id as $key => $value) {
+
+			$coursesubtopicsdetail=Coursetopic::where('id',$value)->get()->first();
+			if($coursesubtopicsdetail)
+			{
+				$quiztopicdata=Quiztopic::where('course_topic',$value)->where('quiz_type','2')->where('quiz_status','1')->get()->first();
+    			if($quiztopicdata)
+    			{
+    				$quiztopicdataarray=$quiztopicdata->toArray();
+    				if($quiztopicdataarray)
+    				{
+    					$theoryquiztopicsid[]=$quiztopicdataarray['id'];
+    				}
+    			}
+			}
+		}
+
+		if(count($theoryquiztopicsid) > 0)
+		{
+			$random_question_ids_arr=[];
+	    	$random_question_ids=[];
+	    	$result_timer=0;
+	    	$total_questions=0;
+
+	    	foreach($theoryquiztopicsid as $row)
+	    	{
+	    		$quiztopicdetail=Quiztopic::where('id',$row)->where('quiz_type','2')->get()->first();
+	    		if($quiztopicdetail)
+	    		{
+	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+	    			$result_timer+=$quiztopicdetaildata['timer'];
+
+	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
+
+		    		if($quiztopicdetaildata['questions_limit']!="")
+					{
+						$total_questions_limit=$quiztopicdetaildata['questions_limit'];
+					}
+					else{
+						$total_questions_limit=0;
+					}
+
+					$random_questionsdata = Question::where('topic_id',$quiztopicdetaildata['id'])->where('question_status','1')->inRandomOrder()->limit($total_questions_limit)->get();
+					if($random_questionsdata)
+					{
+						$random_questionsdataarray=$random_questionsdata->toArray();
+
+						foreach($random_questionsdataarray as $list)
+        				{
+        					$random_question_ids[]=$list['id'];
+        				}		
+					}
+
+
+	    		}
+	    	}
+
+	    	if(count($random_question_ids) > 0)
+	    	{
+	    		$random_question_ids=array_unique($random_question_ids);
+	    		
+	    		$finalquiztopicids=implode(',',$theoryquiztopicsid);
+	        	$newfinalquestionid=$random_question_ids[0];
+
+	        	$total_questions=count($random_question_ids);
+
+	        	try{
+				$theoryquizresult = new Theoryquizresult;
+	            $theoryquizresult->topic_id=$finalquiztopicids;
+	            $theoryquizresult->user_id=$userid;
+	            $theoryquizresult->result_timer=$result_timer;
+	            $theoryquizresult->total_questions=$total_questions;
+	            $theoryquizresult->result_date=$result_date;
+	            $theoryquizresult->result_type=2;
+	            $theoryquizresult->random_questions=json_encode($random_question_ids);
+	            $theoryquizresult->save();
+	            $result_id=$theoryquizresult->id;
+			}
+			catch(\Exception $e){
+	            $data=array('code'=>'400','message'=>'Something went wrong');
+		  		return $data;    
+	         }
+
+	         $questiondata=Question::where('id',$newfinalquestionid)->where('question_status','1')->get()->first();
+		     if($questiondata)
+	         {
+	         	$questiondataarray=$questiondata->toArray();
+
+	         	$currentquestionindex = array_keys($random_question_ids,$newfinalquestionid);
+	         	if(count($currentquestionindex) > 0)
+    			{
+    				$currentquestionindex=$currentquestionindex[0];
+    				$next_question_index=$currentquestionindex+1;
+    				$previous_question_index=$currentquestionindex-1;
+
+    				if(isset($random_question_ids[$previous_question_index]))
+    				{
+    					$previous_question_key=$random_question_ids[$previous_question_index];
+
+    					$previous_question_data=Question::find($previous_question_key);
+    					if(is_null($previous_question_data)){
+				           $previous_quiz_id=0;
+				        }
+				        else{
+				        	$previous_quiz_id=$previous_question_data->topic_id;
+				        }
+
+    				}
+    				else{
+    					$previous_quiz_id=0;
+    					$previous_question_key=0;
+    				}
+
+    				if(isset($random_question_ids[$next_question_index]))
+    				{
+    					$next_question_key=$random_question_ids[$next_question_index];
+
+    					$next_question_data=Question::find($next_question_key);
+    					if(is_null($next_question_data)){
+				           $next_quiz_id=0;
+				        }
+				        else{
+				        	$next_quiz_id=$next_question_data->topic_id;
+				        }
+    				}
+    				else{
+    					$next_quiz_id=0;
+    					$next_question_key=0;
+    				}
+
+    			}
+    			else{
+    				$previous_quiz_id=0;
+    				$previous_question_key=0;
+    				$next_question_key=0;
+    				$next_quiz_id=0;
+    			}
+
+	         	if($questiondataarray['question_img']!="")
+		        {
+		        	$question_img=url('/').'/images/questions/'.$questiondataarray['question_img'];
+		        }
+		        else{
+		        	$question_img='';
+		        }
+
+		        $questionslist=array(
+	        		'course_id'=>(int)$courseid,
+					'course_name'=>"",
+					'topic_name'=>"",
+					'sub_topic_name'=>"",
+					'quiz_name'=>"",
+					'quiz_type'=>2,
+					'quiz_id'=>$questiondataarray['topic_id'],
+					'question_id'=>$questiondataarray['id'],
+					'question'=>strip_tags($questiondataarray['question']), 
+					'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+					'question_video_link'=>$questiondataarray['question_video_link'],
+					'question_img'=>$question_img,
+					'previous_question_key'=>(int)$previous_question_key,
+					'previous_quiz_id'=>(int)$previous_quiz_id,
+		        	'next_question_key'=>(int)$next_question_key,
+		        	'next_quiz_id'=>(int)$next_quiz_id,
+					'result_id'=>(int)$result_id,
+				);
+
+	         }
+	         else{
+	         	$questionslist=[];
+	         }
+
+         	$data=array('code'=>'200','message'=>$questionslist);
+	  		return $data;
+
+	    	}
+	    	else{
+	    		$data=array('code'=>'400','message'=>'No more questions available');
+	  			return $data;
+	    	}
+		}
+		else{
+			$data=array('code'=>'400','message'=>'Please choose at least one sub_topic to start the test');
+	  		return $data;
+		}
+	}
+
+	public function getpracticetheoryquizquestionexplaination(Request $request)
+	{
+		try{
+	        $user=auth()->user();
+	        if($user)
+	        {
+	        	$validator = Validator::make($request->all(), [
+		            'quiz_id'=>'required',
+		            'question_id'=>'required',
+		            'result_id'=>'required'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        $quizid=$request->quiz_id;
+	        	$questionid=$request->question_id;
+	        	$result_date=date('Y-m-d');
+	        	$result_id=$request->result_id;
+
+	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','2')->get()->first();
+	        	if($quiztopicdetail)
+	        	{
+	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+	        		$course_id=$quiztopicdetaildata['subject'];
+	        		$topic_id=$quiztopicdetaildata['category'];
+	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
+
+	        		$theoryquizresultdata=Theoryquizresult::where('id',$result_id)->where('result_type','2')->get()->first();
+	        		if($theoryquizresultdata)
+	        		{
+	        			$theoryquizresultarray=$theoryquizresultdata->toArray();
+	        			$random_question_ids_db=$theoryquizresultarray['random_questions'];
+
+	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
+	        			if(in_array($questionid, $random_questions_final_list))
+	        			{
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				if($questiondetail)
+	        				{
+	        					$questiondetaildata=$questiondetail->toArray();
+
+        					$currentquestionindex = array_keys($random_questions_final_list,$questionid);
+        					if(count($currentquestionindex) > 0)
+        					{
+        						$currentquestionindex=$currentquestionindex[0];
+	        				$next_question_index=$currentquestionindex+1;
+	        				$previous_question_index=$currentquestionindex-1;
+
+	        				if(isset($random_questions_final_list[$previous_question_index]))
+	        				{
+	        					$previous_question_key=$random_questions_final_list[$previous_question_index];
+
+	        					$previous_question_data=Question::find($previous_question_key);
+	        					if(is_null($previous_question_data)){
+						           $previous_quiz_id=0;
+						        }
+						        else{
+						        	$previous_quiz_id=$previous_question_data->topic_id;
+						        }
+
+	        				}
+	        				else{
+	        					$previous_question_key=0;
+	        					$previous_quiz_id=0;
+	        				}
+
+
+	        				if(isset($random_questions_final_list[$next_question_index]))
+	        				{
+	        					$next_question_key=$random_questions_final_list[$next_question_index];
+
+	        					$next_question_data=Question::find($next_question_key);
+	        					if(is_null($next_question_data)){
+						           $next_quiz_id=0;
+						        }
+						        else{
+						        	$next_quiz_id=$next_question_data->topic_id;
+						        }
+	        				}
+	        				else{
+	        					$next_question_key=0;
+	        					$next_quiz_id=0;
+	        				}
+
+        					}
+        					else{
+        						$previous_question_key=0;
+        						$previous_quiz_id=0;
+        						$next_question_key=0;
+        						$next_quiz_id=0;
+        					}
+
+        				if($questiondetaildata['question_img']!="")
+				        {
+				        	$question_img=url('/').'/images/questions/'.$questiondetaildata['question_img'];
+				        }
+				        else{
+				        	$question_img='';
+				        }
+
+				        $questiondet=array(
+				        			'course_id'=>(int)$course_id,
+				        			'course_name'=>"",
+									'topic_name'=>"",
+									'sub_topic_name'=>"",
+									'quiz_name'=>"",
+			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
+			        				'quiz_id'=>$quiztopicdetaildata['id'],
+			        				'question_id'=>$questiondetaildata['id'],
+			        				'question'=>strip_tags($questiondetaildata['question']), 
+			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'question_video_link'=>$questiondetaildata['question_video_link'],
+			        				'question_img'=>$question_img,
+			        				'previous_question_key'=>(int)$previous_question_key,
+			        				'previous_quiz_id'=>(int)$previous_quiz_id,
+		        					'next_question_key'=>(int)$next_question_key,
+		        					'next_quiz_id'=>(int)$next_quiz_id,
+		        					'result_id'=>(int)$result_id
+			        			);
+
+	        				}
+	        				else{
+	        					$questiondet=null;
+	        				}
+
+	        				$success['questiondet'] =  $questiondet;
+        					return $this::sendResponse($success, 'Questions Details.');
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        			}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        		}
+
+	        	}
+	        	else{
+	        		return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        	}
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+	}
+
+
+	public function getpracticetheoryquizquestiondetails(Request $request)
+	{
+		try{
+	        $user=auth()->user();
+	        if($user)
+	        {
+	        	$validator = Validator::make($request->all(), [
+		            'quiz_id'=>'required',
+		            'question_id'=>'required',
+		            'result_id'=>'required'
+		        ]);
+
+		        if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        $quizid=$request->quiz_id;
+	        	$questionid=$request->question_id;
+	        	$result_date=date('Y-m-d');
+	        	$result_id=$request->result_id;
+
+	        	$quiztopicdetail=Quiztopic::where('id',$quizid)->where('quiz_type','2')->get()->first();
+	        	if($quiztopicdetail)
+	        	{
+	        		$quiztopicdetaildata=$quiztopicdetail->toArray();
+	        		$course_id=$quiztopicdetaildata['subject'];
+	        		$topic_id=$quiztopicdetaildata['category'];
+	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
+
+	        		$theoryquizresultdata=Theoryquizresult::where('id',$result_id)->where('result_type','2')->get()->first();
+	        		if($theoryquizresultdata)
+	        		{
+	        			$theoryquizresultarray=$theoryquizresultdata->toArray();
+	        			$random_question_ids_db=$theoryquizresultarray['random_questions'];
+
+	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
+	        			if(in_array($questionid, $random_questions_final_list))
+	        			{
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				if($questiondetail)
+	        				{
+	        					$questiondetaildata=$questiondetail->toArray();
+
+        					$currentquestionindex = array_keys($random_questions_final_list,$questionid);
+        					if(count($currentquestionindex) > 0)
+        					{
+        						$currentquestionindex=$currentquestionindex[0];
+	        				$next_question_index=$currentquestionindex+1;
+	        				$previous_question_index=$currentquestionindex-1;
+
+	        				if(isset($random_questions_final_list[$previous_question_index]))
+	        				{
+	        					$previous_question_key=$random_questions_final_list[$previous_question_index];
+
+	        					$previous_question_data=Question::find($previous_question_key);
+	        					if(is_null($previous_question_data)){
+						           $previous_quiz_id=0;
+						        }
+						        else{
+						        	$previous_quiz_id=$previous_question_data->topic_id;
+						        }
+
+	        				}
+	        				else{
+	        					$previous_question_key=0;
+	        					$previous_quiz_id=0;
+	        				}
+
+
+	        				if(isset($random_questions_final_list[$next_question_index]))
+	        				{
+	        					$next_question_key=$random_questions_final_list[$next_question_index];
+
+	        					$next_question_data=Question::find($next_question_key);
+	        					if(is_null($next_question_data)){
+						           $next_quiz_id=0;
+						        }
+						        else{
+						        	$next_quiz_id=$next_question_data->topic_id;
+						        }
+	        				}
+	        				else{
+	        					$next_question_key=0;
+	        					$next_quiz_id=0;
+	        				}
+
+        					}
+        					else{
+        						$previous_question_key=0;
+        						$previous_quiz_id=0;
+        						$next_question_key=0;
+        						$next_quiz_id=0;
+        					}
+
+        				if($questiondetaildata['question_img']!="")
+				        {
+				        	$question_img=url('/').'/images/questions/'.$questiondetaildata['question_img'];
+				        }
+				        else{
+				        	$question_img='';
+				        }
+
+				        $questiondet=array(
+				        			'course_id'=>(int)$course_id,
+				        			'course_name'=>"",
+									'topic_name'=>"",
+									'sub_topic_name'=>"",
+									'quiz_name'=>"",
+			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
+			        				'quiz_id'=>$quiztopicdetaildata['id'],
+			        				'question_id'=>$questiondetaildata['id'],
+			        				'question'=>strip_tags($questiondetaildata['question']), 
+			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'question_video_link'=>$questiondetaildata['question_video_link'],
+			        				'question_img'=>$question_img,
+			        				'previous_question_key'=>(int)$previous_question_key,
+			        				'previous_quiz_id'=>(int)$previous_quiz_id,
+		        					'next_question_key'=>(int)$next_question_key,
+		        					'next_quiz_id'=>(int)$next_quiz_id,
+		        					'result_id'=>(int)$result_id
+			        			);
+
+	        				}
+	        				else{
+	        					$questiondet=null;
+	        				}
+
+	        				$success['questiondet'] =  $questiondet;
+        					return $this::sendResponse($success, 'Questions Details.');
+	        			}
+	        			else{
+	        				return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+	        			}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        		}
+
+	        	}
+	        	else{
+	        		return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        	}
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+	}
 
 
 }

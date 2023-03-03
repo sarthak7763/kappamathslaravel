@@ -57,36 +57,10 @@ class NotificationController extends Controller
 
               $btn = '<div class="admin-table-action-block">
 
-                    <a href="' . route('notifications.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
-
-                    <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
+                    <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-target="#deleteModal' . $row->id . '">Delete </button></div>';
                    
 
-                //      $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
-                //   <div class="modal-dialog modal-sm">
-                //     <!-- Modal content-->
-                //     <div class="modal-content">
-                //       <div class="modal-header">
-                //         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                //         <div class="delete-icon"></div>
-                //       </div>
-                //       <div class="modal-body text-center">
-                //         <h4 class="modal-heading">Are You Sure ?</h4>
-                //         <p>Do you really want to delete these records? This process cannot be undone.</p>
-                //       </div>
-                //       <div class="modal-footer">
-                //         <form method="POST" action="' . route("category.destroy", $row->id) . '">
-                //           ' . method_field("DELETE") . '
-                //           ' . csrf_field() . '
-                //             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
-                //             <button type="submit" class="btn btn-danger">Yes</button>
-                //         </form>
-                //       </div>
-                //     </div>
-                //   </div>
-                // </div>';
-
-                $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                     $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -94,35 +68,59 @@ class NotificationController extends Controller
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <div class="delete-icon"></div>
                       </div>
-
-                       <form method="POST" action="' . route("notificationchangestatus") . '">
-                          ' . method_field("POST") . '
-                          ' . csrf_field() . '
                       <div class="modal-body text-center">
                         <h4 class="modal-heading">Are You Sure ?</h4>
-                        <p>Do you really want to Change the  status of this record? This process cannot be undone.</p>
-
-                        <div class="row">
-                        <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Status: </label>
-                             <input '.$checked.' type="checkbox" class="toggle-input statusvalue" name="status" id="toggle_status'.$row->id.'">
-                             <label for="toggle_status'.$row->id.'"></label>
-                            <br>
-                          </div>
-                          </div>
-                          </div>
-
+                        <p>Do you really want to delete these records? This process cannot be undone.</p>
                       </div>
                       <div class="modal-footer">
-                          <input type="hidden" name="id" value="'.$row->id.'">
+                        <form method="POST" action="' . route("notifications.destroy", $row->id) . '">
+                          ' . method_field("DELETE") . '
+                          ' . csrf_field() . '
                             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
                             <button type="submit" class="btn btn-danger">Yes</button>
+                        </form>
                       </div>
                     </div>
-                    </form>
                   </div>
                 </div>';
+
+                // $btn .= '<div id="changestatusModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
+                //   <div class="modal-dialog modal-sm">
+                //     <!-- Modal content-->
+                //     <div class="modal-content">
+                //       <div class="modal-header">
+                //         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                //         <div class="delete-icon"></div>
+                //       </div>
+
+                //        <form method="POST" action="' . route("notificationchangestatus") . '">
+                //           ' . method_field("POST") . '
+                //           ' . csrf_field() . '
+                //       <div class="modal-body text-center">
+                //         <h4 class="modal-heading">Are You Sure ?</h4>
+                //         <p>Do you really want to Change the  status of this record? This process cannot be undone.</p>
+
+                //         <div class="row">
+                //         <div class="col-md-6">
+                //         <div class="form-group">
+                //             <label for="">Status: </label>
+                //              <input '.$checked.' type="checkbox" class="toggle-input statusvalue" name="status" id="toggle_status'.$row->id.'">
+                //              <label for="toggle_status'.$row->id.'"></label>
+                //             <br>
+                //           </div>
+                //           </div>
+                //           </div>
+
+                //       </div>
+                //       <div class="modal-footer">
+                //           <input type="hidden" name="id" value="'.$row->id.'">
+                //             <button type="reset" class="btn btn-gray translate-y-3" data-dismiss="modal">No</button>
+                //             <button type="submit" class="btn btn-danger">Yes</button>
+                //       </div>
+                //     </div>
+                //     </form>
+                //   </div>
+                // </div>';
 
               return $btn;
             })
@@ -478,14 +476,67 @@ class NotificationController extends Controller
     }
 
 
+    public function sendNotificationtomultipledevices(Request $request)
+    {
+        $firebaseTokendata = User::where('email','mitsa896@mailinator.com')->get()->first()->toArray();
+
+        $firebasetokens=[];
+        foreach($firebaseTokendata as $list)
+        {
+          $firebasetokens[]=$firebaseTokendata['device_id'];
+        }
+
+      
+        $SERVER_API_KEY = env('FCM_SERVER_KEY');
+    
+        $data = [
+            "registration_ids" => $firebasetokens,
+            "notification" => [
+                "title" => $request->title,
+                "body" => $request->message,  
+            ]
+        ];
+        $dataString = json_encode($data);
+      
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+      
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                 
+        $response = curl_exec($ch);
+
+        $responsearray=json_decode($response);
+        print_r($responsearray);
+        die;
+    
+        return back()->with('success', 'Notification send successfully.');
+    }
+
+
     public function sendNotification(Request $request)
     {
-        $firebaseToken = User::where('email','Testamang@mailinator.com')->pluck('device_id')->all();
+        $firebaseTokendata = User::where('email','mitsa896@mailinator.com')->where('push_notification','1')->get()->first()->toArray();
+
+        if(!$firebaseTokendata)
+        {
+          return back()->with('success', 'Cannot send push notification to this device.');
+        }
+
+        $firebaseToken=$firebaseTokendata['device_id'];
        
         $SERVER_API_KEY = env('FCM_SERVER_KEY');
     
         $data = [
-            "registration_ids" => $firebaseToken,
+            "to" => $firebaseToken,
             "notification" => [
                 "title" => $request->title,
                 "body" => $request->message,  

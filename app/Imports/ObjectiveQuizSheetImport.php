@@ -100,7 +100,7 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
                 'b' => $row['b'],
                 'c' => $row['c'],
                 'd' => $row['d'],
-                'answer' => $row['correct_answer'],
+                'answer' => ucfirst($row['correct_answer']),
                 'code_snippet'=>'',
                 'answer_exp' =>$answer_exp,
                 'question_img'=>$question_img,
@@ -140,6 +140,8 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
             ],
             'question' => [
                 'required',
+                'distinct:strict',
+                Rule::unique('questions'),
             ],
             'a' => [
                 'required',
@@ -155,7 +157,7 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
             ],
             'correct_answer' => [
                 'required',
-                Rule::in(['A','B','C','D']),
+                Rule::in(['A','B','C','D','a','b','c','d']),
             ],
             'question_image' => [
                'nullable',

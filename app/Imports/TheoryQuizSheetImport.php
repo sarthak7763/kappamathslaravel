@@ -140,6 +140,8 @@ class TheoryQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation, W
             ],
             'question' => [
                 'required',
+                'distinct:strict',
+                Rule::unique('questions'),
             ],
             'question_image' => [
                'nullable',

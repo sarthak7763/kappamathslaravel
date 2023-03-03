@@ -56,7 +56,7 @@
         </h3>
       <hr>
 
-      {!! Form::open(['method' => 'POST', 'action' => 'NotificationController@sendNotification','enctype'=>'multipart/form-data']) !!}
+      {!! Form::open(['method' => 'POST', 'action' => 'NotificationController@store','enctype'=>'multipart/form-data']) !!}
 
       <div class="row">
 

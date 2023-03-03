@@ -279,10 +279,10 @@ class ProfileController extends BaseController
 	            $userdet->save();
 
 	            $userarray=array(
-			        	'push_notification'=>$userdet->push_notifications
+			        	'push_notification'=>(int)$userdet->push_notifications
 			        );
 
-				    $success['userarray'] =  $userarray;
+				    $success['userdet'] =  $userarray;
 	            	return $this::sendResponse($success, 'Settings updated successfully.');
 
     		}
@@ -322,10 +322,10 @@ class ProfileController extends BaseController
 	            $userdet->save();
 
 	            $userarray=array(
-			        	'email_notification'=>$userdet->email_notifications
+			        	'email_notification'=>(int)$userdet->email_notifications
 			        );
 
-				    $success['userarray'] =  $userarray;
+				    $success['userdet'] =  $userarray;
 	            	return $this::sendResponse($success, 'Settings updated successfully.');
     		}
     		else{
