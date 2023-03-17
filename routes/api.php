@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ForgotController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\DashboardTestController;
 use App\Http\Controllers\API\PagesController;
 use App\Http\Controllers\API\PracticeDashboardController;
 use App\Http\Controllers\API\PracticeQuizDashboardController;
@@ -55,6 +56,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('course-list', [DashboardController::class, 'getallcourseslist']);
 
+    Route::get('checkusersubscription', [DashboardController::class, 'checkusersubscription']);
+
     Route::post('course-topics', [DashboardController::class, 'getcoursetopicssubtopicsearchlist']);
 
     Route::post('course-sub-topics', [DashboardController::class, 'getcoursetopicsandsubtopicslist']);
@@ -62,6 +65,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('topic-detail', [DashboardController::class, 'gettopicdetailpage']);
 
     Route::post('sub-topic-detail', [DashboardController::class, 'getsubtopicdetails']);
+
+    Route::post('sub-topic-detail-test', [DashboardTestController::class, 'getsubtopicdetails']);
+
+    Route::post('gettransactiondetails', [DashboardController::class, 'gettransactiondetails']);
 
     //dashboard controller end
 

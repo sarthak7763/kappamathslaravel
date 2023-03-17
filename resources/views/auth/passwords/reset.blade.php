@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-  <div style="margin-top: -25px;" class="">
+  <div class="vertical-center">
     <div class="container">
       @if (Session::has('error'))
         <div class="alert alert-danger sessionmodal">
@@ -32,10 +32,12 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                           <div class="row">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-8">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                <div class="form-group">
+                                  <label for="email" class="control-label">E-Mail Address</label>
+                                  <input id="email" placeholder="Email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+                                </div>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">

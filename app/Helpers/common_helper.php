@@ -1,4 +1,8 @@
 <?php
+use Illuminate\Http\Request;
+use App\Subscription;
+use App\Usersubscriptions;
+use App\User;
 
 function checkvimeovideoid($videoid)
 {
@@ -39,6 +43,47 @@ function checkvimeovideoid($videoid)
         return $data;
 	}
 	
+}
+
+function checkusersubscription($userid)
+{
+    if($userid!="")
+    {
+        $user_subscriptions_list=Usersubscriptions::where('user_id',$userid)->where('subscription_status',1)->get()->first();
+            if($user_subscriptions_list)
+            {
+              $user_subscriptions_listarr=$user_subscriptions_list->toArray();
+              if($user_subscriptions_listarr)
+              {
+                $currentdate=date('Y-m-d');
+                $subscription_start=$user_subscriptions_listarr['subscription_start'];
+                $subscription_end=$user_subscriptions_listarr['subscription_end'];
+
+                if($currentdate >= $subscription_start && $currentdate <= $subscription_end)
+                {
+
+                  $subscriptionarray=1;
+                  return $subscriptionarray;
+                }
+                else{
+                    $subscriptionarray=0;
+                    return $subscriptionarray;
+                }
+              }
+              else{
+                  $subscriptionarray=0;
+                  return $subscriptionarray;
+              }
+            }
+            else{
+                $subscriptionarray=0;
+                return $subscriptionarray;
+            }
+    }
+    else{
+          $subscriptionarray=0;
+          return $subscriptionarray;
+    }
 }
 
 ?>

@@ -174,9 +174,9 @@ class SubscriptionController extends Controller
         //
 
         $montharray=array(
-          'day'=>'Day',
-          'month'=>'Month',
-          'year'=>'Year'
+          'days'=>'Day',
+          'months'=>'Month',
+          'years'=>'Year'
         );
 
         return view('admin.subscription.create',compact('montharray'));
@@ -213,8 +213,18 @@ class SubscriptionController extends Controller
         }
         else{
         	try{
-		         $quiz = Subscription::create($input);
+        		$paystack_create_payment_page=$this->createpaymentpage($input);
+
+        		if($paystack_create_payment_page['code']==200)
+        		{
+        			$input['paystack_slug']=$paystack_create_payment_page['slug'];
+        			$quiz = Subscription::create($input);
 		           return redirect('/admin/subscription/')->with('success', 'Subscription Plan has been added');
+        		}
+        		else{
+        			return back()->with('error',$paystack_create_payment_page['message']);
+        		}
+		         
 		        }catch(\Exception $e){
 		          return back()->with('error',$e->getMessage());     
 		       }
@@ -248,6 +258,114 @@ class SubscriptionController extends Controller
          
     }
 
+
+    public function createpaymentpage($input)
+    {
+
+		  $url = "https://api.paystack.co/page";
+		  $custom=[
+		  	'plan_date'=>$input['subscription_tenure'],
+		  	'plan_time'=>$input['subscription_plan']
+		  ];
+
+		  $fields = [
+		    'name' => $input['title'],
+		    'description' => $input['description'],
+		    'amount' => $input['price']*100,
+		    'redirect_url'=>url('/').'/successpage',
+		    'custom_fields'=>$custom
+		  ];
+
+		  $fields_string = http_build_query($fields);
+
+		  //open connection
+		  $ch = curl_init();
+		  
+		  //set the url, number of POST vars, POST data
+		  curl_setopt($ch,CURLOPT_URL, $url);
+		  curl_setopt($ch,CURLOPT_POST, true);
+		  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		    "Authorization: Bearer ".env('Paystack_secret_key'),
+		    "Cache-Control: no-cache",
+		  ));
+		  
+		  //So that curl_exec returns the contents of the cURL; rather than echoing it
+		  curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		  
+		  //execute post
+		  $result = curl_exec($ch);
+		  curl_close($ch);
+
+		  $resultarray=json_decode($result);
+		  if($resultarray->status==1)
+		  {
+		  	$successdata=$resultarray->data;
+		  	$returndata=array('code'=>200,'message'=>$resultarray->message,'slug'=>$successdata->slug);
+		  }
+		  else{
+		  	$returndata=array('code'=>400,'message'=>$resultarray->message);
+		  }
+		  return $returndata;
+    }
+
+    public function updatepaymentpage($subscriptiondata)
+    {
+		  $url = "https://api.paystack.co/page/".$subscriptiondata['paystack_slug'];
+
+		  if($subscriptiondata['status']=="1")
+		  {
+		  	$activestatus='true';
+		  }
+		  else{
+		  	$activestatus='false';
+		  }
+
+		  $custom=[
+		  	'plan_date'=>$subscriptiondata['plan_date'],
+		  	'plan_time'=>$subscriptiondata['plan_time']
+		  ];
+
+		  $fields = [
+		    'name' => $subscriptiondata['title'],
+		    'description' => $subscriptiondata['description'],
+		    'custom_fields'=>$custom,
+		    'active'=>$activestatus
+		  ];
+
+		  $fields_string = http_build_query($fields);
+
+		  //open connection
+		  $ch = curl_init();
+		  
+		  //set the url, number of POST vars, POST data
+		  curl_setopt($ch,CURLOPT_URL, $url);
+		  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+		  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		    "Authorization: Bearer ".env('Paystack_secret_key'),
+		    "Cache-Control: no-cache",
+		  ));
+		  
+		  //So that curl_exec returns the contents of the cURL; rather than echoing it
+		  curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		  
+		  //execute post
+		  $result = curl_exec($ch);
+		  curl_close($ch);
+		  $resultarray=json_decode($result);
+		  if($resultarray->status==1)
+		  {
+		  	$successdata=$resultarray->data;
+		  	$returndata=array('code'=>200,'message'=>$resultarray->message);
+		  }
+		  else{
+		  	$returndata=array('code'=>400,'message'=>$resultarray->message);
+		  }
+		  return $returndata;
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -270,9 +388,9 @@ class SubscriptionController extends Controller
         try{
 
             $montharray=array(
-              'day'=>'Day',
-              'month'=>'Month',
-              'year'=>'Year'
+              'days'=>'Day',
+              'months'=>'Month',
+              'years'=>'Year'
             );
 
             $subscription = Subscription::findOrFail($id);
@@ -295,7 +413,6 @@ class SubscriptionController extends Controller
         try{
         $request->validate([
           'title' => 'required|string',
-          'price' => 'required',
           'subscription_tenure' => 'required',
           'subscription_plan' => 'required'
         ]);
@@ -314,7 +431,6 @@ class SubscriptionController extends Controller
         if($subscription->title==$request->title)
         {
             $subscription->description = $request->description;
-            $subscription->price = $request->price;
             $subscription->subscription_tenure = $request->subscription_tenure;
             $subscription->subscription_plan = $request->subscription_plan;
             $subscription->subscription_status=$statusvalue;
@@ -333,15 +449,33 @@ class SubscriptionController extends Controller
 
             $subscription->title=$request->title;
             $subscription->description = $request->description;
-            $subscription->price = $request->price;
-            $subscription->subscription_date = $request->subscription_date;
+            $subscription->subscription_tenure = $request->subscription_tenure;
             $subscription->subscription_plan = $request->subscription_plan;
             $subscription->subscription_status=$statusvalue;
         } 
 
          try{
-            $subscription->save();
-          return redirect('admin/subscription/')->with('success','Subscription Plan updated !');
+
+         	$subscriptiondata=array(
+        		'paystack_slug'=>$subscription->paystack_slug,
+        		'title'=>$subscription->title,
+        		'status'=>$subscription->subscription_status,
+        		'description'=>$subscription->description,
+        		'amount'=>$subscription->price,
+        		'plan_date'=>$subscription->subscription_tenure,
+        		'plan_time'=>$subscription->subscription_plan
+        	);
+
+        	$paystack_update_payment_page=$this->updatepaymentpage($subscriptiondata);
+        	if($paystack_update_payment_page['code']==200)
+        	{
+        		$subscription->save();
+           		return redirect('admin/subscription/')->with('success','Subscription Plan updated !');
+        	}
+        	else{
+        		return back()->with('error',$paystack_update_payment_page['message']); 
+        	}
+          
          }catch(\Exception $e){
             return back()->with('error',$e->getMessage());
          }
@@ -419,8 +553,26 @@ class SubscriptionController extends Controller
         }
 
         try{
-            $subscription->save();
-           return back()->with('success','Subscription Plan updated !');
+        	$subscriptiondata=array(
+        		'paystack_slug'=>$subscription->paystack_slug,
+        		'title'=>$subscription->title,
+        		'status'=>$subscription->subscription_status,
+        		'description'=>$subscription->description,
+        		'amount'=>$subscription->price,
+        		'plan_date'=>$subscription->subscription_tenure,
+        		'plan_time'=>$subscription->subscription_plan
+        	);
+
+        	$paystack_update_payment_page=$this->updatepaymentpage($subscriptiondata);
+        	if($paystack_update_payment_page['code']==200)
+        	{
+        		$subscription->save();
+           		return back()->with('success','Subscription Plan updated !');
+        	}
+        	else{
+        		return back()->with('error',$paystack_update_payment_page['message']); 
+        	}
+            
         }catch(\Exception $e){
             return back()->with('error',$e->getMessage());
          }

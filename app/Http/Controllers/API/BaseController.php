@@ -15,13 +15,25 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public static function sendResponse($result, $message)
+    public static function sendResponse($result, $message,$subscription="")
     {
-    	$response = [
-            'status_code' => 200,
-            'data'    => $result,
-            'message' => $message,
-        ];
+        if(isset($subscription) && $subscription!="")
+        {
+            $response = [
+                'status_code' => 200,
+                'data'    => $result,
+                'message' => $message,
+                'subscription'=>$subscription,
+            ];
+        }
+        else{
+            $response = [
+                'status_code' => 200,
+                'data'    => $result,
+                'message' => $message,
+            ];
+        }
+    	
 
 
         return response()->json($response, 200);

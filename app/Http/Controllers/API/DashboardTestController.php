@@ -18,7 +18,7 @@ use App\Usersubscriptions;
 use Validator;
 use Hash;
 
-class DashboardController extends BaseController
+class DashboardTestController extends BaseController
 {
 
     public function getallcourseslist()
@@ -450,6 +450,8 @@ class DashboardController extends BaseController
 	        	$topicid=$request->topic_id;
 	        	$subtopicid=$request->sub_topic_id;
 
+	        	$checkusersubscription=checkusersubscription($user->id);
+
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
@@ -625,7 +627,7 @@ class DashboardController extends BaseController
 		        			);
 
 		        	$success['subtopicdetail'] =  $subtopicdetail;
-                	return $this::sendResponse($success, 'Sub Topics Detail.');
+                	return $this::sendResponse($success, 'Sub Topics Detail.',$checkusersubscription);
 
 		        	}
 		        	else{

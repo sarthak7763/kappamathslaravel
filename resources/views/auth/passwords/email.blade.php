@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-  <div style="margin-top: -25px" class="">
+  <div class="vertical-center">
     <div class="container">
       @if (Session::has('error'))
         <div class="alert alert-danger sessionmodal">
@@ -27,7 +27,7 @@
           @endif
         </div>
 
-        <h4 class="user-register-heading text-center">Forget Password ?</h4>
+        <h4 class="user-register-heading text-center">Forget Password?</h4>
         @if (session('status'))
           <div class="alert alert-success">
               {{ session('status') }}
@@ -39,10 +39,10 @@
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
               <div class="row">
-                <label for="email" class="col-md-12 control-label text-center">E-Mail Address</label>
 
                 <div class="col-md-12">
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                <label for="email" class="control-label text-center">E-Mail Address</label>
+                    <input id="email" placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>

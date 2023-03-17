@@ -125,3 +125,11 @@
   </div>
 </div>
 @endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+  $('#price').prop('readonly', true);
+</script>
+
+@endsection

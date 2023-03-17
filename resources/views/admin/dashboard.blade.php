@@ -18,42 +18,42 @@
   @endif
   
 <!---->
-  <div class="dashboard-block">
+  <div class="dashboard-block dashboard_page">
     <div class="row">
 
       <div class="col-md-12">
         <div class="row">
           <form method="post" class="form-block" action="{{url('/admin')}}">
             @csrf
-          <div class="col-md-4">
+          
             <div class="form-group">
               <label>Start Date</label>
               <input type="text" name="date_filter_start" id="datepicker_start" class="form-control">
             </div>
-          </div>
-          <div class="col-md-4">
+          
+        
             <div class="form-group">
               <label>End Date</label>
               <input type="text" name="date_filter_end" id="datepicker_end" class="form-control">
             </div>
-          </div>
-          <div class="col-md-4" style="margin-top: 24px;">
-              <input type="submit" name="submit" class="form-control" value="Submit">
-          </div>
-
-          @if($clear_filter=="1")
-          <div class="col-md-4" style="margin-top: 24px;">
-              <button type="button" class="form-control clearfilterbtn">Clear Filter</button>
-          </div>
-          @endif
-
-        </form>
+          
+         
+            <div class="form-group mt-4">
+              <input type="submit" name="submit" class="form-control btn btn-primary" value="Submit">
+            </div>
+            <div class="filter_button">
+              @if($clear_filter=="1")
+                <button type="button" class="form-control clearfilterbtn">Clear Filter</button>
+              @endif
+            </div>
+        
+         </form>
         </div>
       </div>
 
       <div class="col-md-12">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3>{{$user}}</h3>
@@ -81,7 +81,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-purple">
               <div class="inner">
                 <h3>{{$topic}}</h3>
@@ -110,7 +110,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3>{{$subtopic}}</h3>
@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-red">
               <div class="inner">
                 <h3>{{$quiz}}</h3>
@@ -168,7 +168,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-green">
               <div class="inner">
                 <h3>{{$subscription}}</h3>
@@ -197,7 +197,7 @@
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col">
             <div class="small-box bg-blue">
               <div class="inner">
                 <h3>{{$revenue}}</h3>

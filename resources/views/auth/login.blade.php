@@ -44,10 +44,8 @@
       @php $password_error=""; @endphp
       @endif
   @endif
-
-  <div class="">
     <div class="container">
-
+      <div class="vertical-center">
       <div class="login-page">
         <div class="logo">
           @if ($setting)
@@ -75,19 +73,22 @@
           <div class="form-group">
             <div class="checkbox remember-me">
               <label>
-                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-              </label>
                Remember Me
+                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+              <span class="checkmark"></span>
+              </label>
             </div>
+            
+            <a href="{{url('/password/reset')}}" title="Forgot Password">Forgot Password?</a>
+       
           </div>
 
           <div class="form-group">
             <button type="submit" class="btn btn-wave"> Login </button>
           </div>
+         <p class="login-acc">Don't have an account <a href="https://kappamaths.ezxdemo.com/register" title="don't have an account please sign up" class="text-center btn-block">sign up</a>
 
-          <div class="form-group text-center">
-            <a href="{{url('/password/reset')}}" title="Forgot Password">Forgot Password?</a>
-          </div>
+          
         </form>
       </div>
     </div>

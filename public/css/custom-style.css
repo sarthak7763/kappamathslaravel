@@ -2,3 +2,41 @@
 {
   background-color:#424242 !important;
 }
+.vertical-center{height:calc(100vh - 55px);align-items:center;justify-content:center;display:flex;}
+.vertical-center .login-page{width:550px;margin:0 auto;border-radius:4px;padding:30px 30px 30px;background-color:#FFF;box-shadow:0 7px 24px 2px rgba(0,0,0,0.1),5px 7px 17px 2px rgba(0,0,0,0.15);}
+.login-page .form button{background:#042A60;width:auto;display:block;padding:7px 50px;border-radius:50px;font-weight:bold;font-size:18px;line-height:36px;margin:0 auto 1rem;}
+a[title="Forgot Password"]{color:#042a60;font-size:17px;text-align:end;font-weight:600;float:right;}
+body .login-page .form input{background:transparent;border:0;border-bottom:1px solid #ddd;box-shadow:none;padding:10px 0px;}
+.login-page .logo a{height:100%;display:flex;align-items:center;max-width:100px;justify-content:center;margin:auto;}
+.login-page .logo .login-logo{position:static;}
+.login-page .user-register-heading{font-size:26px;font-weight:bold;border:0;}
+.form-group{display:inline-block;width:100%;}
+.login-page .form button  + a{color:#042a60;text-decoration:none;padding-top:20px;display:inline-block;}
+body .login-page .form label{text-align:left;font-size: 14px}
+.login-form .checkbox{float:left;}
+.dashboard_page .form-group{width:100%;max-width:15%;float:left;padding:0 15px;}
+input.form-control.btn.btn-primary{width:100px;font-weight:bold;transition:all .3s;background:#042A60;font-size:18px;line-height:20px;height:auto;}
+input.form-control.btn.btn-primary:hover{background:#00b1da;border-color:#00b1da;}
+.login-form .checkbox{display:block;position:relative;padding-left:25px;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;line-height:20px;margin:0;}
+.login-form .checkbox input{position:absolute;opacity:0;cursor:pointer;height:0;width:0;}
+.checkmark{position:absolute;top:0;left:0;height:20px;width:20px;border:1px solid #000;border-radius:2px;}
+.login-form .checkbox input:checked ~ .checkmark{background-color:#042a60;}
+.checkmark:after{content:"";position:absolute;display:none;}
+.container input:checked ~ .checkmark:after{display:block;}
+.container .checkmark:after{left:5px;top:1px;width:7px;height:13px;border:solid white;border-width:0 3px 3px 0;-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg);}
+.checkbox.remember-me label{font-size:17px;font-weight:600;margin:0!important;}
+.login-page input:-webkit-autofill,
+.login-page input:-webkit-autofill:hover, 
+.login-page input:-webkit-autofill:focus, 
+.login-page input:-webkit-autofill:active{-webkit-box-shadow:0 0 0 30px white inset!important;}
+body .login-page .form input ~ small{color:red;}
+.login-acc{color:#042a60;font-weight:bold;display:block;text-align:center;}
+form .login-acc > *{display:inline-block;width:auto;}
+.login-acc:hover{text-decoration:none;}
+div.login-page{margin-bottom:40px}
+
+@media(max-width : 1600px){
+body div.login-page .logo{    width: 138.68px;
+    height: 138.68px;}
+
+}

@@ -13,6 +13,7 @@ use App\Subscription;
 use App\Cmspages;
 use App\Contactsubject;
 use App\Contactenquiry;
+use App\Usersubscriptions;
 use Validator;
 use Hash;
 
@@ -34,15 +35,25 @@ class PagesController extends BaseController
 	        			$subscriptionlist=[];
 	        			foreach($subscriptiondataarray as $list)
 	        			{
+	        				$usersubscription=Usersubscriptions::where('subscription_id',$list['id'])->where('user_id',$user->id)->where('subscription_status',1)->get()->first();
+	        				if($usersubscription)
+	        				{
+	        					$active_status=1;
+	        				}
+	        				else{
+	        					$active_status=0;
+	        				}
 
 	        				$subscription_date=$list['subscription_tenure'].' '.$list['subscription_plan'];
 
 	        				$subscriptionlist[]=array(
 	        					'subscription_id'=>$list['id'],
+	        					'paystack_link'=>env('paystack_pay_url').$list['paystack_slug'],
 	        					'title'=>$list['title'],
 	        					'price'=>$list['price'],
 	        					'subscription_date'=>$subscription_date,
-	        					'description'=>$list['description']
+	        					'description'=>$list['description'],
+	        					'active_status'=>$active_status
 	        				);
 	        			}
 	        		}
