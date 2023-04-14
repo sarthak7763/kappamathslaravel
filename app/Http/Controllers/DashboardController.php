@@ -17,6 +17,8 @@ use App\Quiztopic;
 use App\Question;
 use App\User;
 use App\Subscription;
+use App\Usersubscriptions;
+use Vimeo\Vimeo;
 
 class DashboardController extends Controller
 {
@@ -76,9 +78,9 @@ class DashboardController extends Controller
 
                 $quiz=Quiztopic::where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->count();
 
-            $subscription=Subscription::where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->count();
+                $subscription=Subscription::where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->count();
 
-            $revenue="5000";
+                $revenue=Usersubscriptions::where('created_at','>=',$filter_date_start)->where('created_at','<=',$filter_date_end)->sum('subscription_payment');
 
             }
             elseif($filter_date_start!="" && $filter_date_end=="")
@@ -92,9 +94,9 @@ class DashboardController extends Controller
 
                 $quiz=Quiztopic::where('created_at','>=',$filter_date_start)->count();
 
-            $subscription=Subscription::where('created_at','>=',$filter_date_start)->count();
+                $subscription=Subscription::where('created_at','>=',$filter_date_start)->count();
 
-            $revenue="5000";
+                $revenue=Usersubscriptions::where('created_at','>=',$filter_date_start)->sum('subscription_payment');
 
             }
             elseif($filter_date_start=="" && $filter_date_end!="")
@@ -108,9 +110,9 @@ class DashboardController extends Controller
 
                 $quiz=Quiztopic::where('created_at','<=',$filter_date_end)->count();
 
-            $subscription=Subscription::where('created_at','<=',$filter_date_end)->count();
+                $subscription=Subscription::where('created_at','<=',$filter_date_end)->count();
 
-            $revenue="5000";
+                $revenue=Usersubscriptions::where('created_at','<=',$filter_date_end)->sum('subscription_payment');
             
             }
             else{
@@ -122,7 +124,7 @@ class DashboardController extends Controller
                 $subtopic = Coursetopic::count();
                 $quiz=Quiztopic::count();
                 $subscription=Subscription::count();
-                $revenue="5000";
+                $revenue=Usersubscriptions::sum('subscription_payment');
             }
     	}
     	else{
@@ -134,9 +136,23 @@ class DashboardController extends Controller
     		$subtopic = Coursetopic::count();
     		$quiz=Quiztopic::count();
     		$subscription=Subscription::count();
-    		$revenue="5000";
+    		$revenue=Usersubscriptions::sum('subscription_payment');
     	}
     	return view('admin.dashboard', compact('user','topic','subtopic','quiz','subscription','revenue','new_filter_date_start','new_filter_date_end','clear_filter'));
+    }
+
+    public function testvideo()
+    {
+        $client_id="ecd7d48e0299335886dc51d0ad5b92fac1428165";
+
+        $client_secret="FApdXH5wHL5gNsIqLM4YChGvJGiAmXsiSGX1sDUTaGg3tDsTHNCf+GYQHVw+BbY0k8g0DfgWej3oXMNyXSdzdW/RHwCF3o6rIwX00/CN3cO2b21hiuyk575iPmXURo66";
+
+        $access_token="fbae76cd368c2e5d55929cb96ca7fe2d";
+
+        $client = new Vimeo($client_id,$client_secret,$access_token);
+        $video_id ="809305521";
+        $response = $client->request("/videos/$video_id");
+        print_r($response);
     }
 
 }

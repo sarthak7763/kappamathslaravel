@@ -42,6 +42,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('updateprofile', [ProfileController::class, 'updateprofile']);
     Route::post('updateprofileimage', [ProfileController::class, 'updateprofileimage']);
 
+    Route::post('deleteaccount', [ProfileController::class, 'deleteaccount']);
+
     Route::post('updateuserpushnotificationsettings', [ProfileController::class, 'updateuserpushnotificationsettings']);
 
     Route::post('updateuseremailnotificationsettings', [ProfileController::class, 'updateuseremailnotificationsettings']);
@@ -70,6 +72,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('gettransactiondetails', [DashboardController::class, 'gettransactiondetails']);
 
+    Route::post('getsubscriptionnotification', [DashboardController::class, 'getsubscriptionnotification']);
+
     //dashboard controller end
 
     // pages controller start
@@ -79,6 +83,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('faq', [PagesController::class, 'getallfaqlist']);
 
     Route::post('notifications', [PagesController::class, 'getallnotificationslist']);
+    
+    Route::post('notification-delete', [PagesController::class, 'NotificationDelete']);
+   
 
     Route::post('bulletins', [PagesController::class, 'getallbulletinslist']);
 

@@ -393,7 +393,8 @@ class CmsPagesController extends Controller
           $cmspagedataarray=$cmspagedata->toArray();
           $pagedet=array(
             'name'=>$cmspagedataarray['name'],
-            'description'=>$cmspagedataarray['description']
+            'description'=>$cmspagedataarray['description'],
+            'status'=>$cmspagedataarray['status']
           );
 
           return view('admin.cmspages.viewcmspage',compact('pagedet'));

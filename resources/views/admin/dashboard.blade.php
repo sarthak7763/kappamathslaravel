@@ -23,22 +23,22 @@
 
       <div class="col-md-12">
         <div class="row">
-          <form method="post" class="form-block" action="{{url('/admin')}}">
+          <form method="post" class="form-block" action="{{url('/admin')}}" autocomplete="off">
             @csrf
           
             <div class="form-group">
               <label>Start Date</label>
-              <input type="text" name="date_filter_start" id="datepicker_start" class="form-control">
+              <input type="text" name="date_filter_start" id="datepicker_start" value="{{$new_filter_date_start}}" class="form-control">
             </div>
           
         
             <div class="form-group">
               <label>End Date</label>
-              <input type="text" name="date_filter_end" id="datepicker_end" class="form-control">
+              <input type="text" name="date_filter_end" id="datepicker_end" value="{{$new_filter_date_end}}" class="form-control">
             </div>
           
          
-            <div class="form-group mt-4">
+            <div class="mt-4 d-inline-block dashb_submit">
               <input type="submit" name="submit" class="form-control btn btn-primary" value="Submit">
             </div>
             <div class="filter_button">
@@ -60,7 +60,7 @@
                 <p>Total Users</p>
               </div>
               <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <img src="https://kappamaths.ezxdemo.com/images/dashboard/users.png" class="img-responsive" alt="users">
               </div>
               @if($new_filter_date_start!="" && $new_filter_date_end=="")
               @php $hrefurl=url('/').'/admin/users?filter_start_date='.$new_filter_date_start; @endphp
@@ -88,7 +88,7 @@
                 <p>Total Topics</p>
               </div>
               <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <img src="https://kappamaths.ezxdemo.com/images/dashboard/Topics.png" class="img-responsive" alt="users">
               </div>
 
               @if($new_filter_date_start!="" && $new_filter_date_end=="")
@@ -117,7 +117,7 @@
                 <p>Total Sub-topics</p>
               </div>
               <div class="icon">
-                <i class="ion ion-person-add"></i>
+               <img src="https://kappamaths.ezxdemo.com/images/dashboard/Topics.png" class="img-responsive" alt="users">
               </div>
 
               @if($new_filter_date_start!="" && $new_filter_date_end=="")
@@ -146,7 +146,7 @@
                 <p>Total Quiz</p>
               </div>
               <div class="icon">
-                <i class="fa fa-question-circle-o"></i>
+                <img src="https://kappamaths.ezxdemo.com/images/dashboard/quiz.png" class="img-responsive" alt="users">
               </div>
 
               @if($new_filter_date_start!="" && $new_filter_date_end=="")
@@ -175,7 +175,7 @@
                 <p>Total Subscription</p>
               </div>
               <div class="icon">
-                <i class="fa fa-question-circle-o"></i>
+                <img src="https://kappamaths.ezxdemo.com/images/dashboard/subscription.png" class="img-responsive" alt="users">
               </div>
 
               @if($new_filter_date_start!="" && $new_filter_date_end=="")
@@ -204,7 +204,7 @@
                 <p>Total Revenue</p>
               </div>
               <div class="icon">
-                <i class="fa fa-question-circle-o"></i>
+                <img src="https://kappamaths.ezxdemo.com/images/dashboard/increase.png" class="img-responsive" alt="users">
               </div>
               @if($new_filter_date_start!="")
                <a href="{{url('/admin/payment?filter_date=')}}{{$new_filter_date_start}}" class="small-box-footer">

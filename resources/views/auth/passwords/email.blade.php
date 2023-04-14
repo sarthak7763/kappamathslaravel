@@ -38,10 +38,8 @@
             {{ csrf_field() }}
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-              <div class="row">
-
-                <div class="col-md-12">
-                <label for="email" class="control-label text-center">E-Mail Address</label>
+              <!-- <label for="email" class="control-label text-center">E-Mail Address</label> -->
+                <i class="fa fa-envelope"></i>
                     <input id="email" placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -49,10 +47,8 @@
                         </span>
                     @endif
                 </div> 
-              </div>
-            </div>
-
-            <div class="form-group text-center">
+              
+                        <div class="form-group text-center">
               <button type="submit" class="btn btn-primary">
                   Send Password Reset Link
               </button>

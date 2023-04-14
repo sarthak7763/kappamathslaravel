@@ -1,3 +1,55 @@
+<style>
+  .w-100 {
+    width: 100%;
+}
+
+table.que_table.table-striped tr  > * {
+    font-size: 15px;
+    padding: 13px 10px;
+    border-right: 1px solid #bbb8b8;
+}
+
+table.que_table thead {
+    background: #9e9e9e24;
+}
+.ox-auto {
+    overflow-x: auto;
+}
+table.que_table.table-striped {
+    background: #eff4ff;
+    margin-bottom: 15px;
+    border: 1px solid #b1b2b7;
+}
+.ques_table {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 50px;
+}
+.ox-auto::-webkit-scrollbar, .ox-auto::-webkit-scrollbar-thumb, .ox-auto::-webkit-scrollbar-thumb {
+    display: none;
+}
+.ques_table .btn-primary {
+    background: #112a60;
+    border: 1px solid #112a60;
+    float: right;
+    padding: 3px 18px;
+    font-size: 19px;
+    text-transform: capitalize;
+    margin: 10px 0;
+    transition: all .3s;
+}
+
+.ques_table .btn-primary:hover {
+    background: #3ab1da;
+    border-color: #3ab1da;
+}
+@media(max-width: 767px){
+  table.que_table.table-striped tr > * {
+    font-size: 13px;
+    white-space: nowrap;
+}
+}
+</style>
 @extends('layouts.admin', [
   'page_header' => "Questions Import Module"
 ])
@@ -49,6 +101,66 @@
     </div>
   </div>
 
+  @if(count($questionslistarray) > 0)
+  <div class="ques_table">
+  <form method="post" action="{{route('submitimporttempquestions')}}">
+    @csrf
+  <div class="ox-auto">
+
+  <table class="table-striped w-100 que_table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Questions </th>
+      </tr>
+    </thead>
+    <tbody>
+      @php $i=1; @endphp
+      @foreach($questionslistarray as $list)
+      <tr>
+        <td>{{$i}}</td>
+        <td>
+          <textarea class="textarea" id="textareavalue_{{$list['question_id']}}" style="display: none;">{{html_entity_decode($list['question'])}}</textarea>
+
+          <p id="renderer_{{$list['question_id']}}" class="mathrender" style="color: black;font-size: 20px;"></p>
+
+          <input type="hidden" name="question_id[]" id="importquestion_{{$list['question_id']}}" value="{{$list['question_id']}}">
+
+          <input type="hidden" name="questionmathml[]" id="questionmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['question'])}}">
+
+          <input type="hidden" name="questionlatex[]" id="questionlatex_{{$list['question_id']}}" value="">
+
+          <input type="hidden" name="optionamathml[]" id="optionamathml_{{$list['question_id']}}" value="{{html_entity_decode($list['a'])}}">
+
+          <input type="hidden" name="optionalatex[]" id="optionalatex_{{$list['question_id']}}" value="">
+
+          <input type="hidden" name="optionbmathml[]" id="optionbmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['b'])}}">
+
+          <input type="hidden" name="optionblatex[]" id="optionblatex_{{$list['question_id']}}" value="">
+
+          <input type="hidden" name="optioncmathml[]" id="optioncmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['c'])}}">
+
+          <input type="hidden" name="optionclatex[]" id="optionclatex_{{$list['question_id']}}" value="">
+
+          <input type="hidden" name="optiondmathml[]" id="optiondmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['d'])}}">
+
+          <input type="hidden" name="optiondlatex[]" id="optiondlatex_{{$list['question_id']}}" value="">
+
+          <input type="hidden" name="answerexpmathml[]" id="answerexpmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['answer_exp'])}}">
+
+          <input type="hidden" name="answerexplatex[]" id="answerexplatex_{{$list['question_id']}}" value="">
+
+        </td>
+      </tr>
+      @php $i++; @endphp
+      @endforeach
+    </tbody>
+  </table>
+  </div>
+  <button type="submit" class="btn-primary ">  submit</button>
+</form>
+</div>
+@endif
 
   <!-- Import Questions Modal -->
   <div id="importobjectiveQuestions" class="modal fade" role="dialog">
@@ -277,5 +389,110 @@
       </div>
     </div>
   </div>
+
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+
+<script type="text/javascript">
+  $('[id^=textareavalue_]').each(function(){
+      var textareavalue = $(this).val();
+      var id = $(this).attr("id").replace('textareavalue_','');
+      $("#renderer_"+id).empty();
+      $("#renderer_"+id).append(textareavalue);
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#renderer_"+id)[0]])
+    });
+
+  $('[id^=questionmathml_]').each(function(){
+      var questionmathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('questionmathml_','');
+      if(questionmathmlvalue)
+      {
+        var questionlatex = MathML2LaTeX.convert(questionmathmlvalue);
+      }
+      else{
+        var questionlatex = "";
+      }
+      
+      $("#questionlatex_"+id).val(questionlatex);
+    });
+
+    $('[id^=optionamathml_]').each(function(){
+      var optionamathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('optionamathml_','');
+      if(optionamathmlvalue)
+      {
+        var optionalatex = MathML2LaTeX.convert(optionamathmlvalue);
+      }
+      else{
+        var optionalatex = "";
+      }
+      
+      $("#optionalatex_"+id).val(optionalatex);
+    });
+
+    $('[id^=optionbmathml_]').each(function(){
+      var optionbmathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('optionbmathml_','');
+      if(optionbmathmlvalue)
+      {
+        var optionblatex = MathML2LaTeX.convert(optionbmathmlvalue);
+      }
+      else{
+        var optionblatex = "";
+      }
+      
+      $("#optionblatex_"+id).val(optionblatex);
+    });
+
+    $('[id^=optioncmathml_]').each(function(){
+      var optioncmathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('optioncmathml_','');
+      if(optioncmathmlvalue)
+      {
+        var optionclatex = MathML2LaTeX.convert(optioncmathmlvalue);
+      }
+      else{
+        var optionclatex = "";
+      }
+      
+      $("#optionclatex_"+id).val(optionclatex);
+    });
+
+    $('[id^=optiondmathml_]').each(function(){
+      var optiondmathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('optiondmathml_','');
+      if(optiondmathmlvalue)
+      {
+        var optiondlatex = MathML2LaTeX.convert(optiondmathmlvalue);
+      }
+      else{
+        var optiondlatex = "";
+      }
+      
+      $("#optiondlatex_"+id).val(optiondlatex);
+    });
+
+    $('[id^=answerexpmathml_]').each(function(){
+      var answerexpmathmlvalue = $(this).val();
+      var id = $(this).attr("id").replace('answerexpmathml_','');
+      if(answerexpmathmlvalue)
+      {
+        var answerexplatex = MathML2LaTeX.convert(answerexpmathmlvalue);
+      }
+      else{
+        var answerexplatex = "";
+      }
+      
+      $("#answerexplatex_"+id).val(answerexplatex);
+    });
+
+</script>
 
 @endsection

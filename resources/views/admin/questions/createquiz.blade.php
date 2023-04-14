@@ -4,6 +4,9 @@
 
 @section('content')
 
+<!-- Style for html code -->
+  <link type="text/css" rel="stylesheet" href="{{ env('APP_URL') }}css/editor/prism.css" />
+
 @if (session()->has('success'))
     <div class="alert alert-success">
         {!! session()->get('success')!!}        
@@ -62,7 +65,7 @@
   @endif
 
   <!-- Add Question Modal -->
-        <form method="post" action="{{route('storetheoryquiz')}}" enctype="multipart/form-data">
+        <form method="post" action="{{route('storetheoryquiz')}}" enctype="multipart/form-data" id="add-form">
         {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6">
@@ -73,6 +76,13 @@
                   {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
                   <small class="text-danger">{{ $question_error }}</small>
                 </div>
+
+                <div style="display: none;">
+          <textarea class="form-control" rows="10" cols="30" id="get_question_preview" name="get_question_preview"></textarea>
+
+          <textarea class="form-control" rows="10" cols="30" id="get_question_preview_latex" name="get_question_preview_latex"></textarea>
+        </div>
+
               </div>
               <div class="col-md-6">   
                 <div class="form-group{{ $errors->has('answer_exp') ? ' has-error' : '' }}">
@@ -80,6 +90,13 @@
                     {!! Form::textarea('answer_exp', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Answer Explanation', 'rows' => '8']) !!}
                     <small class="text-danger">{{ $answer_exp_error }}</small>
                 </div>
+
+                <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview" name="get_answer_exp_preview"></textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview_latex" name="get_answer_exp_preview_latex"></textarea>
+              </div>
+
               </div>
 
               <div class="extras-block col-md-12">
@@ -130,7 +147,7 @@
 
                 <div class="col-md-6">
                       <div class="btn-group pull-right">
-                        {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
+                        <button class="btn btn-wave submitbtn" type="button">Add</button>
                       </div>
                     </div>
                 
@@ -144,5 +161,27 @@
 
   
 
+@endsection
+
+@section('scripts')
+<script type="text/javascript" src="{{ env('APP_URL') }}generic_wiris/wirisplugin-generic.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_answer.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+
+<!-- Prism JS script to beautify the HTML code -->
+    <script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
+
+    <script type="text/javascript">
+
+      $(document).on('click','.submitbtn',function(){
+        updateQuestionFunction();
+        updateanswerFunction();
+        $('#add-form').submit();
+      });
+    </script>
 @endsection
 

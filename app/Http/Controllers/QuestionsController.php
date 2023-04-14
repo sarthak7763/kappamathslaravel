@@ -13,6 +13,7 @@ use App\Subjectcategory;
 use App\User;
 use App\Theoryexcelinstructions;
 use App\Objectiveexcelinstructions;
+use App\Tempquestions;
 
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -26,6 +27,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use DB;
 
 class QuestionsController extends Controller
 {
@@ -48,14 +50,68 @@ class QuestionsController extends Controller
           $subjectlist=[];
         }
 
-        $topicsdata = Quiztopic::where('quiz_status','1')->get();
-        if(!empty($topicsdata))
+        if(count($request->all()) > 0)
+        {
+          $clear_filter=1;
+          $subject=$request->course;
+          $category=$request->topic;
+          $course=$request->sub_topic;
+          $quiz_type=$request->quiz_type;
+
+          $topicsdata = Quiztopic::where('quiz_status','1');
+
+          if($subject!="")
+          {
+            $subjectdata=Subject::find($subject);
+            if(is_null($subjectdata)){
+          
+            }
+            else{
+              $topicsdata = $topicsdata->where('subject',$subject);
+            }
+          }
+
+        if($category!="")
+        {
+          $subjectcategorydata=Subjectcategory::find($category);
+          if(is_null($subjectcategorydata))
+          {
+
+          }
+          else{
+            $topicsdata = $topicsdata->where('category',$category);
+          }
+          
+        }
+
+      if($course!="")
+        {
+          $coursetopicdata=Coursetopic::find($course);
+          if(is_null($coursetopicdata))
+          {
+
+          }
+          else{
+            $topicsdata = $topicsdata->where('course_topic',$course);
+          }
+        }
+
+        if($quiz_type!="")
+        {
+          $topicsdata = $topicsdata->where('quiz_type',$quiz_type);
+        }
+        else{
+          return redirect('/admin/questions/')->with('error','Quiz type is required.');
+        }
+
+        $topicsdata=$topicsdata->get();
+        if($topicsdata)
         {
           $topics=$topicsdata->toArray();
           foreach($topics as $key=>$list)
           {
             $topic_id=$list['id'];
-          $counttopicquestions=Question::where('topic_id',$topic_id)->count();
+            $counttopicquestions=Question::where('topic_id',$topic_id)->count();
             if($counttopicquestions)
             {
               $topics[$key]['qu_count']=$counttopicquestions;
@@ -69,7 +125,38 @@ class QuestionsController extends Controller
           $topics=[];
         }
 
-        return view('admin.questions.index', compact('topics','subjectlist'));
+
+        }
+        else{
+          $clear_filter=0;
+          $subject="";
+          $category="";
+          $course="";
+          $quiz_type="";
+
+          $topicsdata = Quiztopic::where('quiz_status','1')->get();
+          if(!empty($topicsdata))
+          {
+            $topics=$topicsdata->toArray();
+            foreach($topics as $key=>$list)
+            {
+              $topic_id=$list['id'];
+            $counttopicquestions=Question::where('topic_id',$topic_id)->count();
+              if($counttopicquestions)
+              {
+                $topics[$key]['qu_count']=$counttopicquestions;
+              }
+              else{
+                $topics[$key]['qu_count']=0;
+              }
+            }
+          }
+          else{
+            $topics=[];
+          }
+        }  
+
+        return view('admin.questions.index', compact('topics','subjectlist','subject','category','course','quiz_type','clear_filter'));
       }
       catch(\Exception $e){
                   return redirect('admin/questions/')->with('deleted','Something went wrong.');     
@@ -256,17 +343,69 @@ class QuestionsController extends Controller
         try{
         $request->validate([
           'topic_id' => 'required',
-          'question' => 'required',
-          'a' => 'required',
-          'b' => 'required',
-          'c' => 'required',
-          'd' => 'required',
           'answer' => 'required'
         ]);
 
          // return $request;
 
         $input = $request->all();
+        if($input['get_question_preview']=="" || $input['get_question_preview_latex']=="")
+        {
+        	return back()->with('error','Question is required.');
+        }
+        else{
+        	$quiz_question=htmlentities($input['get_question_preview']);
+          $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
+        }
+
+        if($input['get_a_option_preview']=="" || $input['get_a_option_preview_latex']=="")
+        {
+          return back()->with('error','Option A is required.');
+        }
+        else{
+          $a_option=htmlentities($input['get_a_option_preview']);
+          $a_option_latex=htmlentities($input['get_a_option_preview_latex']);
+        }
+
+        if($input['get_b_option_preview']=="" || $input['get_b_option_preview_latex']=="")
+        {
+          return back()->with('error','Option B is required.');
+        }
+        else{
+          $b_option=htmlentities($input['get_b_option_preview']);
+          $b_option_latex=htmlentities($input['get_b_option_preview_latex']);
+        }
+
+        if($input['get_c_option_preview']=="" || $input['get_c_option_preview_latex']=="")
+        {
+          return back()->with('error','Option C is required.');
+        }
+        else{
+          $c_option=htmlentities($input['get_c_option_preview']);
+          $c_option_latex=htmlentities($input['get_c_option_preview_latex']);
+        }
+
+        if($input['get_d_option_preview']=="" || $input['get_d_option_preview_latex']=="")
+        {
+          return back()->with('error','Option D is required.');
+        }
+        else{
+          $d_option=htmlentities($input['get_d_option_preview']);
+          $d_option_latex=htmlentities($input['get_d_option_preview_latex']);
+        }
+
+
+        if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
+        {
+          $answer_exp="";
+          $answer_exp_latex="";
+        }
+        else{
+          $answer_exp=htmlentities($input['get_answer_exp_preview']);
+          $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
+        }
+
+
 
         if ($file = $request->file('question_img')) {
 
@@ -305,6 +444,8 @@ class QuestionsController extends Controller
         else{
         	$question_img="";
         }
+
+
 
         if ($file = $request->file('answer_explaination_img')) {
 
@@ -381,7 +522,7 @@ class QuestionsController extends Controller
       		return redirect('admin/questions/')->with('error','Something went wrong.');
       	}
       	else{
-      		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+      		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
       		if($checkquizquestion)
       		{
       			return back()->with('error','Question already exists.');
@@ -390,14 +531,20 @@ class QuestionsController extends Controller
 	      			try{
 	  				$question = new Question;
 	                $question->topic_id=$request->topic_id;
-	                $question->question=$request->question;
-	                $question->a=$request->a;
-	                $question->b=$request->b;
-	                $question->c=$request->c;
-	                $question->d=$request->d;
+	                $question->question=$quiz_question;
+                  $question->question_latex=$quiz_question_latex;
+	                $question->a=$a_option;
+                  $question->a_latex=$a_option_latex;
+	                $question->b=$b_option;
+                  $question->b_latex=$b_option_latex;
+	                $question->c=$c_option;
+                  $question->c_latex=$c_option_latex;
+	                $question->d=$d_option;
+                  $question->d_latex=$d_option_latex;
 	                $question->answer=$request->answer;
 	                $question->code_snippet="";
-	                $question->answer_exp=$request->answer_exp;
+	                $question->answer_exp=$answer_exp;
+                  $question->answer_exp_latex=$answer_exp_latex;
 	                $question->question_img=$question_img;
 	                $question->question_video_link=$question_video_link;
 	                $question->answer_explaination_img=$answer_explaination_img;
@@ -442,11 +589,29 @@ class QuestionsController extends Controller
       try{
         $request->validate([
           'topic_id' => 'required',
-          'question' => 'required',
-          'answer_exp' => 'required'
         ]);
 
         $input = $request->all();
+
+        if($input['get_question_preview']=="" || $input['get_question_preview_latex']=="")
+        {
+          return back()->with('error','Question is required.');
+        }
+        else{
+          $quiz_question=htmlentities($input['get_question_preview']);
+          $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
+        }
+
+
+        if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
+        {
+          $answer_exp="";
+          $answer_exp_latex="";
+        }
+        else{
+          $answer_exp=htmlentities($input['get_answer_exp_preview']);
+          $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
+        }
 
         if ($file = $request->file('question_img')) {
 
@@ -571,14 +736,20 @@ class QuestionsController extends Controller
 	      			try{
 	  				$question = new Question;
 	                $question->topic_id=$request->topic_id;
-	                $question->question=$request->question;
+	                $question->question=$quiz_question;
+                  $question->question_latex=$quiz_question_latex;
 	                $question->a='-';
+                  $question->a_latex='-';
 	                $question->b='-';
+                  $question->b_latex='-';
 	                $question->c='-';
+                  $question->c_latex='-';
 	                $question->d='-';
+                  $question->d_latex='-';
 	                $question->answer='-';
 	                $question->code_snippet="";
-	                $question->answer_exp=$request->answer_exp;
+	                $question->answer_exp=$answer_exp;
+                  $question->answer_exp_latex=$answer_exp_latex;
 	                $question->question_img=$question_img;
 	                $question->question_video_link=$question_video_link;
 	                $question->answer_explaination_img=$answer_explaination_img;
@@ -633,20 +804,28 @@ class QuestionsController extends Controller
         {
           return DataTables::of($questions)
           ->addIndexColumn()
+          ->setRowClass('question_row')
           ->addColumn('question',function($row){
-              return $row->question;
+
+            return '<textarea class="textarea" id="textareavalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->question).'</textarea>
+              <p id="renderer_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
+              //return $row->question;
           })
           ->addColumn('a',function($row){
-              return $row->a;
+              return '<textarea class="textarea" id="textareaoptionavalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->a).'</textarea>
+              <p id="rendereroptiona_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
           })
           ->addColumn('b',function($row){
-              return $row->b;
+              return '<textarea class="textarea" id="textareaoptionbvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->b).'</textarea>
+              <p id="rendereroptionb_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
           })
           ->addColumn('c',function($row){
-              return $row->c;
+              return '<textarea class="textarea" id="textareaoptioncvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->c).'</textarea>
+              <p id="rendereroptionc_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
           })
           ->addColumn('d',function($row){
-              return $row->d;
+              return '<textarea class="textarea" id="textareaoptiondvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->d).'</textarea>
+              <p id="rendereroptiond_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
           })
           ->addColumn('answer',function($row){
               return $row->answer;
@@ -678,6 +857,8 @@ class QuestionsController extends Controller
               $btn = '<div class="admin-table-action-block">
 
                   <a href="' . route('questions.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+
+                  <a href="' . route('viewquestion', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">View</a>
                 
                  <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->question_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
 
@@ -756,14 +937,15 @@ class QuestionsController extends Controller
     {
         $topic = Quiztopic::findOrFail($id);
         
-        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','question_status');
+        $questions = \DB::table('questions')->where('topic_id', $topic->id);
 
         if($request->ajax())
         {
           return DataTables::of($questions)
           ->addIndexColumn()
           ->addColumn('question',function($row){
-              return $row->question;
+              return '<textarea class="textarea" id="textareavalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->question).'</textarea>
+              <p id="renderer_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
           })
           ->addColumn('question_status',function($row){
 
@@ -791,6 +973,8 @@ class QuestionsController extends Controller
               $btn = '<div class="admin-table-action-block">
 
                   <a href="' . route('questions.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+
+                  <a href="' . route('viewquestion', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">View</a>
                 
                  <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->question_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
 
@@ -896,11 +1080,6 @@ class QuestionsController extends Controller
       try{
         $request->validate([
           'topic_id' => 'required',
-          'question' => 'required',
-          'a' => 'required',
-          'b' => 'required',
-          'c' => 'required',
-          'd' => 'required',
           'answer' => 'required'
         ]);
 
@@ -910,6 +1089,74 @@ class QuestionsController extends Controller
 		}
 
         $input = $request->all();
+
+        if($input['get_question_preview']=="" || $input['get_question_preview_latex']=="")
+        {
+          return back()->with('error','Question is required.');
+        }
+        else{
+          $quiz_question=strip_tags(($input['get_question_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $quiz_question=htmlentities($quiz_question);
+          $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
+        }
+
+        if($input['get_a_option_preview']=="" || $input['get_a_option_preview_latex']=="")
+        {
+          return back()->with('error','Option A is required.');
+        }
+        else{
+
+          $a_option=strip_tags(($input['get_a_option_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $a_option=htmlentities($a_option);
+          $a_option_latex=htmlentities($input['get_a_option_preview_latex']);
+        }
+
+        if($input['get_b_option_preview']=="" || $input['get_b_option_preview_latex']=="")
+        {
+          return back()->with('error','Option B is required.');
+        }
+        else{
+
+          $b_option=strip_tags(($input['get_b_option_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $b_option=htmlentities($b_option);
+          $b_option_latex=htmlentities($input['get_b_option_preview_latex']);
+        }
+
+        if($input['get_c_option_preview']=="" || $input['get_c_option_preview_latex']=="")
+        {
+          return back()->with('error','Option C is required.');
+        }
+        else{
+
+          $c_option=strip_tags(($input['get_c_option_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $c_option=htmlentities($c_option);
+          $c_option_latex=htmlentities($input['get_c_option_preview_latex']);
+        }
+
+
+        if($input['get_d_option_preview']=="" || $input['get_d_option_preview_latex']=="")
+        {
+          return back()->with('error','Option D is required.');
+        }
+        else{
+
+          $d_option=strip_tags(($input['get_d_option_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $d_option=htmlentities($d_option);
+          $d_option_latex=htmlentities($input['get_d_option_preview_latex']);
+        }
+
+        if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
+        {
+          $answer_exp="";
+          $answer_exp_latex="";
+        }
+        else{
+
+          $answer_exp=strip_tags(($input['get_answer_exp_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $answer_exp=htmlentities($answer_exp);
+          $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
+        }
+
         $topicid=$question->topic_id;
 
         if ($file = $request->file('question_img')) {
@@ -1023,35 +1270,46 @@ class QuestionsController extends Controller
           
           if($question_img!="" && $answer_explaination_img!="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
-          		$question->a=$request->a;
-	            $question->b=$request->b;
-	            $question->c=$request->c;
-	            $question->d=$request->d;
+          		$question->a=$a_option;
+              $question->a_latex=$a_option_latex;
+	            $question->b=$b_option;
+              $question->b_latex=$b_option_latex;
+	            $question->c=$c_option;
+              $question->c_latex=$c_option_latex;
+	            $question->d=$d_option;
+              $question->d_latex=$d_option_latex;
 	            $question->answer=$request->answer;
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_img=$question_img;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_img=$answer_explaination_img;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
-		            $question->a=$request->a;
-		            $question->b=$request->b;
-		            $question->c=$request->c;
-		            $question->d=$request->d;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
+		            $question->a=$a_option;
+                $question->a_latex=$a_option_latex;
+		            $question->b=$b_option;
+                $question->b_latex=$b_option_latex;
+		            $question->c=$c_option;
+                $question->c_latex=$c_option_latex;
+		            $question->d=$d_option;
+                $question->d_latex=$d_option_latex;
 		            $question->answer=$request->answer;
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_img=$question_img;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_img=$answer_explaination_img;
@@ -1061,34 +1319,45 @@ class QuestionsController extends Controller
           }
           elseif($question_img!="" && $answer_explaination_img=="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
-	            $question->a=$request->a;
-	            $question->b=$request->b;
-	            $question->c=$request->c;
-	            $question->d=$request->d;
+	            $question->a=$a_option;
+              $question->a_latex=$a_option_latex;
+	            $question->b=$b_option;
+              $question->b_latex=$b_option_latex;
+	            $question->c=$c_option;
+              $question->c_latex=$c_option_latex;
+	            $question->d=$d_option;
+              $question->d_latex=$d_option_latex;
 	            $question->answer=$request->answer;
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_img=$question_img;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
-		            $question->a=$request->a;
-		            $question->b=$request->b;
-		            $question->c=$request->c;
-		            $question->d=$request->d;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
+		            $question->a=$a_option;
+                $question->a_latex=$a_option_latex;
+		            $question->b=$b_option;
+                $question->b_latex=$b_option_latex;
+		            $question->c=$c_option;
+                $question->c_latex=$c_option_latex;
+		            $question->d=$d_option;
+                $question->d_latex=$d_option_latex;
 		            $question->answer=$request->answer;
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_img=$question_img;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1097,34 +1366,45 @@ class QuestionsController extends Controller
           }
           elseif($question_img=="" && $answer_explaination_img!="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
-          		$question->a=$request->a;
-	            $question->b=$request->b;
-	            $question->c=$request->c;
-	            $question->d=$request->d;
+          		$question->a=$a_option;
+              $question->a_latex=$a_option_latex;
+	            $question->b=$b_option;
+              $question->b_latex=$b_option_latex;
+	            $question->c=$c_option;
+              $question->c_latex=$c_option_latex;
+	            $question->d=$d_option;
+              $question->d_latex=$d_option_latex;
 	            $question->answer=$request->answer;
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_img=$answer_explaination_img;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
-		            $question->a=$request->a;
-		            $question->b=$request->b;
-		            $question->c=$request->c;
-		            $question->d=$request->d;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
+		            $question->a=$a_option;
+                $question->a_latex=$a_option_latex;
+		            $question->b=$b_option;
+                $question->b_latex=$b_option_latex;
+		            $question->c=$c_option;
+                $question->c_latex=$c_option_latex;
+		            $question->d=$d_option;
+                $question->d_latex=$d_option_latex;
 		            $question->answer=$request->answer;
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_img=$answer_explaination_img;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1133,33 +1413,44 @@ class QuestionsController extends Controller
             
           }
           else{
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
-          		$question->a=$request->a;
-	            $question->b=$request->b;
-	            $question->c=$request->c;
-	            $question->d=$request->d;
+          		$question->a=$a_option;
+              $question->a_latex=$a_option_latex;
+	            $question->b=$b_option;
+              $question->b_latex=$b_option_latex;
+	            $question->c=$c_option;
+              $question->c_latex=$c_option_latex;
+	            $question->d=$d_option;
+              $question->d_latex=$d_option_latex;
 	            $question->answer=$request->answer;
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
-		            $question->a=$request->a;
-		            $question->b=$request->b;
-		            $question->c=$request->c;
-		            $question->d=$request->d;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
+		            $question->a=$a_option;
+                $question->a_latex=$a_option_latex;
+		            $question->b=$b_option;
+                $question->b_latex=$b_option_latex;
+		            $question->c=$c_option;
+                $question->c_latex=$c_option_latex;
+		            $question->d=$d_option;
+                $question->d_latex=$d_option_latex;
 		            $question->answer=$request->answer;
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
           		}
@@ -1208,8 +1499,6 @@ class QuestionsController extends Controller
       try{
         $request->validate([
           'topic_id' => 'required',
-          'question' => 'required',
-          'answer_exp' =>'required'
         ]);
 
         $question = Question::find($id);
@@ -1218,6 +1507,30 @@ class QuestionsController extends Controller
     }
 
         $input = $request->all();
+
+        if($input['get_question_preview']=="" || $input['get_question_preview_latex']=="")
+        {
+          return back()->with('error','Question is required.');
+        }
+        else{
+          $quiz_question=strip_tags(($input['get_question_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $quiz_question=htmlentities($quiz_question);
+          $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
+        }
+
+
+        if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
+        {
+          $answer_exp="";
+          $answer_exp_latex="";
+        }
+        else{
+
+          $answer_exp=strip_tags(($input['get_answer_exp_preview']),"<math><menclose><merror><mfenced><mfrac><mglyph><mi><mlabeledtr><mmultiscripts><mn><mo><mover><mpadded><mphantom><mroot><mrow><ms><mspace><msqrt><mstyle><msub><msubsup><msup><mtable><mtd><mtext><mtr><munder><munderover><semantics>");
+          $answer_exp=htmlentities($answer_exp);
+          $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
+        }
+
         $topicid=$question->topic_id;
 
         if ($file = $request->file('question_img')) {
@@ -1335,12 +1648,17 @@ class QuestionsController extends Controller
           	if($question->question==$request->question)
           	{
           		$question->a='-';
+              $question->a_latex='-';
 	            $question->b='-';
+              $question->b_latex='-';
 	            $question->c='-';
+              $question->c_latex='-';
 	            $question->d='-';
+              $question->d_latex='-';
 	            $question->answer='-';
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_img=$question_img;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_img=$answer_explaination_img;
@@ -1353,14 +1671,20 @@ class QuestionsController extends Controller
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
 		            $question->a='-';
-		            $question->b='-';
-		            $question->c='-';
-		            $question->d='-';
+                $question->a_latex='-';
+                $question->b='-';
+                $question->b_latex='-';
+                $question->c='-';
+                $question->c_latex='-';
+                $question->d='-';
+                $question->d_latex='-';
 		            $question->answer='-';
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_img=$question_img;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_img=$answer_explaination_img;
@@ -1374,12 +1698,17 @@ class QuestionsController extends Controller
           	if($question->question==$request->question)
           	{
           		$question->a='-';
-	            $question->b='-';
-	            $question->c='-';
-	            $question->d='-';
+              $question->a_latex='-';
+              $question->b='-';
+              $question->b_latex='-';
+              $question->c='-';
+              $question->c_latex='-';
+              $question->d='-';
+              $question->d_latex='-';
 	            $question->answer='-';
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_img=$question_img;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1391,14 +1720,20 @@ class QuestionsController extends Controller
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
 		            $question->a='-';
-		            $question->b='-';
-		            $question->c='-';
-		            $question->d='-';
+                $question->a_latex='-';
+                $question->b='-';
+                $question->b_latex='-';
+                $question->c='-';
+                $question->c_latex='-';
+                $question->d='-';
+                $question->d_latex='-';
 		            $question->answer='-';
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_img=$question_img;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1411,12 +1746,17 @@ class QuestionsController extends Controller
           	if($question->question==$request->question)
           	{
           		$question->a='-';
-	            $question->b='-';
-	            $question->c='-';
-	            $question->d='-';
+              $question->a_latex='-';
+              $question->b='-';
+              $question->b_latex='-';
+              $question->c='-';
+              $question->c_latex='-';
+              $question->d='-';
+              $question->d_latex='-';
 	            $question->answer='-';
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_img=$answer_explaination_img;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1428,14 +1768,20 @@ class QuestionsController extends Controller
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
 		            $question->a='-';
-		            $question->b='-';
-		            $question->c='-';
-		            $question->d='-';
+                $question->a_latex='-';
+                $question->b='-';
+                $question->b_latex='-';
+                $question->c='-';
+                $question->c_latex='-';
+                $question->d='-';
+                $question->d_latex='-';
 		            $question->answer='-';
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_img=$answer_explaination_img;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
@@ -1447,12 +1793,17 @@ class QuestionsController extends Controller
           	if($question->question==$request->question)
           	{
           		$question->a='-';
-	            $question->b='-';
-	            $question->c='-';
-	            $question->d='-';
+              $question->a_latex='-';
+              $question->b='-';
+              $question->b_latex='-';
+              $question->c='-';
+              $question->c_latex='-';
+              $question->d='-';
+              $question->d_latex='-';
 	            $question->answer='-';
 	            $question->code_snippet="";
-	            $question->answer_exp=$request->answer_exp;
+	            $question->answer_exp=$answer_exp;
+              $question->answer_exp_latex=$answer_exp_latex;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
@@ -1463,14 +1814,20 @@ class QuestionsController extends Controller
           			return back()->with('error','Question already exists.');
           		}
           		else{
-          			$question->question=$request->question;
+          			$question->question=$quiz_question;
+                $question->question_latex=$quiz_question_latex;
 		            $question->a='-';
-		            $question->b='-';
-		            $question->c='-';
-		            $question->d='-';
+                $question->a_latex='-';
+                $question->b='-';
+                $question->b_latex='-';
+                $question->c='-';
+                $question->c_latex='-';
+                $question->d='-';
+                $question->d_latex='-';
 		            $question->answer='-';
 		            $question->code_snippet="";
-		            $question->answer_exp=$request->answer_exp;
+		            $question->answer_exp=$answer_exp;
+                $question->answer_exp_latex=$answer_exp_latex;
 		            $question->question_video_link=$question_video_link;
 		            $question->answer_explaination_video_link=$answer_explaination_video_link;
           		}
@@ -1595,7 +1952,28 @@ class QuestionsController extends Controller
 
   public function import_questions_module(Request $request)
     {   
-      return view('admin.questions.import_module');    
+      $tempquestionslist=Tempquestions::orderBy('id','ASC')->get();
+      if($tempquestionslist)
+      {
+        $tempquestionslistarray=$tempquestionslist->toArray();
+        $questionslistarray=[];
+        foreach($tempquestionslistarray as $list)
+        {
+          $questionslistarray[]=array(
+            'question'=>$list['question'],
+            'a'=>$list['a'],
+            'b'=>$list['b'],
+            'c'=>$list['c'],
+            'd'=>$list['d'],
+            'answer_exp'=>$list['answer_exp'],
+            'question_id'=>$list['id']
+          );
+        }
+      }
+      else{
+        $questionslistarray=[];
+      }
+      return view('admin.questions.import_module',compact('questionslistarray'));    
     }
 
      /**
@@ -1625,6 +2003,8 @@ class QuestionsController extends Controller
 
       if($request->hasFile('question_file'))
       {
+          DB::table('temp_questions')->delete();
+
           $quiztopicsdata = Quiztopic::where('quiz_type',"1")->where('quiz_status','1')->get();
           if($quiztopicsdata)
           {
@@ -1704,6 +2084,9 @@ class QuestionsController extends Controller
 
       if($request->hasFile('question_file'))
       {
+
+          DB::table('temp_questions')->delete();
+
           $quiztopicsdata = Quiztopic::where('quiz_type',"2")->where('quiz_status','1')->get();
           if($quiztopicsdata)
           {
@@ -1948,6 +2331,198 @@ class QuestionsController extends Controller
        }
 
        return Excel::download(new TheoryQuestionSampleExport($questionarray,$quiz_topic_arr,$quizid_arr), 'theory_question_sample_export.xlsx');
+    }
+
+    public function viewquestion($id)
+    {
+        $question = Question::findOrFail($id);
+        $topic = Quiztopic::where('id',$question->topic_id)->first();
+        return view('admin.questions.view',compact('question','topic'));
+    }
+
+    public function viewquizquestion($id)
+    {
+        $question = Question::findOrFail($id);
+        $topic = Quiztopic::where('id',$question->topic_id)->first();
+        return view('admin.questions.viewquizquestion',compact('question','topic'));
+    }
+
+
+    public function submitimporttempquestions(Request $request)
+    {
+        try{
+
+        if(isset($request->question_id) && $request->question_id!="")
+        {
+          $question_id_arr=$request->question_id;
+          if(count($question_id_arr) > 0)
+          {
+              if(isset($request->questionlatex) && $request->questionlatex!="")
+              {
+                $questionlatex_arr=$request->questionlatex;
+                if(count($questionlatex_arr) > 0)
+                {
+                  if(isset($request->optionalatex) && $request->optionalatex!="")
+                  {
+                      $optionalatex_arr=$request->optionalatex;
+                      if(count($optionalatex_arr) > 0)
+                      {
+                        $optionalatex_arr=$optionalatex_arr;
+                      }
+                      else{
+                        $optionalatex_arr=[];
+                      }
+                  }
+                  else{
+                    $optionalatex_arr=[];
+                  }
+
+                  if(isset($request->optionblatex) && $request->optionblatex!="")
+                  {
+                      $optionblatex_arr=$request->optionblatex;
+                      if(count($optionblatex_arr) > 0)
+                      {
+                        $optionblatex_arr=$optionblatex_arr;
+                      }
+                      else{
+                        $optionblatex_arr=[];
+                      }
+                  }
+                  else{
+                    $optionblatex_arr=[];
+                  }
+
+                  if(isset($request->optionclatex) && $request->optionclatex!="")
+                  {
+                      $optionclatex_arr=$request->optionclatex;
+                      if(count($optionclatex_arr) > 0)
+                      {
+                        $optionclatex_arr=$optionclatex_arr;
+                      }
+                      else{
+                        $optionclatex_arr=[];
+                      }
+                  }
+                  else{
+                    $optionclatex_arr=[];
+                  }
+
+                  if(isset($request->optiondlatex) && $request->optiondlatex!="")
+                  {
+                      $optiondlatex_arr=$request->optiondlatex;
+                      if(count($optiondlatex_arr) > 0)
+                      {
+                        $optiondlatex_arr=$optiondlatex_arr;
+                      }
+                      else{
+                        $optiondlatex_arr=[];
+                      }
+                  }
+                  else{
+                    $optiondlatex_arr=[];
+                  }
+
+                   if(isset($request->answerexplatex) && $request->answerexplatex!="")
+                  {
+                      $answerexplatex_arr=$request->answerexplatex;
+                      if(count($answerexplatex_arr) > 0)
+                      {
+                        $answerexplatex_arr=$answerexplatex_arr;
+                      }
+                      else{
+                        $answerexplatex_arr=[];
+                      }
+                  }
+                  else{
+                    $answerexplatex_arr=[];
+                  }
+
+
+                    foreach($question_id_arr as $key=>$value)
+                    {
+                      if(isset($questionlatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'question_latex' => $questionlatex_arr[$key]
+                          ]);
+                      }
+
+                      if(isset($optionalatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'a_latex' => $optionalatex_arr[$key]
+                          ]);
+                      }
+
+                      if(isset($optionblatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'b_latex' => $optionblatex_arr[$key]
+                          ]);
+                      }
+
+                      if(isset($optionclatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'c_latex' => $optionclatex_arr[$key]
+                          ]);
+                      }
+
+                      if(isset($optiondlatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'd_latex' => $optiondlatex_arr[$key]
+                          ]);
+                      }
+
+                      if(isset($answerexplatex_arr[$key]))
+                      {
+                        Tempquestions::where('id', $value)
+                         ->update([
+                             'answer_exp_latex' => $answerexplatex_arr[$key]
+                          ]);
+                      }
+                    }
+
+                    Tempquestions::query()
+                     ->where('question_status',1)
+                     ->each(function ($oldPost) {
+                      $newPost = $oldPost->replicate();
+                      $newPost->setTable('questions');
+                      $newPost->save();
+
+                      $oldPost->delete();
+
+                    });
+
+
+                    return back()->with('success', 'Questions imported Successfully.');
+
+                }
+                else{
+                  return back()->with('error', 'Something went wrong.');
+                }
+              }
+              else{
+                return back()->with('error', 'Something went wrong.');
+              }
+          }
+          else{
+            return back()->with('error', 'Something went wrong.');
+          }
+        }
+        else{
+          return back()->with('error', 'Something went wrong.');
+        }
+    }
+    catch(\Exception $e){
+                  return back()->with('error','Something went wrong.');     
+               }
     }
 
 }

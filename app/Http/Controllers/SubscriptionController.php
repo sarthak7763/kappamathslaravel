@@ -27,13 +27,13 @@ class SubscriptionController extends Controller
 
           $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
 
-        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status','flag');
       }
       elseif($request->filter_start_date!="" && $request->filter_end_date=="")
       {
         $filter_start_date=date('Y-m-d',strtotime($request->filter_start_date));
 
-        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+        $subscription = \DB::table('subscriptions')->where('created_at','>=',$filter_start_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status','flag');
       }
       elseif($request->filter_start_date=="" && $request->filter_end_date!="")
       {
@@ -41,14 +41,13 @@ class SubscriptionController extends Controller
 
           $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
 
-        $subscription = \DB::table('subscriptions')->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+        $subscription = \DB::table('subscriptions')->where('created_at','<=',$filter_end_date)->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status','flag');
       }
       else{
-        $subscription = \DB::table('subscriptions')->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status');
+        $subscription = \DB::table('subscriptions')->select('id','title','description','price','subscription_plan','subscription_tenure','subscription_status','flag');
       }
-        
-
-          if($request->ajax()){
+      
+      if($request->ajax()){
 
             return DataTables::of($subscription)
             ->addIndexColumn()
@@ -84,12 +83,12 @@ class SubscriptionController extends Controller
                 $checked="";
             }
 
-              $btn = '<div class="admin-table-action-block">
-
-                    <a href="' . route('subscription.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
-
-                    <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->subscription_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
-                   
+              $btn = '';
+              $btn .= '<div class="admin-table-action-block">';
+              if($row->flag == "1"){
+                $btn   .=  '<a href="' . route('subscription.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>';
+              }
+              $btn   .= '<button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->subscription_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
 
                 //      $btn .= '<div id="deleteModal' . $row->id . '" class="delete-modal modal fade" role="dialog">
                 //   <div class="modal-dialog modal-sm">
@@ -191,7 +190,7 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         try{
-       $input = $request->all();
+        $input = $request->all();
         $request->validate([
           'title' => 'required|string',
           'price' => 'required',

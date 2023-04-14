@@ -70,7 +70,7 @@
           </a>
         </h3>
       <hr>
-       {!! Form::model($question, ['method' => 'PATCH', 'action' => ['QuestionsController@updatetheoryquiz', $question->id], 'files' => true]) !!}
+       {!! Form::model($question, ['method' => 'PATCH', 'id'=>'edit-form', 'action' => ['QuestionsController@updatetheoryquiz', $question->id], 'files' => true]) !!}
                      
         <div class="row">
           <div class="col-md-6">
@@ -78,16 +78,36 @@
             <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">
               {!! Form::label('question', 'Question') !!}
               <span class="required">*</span>
-              {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
+
+              <p id="previeweditquestion" style="display:none;">{{html_entity_decode($question->question)}}</p>
+              
+              <textarea class="form-control" placeholder="Please Enter Question" rows="8" name="question" cols="50" id="question"></textarea>
               <small class="text-danger">{{ $question_error }}</small>
             </div>
+
+            <div style="display: none;">
+            <textarea class="form-control" rows="10" cols="30" id="get_question_preview" name="get_question_preview">{{html_entity_decode($question->question)}}</textarea>
+
+            <textarea class="form-control" rows="10" cols="30" id="get_question_preview_latex" name="get_question_preview_latex">{{html_entity_decode($question->question_latex)}}</textarea>
+          </div>
+
           </div>
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer_ex') ? ' has-error' : '' }}">
                 {!! Form::label('answer_exp', 'Answer Explanation') !!}
-                {!! Form::textarea('answer_exp', null, ['class' => 'form-control',  'placeholder' => 'Please Enter Answer Explanation',  'rows' => '8']) !!}
+
+                <p id="previeweditanswerexp" style="display:none;">{{html_entity_decode($question->answer_exp)}}</p>
+
+               <textarea class="form-control" placeholder="Please Enter Answer Explanation" rows="8" name="answer_exp" cols="50" id="answer_exp"></textarea>
                 <small class="text-danger">{{ $answer_exp_error }}</small>
             </div>
+
+            <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview" name="get_answer_exp_preview">{{html_entity_decode($question->answer_exp)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview_latex" name="get_answer_exp_preview_latex">{{html_entity_decode($question->answer_exp_latex)}}</textarea>
+              </div>
+
           </div>
 
          <div class="extras-block col-md-12">
@@ -138,7 +158,7 @@
 
            <div class="col-md-6">
                   <div class="btn-group pull-right">
-                    {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+                    <button class="btn btn-wave submitbtn" type="button">Update</button>
                   </div>
                 </div>
 
@@ -150,4 +170,37 @@
     {!! Form::close() !!}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript" src="{{ env('APP_URL') }}generic_wiris/wirisplugin-generic.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_answer.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+      var textareaquestionvalue=$('#previeweditquestion').text();
+      $("#question").append(textareaquestionvalue);
+
+      var textareaanswerexpvalue=$('#previeweditanswerexp').text();
+      $("#answer_exp").append(textareaanswerexpvalue);
+  });
+    </script>
+
+    <script type="text/javascript">
+      $(document).on('click','.submitbtn',function(){
+        updateQuestionFunction();
+        updateanswerFunction();
+        $('#edit-form').submit();
+      });
+    </script>
+
 @endsection

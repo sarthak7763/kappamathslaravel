@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Question;
+use App\Tempquestions;
 use App\Quiztopic;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -33,7 +34,7 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
         {
             if($row['answer_explaination']!="")
             {
-                $answer_exp=$row['answer_explaination'];
+                $answer_exp=htmlentities($row['answer_explaination']);
             }
             else{
                 $answer_exp="";
@@ -93,16 +94,22 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
               $answer_explaination_video_link="";
             }
 
-              return new Question([
+              return new Tempquestions([
                 'topic_id' => $row['quiz_id'],
-                'question' => $row['question'],
-                'a' => $row['a'],
-                'b' => $row['b'],
-                'c' => $row['c'],
-                'd' => $row['d'],
+                'question' => htmlentities($row['question']),
+                'question_latex'=>'',
+                'a' => htmlentities($row['a']),
+                'a_latex'=>'',
+                'b' => htmlentities($row['b']),
+                'b_latex'=>'',
+                'c' => htmlentities($row['c']),
+                'c_latex'=>'',
+                'd' => htmlentities($row['d']),
+                'd_latex'=>'',
                 'answer' => ucfirst($row['correct_answer']),
                 'code_snippet'=>'',
                 'answer_exp' =>$answer_exp,
+                'answer_exp_latex'=>'',
                 'question_img'=>$question_img,
                 'question_video_link'=>$question_video_link,
                 'answer_explaination_img'=>$answer_explaination_img,

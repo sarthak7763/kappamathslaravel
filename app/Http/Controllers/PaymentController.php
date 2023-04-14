@@ -6,19 +6,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Topic;
-use App\topic_user;
+use App\Usersubscriptions;
 
 class PaymentController extends Controller
 {
-  public function index()
-    {
-      $auth = Auth::User();
-        if($auth->role == 'A'){
-           $data = Topic::all();
+  public function index(Request $request)
+  {
+      try {
+        if($request->user_id){
+          $userid=$request->user_id;
+          $clear_filter=1;
+          $data = Usersubscriptions::where('user_id',$request->user_id)->orderBy('id','DESC')->get();
+        }else{
+          $userid="";
+          $clear_filter=0;
+          $data = Usersubscriptions::orderBy('id','DESC')->get();
         }
-        else{
-             $data = $auth->topic()->get();
-        }
-       return view('admin.payment', compact('data'));
-     }
+        $users = User::where('role','S')->get();
+        return view('admin.payment_history.index', compact('data','users','userid','clear_filter'));
+      }
+      catch(\Exception $e){
+                  return back()->with('error','Something went wrong.');     
+               }
+  }
 }

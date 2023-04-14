@@ -292,9 +292,9 @@ class QuizResultController extends BaseController
 		        				{
 		        					$questiondetarray=$questiondet->toArray();
 		        					$question_id=$questiondetarray['id'];
-		        					$question=$questiondetarray['question'];
+		        					$question=$questiondetarray['question_latex'];
 		        					$correct_answer=$questiondetarray['answer'];
-		        					$answer_explaination=$questiondetarray['answer_exp'];
+		        					$answer_explaination=$questiondetarray['answer_exp_latex'];
 		        				}
 		        				else{
 		        					$question_id="";
@@ -317,14 +317,30 @@ class QuizResultController extends BaseController
 		        					$answer_status=0;
 		        				}
 
+		        			if($question!="")
+		        			{
+		        				$quizquestion='\('.$question.'\)';
+		        			}
+		        			else{
+		        				$quizquestion="";
+		        			}
+
+		        			if($answer_explaination!="")
+					        {
+					        	$quiz_answer_exp='\('.$answer_explaination.'\)';
+					        }
+					        else{
+					        	$quiz_answer_exp="";
+					        }
+
 	        				$quiz_result[]=array(
 	        					'result_type'=>(int)$resultmarksdetail['result_type'],
 	        					'course_id'=>"",
 	        					'quiz_id'=>(int)$quiz_topiciddb,
 	        					'question_id'=>(int)$question_id,
-	        					'question'=>strip_tags($question),
+	        					'question'=>$quizquestion,
 	        					'correct_answer'=>$correct_answer,
-	        					'answer_explaination'=>strip_tags($answer_explaination),
+	        					'answer_explaination'=>$quiz_answer_exp,
 	        					'user_answer'=>$user_answer,
 	        					'answer_status'=>$answer_status,
 	        					'result_id'=>(int)$result_id,

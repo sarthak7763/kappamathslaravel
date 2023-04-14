@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Question;
 use App\Quiztopic;
+use App\Tempquestions;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -33,7 +34,7 @@ class TheoryQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation, W
         {
             if($row['answer_explaination']!="")
             {
-                $answer_exp=$row['answer_explaination'];
+                $answer_exp=htmlentities($row['answer_explaination']);
             }
             else{
                 $answer_exp="";
@@ -93,16 +94,22 @@ class TheoryQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation, W
               $answer_explaination_video_link="";
             }
 
-              return new Question([
+              return new Tempquestions([
                 'topic_id' => $row['quiz_id'],
-                'question' => $row['question'],
+                'question' => htmlentities($row['question']),
+                'question_latex'=>'',
                 'a' => '',
+                'a_latex'=>'',
                 'b' => '',
+                'b_latex'=>'',
                 'c' => '',
+                'c_latex'=>'',
                 'd' => '',
+                'd_latex'=>'',
                 'answer' => '',
                 'code_snippet'=>'',
                 'answer_exp' =>$answer_exp,
+                'answer_exp_latex'=>'',
                 'question_img'=>$question_img,
                 'question_video_link'=>$question_video_link,
                 'answer_explaination_img'=>$answer_explaination_img,

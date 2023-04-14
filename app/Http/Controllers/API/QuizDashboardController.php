@@ -55,6 +55,26 @@ class QuizDashboardController extends BaseController
 		        	{
 		        		$coursesubtopicsdetaildata=$coursesubtopicsdetail->toArray();
 
+		        		$userid=$user->id;
+		        		$userdet=User::find($userid);
+
+		        		$usersubtopicsubscribe=User::where('id',$userid)->whereRaw('FIND_IN_SET(?, subscribed_coursesubtopics)', [$subtopicid])->get()->first();
+		        		if(!$usersubtopicsubscribe)
+		        		{
+		        			$subscribed_coursesubtopics=$userdet->subscribed_coursesubtopics;
+				            if($subscribed_coursesubtopics!="")
+				            {
+				            	$newsubscribed_coursesubtopics=$subscribed_coursesubtopics.','.$subtopicid;
+				            }
+				            else{
+				            	$newsubscribed_coursesubtopics=$subtopicid;
+				            }
+
+				            $userdet->subscribed_coursesubtopics=$newsubscribed_coursesubtopics;
+
+						    $userdet->save();
+		        		}
+
 		        		$quiztopicdetail=Quiztopic::where('subject',$courseid)->where('category',$topicid)->where('course_topic',$subtopicid)->where('quiz_type','1')->get()->first();
 		        		if($quiztopicdetail)
 		        		{
@@ -202,6 +222,26 @@ class QuizDashboardController extends BaseController
 					        	$question_img='';
 					        }
 
+					        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
+
+					        $quiz_option_a='\('.$questiondataarray['a_latex'].'\)';
+
+					        $quiz_option_b='\('.$questiondataarray['b_latex'].'\)';
+
+					        $quiz_option_c='\('.$questiondataarray['c_latex'].'\)';
+
+					        $quiz_option_d='\('.$questiondataarray['d_latex'].'\)';
+
+					        if($questiondataarray['answer_exp_latex']!="")
+					        {
+					        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
+					        }
+					        else{
+					        	$quiz_answer_exp="";
+					        }
+					        
+
+
 					        $questionslist=array(
 					        		'course_id'=>(int)$courseid,
 			        				'course_name'=>$subject->title,
@@ -211,13 +251,13 @@ class QuizDashboardController extends BaseController
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
 			        				'question_id'=>$questiondataarray['id'],
-			        				'question'=>strip_tags($questiondataarray['question']), 
-			        				'a'=>strip_tags($questiondataarray['a']), 
-			        				'b'=>strip_tags($questiondataarray['b']),
-			        				'c'=>strip_tags($questiondataarray['c']),
-			        				'd'=>strip_tags($questiondataarray['d']),
+			        				'question'=>$quizquestion, 
+			        				'a'=>$quiz_option_a, 
+			        				'b'=>$quiz_option_b,
+			        				'c'=>$quiz_option_c,
+			        				'd'=>$quiz_option_d,
 			        				'answer'=>strip_tags($questiondataarray['answer']),
-			        				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+			        				'answer_exp'=>$quiz_answer_exp,
 			        				'question_video_link'=>$questiondataarray['question_video_link'],
 			        				'question_img'=>$question_img,
 			        				'current_score'=>$current_score,
@@ -810,6 +850,24 @@ class QuizDashboardController extends BaseController
 
 	        			$total_marks=$total_questions*$quiztopicdetaildata['per_q_mark'];
 
+	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+
+					    $quiz_option_a='\('.$questiondetaildata['a_latex'].'\)';
+
+					    $quiz_option_b='\('.$questiondetaildata['b_latex'].'\)';
+
+					     $quiz_option_c='\('.$questiondetaildata['c_latex'].'\)';
+
+					    $quiz_option_d='\('.$questiondetaildata['d_latex'].'\)';
+
+				        if($questiondetaildata['answer_exp_latex']!="")
+				        {
+				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+				        }
+				        else{
+				        	$quiz_answer_exp="";
+				        }
+
 	        			$questiondet=array(
 		        		 			'course_id'=>$course_id,
 		        		 			'topic_id'=>$topic_id,
@@ -817,8 +875,8 @@ class QuizDashboardController extends BaseController
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
 			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>strip_tags($questiondetaildata['question']), 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'question'=>$quizquestion, 
+			        				'answer_exp'=>$quiz_answer_exp,
 			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
 			        				'previous_question_key'=>(int)$previous_question_key,
@@ -959,6 +1017,26 @@ class QuizDashboardController extends BaseController
 
 	        			$total_marks=$total_questions*$quiztopicdetaildata['per_q_mark'];
 
+
+	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+
+					    $quiz_option_a='\('.$questiondetaildata['a_latex'].'\)';
+
+					    $quiz_option_b='\('.$questiondetaildata['b_latex'].'\)';
+
+					     $quiz_option_c='\('.$questiondetaildata['c_latex'].'\)';
+
+					    $quiz_option_d='\('.$questiondetaildata['d_latex'].'\)';
+
+				        if($questiondetaildata['answer_exp_latex']!="")
+				        {
+				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+				        }
+				        else{
+				        	$quiz_answer_exp="";
+				        }
+				        
+
 	        			$questionslist=array(
 		        		 			'course_id'=>$course_id,
 		        		 			'topic_id'=>$topic_id,
@@ -966,13 +1044,13 @@ class QuizDashboardController extends BaseController
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
 			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>strip_tags($questiondetaildata['question']),
-			        				'a'=>strip_tags($questiondetaildata['a']), 
-			        				'b'=>strip_tags($questiondetaildata['b']),
-			        				'c'=>strip_tags($questiondetaildata['c']),
-			        				'd'=>strip_tags($questiondetaildata['d']),
+			        				'question'=>$quizquestion,
+			        				'a'=>$quiz_option_a, 
+			        				'b'=>$quiz_option_b,
+			        				'c'=>$quiz_option_c,
+			        				'd'=>$quiz_option_d,
 			        				'answer'=>strip_tags($questiondetaildata['answer']), 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'answer_exp'=>$quiz_answer_exp,
 			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
 			        				'previous_question_key'=>(int)$previous_question_key,
@@ -1223,8 +1301,15 @@ class QuizDashboardController extends BaseController
 		        	$question_img='';
 		        }
 
-		        $content=strip_tags($questiondataarray['question']);
-				$string = preg_replace("/&nbsp;/",'',$content);
+		        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
+
+		        if($questiondataarray['answer_exp_latex']!="")
+		        {
+		        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
+		        }
+		        else{
+		        	$quiz_answer_exp="";
+		        }
 
 		        $questionslist=array(
         				'course_name'=>$subject->title,
@@ -1234,8 +1319,8 @@ class QuizDashboardController extends BaseController
         				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
         				'quiz_id'=>$quiztopicdetaildata['id'],
         				'question_id'=>$questiondataarray['id'],
-        				'question'=>$string, 
-        				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+        				'question'=>$quizquestion, 
+        				'answer_exp'=>$quiz_answer_exp,
         				'question_video_link'=>$questiondataarray['question_video_link'],
         				'question_img'=>$question_img,
         				'previous_question_key'=>(int)$previous_question_key,
@@ -1319,8 +1404,15 @@ class QuizDashboardController extends BaseController
 		        	$question_img='';
 		        }
 
-		        $content=strip_tags($questiondataarray['question']);
-				$string = preg_replace("/&nbsp;/",'',$content);
+		        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
+
+		        if($questiondataarray['answer_exp_latex']!="")
+		        {
+		        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
+		        }
+		        else{
+		        	$quiz_answer_exp="";
+		        }
 
 		        $questionslist=array(
         				'course_name'=>$subject->title,
@@ -1330,8 +1422,8 @@ class QuizDashboardController extends BaseController
         				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
         				'quiz_id'=>$quiztopicdetaildata['id'],
         				'question_id'=>$questiondataarray['id'],
-        				'question'=>$string, 
-        				'answer_exp'=>strip_tags($questiondataarray['answer_exp']),
+        				'question'=>$quizquestion, 
+        				'answer_exp'=>$quiz_answer_exp,
         				'question_video_link'=>$questiondataarray['question_video_link'],
         				'question_img'=>$question_img,
         				'previous_question_key'=>(int)$previous_question_key,
@@ -1432,15 +1524,22 @@ class QuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
-				        $content=strip_tags($questiondetaildata['question']);
-				        $string = preg_replace("/&nbsp;/",'',$content);
+				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+
+				        if($questiondetaildata['answer_exp_latex']!="")
+				        {
+				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+				        }
+				        else{
+				        	$quiz_answer_exp="";
+				        }
 
 				        $questiondet=array(
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
 			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>$string, 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'question'=>$quizquestion, 
+			        				'answer_exp'=>$quiz_answer_exp,
 			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
 			        				'previous_question_key'=>(int)$previous_question_key,
@@ -1560,15 +1659,22 @@ class QuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
-				        $content=strip_tags($questiondetaildata['question']);
-				        $string = preg_replace("/&nbsp;/",'',$content);
+				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+
+				        if($questiondetaildata['answer_exp_latex']!="")
+				        {
+				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+				        }
+				        else{
+				        	$quiz_answer_exp="";
+				        }
 
 				        $questionslist=array(
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
 			        				'question_id'=>$questiondetaildata['id'],
-			        				'question'=>$string, 
-			        				'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			        				'question'=>$quizquestion, 
+			        				'answer_exp'=>$quiz_answer_exp,
 			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
 			        				'previous_question_key'=>(int)$previous_question_key,

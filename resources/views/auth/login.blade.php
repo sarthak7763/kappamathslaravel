@@ -61,11 +61,13 @@
         <form class="form login-form" method="POST" action="{{ route('checkwebuserlogin') }}">
           {{ csrf_field() }}
           <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <i class="fa fa-envelope"></i>
             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter Your Email" autofocus>
             <small class="text-danger">{{$email_error}}</small>
           </div>
 
           <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+            <i class="fa fa-eye"></i>
             <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password" value="{{ old('password') }}">
             <small class="text-danger">{{$password_error}}</small>
           </div>

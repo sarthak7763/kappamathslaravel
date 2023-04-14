@@ -77,7 +77,7 @@ Route::post('/login/checkwebuserlogin','Auth\LoginController@checkwebuserlogin')
 
   Route::delete('admin/ans/{id}','Anscontroller@destroy')->name('ans.del');
 
-  Route::get('/admin/payment', 'PaymentController@index')->name('admin.payment');
+  
 
   // route for processing payment\
   Route::post('payment/paypal_post', 'PaypalController@paypal_post')->name('paypal_post');
@@ -112,9 +112,17 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::resource('/admin/questions', 'QuestionsController');
 
+  Route::post('/admin/questions/','QuestionsController@index')->name('questionsindex');
+
+  Route::get('/admin/view-question/{id}','QuestionsController@viewquestion')->name('viewquestion');
+
   Route::get('/admin/import_questions_module','QuestionsController@import_questions_module')->name('import_questions_module');
 
+  Route::get('/admin/testvideo','DashboardController@testvideo')->name('testvideo');
+
   Route::post('/admin/questions/import_theory_questions', 'QuestionsController@importTheoryquestionExcelToDB')->name('import_theory_questions');
+
+  Route::post('/admin/questions/submitimporttempquestions', 'QuestionsController@submitimporttempquestions')->name('submitimporttempquestions');
 
   Route::post('/admin/questions/import_objective_questions', 'QuestionsController@importObjectivequestionExcelToDB')->name('import_objective_questions');
   
@@ -207,13 +215,18 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::get('/admin/get_objective_question_sample_export','QuestionsController@get_objective_question_sample_export')->name('get_objective_question_sample_export');
 
-   Route::get('/admin/get_theory_question_sample_export','QuestionsController@get_theory_question_sample_export')->name('get_theory_question_sample_export');
+  Route::get('/admin/get_theory_question_sample_export','QuestionsController@get_theory_question_sample_export')->name('get_theory_question_sample_export');
 
+  Route::any('/admin/payment', 'PaymentController@index')->name('admin.payment');
+  
 });
 
 Route::get('/cms-pages/{slug}','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
 
 Route::get('/cms-pages','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
+
+Route::get('/view-quiz-question/{slug}','QuestionsController@viewquizquestion')->name('viewquizquestion');
+
 
 
 

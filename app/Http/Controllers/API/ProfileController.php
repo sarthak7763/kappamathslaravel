@@ -204,6 +204,35 @@ class ProfileController extends BaseController
                }
     }
 
+    public function deleteaccount(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+    		if($user)
+    		{
+    			$userid=$user->id;
+		        $userdet=User::find($userid);
+
+		        if(is_null($userdet)){
+	               return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	            }
+
+	            $userdet->status=2;
+				$userdet->save();
+
+				$success=[];
+	           	return $this::sendResponse($success, 'Account deleted successfully.');
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+
+    }
+
     public function updatepassword(Request $request)
     {
     	try{

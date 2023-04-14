@@ -34,7 +34,7 @@
   		<form method="post" action="{{url('/admin/all_reports/')}}" autocomplete="off">
         @csrf
         <div class="row">  
-      		<div class="col-md-5">
+      		<div class="col-md-4">
             <div class="form-group">
               <label for="">User Name: </label>
               <select class="form-control" name="filter_user" id="filter_user">

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 @php
 $setting = App\Setting::first();
@@ -64,8 +64,9 @@ $setting = App\Setting::first();
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">{{$auth->name}}</span>
-              <i class="fa fa-user hidden-lg hidden-md hidden-sm"></i>
+        <img src="{{asset('/images/profile.png')}}" class="img-responsive" width="30px" alt="{{$setting->welcome_txt}}">
+                            <span class="hidden-xs">{{$auth->name}}</span>
+              <!-- <i class="fa fa-user hidden-lg hidden-md hidden-sm"></i> -->
             </a>
             <ul class="dropdown-menu">
               <!-- Menu Body -->
@@ -240,15 +241,21 @@ $setting = App\Setting::first();
       "sDom": "<'row'><'row'<'col-md-4'l><'col-md-4'B><'col-md-4'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
       buttons: [
             {
-               extend: 'print',
-               exportOptions: {
-                   columns: ':visible'
+              extend: 'print',
+              exportOptions: {
+                   columns: ':notvisible'
                }
             },
             'csvHtml5',
             'excelHtml5',
             'colvis',
           ]
+    });
+
+    $('#example2').DataTable({
+      "sDom": "<'row'><'row'<'col-md-4'l><'col-md-4'B><'col-md-4'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+      buttons: [
+        ]
     });
 
     $('#questions_table').DataTable({

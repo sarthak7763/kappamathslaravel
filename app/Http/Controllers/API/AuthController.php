@@ -7,6 +7,9 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Subscription;
+use App\Usersubscriptions;
+use Carbon\Carbon;
 use Validator;
 
 class AuthController extends BaseController
@@ -97,6 +100,19 @@ class AuthController extends BaseController
                 'status'=>'1',
                 'device_id'=>$request->fcm_token
             ]);
+            $subscription =Subscription::where('subscription_status','1')->where('flag',0)->first();
+            if($subscription){
+                $user_sub = [
+                    'user_id'               => $user->id,
+                    'subscription_id'       => $subscription->id,
+                    'transaction_id'        => '0',
+                    'subscription_payment'  => $subscription->price,
+                    'subscription_start'    => date('Y-m-d'),
+                    'subscription_end'      => Carbon::now()->addDays($subscription->subscription_tenure),
+                    'subscription_status'   => '1'
+                ];
+                Usersubscriptions::create($user_sub);
+            }
 
             $token = $user->createToken('Laravel8PassportAuth')->accessToken;
 
@@ -116,8 +132,8 @@ class AuthController extends BaseController
 
         }
         catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-               }
+            return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+        }
         
     }
     catch(\Exception $e){
@@ -184,6 +200,9 @@ class AuthController extends BaseController
                     $success['userdet']=$user;
 
                     return $this::sendResponse($success, 'User login successfully.');
+                }
+                elseif($user->status=="2"){
+                    return $this::sendError('Account suspended.', ['error'=>'Your account has been suspended.']);
                 }
                 else{
                     return $this::sendError('Account Supended.', ['error'=>'Your account has been suspended.']);

@@ -15,6 +15,8 @@ use App\Homebanner;
 use App\Resultmarks;
 use App\Subscription;
 use App\Usersubscriptions;
+use App\Notifications;
+use App\UserNotification;
 use Validator;
 use Hash;
 
@@ -360,6 +362,15 @@ class DashboardController extends BaseController
 		        $courseid=$request->course_id;
 	        	$topicid=$request->topic_id;
 
+	        	$checkusersubscription=checkusersubscription($user->id);
+	        	if($checkusersubscription)
+	        	{
+	        		$usersubscription=$checkusersubscription;
+	        	}
+	        	else{
+	        		$usersubscription=0;
+	        	}
+
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
 		           return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
@@ -414,7 +425,7 @@ class DashboardController extends BaseController
 		        			);
 
 		        	$success['topicdetail'] =  $topicdetail;
-                	return $this::sendResponse($success, 'Topics Detail.');
+                	return $this::sendResponse($success, 'Topics Detail.',$usersubscription);
 		        }
 		        else{
 		        	return $this::sendError('Unauthorised Exception.', ['error'=>'Something went wrong']);
@@ -449,6 +460,15 @@ class DashboardController extends BaseController
 		        $courseid=$request->course_id;
 	        	$topicid=$request->topic_id;
 	        	$subtopicid=$request->sub_topic_id;
+
+	        	$checkusersubscription=checkusersubscription($user->id);
+	        	if($checkusersubscription)
+	        	{
+	        		$usersubscription=$checkusersubscription;
+	        	}
+	        	else{
+	        		$usersubscription=0;
+	        	}
 
 	        	$subject = Subject::find($courseid);
 		          if(is_null($subject)){
@@ -571,31 +591,17 @@ class DashboardController extends BaseController
 			        	$quiz_retake_time=0;
 			        }
 
-			        
-
 			        if($coursesubtopicsdetaildata['topic_video_id']!="")
 			        {
-			        	$curlSession = curl_init();
-					    curl_setopt($curlSession, CURLOPT_URL, 'https://player.vimeo.com/video/'.$coursesubtopicsdetaildata['topic_video_id'].'/config');
-					    curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
-					    curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+			        	$checkvideo=checkvimeovideoid($coursesubtopicsdetaildata['topic_video_id']);
 
-				    	$jsonData = json_decode(curl_exec($curlSession));
-				    	curl_close($curlSession);
-
-					    if(isset($jsonData->message))
-					    {
-					    	return $this::sendError('Unauthorised Exception.', ['error'=>$jsonData->message]);
-					    }
-					    else{
-					    	if(count($jsonData->request->files->progressive) >0)
-					    	{
-					    		$subtopicvideourl=$jsonData->request->files->progressive[0]->url;
-					    	}
-					    	else{
-					    		return $this::sendError('Unauthorised Exception.', ['error'=>'Invalid Video']);
-					    	}
-					    }
+			        	if($checkvideo['code']=="400")
+			            {
+			              $subtopicvideourl="";
+			            }
+			            else{
+			            	$subtopicvideourl=$checkvideo['subtopicvideourl'];
+			            }
 			        }
 			        else{
 			        	$subtopicvideourl="";
@@ -606,7 +612,13 @@ class DashboardController extends BaseController
 			        	$sub_topic_image=url('/').'/images/topics/'.$coursesubtopicsdetaildata['topic_image'];
 			        }
 			        else{
-			        	$sub_topic_image=$jsonData->video->thumbs->base;
+			        	if($checkvideo['code']=="400")
+			            {
+			              $sub_topic_image="";
+			            }
+			            else{
+			            	$sub_topic_image=$checkvideo['sub_topic_image'];
+			            }
 			        }  
 				    
 		        		$subtopicdetail=array(
@@ -625,7 +637,7 @@ class DashboardController extends BaseController
 		        			);
 
 		        	$success['subtopicdetail'] =  $subtopicdetail;
-                	return $this::sendResponse($success, 'Sub Topics Detail.');
+                	return $this::sendResponse($success, 'Sub Topics Detail.',$usersubscription);
 
 		        	}
 		        	else{
@@ -672,8 +684,16 @@ class DashboardController extends BaseController
 
     			if($verifytransaction_data['code']==200)
     			{
-    				$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+    				if($verifytransaction_data['transactionstatus']=="success")
+    				{
+    					$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+    				}
+    				else{
+    					$this->sendpaymentfailnotification($user->id);
 
+    					return $this::sendError('Unauthorised Exception.', ['error'=>'Payment Failure. Please try again.']);
+    				}
+    				
     				$user_subscriptions_list=Usersubscriptions::where('user_id',$user->id)->where('subscription_status',1)->get();
     				if($user_subscriptions_list)
     				{
@@ -705,6 +725,8 @@ class DashboardController extends BaseController
 		            $usersubscription->subscription_status=1;
 		            $usersubscription->save();
 
+		            $this->sendpaymentsuccessnotification($user->id);
+		            $this->sendsubscriptionsuccessnotification($user->id);
 
     				$success['reference_id'] =  $reference_id;
                 	return $this::sendResponse($success, 'Payment success.');
@@ -720,6 +742,126 @@ class DashboardController extends BaseController
     	catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
                }
+
+    }
+
+    public function sendpaymentfailnotification($userid)
+    {
+    	$currentdate=date('Y-m-d');
+
+    	$checkusernotification=UserNotification::where('user_id',$userid)->where('notification_type','payment_fail')->whereDate('created_at',$currentdate)->get()->first();
+
+    	if(!$checkusernotification)
+    	{
+    		$notification_title='Subscription Payment Failure';
+			$notification_message='Sorry payment for the subscription has been failed.';
+
+			$notifications = new Notifications;
+            $notifications->title =$notification_title;
+            $notifications->message =$notification_message;
+            $notifications->image="";
+            $notifications->send_by = 1;
+            $notifications->save();
+
+            if($notifications)
+	        {
+	        	$usernotifications = new UserNotification;
+	            $usernotifications->user_id =$userid;
+	            $usernotifications->notification_id =$notifications->id;
+	            $usernotifications->notification_type="payment_fail";
+	            $usernotifications->is_read = 0;
+	            $usernotifications->save();
+
+	            $success=[];
+	            return $this::sendResponse($success, 'Notification send successfully.');
+	        }
+	        else{
+	        	return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        }
+    	}
+    	else{
+    		return $this::sendError('Unauthorised.', ['error'=>'No subscription.']);
+    	}
+
+    }
+
+    public function sendpaymentsuccessnotification($userid)
+    {
+    	$currentdate=date('Y-m-d');
+
+    	$checkusernotification=UserNotification::where('user_id',$userid)->where('notification_type','payment_success')->whereDate('created_at',$currentdate)->get()->first();
+
+    	if(!$checkusernotification)
+    	{
+    		$notification_title='Subscription Payment Success';
+			$notification_message='Your payment for the subscription has been successfully done.';
+
+			$notifications = new Notifications;
+            $notifications->title =$notification_title;
+            $notifications->message =$notification_message;
+            $notifications->image="";
+            $notifications->send_by = 1;
+            $notifications->save();
+
+            if($notifications)
+	        {
+	        	$usernotifications = new UserNotification;
+	            $usernotifications->user_id =$userid;
+	            $usernotifications->notification_id =$notifications->id;
+	            $usernotifications->notification_type="payment_success";
+	            $usernotifications->is_read = 0;
+	            $usernotifications->save();
+
+	            $success=[];
+	            return $this::sendResponse($success, 'Notification send successfully.');
+	        }
+	        else{
+	        	return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        }
+    	}
+    	else{
+    		return $this::sendError('Unauthorised.', ['error'=>'No subscription.']);
+    	}
+
+    }
+
+    public function sendsubscriptionsuccessnotification($userid)
+    {
+    	$currentdate=date('Y-m-d');
+
+    	$checkusernotification=UserNotification::where('user_id',$userid)->where('notification_type','subscription_success')->whereDate('created_at',$currentdate)->get()->first();
+
+    	if(!$checkusernotification)
+    	{
+    		$notification_title='Subscription Successfully Activate';
+			$notification_message='Your subscription has been activate successfully.';
+
+			$notifications = new Notifications;
+            $notifications->title =$notification_title;
+            $notifications->message =$notification_message;
+            $notifications->image="";
+            $notifications->send_by = 1;
+            $notifications->save();
+
+            if($notifications)
+	        {
+	        	$usernotifications = new UserNotification;
+	            $usernotifications->user_id =$userid;
+	            $usernotifications->notification_id =$notifications->id;
+	            $usernotifications->notification_type="subscription_success";
+	            $usernotifications->is_read = 0;
+	            $usernotifications->save();
+
+	            $success=[];
+	            return $this::sendResponse($success, 'Notification send successfully.');
+	        }
+	        else{
+	        	return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+	        }
+    	}
+    	else{
+    		return $this::sendError('Unauthorised.', ['error'=>'No subscription.']);
+    	}
 
     }
 
@@ -813,6 +955,90 @@ class DashboardController extends BaseController
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
                }
 
+    }
+
+    public function getsubscriptionnotification(Request $request)
+    {
+    	try{
+	        $user=auth()->user();
+	        if($user)
+	        {
+	        	$user_subscriptions_list=Usersubscriptions::where('user_id',$user->id)->where('subscription_status',1)->get()->first();
+
+	        	if($user_subscriptions_list)
+	        	{
+	        		$user_subscriptions_listarr=$user_subscriptions_list->toArray();
+
+	        		$currentdate=date('Y-m-d');
+	        		$subscription_start=$user_subscriptions_listarr['subscription_start'];
+	        		$subscription_end=$user_subscriptions_listarr['subscription_end'];
+
+	        		if($currentdate <= $subscription_end)
+	        		{
+	        			$startTimeStamp = strtotime($currentdate);
+						$endTimeStamp = strtotime($subscription_end);
+
+						$timeDiff = abs($endTimeStamp - $startTimeStamp);
+
+						$numberDays = $timeDiff/86400;  // 86400 seconds in one day
+
+						// and you might want to convert to integer
+						$numberDays = intval($numberDays);
+
+						if($numberDays <= 3)
+						{
+							$checkusernotification=UserNotification::where('user_id',$user->id)->where('notification_type','subscription_end')->whereDate('created_at',$currentdate)->get()->first();
+							if($checkusernotification)
+							{
+								return $this::sendError('Unauthorised.', ['error'=>'notification already send.']);
+							}
+							else{
+								$notification_title='Subscription Expires';
+								$notification_message='Your current subscription plan is going to expire in '.$numberDays.' days.';
+
+								$notifications = new Notifications;
+				                $notifications->title =$notification_title;
+				                $notifications->message =$notification_message;
+				                $notifications->image="";
+				                $notifications->send_by = 1;
+				                $notifications->save();
+				                if($notifications)
+				                {
+				                	$usernotifications = new UserNotification;
+					                $usernotifications->user_id =$user->id;
+					                $usernotifications->notification_id =$notifications->id;
+
+					                $usernotifications->notification_type="subscription_end";
+					                $usernotifications->is_read = 0;
+					                $usernotifications->save();
+
+					                $success=[];
+					                return $this::sendResponse($success, 'Notification send successfully.');
+				                }
+				                else{
+				                	return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+				                }
+							}
+						}
+						else{
+							return $this::sendError('Unauthorised.', ['error'=>'subscription is active.']);
+						}
+	        		}
+	        		else{
+	        			return $this::sendError('Unauthorised.', ['error'=>'No subscription.']);
+	        		}
+	        	}
+	        	else{
+	        		return $this::sendError('Unauthorised.', ['error'=>'No subscription.']);
+	        	}
+	        }
+	        else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
     }
 
 

@@ -226,7 +226,7 @@ class TopReportController extends Controller
 
     }
     catch(\Exception $e){
-                  return back()->with('error',$e->getMessage());     
+                  return back()->with('error','Something went wrong.');     
                }
 
 }

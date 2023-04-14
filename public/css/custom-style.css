@@ -33,10 +33,46 @@ body .login-page .form input ~ small{color:red;}
 .login-acc{color:#042a60;font-weight:bold;display:block;text-align:center;}
 form .login-acc > *{display:inline-block;width:auto;}
 .login-acc:hover{text-decoration:none;}
-div.login-page{margin-bottom:40px}
+div.login-page{margin-bottom:40px;}
+.form-group {
+    position: relative;
+}
+
+.form-group i {
+    font-size: 18px;
+    color: #042a60;
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
 
 @media(max-width : 1600px){
 body div.login-page .logo{    width: 138.68px;
     height: 138.68px;}
 
+}
+@media(max-width : 767px){
+.vertical-center .login-page,  div.login-page {
+    max-width: 100%;
+    margin-bottom: 40px;
+    width: 100%;
+}
+.login-page .form button {
+    font-size: 16px;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.vertical-center .login-page {
+    padding: 15px;
+}
+
+.login-page .user-register-heading {
+    font-size: 20px;
+    margin: 20px 0 0;
+}
+body div.login-page .logo {
+    margin: auto;
+}
 }

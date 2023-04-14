@@ -13,6 +13,7 @@ use App\Subscription;
 use App\Cmspages;
 use App\Contactsubject;
 use App\Contactenquiry;
+use App\UserNotification;
 use App\Usersubscriptions;
 use Validator;
 use Hash;
@@ -26,7 +27,7 @@ class PagesController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$subscriptiondata=Subscription::where('subscription_status','1')->get();
+	        	$subscriptiondata=Subscription::where('subscription_status','1')->where('flag',1)->get();
 	        	if($subscriptiondata)
 	        	{
 	        		$subscriptiondataarray=$subscriptiondata->toArray();
@@ -74,8 +75,8 @@ class PagesController extends BaseController
 	        }  
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
-               }
+			return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+		}
     }
 
     public function getallfaqlist()
@@ -130,7 +131,7 @@ class PagesController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$notificationdata=Notifications::where('status','1')->get();
+	        	$notificationdata=UserNotification::where('user_id',$user->id)->with('getNotification')->get();
 	        	if($notificationdata)
 	        	{
 	        		$notificationdataarray=$notificationdata->toArray();
@@ -141,19 +142,20 @@ class PagesController extends BaseController
 	        			{
 	        				$createddate=date('d M, Y',strtotime($list['created_at']));
 
-	        				if($list['image']!="")
+	        				if($list['get_notification']['image']!="")
 					        {
-					        	$notification_image=url('/').'/images/notifications/'.$list['image'];
+					        	$notification_image=url('/').'/images/notifications/'.$list['get_notification']['image'];
 					        }
 					        else{
 					        	$notification_image='';
 					        }
-	        				
+	    
 	        				$notificationlist[]=array(
 	        					'notification_id'=>$list['id'],
-	        					'title'=>$list['title'],
+	        					'user_id'=>$list['user_id'],
+	        					'title'=>$list['get_notification']['title'],
 	        					'image'=>$notification_image,
-	        					'message'=>$list['message'],
+	        					'message'=>$list['get_notification']['message'],
 	        					'date'=>$createddate
 	        				);
 	        			}
@@ -167,7 +169,7 @@ class PagesController extends BaseController
 	        	}
 
 	        	$success['notificationlist'] =  $notificationlist;
-                return $this::sendResponse($success, 'Notification List.');
+               return $this::sendResponse($success, 'Notification List.');
 		        
 	        }
 	        else{
@@ -175,9 +177,34 @@ class PagesController extends BaseController
 	        }  
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-               }
+			return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+		}
     }
+
+	public function NotificationDelete(Request $request)
+	{
+		try {
+			$user=auth()->user();
+			if($user){
+				if($request->notification_id){
+					UserNotification::where('id',$request->notification_id)->where('user_id',$user->id)->delete();
+				}
+				
+				if($request->type == 'all'){
+					UserNotification::where('user_id',$user->id)->delete();
+				}
+
+				$success=[];
+            	return $this::sendResponse($success, 'Notification deleted successfully.');
+
+			}
+			else{
+				return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+			}
+		} catch (\Exception $e) {
+			return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);
+		}
+	}
 
     public function getcmspagecontent(Request $request)
     {
@@ -201,8 +228,7 @@ class PagesController extends BaseController
 
 		        	$success['pagedet'] =  $pagedet;
                 	return $this::sendResponse($success, 'CMS Page Details.');
-		        }
-		        else{
+		        }else{
 		        	return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']); 
 		        }
 	        }
@@ -211,8 +237,8 @@ class PagesController extends BaseController
 	        }
 	    }
 	    catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
-               }
+        	return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong']);    
+        }
     }
 
 

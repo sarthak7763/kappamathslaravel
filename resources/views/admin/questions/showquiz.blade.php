@@ -55,6 +55,11 @@
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
   <script>
     $(function () {
 
@@ -75,7 +80,15 @@
       {data: 'action', name: 'action',searchable: false,orderable: false}
 
       ]
-    });
+    }).on( 'init', function () {
+       $('[id^=textareavalue_]').each(function(){
+        var textareavalue = $(this).val();
+        var id = $(this).attr("id").replace('textareavalue_','');
+        $("#renderer_"+id).empty();
+        $("#renderer_"+id).append(textareavalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#renderer_"+id)[0]])
+      });
+     });
 
   });
   

@@ -271,8 +271,8 @@ a:focus {
   font-family: fontAwesome;
 }
 .navbar-nav > li > a {
-  padding-top: 20px;
-  padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .main-header .sidebar-toggle:before {
   content: "\f0c9";
@@ -5275,9 +5275,16 @@ body.sidebar-collapse.skin-black .sidebar-menu > li.active > a {
 
 /*========= Question Modal =======*/
 .extras-block {
-  margin-top: 15px;
-  border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: 15px;
+    background: #fff;
+    padding: 15px;
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
+.extras-block .form-group input[type="file"] {
+    width: 100%;
+    padding-bottom: 10px;
+}
+.mt-4{margin-top: 1rem}
 .extras-heading {
   padding: 5px 0 15px;
   margin-bottom: 15px;

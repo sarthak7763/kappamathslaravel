@@ -4,6 +4,46 @@
 
 @section('content')
 
+<!-- Style for html code -->
+  <link type="text/css" rel="stylesheet" href="{{ env('APP_URL') }}css/editor/prism.css" />
+
+  <style>
+  .tox-tinymce {
+    width: 100% !important;
+  }
+  .btn.btn-wave {
+    margin-bottom: 50px;
+  }
+
+  .wrs_btn {
+  background-color: #4d4d4d;
+  border: 0;
+  border-radius: 4px;
+  color: #FEFEFE;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 10px;
+  outline:0;
+  padding: 0px 12px;
+  padding-right:15px;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  line-height: 2.4;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.wrs_btn:hover {
+  background-color: #3d3d3d;
+}
+
+.wrs_btn_large {
+  height: 46px;
+  width: 160px;
+}
+
+</style>
+
 @if (session()->has('success'))
     <div class="alert alert-success">
         {!! session()->get('success')!!}        
@@ -100,7 +140,7 @@
           </a>
         </h3>
       <hr>
-       {!! Form::model($question, ['method' => 'PATCH', 'action' => ['QuestionsController@update', $question->id], 'files' => true]) !!}
+       {!! Form::model($question, ['method' => 'PATCH', 'id'=>'edit-form', 'action' => ['QuestionsController@update', $question->id], 'files' => true]) !!}
                      
         <div class="row">
           <div class="col-md-6">
@@ -108,42 +148,88 @@
             <div class="form-group{{ $errors->has('question') ? ' has-error' : '' }}">
               {!! Form::label('question', 'Question') !!}
               <span class="required">*</span>
-              {!! Form::textarea('question', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Question', 'rows'=>'8']) !!}
+              <p id="previeweditquestion" style="display:none;">{{html_entity_decode($question->question)}}</p>
+              
+              <textarea class="form-control" placeholder="Please Enter Question" rows="8" name="question" cols="50" id="question"></textarea>
               <small class="text-danger">{{ $question_error }}</small>
             </div>
+
+          <div style="display: none;">
+            <textarea class="form-control" rows="10" cols="30" id="get_question_preview" name="get_question_preview">{{html_entity_decode($question->question)}}</textarea>
+
+            <textarea class="form-control" rows="10" cols="30" id="get_question_preview_latex" name="get_question_preview_latex">{{html_entity_decode($question->question_latex)}}</textarea>
+          </div>
+
           </div>  
         
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('a') ? ' has-error' : '' }}">
-              {!! Form::label('a', 'A - Option') !!}
+              {!! Form::label('a_option', 'A - Option') !!}
               <span class="required">*</span>
-              {!! Form::textarea('a', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
+              <p id="previeweditoptiona" style="display:none;">{{html_entity_decode($question->a)}}</p>
+
+              {!! Form::textarea('a_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
               <small class="text-danger">{{ $a_error }}</small>
             </div>
+
+            <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_a_option_preview" name="get_a_option_preview">{{html_entity_decode($question->a)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_a_option_preview_latex" name="get_a_option_preview_latex">{{html_entity_decode($question->a_latex)}}</textarea>
+              </div>
+
           </div>
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('b') ? ' has-error' : '' }}">
-              {!! Form::label('b', 'B - Option') !!}
+              {!! Form::label('b_option', 'B - Option') !!}
               <span class="required">*</span>
-              {!! Form::textarea('b', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
+              <p id="previeweditoptionb" style="display:none;">{{html_entity_decode($question->b)}}</p>
+
+              {!! Form::textarea('b_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
               <small class="text-danger">{{ $b_error }}</small>
             </div>
+
+            <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_b_option_preview" name="get_b_option_preview">{{html_entity_decode($question->b)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_b_option_preview_latex" name="get_b_option_preview_latex">{{html_entity_decode($question->b_latex)}}</textarea>
+              </div>
+
           </div>
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('c') ? ' has-error' : '' }}">
-              {!! Form::label('c', 'C - Option') !!}
+              {!! Form::label('c_option', 'C - Option') !!}
               <span class="required">*</span>
-              {!! Form::textarea('c', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
+              <p id="previeweditoptionc" style="display:none;">{{html_entity_decode($question->c)}}</p>
+
+              {!! Form::textarea('c_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
               <small class="text-danger">{{ $c_error }}</small>
             </div>
+
+            <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_c_option_preview" name="get_c_option_preview">{{html_entity_decode($question->c)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_c_option_preview_latex" name="get_c_option_preview_latex">{{html_entity_decode($question->c_latex)}}</textarea>
+              </div>
+
           </div>
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('d') ? ' has-error' : '' }}">
-              {!! Form::label('d', 'D - Option') !!}
+              {!! Form::label('d_option', 'D - Option') !!}
               <span class="required">*</span>
-              {!! Form::textarea('d', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
+
+              <p id="previeweditoptiond" style="display:none;">{{html_entity_decode($question->d)}}</p>
+
+              {!! Form::textarea('d_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
               <small class="text-danger">{{ $d_error }}</small>
             </div>
+
+            <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_d_option_preview" name="get_d_option_preview">{{html_entity_decode($question->d)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_d_option_preview_latex" name="get_d_option_preview_latex">{{html_entity_decode($question->d_latex)}}</textarea>
+              </div>
+
           </div>
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
@@ -157,9 +243,19 @@
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('answer_ex') ? ' has-error' : '' }}">
                 {!! Form::label('answer_exp', 'Answer Explanation') !!}
-                {!! Form::textarea('answer_exp', null, ['class' => 'form-control',  'placeholder' => 'Please Enter Answer Explanation',  'rows' => '4']) !!}
+
+                <p id="previeweditanswerexp" style="display:none;">{{html_entity_decode($question->answer_exp)}}</p>
+
+                <textarea class="form-control" placeholder="Please Enter Answer Explanation" rows="8" name="answer_exp" cols="50" id="answer_exp"></textarea>
                 <small class="text-danger">{{ $answer_exp_error }}</small>
             </div>
+
+             <div style="display: none;">
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview" name="get_answer_exp_preview">{{html_entity_decode($question->answer_exp)}}</textarea>
+
+                <textarea class="form-control" rows="10" cols="30" id="get_answer_exp_preview_latex" name="get_answer_exp_preview_latex">{{html_entity_decode($question->answer_exp_latex)}}</textarea>
+              </div>
+
           </div>
 
           <div class="extras-block col-md-12">
@@ -210,7 +306,7 @@
 
         <div class="col-md-6">
             <div class="btn-group pull-right">
-              {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+              <button class="btn btn-wave submitbtn" type="button">Update</button>
             </div>
           </div>
 
@@ -223,4 +319,63 @@
     {!! Form::close() !!}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript" src="{{ env('APP_URL') }}generic_wiris/wirisplugin-generic.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_optiona.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_optionb.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_optionc.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_optiond.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_answer.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
+
+<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+      var textareaquestionvalue=$('#previeweditquestion').text();
+      $("#question").append(textareaquestionvalue);
+
+      var textareaoptionavalue=$('#previeweditoptiona').text();
+      $("#a_option").append(textareaoptionavalue);
+
+      var textareaoptionbvalue=$('#previeweditoptionb').text();
+      $("#b_option").append(textareaoptionbvalue);
+
+      var textareaoptioncvalue=$('#previeweditoptionc').text();
+      $("#c_option").append(textareaoptioncvalue);
+
+      var textareaoptiondvalue=$('#previeweditoptiond').text();
+      $("#d_option").append(textareaoptiondvalue);
+
+      var textareaanswerexpvalue=$('#previeweditanswerexp').text();
+      $("#answer_exp").append(textareaanswerexpvalue);
+	});
+    </script>
+
+    <script type="text/javascript">
+      $(document).on('click','.submitbtn',function(){
+        updateQuestionFunction();
+        updateoptionaFunction();
+        updateoptionbFunction();
+        updateoptioncFunction();
+        updateoptiondFunction();
+        updateanswerFunction();
+        $('#edit-form').submit();
+      });
+    </script>
+
+
+
 @endsection

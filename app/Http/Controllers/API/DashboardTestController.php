@@ -583,6 +583,7 @@ class DashboardTestController extends BaseController
 					    curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
 
 				    	$jsonData = json_decode(curl_exec($curlSession));
+
 				    	curl_close($curlSession);
 
 					    if(isset($jsonData->message))

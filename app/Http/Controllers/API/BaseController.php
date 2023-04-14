@@ -15,9 +15,9 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public static function sendResponse($result, $message,$subscription="")
+    public static function sendResponse($result, $message,$subscription=2)
     {
-        if(isset($subscription) && $subscription!="")
+        if(isset($subscription) && $subscription!=2)
         {
             $response = [
                 'status_code' => 200,

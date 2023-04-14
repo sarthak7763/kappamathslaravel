@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notifications;
+use App\UserNotification;
 use App\User;
 use Yajra\Datatables\DataTables;
 use Exception;
@@ -20,7 +21,7 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-        $notifications = \DB::table('notifications')->select('id','title','message','status');
+        $notifications = \DB::table('notifications')->select('id','title','message','status')->where('send_by','0')->orderBy('id','DESC');
 
           if($request->ajax()){
 
@@ -153,8 +154,8 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-       $input = $request->all();
+      try{
+        $input = $request->all();
         $request->validate([
           'title' => 'required|string',
           'message'=>'required'
@@ -166,85 +167,78 @@ class NotificationController extends Controller
           $input['status'] = "0";
         }
 
-        if ($file = $request->file('image')) {
-
-            try{
+        if($file = $request->file('image')) {
+          try{
             $request->validate([
               'image' => 'required|mimes:jpeg,png,jpg'
             ]);
+          } catch(\Exception $e){
+            if($e instanceof ValidationException){
+              $listmessage=[];
+              foreach($e->errors() as $key=>$list){
+                $listmessage[$key]=$list[0];
+              }
+              if(count($listmessage) > 0){
+                return back()->with('valid_error',$listmessage);
+              }else{
+                return back()->with('error','Something went wrong.');
+              }
+                
+            }else{
+              return back()->with('error','Something went wrong.');
+            }      
           }
-          catch(\Exception $e){
-                    if($e instanceof ValidationException){
-                        $listmessage=[];
-                        foreach($e->errors() as $key=>$list)
-                        {
-                            $listmessage[$key]=$list[0];
-                        }
 
-                        if(count($listmessage) > 0)
-                        {
-                            return back()->with('valid_error',$listmessage);
-                        }
-                        else{
-                            return back()->with('error','Something went wrong.');
-                        }
-                        
-                    }
-                    else{
-                        return back()->with('error','Something went wrong.');
-                    }      
-               }
-
-            $name = 'notifications_'.time().$file->getClientOriginalName(); 
-            $file->move('images/notifications/', $name);
-            $image = $name;
+          $name = 'notifications_'.time().$file->getClientOriginalName(); 
+          $file->move('images/notifications/', $name);
+          $image = $name;
+        }else{
+          $image="";
         }
-        else{
-            $image="";
-        }
-
         $input['image']=$image;
-
         try{
-        $notificationsdata=Notifications::where('title',$request->title)->first();
-        if($notificationsdata)
-        {
-        	return back()->with('error','Title already exists.');
+          $notificationsdata=Notifications::where('title',$request->title)->first();
+          if($notificationsdata){
+        	  return back()->with('error','Title already exists.');
+          }else{
+        	  try{
+		          $quiz = Notifications::create($input);
+              if($quiz){
+                $users = User::where('role','S')->get();
+                foreach($users as $value){
+                  $user_notification = [
+                    'user_id'         => $value['id'],
+                    'notification_id' => $quiz->id,
+                    'image'     => $image ?? ''
+                  ];
+                  UserNotification::create($user_notification);
+                }
+              }
+		          return redirect('/admin/notifications/')->with('success', 'Notification has been added');
+            }catch(\Exception $e){
+              return back()->with('error',$e->getMessage());     
+            }
+          }
+        }catch(\Exception $e){
+          return back()->with('error','Something went wrong.');     
         }
-        else{
-        	try{
-		         $quiz = Notifications::create($input);
-		           return redirect('/admin/notifications/')->with('success', 'Notification has been added');
-		        }catch(\Exception $e){
-		          return back()->with('error',$e->getMessage());     
-		       }
-        }
-    }
-    catch(\Exception $e){
-                  return back()->with('error','Something went wrong.');     
-               }
 
-    }catch(\Exception $e){
-                    if($e instanceof ValidationException){
-                        $listmessage=[];
-                        foreach($e->errors() as $key=>$list)
-                        {
-                            $listmessage[$key]=$list[0];
-                        }
-
-                        if(count($listmessage) > 0)
-                        {
-                            return back()->with('valid_error',$listmessage);
-                        }
-                        else{
-                            return back()->with('error','Something went wrong.');
-                        }
-                        
-                    }
-                    else{
-                        return back()->with('error','Something went wrong.');
-                    }      
-               }
+      }catch(\Exception $e){
+        if($e instanceof ValidationException){
+          $listmessage=[];
+          foreach($e->errors() as $key=>$list){
+            $listmessage[$key]=$list[0];
+          }
+          if(count($listmessage) > 0){
+            return back()->with('valid_error',$listmessage);
+          }else{
+            return back()->with('error','Something went wrong.');
+          }
+            
+        }else{
+            return back()->with('error','Something went wrong.');
+        }      
+      }
          
     }
 
@@ -267,14 +261,12 @@ class NotificationController extends Controller
      */
     public function edit($id)
     {
-        try{
-
-            $notifications = Notifications::findOrFail($id);
-           return view('admin.notifications.edit',compact('notifications'));
-        }
-        catch(\Exception $e){
-                  return redirect('admin/notifications/')->with('error','Something went wrong.');     
-               }
+      try{
+        $notifications = Notifications::findOrFail($id);
+        return view('admin.notifications.edit',compact('notifications'));
+      }catch(\Exception $e){
+        return redirect('admin/notifications/')->with('error','Something went wrong.');     
+      }
     }
 
     /**
@@ -287,58 +279,49 @@ class NotificationController extends Controller
     public function update(Request $request, $id)
     {
         try{
-        $request->validate([
-          'title' => 'required|string',
-          'message'=>'required'
-        ]);
+          $request->validate([
+            'title' => 'required|string',
+            'message'=>'required'
+          ]);
 
           $notifications = Notifications::find($id);
           if(is_null($notifications)){
-           return redirect('admin/notifications')->with('error','Something went wrong.');
-        }
+            return redirect('admin/notifications')->with('error','Something went wrong.');
+          }
 
-        if(isset($request->status)){
+          if(isset($request->status)){
             $statusvalue = 1;
           }else{
             $statusvalue = 0;
           }
 
           if ($file = $request->file('image')) {
-
             try{
-            $request->validate([
-              'image' => 'required|mimes:jpeg,png,jpg'
-            ]);
-          }
-          catch(\Exception $e){
-                    if($e instanceof ValidationException){
-                        $listmessage=[];
-                        foreach($e->errors() as $key=>$list)
-                        {
-                            $listmessage[$key]=$list[0];
-                        }
-
-                        if(count($listmessage) > 0)
-                        {
-                            return back()->with('valid_error',$listmessage);
-                        }
-                        else{
-                            return back()->with('error','Something went wrong.');
-                        }
-                        
-                    }
-                    else{
-                        return back()->with('error','Something went wrong.');
-                    }      
-               }
-
+              $request->validate([
+                'image' => 'required|mimes:jpeg,png,jpg'
+              ]);
+            }catch(\Exception $e){
+              if($e instanceof ValidationException){
+                $listmessage=[];
+                foreach($e->errors() as $key=>$list){
+                  $listmessage[$key]=$list[0];
+                }
+                if(count($listmessage) > 0){
+                  return back()->with('valid_error',$listmessage);
+                }else{
+                  return back()->with('error','Something went wrong.');
+                }
+                  
+              }else{
+                return back()->with('error','Something went wrong.');
+              }      
+            }
             $name = 'subject_'.time().$file->getClientOriginalName(); 
             $file->move('images/notifications/', $name);
             $notificationimage = $name;
-        }
-        else{
+          }else{
             $notificationimage="";
-        }
+          }
 
         if($notifications->title==$request->title)
         {
@@ -425,7 +408,7 @@ class NotificationController extends Controller
     {
         try{
         $notifications = Notifications::find($id);
-
+        UserNotification::where('notification_id',$id)->delete();
         if(is_null($notifications)){
            return redirect('admin/notifications')->with('error','Something went wrong.');
         }
