@@ -260,6 +260,10 @@
                         <small class="text-danger">{{ $question_img_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
+                      <div id="preview_image_question_div">
+                      <img id="preview-image-question" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -285,6 +289,9 @@
                         <small class="text-danger">{{ $answer_explaination_img_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
+                      <div id="preview_image_answer_div">
+                      <img id="preview-image-answer" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                    </div>
                     </div>
 
                   </div>
@@ -346,4 +353,30 @@
     		$('#add-form').submit();
     	});
     </script>
+
+    <script type="text/javascript">
+
+  $(document).on('change','#question_img',function(){
+    let questionreader = new FileReader();
+    questionreader.onload = (e) => { 
+      $('#preview-image-question').attr('src', e.target.result); 
+    }
+    questionreader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
+
+<script type="text/javascript">
+
+  $(document).on('change','#answer_explaination_img',function(){
+    let answerreader = new FileReader();
+    answerreader.onload = (e) => { 
+      $('#preview-image-answer').attr('src', e.target.result); 
+    }
+    answerreader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
 @endsection

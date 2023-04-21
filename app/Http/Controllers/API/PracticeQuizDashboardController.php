@@ -234,6 +234,46 @@ class PracticeQuizDashboardController extends BaseController
 	        	$question_img='';
 	        }
 
+	        if($questiondataarray['question_video_link']!="")
+	        {
+	        	$checkquestionvideo=getVideoDetails($questiondataarray['question_video_link']);
+
+	        	if($checkquestionvideo['code']=="400")
+	            {
+	              $question_video_link="";
+	            }
+	            else{
+	            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+	            }
+	        }
+	        else{
+	        	$question_video_link="";
+	        }
+
+	        if($questiondataarray['answer_explaination_img']!="")
+	        {
+	        	$answer_explaination_img=url('/').'/images/questions/'.$questiondataarray['answer_explaination_img'];
+	        }
+	        else{
+	        	$answer_explaination_img='';
+	        }
+
+	        if($questiondataarray['answer_explaination_video_link']!="")
+	        {
+	        	$checkanswervideo=getVideoDetails($questiondataarray['answer_explaination_video_link']);
+
+	        	if($checkanswervideo['code']=="400")
+	            {
+	              $answer_explaination_video_link="";
+	            }
+	            else{
+	            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+	            }
+	        }
+	        else{
+	        	$answer_explaination_video_link="";
+	        }
+
 
 	       $quizquestion='\('.$questiondataarray['question_latex'].'\)';
 
@@ -269,8 +309,10 @@ class PracticeQuizDashboardController extends BaseController
 				'd'=>$quiz_option_d,
 				'answer'=>strip_tags($questiondataarray['answer']),
 				'answer_exp'=>$quiz_answer_exp,
-				'question_video_link'=>$questiondataarray['question_video_link'],
 				'question_img'=>$question_img,
+				'question_video_link'=>$question_video_link,
+				'answer_explaination_img'=>$answer_explaination_img,
+				'answer_explaination_video_link'=>$answer_explaination_video_link,
 				'current_score'=>$current_score,
 				'total_score'=>$total_score,
 				'total_questions'=>$total_questions,
@@ -414,6 +456,46 @@ class PracticeQuizDashboardController extends BaseController
 	        	$question_img='';
 	        }
 
+	        if($questiondataarray['question_video_link']!="")
+	        {
+	        	$checkquestionvideo=getVideoDetails($questiondataarray['question_video_link']);
+
+	        	if($checkquestionvideo['code']=="400")
+	            {
+	              $question_video_link="";
+	            }
+	            else{
+	            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+	            }
+	        }
+	        else{
+	        	$question_video_link="";
+	        }
+
+	        if($questiondataarray['answer_explaination_img']!="")
+	        {
+	        	$answer_explaination_img=url('/').'/images/questions/'.$questiondataarray['answer_explaination_img'];
+	        }
+	        else{
+	        	$answer_explaination_img='';
+	        }
+
+	        if($questiondataarray['answer_explaination_video_link']!="")
+	        {
+	        	$checkanswervideo=getVideoDetails($questiondataarray['answer_explaination_video_link']);
+
+	        	if($checkanswervideo['code']=="400")
+	            {
+	              $answer_explaination_video_link="";
+	            }
+	            else{
+	            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+	            }
+	        }
+	        else{
+	        	$answer_explaination_video_link="";
+	        }
+
 	        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
 
 	        $quiz_option_a='\('.$questiondataarray['a_latex'].'\)';
@@ -448,8 +530,10 @@ class PracticeQuizDashboardController extends BaseController
 				'd'=>$quiz_option_d,
 				'answer'=>strip_tags($questiondataarray['answer']),
 				'answer_exp'=>$quiz_answer_exp,
-				'question_video_link'=>$questiondataarray['question_video_link'],
 				'question_img'=>$question_img,
+				'question_video_link'=>$question_video_link,
+				'answer_explaination_img'=>$answer_explaination_img,
+				'answer_explaination_video_link'=>$answer_explaination_video_link,
 				'current_score'=>$current_score,
 				'total_score'=>$total_score,
 				'total_questions'=>$total_questions,
@@ -681,12 +765,20 @@ class PracticeQuizDashboardController extends BaseController
             return $data;     
          }
 
+        if($questiondetaildata['answer_exp_latex']!="")
+        {
+        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        }
+        else{
+        	$quiz_answer_exp="";
+        }
+
          $questiondet=array(
          	'course_id'=>$courseid,
 			'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			'quiz_id'=>$quiztopicdetaildata['id'],
 			'question_id'=>$questiondetaildata['id'],
-			'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			'answer_exp'=>$quiz_answer_exp,
 			'answer_status'=>1, //correct
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
@@ -786,12 +878,20 @@ class PracticeQuizDashboardController extends BaseController
             return $data;     
          }
 
+        if($questiondetaildata['answer_exp_latex']!="")
+        {
+        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        }
+        else{
+        	$quiz_answer_exp="";
+        }
+
          $questiondet=array(
          	'course_id'=>$courseid,
 			'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			'quiz_id'=>$quiztopicdetaildata['id'],
 			'question_id'=>$questiondetaildata['id'],
-			'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			'answer_exp'=>$quiz_answer_exp,
 			'answer_status'=>2, //correct
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
@@ -893,12 +993,21 @@ class PracticeQuizDashboardController extends BaseController
             return $data;     
          }
 
+
+        if($questiondetaildata['answer_exp_latex']!="")
+        {
+        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        }
+        else{
+        	$quiz_answer_exp="";
+        }
+
          $questiondet=array(
          	'course_id'=>$courseid,
 			'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			'quiz_id'=>$quiztopicdetaildata['id'],
 			'question_id'=>$questiondetaildata['id'],
-			'answer_exp'=>strip_tags($questiondetaildata['answer_exp']),
+			'answer_exp'=>$quiz_answer_exp,
 			'answer_status'=>2, //correct
 			'previous_question_key'=>(int)$previous_question_key,
 			'next_question_key'=>(int)$next_question_key,
@@ -1097,6 +1206,46 @@ class PracticeQuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
+				    if($questiondetaildata['question_video_link']!="")
+			        {
+			        	$checkquestionvideo=getVideoDetails($questiondetaildata['question_video_link']);
+
+			        	if($checkquestionvideo['code']=="400")
+			            {
+			              $question_video_link="";
+			            }
+			            else{
+			            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$question_video_link="";
+			        }
+
+			        if($questiondetaildata['answer_explaination_img']!="")
+			        {
+			        	$answer_explaination_img=url('/').'/images/questions/'.$questiondetaildata['answer_explaination_img'];
+			        }
+			        else{
+			        	$answer_explaination_img='';
+			        }
+
+			        if($questiondetaildata['answer_explaination_video_link']!="")
+			        {
+			        	$checkanswervideo=getVideoDetails($questiondetaildata['answer_explaination_video_link']);
+
+			        	if($checkanswervideo['code']=="400")
+			            {
+			              $answer_explaination_video_link="";
+			            }
+			            else{
+			            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$answer_explaination_video_link="";
+			        }
+
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
@@ -1121,8 +1270,10 @@ class PracticeQuizDashboardController extends BaseController
 			        				'question_id'=>$questiondetaildata['id'],
 			        				'question'=>$quizquestion, 
 			        				'answer_exp'=>$quiz_answer_exp,
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
+			        				'question_video_link'=>$question_video_link,
+			        				'answer_explaination_img'=>$answer_explaination_img,
+			        				'answer_explaination_video_link'=>$answer_explaination_video_link,
 			        				'previous_question_key'=>(int)$previous_question_key,
 			        				'previous_quiz_id'=>(int)$previous_quiz_id,
 		        					'next_question_key'=>(int)$next_question_key,
@@ -1291,6 +1442,46 @@ class PracticeQuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
+				    if($questiondetaildata['question_video_link']!="")
+			        {
+			        	$checkquestionvideo=getVideoDetails($questiondetaildata['question_video_link']);
+
+			        	if($checkquestionvideo['code']=="400")
+			            {
+			              $question_video_link="";
+			            }
+			            else{
+			            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$question_video_link="";
+			        }
+
+			        if($questiondetaildata['answer_explaination_img']!="")
+			        {
+			        	$answer_explaination_img=url('/').'/images/questions/'.$questiondetaildata['answer_explaination_img'];
+			        }
+			        else{
+			        	$answer_explaination_img='';
+			        }
+
+			        if($questiondetaildata['answer_explaination_video_link']!="")
+			        {
+			        	$checkanswervideo=getVideoDetails($questiondetaildata['answer_explaination_video_link']);
+
+			        	if($checkanswervideo['code']=="400")
+			            {
+			              $answer_explaination_video_link="";
+			            }
+			            else{
+			            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$answer_explaination_video_link="";
+			        }
+
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
@@ -1328,8 +1519,10 @@ class PracticeQuizDashboardController extends BaseController
 			        				'd'=>$quiz_option_d,
 			        				'answer'=>strip_tags($questiondetaildata['answer']),
 			        				'answer_exp'=>$quiz_answer_exp,
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
+			        				'question_video_link'=>$question_video_link,
+			        				'answer_explaination_img'=>$answer_explaination_img,
+			        				'answer_explaination_video_link'=>$answer_explaination_video_link,
 			        				'previous_question_key'=>(int)$previous_question_key,
 			        				'previous_quiz_id'=>(int)$previous_quiz_id,
 		        					'next_question_key'=>(int)$next_question_key,
@@ -1624,6 +1817,46 @@ class PracticeQuizDashboardController extends BaseController
 		        	$question_img='';
 		        }
 
+		        if($questiondataarray['question_video_link']!="")
+		        {
+		        	$checkquestionvideo=getVideoDetails($questiondataarray['question_video_link']);
+
+		        	if($checkquestionvideo['code']=="400")
+		            {
+		              $question_video_link="";
+		            }
+		            else{
+		            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+		            }
+		        }
+		        else{
+		        	$question_video_link="";
+		        }
+
+		        if($questiondataarray['answer_explaination_img']!="")
+		        {
+		        	$answer_explaination_img=url('/').'/images/questions/'.$questiondataarray['answer_explaination_img'];
+		        }
+		        else{
+		        	$answer_explaination_img='';
+		        }
+
+		        if($questiondataarray['answer_explaination_video_link']!="")
+		        {
+		        	$checkanswervideo=getVideoDetails($questiondataarray['answer_explaination_video_link']);
+
+		        	if($checkanswervideo['code']=="400")
+		            {
+		              $answer_explaination_video_link="";
+		            }
+		            else{
+		            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+		            }
+		        }
+		        else{
+		        	$answer_explaination_video_link="";
+		        }
+
 		        	$quizquestion='\('.$questiondataarray['question_latex'].'\)';
 
 			        if($questiondataarray['answer_exp_latex']!="")
@@ -1645,8 +1878,10 @@ class PracticeQuizDashboardController extends BaseController
 					'question_id'=>$questiondataarray['id'],
 					'question'=>$quizquestion, 
 					'answer_exp'=>$quiz_answer_exp,
-					'question_video_link'=>$questiondataarray['question_video_link'],
 					'question_img'=>$question_img,
+					'question_video_link'=>$question_video_link,
+					'answer_explaination_img'=>$answer_explaination_img,
+					'answer_explaination_video_link'=>$answer_explaination_video_link,
 					'previous_question_key'=>(int)$previous_question_key,
 					'previous_quiz_id'=>(int)$previous_quiz_id,
 		        	'next_question_key'=>(int)$next_question_key,
@@ -1825,6 +2060,46 @@ class PracticeQuizDashboardController extends BaseController
 		        	$question_img='';
 		        }
 
+		        if($questiondataarray['question_video_link']!="")
+		        {
+		        	$checkquestionvideo=getVideoDetails($questiondataarray['question_video_link']);
+
+		        	if($checkquestionvideo['code']=="400")
+		            {
+		              $question_video_link="";
+		            }
+		            else{
+		            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+		            }
+		        }
+		        else{
+		        	$question_video_link="";
+		        }
+
+		        if($questiondataarray['answer_explaination_img']!="")
+		        {
+		        	$answer_explaination_img=url('/').'/images/questions/'.$questiondataarray['answer_explaination_img'];
+		        }
+		        else{
+		        	$answer_explaination_img='';
+		        }
+
+		        if($questiondataarray['answer_explaination_video_link']!="")
+		        {
+		        	$checkanswervideo=getVideoDetails($questiondataarray['answer_explaination_video_link']);
+
+		        	if($checkanswervideo['code']=="400")
+		            {
+		              $answer_explaination_video_link="";
+		            }
+		            else{
+		            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+		            }
+		        }
+		        else{
+		        	$answer_explaination_video_link="";
+		        }
+
 		        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
 
 		        if($questiondataarray['answer_exp_latex']!="")
@@ -1846,8 +2121,10 @@ class PracticeQuizDashboardController extends BaseController
 					'question_id'=>$questiondataarray['id'],
 					'question'=>$quizquestion, 
 					'answer_exp'=>$quiz_answer_exp,
-					'question_video_link'=>$questiondataarray['question_video_link'],
 					'question_img'=>$question_img,
+					'question_video_link'=>$question_video_link,
+					'answer_explaination_img'=>$answer_explaination_img,
+					'answer_explaination_video_link'=>$answer_explaination_video_link,
 					'previous_question_key'=>(int)$previous_question_key,
 					'previous_quiz_id'=>(int)$previous_quiz_id,
 		        	'next_question_key'=>(int)$next_question_key,
@@ -1977,6 +2254,47 @@ class PracticeQuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
+				    if($questiondetaildata['question_video_link']!="")
+			        {
+			        	$checkquestionvideo=getVideoDetails($questiondetaildata['question_video_link']);
+
+			        	if($checkquestionvideo['code']=="400")
+			            {
+			              $question_video_link="";
+			            }
+			            else{
+			            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$question_video_link="";
+			        }
+
+			        if($questiondetaildata['answer_explaination_img']!="")
+			        {
+			        	$answer_explaination_img=url('/').'/images/questions/'.$questiondetaildata['answer_explaination_img'];
+			        }
+			        else{
+			        	$answer_explaination_img='';
+			        }
+
+			        if($questiondetaildata['answer_explaination_video_link']!="")
+			        {
+			        	$checkanswervideo=getVideoDetails($questiondetaildata['answer_explaination_video_link']);
+
+			        	if($checkanswervideo['code']=="400")
+			            {
+			              $answer_explaination_video_link="";
+			            }
+			            else{
+			            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$answer_explaination_video_link="";
+			        }
+
+
 				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
 
 				        if($questiondetaildata['answer_exp_latex']!="")
@@ -1998,8 +2316,10 @@ class PracticeQuizDashboardController extends BaseController
 			        				'question_id'=>$questiondetaildata['id'],
 			        				'question'=>$quizquestion, 
 			        				'answer_exp'=>$quiz_answer_exp,
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
+			        				'question_video_link'=>$question_video_link,
+			        				'answer_explaination_img'=>$answer_explaination_img,
+			        				'answer_explaination_video_link'=>$answer_explaination_video_link,
 			        				'previous_question_key'=>(int)$previous_question_key,
 			        				'previous_quiz_id'=>(int)$previous_quiz_id,
 		        					'next_question_key'=>(int)$next_question_key,
@@ -2140,6 +2460,46 @@ class PracticeQuizDashboardController extends BaseController
 				        	$question_img='';
 				        }
 
+				    if($questiondetaildata['question_video_link']!="")
+			        {
+			        	$checkquestionvideo=getVideoDetails($questiondetaildata['question_video_link']);
+
+			        	if($checkquestionvideo['code']=="400")
+			            {
+			              $question_video_link="";
+			            }
+			            else{
+			            	$question_video_link=$checkquestionvideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$question_video_link="";
+			        }
+
+			        if($questiondetaildata['answer_explaination_img']!="")
+			        {
+			        	$answer_explaination_img=url('/').'/images/questions/'.$questiondetaildata['answer_explaination_img'];
+			        }
+			        else{
+			        	$answer_explaination_img='';
+			        }
+
+			        if($questiondetaildata['answer_explaination_video_link']!="")
+			        {
+			        	$checkanswervideo=getVideoDetails($questiondetaildata['answer_explaination_video_link']);
+
+			        	if($checkanswervideo['code']=="400")
+			            {
+			              $answer_explaination_video_link="";
+			            }
+			            else{
+			            	$answer_explaination_video_link=$checkanswervideo['subtopicvideourl'];
+			            }
+			        }
+			        else{
+			        	$answer_explaination_video_link="";
+			        }
+
 				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
 
 				        if($questiondetaildata['answer_exp_latex']!="")
@@ -2161,8 +2521,10 @@ class PracticeQuizDashboardController extends BaseController
 			        				'question_id'=>$questiondetaildata['id'],
 			        				'question'=>$quizquestion, 
 			        				'answer_exp'=>$quiz_answer_exp,
-			        				'question_video_link'=>$questiondetaildata['question_video_link'],
 			        				'question_img'=>$question_img,
+			        				'question_video_link'=>$question_video_link,
+			        				'answer_explaination_img'=>$answer_explaination_img,
+			        				'answer_explaination_video_link'=>$answer_explaination_video_link,
 			        				'previous_question_key'=>(int)$previous_question_key,
 			        				'previous_quiz_id'=>(int)$previous_quiz_id,
 		        					'next_question_key'=>(int)$next_question_key,

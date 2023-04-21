@@ -39,7 +39,25 @@ class PagesController extends BaseController
 	        				$usersubscription=Usersubscriptions::where('subscription_id',$list['id'])->where('user_id',$user->id)->where('subscription_status',1)->get()->first();
 	        				if($usersubscription)
 	        				{
-	        					$active_status=1;
+	        					$usersubscriptionarray=$usersubscription->toArray();
+	        					if($usersubscriptionarray)
+	        					{
+	        						$currentdate=date('Y-m-d');
+				        			$subscription_start=$usersubscriptionarray['subscription_start'];
+
+				        			$subscription_end=$usersubscriptionarray['subscription_end'];
+
+				        			if($currentdate >= $subscription_start && $currentdate <= $subscription_end)
+				        			{
+				        				$active_status=1;
+				        			}
+				        			else{
+				        				$active_status=0;
+				        			}
+	        					}
+	        					else{
+	        						$active_status=0;
+	        					}
 	        				}
 	        				else{
 	        					$active_status=0;

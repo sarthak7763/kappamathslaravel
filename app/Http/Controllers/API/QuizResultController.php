@@ -291,12 +291,14 @@ class QuizResultController extends BaseController
 			        			if($questiondet)
 		        				{
 		        					$questiondetarray=$questiondet->toArray();
+		        					$questionquiz_id=$questiondetarray['topic_id'];
 		        					$question_id=$questiondetarray['id'];
 		        					$question=$questiondetarray['question_latex'];
 		        					$correct_answer=$questiondetarray['answer'];
 		        					$answer_explaination=$questiondetarray['answer_exp_latex'];
 		        				}
 		        				else{
+		        					$questionquiz_id="";
 		        					$question_id="";
 		        					$question="";
 		        					$correct_answer="";
@@ -336,7 +338,7 @@ class QuizResultController extends BaseController
 	        				$quiz_result[]=array(
 	        					'result_type'=>(int)$resultmarksdetail['result_type'],
 	        					'course_id'=>"",
-	        					'quiz_id'=>(int)$quiz_topiciddb,
+	        					'quiz_id'=>(int)$questionquiz_id,
 	        					'question_id'=>(int)$question_id,
 	        					'question'=>$quizquestion,
 	        					'correct_answer'=>$correct_answer,

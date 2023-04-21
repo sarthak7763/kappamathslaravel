@@ -90,6 +90,16 @@
       });
      });
 
+    $(document).on("click", ".paginate_button a", function(){    
+      $('[id^=textareavalue_]').each(function(){
+        var textareavalue = $(this).val();
+        var id = $(this).attr("id").replace('textareavalue_','');
+        $("#renderer_"+id).empty();
+        $("#renderer_"+id).append(textareavalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#renderer_"+id)[0]])
+      });
+    });
+
   });
   
   </script>

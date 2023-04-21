@@ -118,8 +118,6 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::get('/admin/import_questions_module','QuestionsController@import_questions_module')->name('import_questions_module');
 
-  Route::get('/admin/testvideo','DashboardController@testvideo')->name('testvideo');
-
   Route::post('/admin/questions/import_theory_questions', 'QuestionsController@importTheoryquestionExcelToDB')->name('import_theory_questions');
 
   Route::post('/admin/questions/submitimporttempquestions', 'QuestionsController@submitimporttempquestions')->name('submitimporttempquestions');
@@ -226,8 +224,6 @@ Route::get('/cms-pages/{slug}','CmsPagesController@viewcmspagecontent')->name('v
 Route::get('/cms-pages','CmsPagesController@viewcmspagecontent')->name('viewcmspagecontent');
 
 Route::get('/view-quiz-question/{slug}','QuestionsController@viewquizquestion')->name('viewquizquestion');
-
-
 
 
 

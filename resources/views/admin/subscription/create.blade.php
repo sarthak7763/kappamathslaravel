@@ -45,9 +45,9 @@
       @endif
 
       @if($validationmessage!="" && isset($validationmessage['subscription_plan']))
-      @php $subscription_plan=$validationmessage['subscription_plan']; @endphp
+      @php $subscription_plan_error=$validationmessage['subscription_plan']; @endphp
       @else
-      @php $subscription_plan=""; @endphp
+      @php $subscription_plan_error=""; @endphp
       @endif
 
       

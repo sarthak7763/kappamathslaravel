@@ -6,6 +6,7 @@ use App\Question;
 use App\Quiztopic;
 use App\Tempquestions;
 use Illuminate\Validation\Rule;
+use App\Rules\QuestionCheckRule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
@@ -148,7 +149,7 @@ class TheoryQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation, W
             'question' => [
                 'required',
                 'distinct:strict',
-                Rule::unique('questions'),
+                new QuestionCheckRule()
             ],
             'question_image' => [
                'nullable',
@@ -175,6 +176,7 @@ class TheoryQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation, W
             'quiz_id.required' => 'Quiz ID is required',
             'quiz_id.in'=>'Invalid Quiz Id Value',
             'question.required' => 'Question is required',
+            'question.question_check'=>'Question already exists',
             'question_image.url'=>'Please Enter Valid Question Image URL.',
             'question_video_link.numeric'=>'Question video link field should only contain numbers.',
             'answer_explaination_image.url'=>'Please Enter Valid Answer explaination Image URL.',

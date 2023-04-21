@@ -6,6 +6,7 @@ use App\Question;
 use App\Tempquestions;
 use App\Quiztopic;
 use Illuminate\Validation\Rule;
+use App\Rules\QuestionCheckRule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
@@ -148,7 +149,7 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
             'question' => [
                 'required',
                 'distinct:strict',
-                Rule::unique('questions'),
+                new QuestionCheckRule()
             ],
             'a' => [
                 'required',
@@ -191,6 +192,7 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
             'quiz_id.required' => 'Quiz ID is required',
             'quiz_id.in'=>'Invalid Quiz Id Value',
             'question.required' => 'Question is required',
+            'question.question_check'=>'Question already exists',
             'a.required' => 'Option A is required',
             'b.required' => 'Option B is required',
             'c.required' => 'Option C is required',

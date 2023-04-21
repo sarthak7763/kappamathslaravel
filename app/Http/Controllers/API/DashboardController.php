@@ -593,7 +593,7 @@ class DashboardController extends BaseController
 
 			        if($coursesubtopicsdetaildata['topic_video_id']!="")
 			        {
-			        	$checkvideo=checkvimeovideoid($coursesubtopicsdetaildata['topic_video_id']);
+			        	$checkvideo=getVideoDetails($coursesubtopicsdetaildata['topic_video_id']);
 
 			        	if($checkvideo['code']=="400")
 			            {
@@ -654,7 +654,7 @@ class DashboardController extends BaseController
 		    }
     	}
     	catch(\Exception $e){
-                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
                }
 
     }

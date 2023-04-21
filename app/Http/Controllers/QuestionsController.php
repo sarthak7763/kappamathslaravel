@@ -487,7 +487,7 @@ class QuestionsController extends Controller
 
         if($request->question_video_link!="")
         {
-            $checkvideo=checkvimeovideoid($request->question_video_link);
+            $checkvideo=getVideoDetails($request->question_video_link);
             if($checkvideo['code']=="400")
             {
               return back()->with('error',$checkvideo['message']);
@@ -502,7 +502,7 @@ class QuestionsController extends Controller
 
         if($request->answer_explaination_video_link!="")
         {
-            $checkanswervideo=checkvimeovideoid($request->answer_explaination_video_link);
+            $checkanswervideo=getVideoDetails($request->answer_explaination_video_link);
             if($checkanswervideo['code']=="400")
             {
               return back()->with('error',$checkanswervideo['message']);
@@ -727,7 +727,7 @@ class QuestionsController extends Controller
       	}
       	else{
 
-      		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+      		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
       		if($checkquizquestion)
       		{
       			return back()->with('error','Question already exists.');
@@ -937,7 +937,7 @@ class QuestionsController extends Controller
     {
         $topic = Quiztopic::findOrFail($id);
         
-        $questions = \DB::table('questions')->where('topic_id', $topic->id);
+        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','question_status');
 
         if($request->ajax())
         {
@@ -1481,12 +1481,12 @@ class QuestionsController extends Controller
                         return back()->with('valid_error',$listmessage);
                     }
                         else{
-                            return back()->with('error','Something went wrong12.');
+                            return back()->with('error','Something went wrong.');
                         }
                         
                     }
                     else{
-                        return back()->with('error','Something went wrong11.');
+                        return back()->with('error','Something went wrong.');
                     }
 
                }
@@ -1645,7 +1645,7 @@ class QuestionsController extends Controller
           
           if($question_img!="" && $answer_explaination_img!="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
           		$question->a='-';
               $question->a_latex='-';
@@ -1665,7 +1665,7 @@ class QuestionsController extends Controller
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
@@ -1695,7 +1695,7 @@ class QuestionsController extends Controller
           }
           elseif($question_img!="" && $answer_explaination_img=="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
           		$question->a='-';
               $question->a_latex='-';
@@ -1714,7 +1714,7 @@ class QuestionsController extends Controller
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');
@@ -1743,7 +1743,7 @@ class QuestionsController extends Controller
           }
           elseif($question_img=="" && $answer_explaination_img!="")
           {
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
           		$question->a='-';
               $question->a_latex='-';
@@ -1762,7 +1762,7 @@ class QuestionsController extends Controller
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestio)
           		{
           			return back()->with('error','Question already exists.');
@@ -1790,7 +1790,7 @@ class QuestionsController extends Controller
             
           }
           else{
-          	if($question->question==$request->question)
+          	if($question->question==$quiz_question)
           	{
           		$question->a='-';
               $question->a_latex='-';
@@ -1808,7 +1808,7 @@ class QuestionsController extends Controller
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
           	}
           	else{
-          		$checkquizquestion=Question::where('question',$request->question)->get()->first();
+          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
           		if($checkquizquestion)
           		{
           			return back()->with('error','Question already exists.');

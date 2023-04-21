@@ -5229,6 +5229,7 @@ table.text-center th {
   background-color: #FFF;
   border-top: 3px solid rgba(38, 166, 154, 0.7);
   margin-bottom: 30px;
+  width: 100%;
 }
 .quiz-name {
   font-size: 22px;
@@ -5306,8 +5307,27 @@ span.required {
   color: #666;
   line-height: 1;
 }
+/* for box wrrap css */
+.box-body .row {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+.box-body .row .col-md-4 {
+    width: 33.33333333%;
+    display: flex;
+}
 
-
+@media (max-width: 991px) {
+.box-body .row .col-md-4 {
+    width: 50%;
+}
+}
+@media (max-width: 767px) {
+.box-body .row .col-md-4 {
+    width: 100%;
+}
+}
 @media (max-width: 359px) {
   .main-header .logo, .main-header .navbar {
     width: 15%;

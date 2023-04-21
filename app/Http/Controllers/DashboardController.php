@@ -141,18 +141,4 @@ class DashboardController extends Controller
     	return view('admin.dashboard', compact('user','topic','subtopic','quiz','subscription','revenue','new_filter_date_start','new_filter_date_end','clear_filter'));
     }
 
-    public function testvideo()
-    {
-        $client_id="ecd7d48e0299335886dc51d0ad5b92fac1428165";
-
-        $client_secret="FApdXH5wHL5gNsIqLM4YChGvJGiAmXsiSGX1sDUTaGg3tDsTHNCf+GYQHVw+BbY0k8g0DfgWej3oXMNyXSdzdW/RHwCF3o6rIwX00/CN3cO2b21hiuyk575iPmXURo66";
-
-        $access_token="fbae76cd368c2e5d55929cb96ca7fe2d";
-
-        $client = new Vimeo($client_id,$client_secret,$access_token);
-        $video_id ="809305521";
-        $response = $client->request("/videos/$video_id");
-        print_r($response);
-    }
-
 }

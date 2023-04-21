@@ -45,6 +45,74 @@ function checkvimeovideoid($videoid)
 	
 }
 
+function getVideoDetails($video_id)
+    {
+      if($video_id=="")
+      {
+        $data=array('code'=>'400','message'=>'Please enter valid Video ID');
+        return $data;
+      }
+
+        $vimeo_api_key=env('Vimeo_access_token');   
+        $options = array('http' => array(
+            'method'  => 'GET',
+            'header' => 'Authorization: Bearer '.$vimeo_api_key
+        ));
+        $context  = stream_context_create($options);
+
+        $hash = json_decode(file_get_contents("https://api.vimeo.com/videos/{$video_id}",false, $context));
+        header("Content-Type: text/plain");
+
+        if(isset($hash->files))
+        {
+          $videofiles=$hash->files;
+          if(isset($videofiles[3]) && $videofiles[3]->rendition=="adaptive")
+          {
+              $video_url=$videofiles[3]->link;
+              $video_rendition=$videofiles[3]->rendition;
+          }
+          else{
+             $video_url=$videofiles[0]->link;
+              $video_rendition=$videofiles[0]->rendition;
+          }
+        }
+        else{
+          $video_url='';
+          $video_rendition='';
+        }
+        
+
+        $thumbanilsizes=$hash->pictures->sizes;
+        if(isset($thumbanilsizes[2]) && $thumbanilsizes[2]->width=="295")
+        {
+            $thumbnailurl=$thumbanilsizes[2]->link;
+            $thumbnailurlwidth=$thumbanilsizes[2]->width;
+        }
+        else{
+            $thumbnailurl=$thumbanilsizes[0]->link;
+            $thumbnailurlwidth=$thumbanilsizes[0]->width;
+        }
+
+    if($video_url!="")
+    {
+      return array(
+          'code'=>200,
+          'message'=>'Successfully',
+          'title'=>$hash->name,
+          'sub_topic_image'=>$thumbnailurl,
+          'thumbnailurlwidth'=>$thumbnailurlwidth,
+          'subtopicvideourl'=>$video_url,
+          'video_rendition'=>$video_rendition
+      );
+    }
+    else{
+      $data=array('code'=>'400','message'=>'Video not found.');
+      return $data;
+    }
+    
+  }
+
+
 function checkusersubscription($userid)
 {
     if($userid!="")

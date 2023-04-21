@@ -132,6 +132,55 @@
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#rendereroptiond_"+id)[0]])
       });
     });
-  });  
+
+    $(document).on("click", ".paginate_button a", function(){  
+      
+      $('[id^=textareavalue_]').each(function(){
+        var textareavalue = $(this).val();
+        var id = $(this).attr("id").replace('textareavalue_','');
+        $("#renderer_"+id).empty();
+        $("#renderer_"+id).append(textareavalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#renderer_"+id)[0]])
+      });
+
+      $('[id^=textareaoptionavalue_]').each(function(){
+        var textareaoptionavalue = $(this).val();
+        var id = $(this).attr("id").replace('textareaoptionavalue_','');
+        $("#rendereroptiona_"+id).empty();
+        $("#rendereroptiona_"+id).append(textareaoptionavalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#rendereroptiona_"+id)[0]])
+      });
+
+      $('[id^=textareaoptionbvalue_]').each(function(){
+        var textareaoptionbvalue = $(this).val();
+        var id = $(this).attr("id").replace('textareaoptionbvalue_','');
+        $("#rendereroptionb_"+id).empty();
+        $("#rendereroptionb_"+id).append(textareaoptionbvalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#rendereroptionb_"+id)[0]])
+      });
+
+      $('[id^=textareaoptioncvalue_]').each(function(){
+        var textareaoptioncvalue = $(this).val();
+        var id = $(this).attr("id").replace('textareaoptioncvalue_','');
+        $("#rendereroptionc_"+id).empty();
+        $("#rendereroptionc_"+id).append(textareaoptioncvalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#rendereroptionc_"+id)[0]])
+      });
+
+      $('[id^=textareaoptiondvalue_]').each(function(){
+        var textareaoptiondvalue = $(this).val();
+        var id = $(this).attr("id").replace('textareaoptiondvalue_','');
+        $("#rendereroptiond_"+id).empty();
+        $("#rendereroptiond_"+id).append(textareaoptiondvalue);
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#rendereroptiond_"+id)[0]])
+      });
+
+    });
+
+
+  });
+
+  
+
   </script>
 @endsection
