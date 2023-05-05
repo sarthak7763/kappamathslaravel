@@ -919,17 +919,30 @@ class DashboardController extends BaseController
 	        			$subscription_start=$user_subscriptions_listarr['subscription_start'];
 	        			$subscription_end=$user_subscriptions_listarr['subscription_end'];
 
+	        			$subscription_id=$user_subscriptions_listarr['subscription_id'];
+
+	        			$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+	        			if($checksubscription)
+	        			{
+	        				$subscription_name=$checksubscription->title;
+	        			}
+	        			else{
+	        				$subscription_name="No Active Plan";
+	        			}
+
 	        			if($currentdate >= $subscription_start && $currentdate <= $subscription_end)
 	        			{
 	        				$success['check_status'] = 1;
 	        				$success['subscription_start']=$subscription_start;
 	        				$success['subscription_end']=$subscription_end;
+	        				$success['subscription_name']=$subscription_name;
                 			return $this::sendResponse($success, 'Subscription success.');
 	        			}
 	        			else{
 	        				$success['check_status'] = 0;
 	        				$success['subscription_start']="";
 	        				$success['subscription_end']="";
+	        				$success['subscription_name']="No Active Plan.";
                 			return $this::sendResponse($success, 'No Subscription available.');
 	        			}
 	        		}
@@ -937,6 +950,7 @@ class DashboardController extends BaseController
 	        			$success['check_status'] = 0;
 	        			$success['subscription_start']="";
 	        			$success['subscription_end']="";
+	        			$success['subscription_name']="No Active Plan.";
                 		return $this::sendResponse($success, 'No Subscription available.');
 	        		}
 	        	}
@@ -944,6 +958,7 @@ class DashboardController extends BaseController
 	        		$success['check_status'] = 0;
 	        		$success['subscription_start']="";
 	        		$success['subscription_end']="";
+	        		$success['subscription_name']="No Active Plan.";
                 	return $this::sendResponse($success, 'No Subscription available.');
 	        	}
 	        }

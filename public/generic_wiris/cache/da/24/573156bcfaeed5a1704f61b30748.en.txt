@@ -1,0 +1,1 @@
+{"result":{"text":"x space plus space x space equals space 1 half space f i n d space x ?"},"status":"ok"}

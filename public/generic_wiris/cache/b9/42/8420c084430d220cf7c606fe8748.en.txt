@@ -1,0 +1,1 @@
+{"result":{"text":"1 third square root of 49"},"status":"ok"}

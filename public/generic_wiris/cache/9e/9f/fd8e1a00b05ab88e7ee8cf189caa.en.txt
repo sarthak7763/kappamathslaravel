@@ -1,0 +1,1 @@
+{"result":{"text":"x equals 12 over 13 plus 41 over 5 minus square root of 4 space f i n d space x ?"},"status":"ok"}

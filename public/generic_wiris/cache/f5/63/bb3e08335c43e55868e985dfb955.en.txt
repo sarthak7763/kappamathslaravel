@@ -1,0 +1,1 @@
+{"result":{"text":"m space equals space fraction numerator y plus k squared over denominator k squared plus 1 end fraction"},"status":"ok"}

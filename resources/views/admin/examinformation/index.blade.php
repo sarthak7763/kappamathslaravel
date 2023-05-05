@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Exam Information'
+  'page_header' => 'Manage FAQ'
 ])
 
 @section('content')
@@ -18,7 +18,7 @@
   @endif
 
   <div class="margin-bottom">
-    <a href="{{route('exam-information.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Exam Information</a>
+    <a href="{{route('faq.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add FAQ</a>
   </div>
 
   <div class="box">
@@ -69,7 +69,7 @@ $(function () {
       scrollCollapse: true,
 
 
-      ajax: "{{ route('exam-information.index') }}",
+      ajax: "{{ route('faq.index') }}",
       columns: [
 
       {data: 'DT_RowIndex', name: 'DT_RowIndex',orderable: false, searchable: false},

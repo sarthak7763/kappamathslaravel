@@ -194,8 +194,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::post('/admin/notifications/sendNotification','NotificationController@sendNotification')->name('sendNotification');
 
-  Route::resource('/admin/exam-information', 'ExamInformationController');
-  Route::post('/admin/exam-information/changestatus','ExamInformationController@changestatus')->name('examinformationchangestatus');
+  Route::resource('/admin/faq', 'ExamInformationController');
+  Route::post('/admin/faq/changestatus','ExamInformationController@changestatus')->name('examinformationchangestatus');
 
   Route::resource('/admin/bulletin', 'BulletinController');
   Route::post('/admin/bulletin/changestatus','BulletinController@changestatus')->name('bulletinchangestatus');

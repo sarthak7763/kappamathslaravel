@@ -1,0 +1,1 @@
+{"result":{"text":"square root of 22 space plus space 1 half minus x equals space 2 over 5 space f i n d space x space ? space"},"status":"ok"}

@@ -53,7 +53,7 @@
 
       <div class="col-md-12">
         <div class="row">
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3>{{$user}}</h3>
@@ -81,7 +81,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-purple">
               <div class="inner">
                 <h3>{{$topic}}</h3>
@@ -110,7 +110,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3>{{$subtopic}}</h3>
@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-red">
               <div class="inner">
                 <h3>{{$quiz}}</h3>
@@ -168,7 +168,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-green">
               <div class="inner">
                 <h3>{{$subscription}}</h3>
@@ -197,7 +197,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
             <div class="small-box bg-blue">
               <div class="inner">
                 <h3>{{$revenue}}</h3>

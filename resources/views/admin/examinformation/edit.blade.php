@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-  'page_header' => 'Exam Information'
+  'page_header' => 'Manage FAQ'
 ])
 
 @section('content')
@@ -19,8 +19,8 @@
 
   <div class="box">
     <div class="box-body">
-        <h3>Edit Exam Information
-          <a href="{{ route('exam-information.index') }}" class="btn btn-gray pull-right">
+        <h3>Edit FAQ
+          <a href="{{ route('faq.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> Back
           </a>
         </h3>

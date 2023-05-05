@@ -132,18 +132,44 @@ footer.main-footer {
     text-align: center;
 }
 
+/* dashboard css sachin sir */
+
+.dashboard-block .small-box {
+display: flex;
+flex-wrap: wrap;
+}
+.inner {
+width: 100%;
+padding: 10px 5px;
+}
+.small-box .icon {
+text-align: center;
+margin: 0 auto 20px;
+position: static;
+transform: none;
+}
+
+.small-box > .small-box-footer {
+width: 100%;
+text-align: center;
+}
+
 }
 
 
-
-tr.question_row p.mathrender{
-    overflow-x: auto;
-    max-width: 600px;
-}
 tr.question_row p.mathrender {
-    overflow-x: auto;
     max-width: 390px;
     font-size: 18px !important;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.btn-group.pull-right {
+    margin-right: 15px;
+}
+
+tr.question_row p.mathrender:hover {
+    overflow-x: auto;
     overflow-y: hidden;
 }
 
@@ -160,4 +186,12 @@ tr.question_row td p::-webkit-scrollbar {
     height: 10px;
     border-radius: 50px;
     box-shadow: none;
+}
+
+.dashboard-block .row .col-md-12 {
+width: 100%;
+}
+
+.dashboard-block {
+    padding-bottom: 30px;
 }

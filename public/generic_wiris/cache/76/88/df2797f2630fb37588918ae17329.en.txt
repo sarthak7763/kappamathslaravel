@@ -1,0 +1,1 @@
+{"result":{"text":"straight pi to the power of plus open curly brackets plus-or-minus open vertical bar blank close vertical bar plus-or-minus blank to the power of blank subscript blank close curly brackets end exponent intersection root index blank of blank"},"status":"ok"}

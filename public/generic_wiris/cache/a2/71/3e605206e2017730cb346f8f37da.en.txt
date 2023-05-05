@@ -1,0 +1,1 @@
+{"result":{"text":"2 over 3 square root of 14"},"status":"ok"}

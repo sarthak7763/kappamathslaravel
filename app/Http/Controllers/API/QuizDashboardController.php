@@ -841,6 +841,16 @@ class QuizDashboardController extends BaseController
 
 	        		$course_id=$quiztopicdetaildata['subject'];
 	        		$topic_id=$quiztopicdetaildata['category'];
+
+	        		$coursetopicsdetail=Subjectcategory::where('subject',$course_id)->where('id',$topic_id)->get()->first();
+	        		if($coursetopicsdetail)
+	        		{
+	        			$topic_name=$coursetopicsdetail->category_name;
+	        		}
+	        		else{
+	        			$topic_name="";
+	        		}
+
 	        		$sub_topic_id=$quiztopicdetaildata['course_topic'];
 
 	        		if(isset($request->result_id) && $request->result_id!="")
@@ -956,7 +966,7 @@ class QuizDashboardController extends BaseController
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
-	        			$total_marks=$total_questions*$quiztopicdetaildata['per_q_mark'];
+	        			$total_marks=$randomquizresultmarksarray['total_marks'];
 
 	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
 
@@ -979,6 +989,7 @@ class QuizDashboardController extends BaseController
 	        			$questiondet=array(
 		        		 			'course_id'=>$course_id,
 		        		 			'topic_id'=>$topic_id,
+		        		 			'topic_name'=>$topic_name,
 		        		 			'sub_topic_id'=>$sub_topic_id,
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
 			        				'quiz_id'=>$quiztopicdetaildata['id'],
@@ -1165,8 +1176,7 @@ class QuizDashboardController extends BaseController
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
-	        			$total_marks=$total_questions*$quiztopicdetaildata['per_q_mark'];
-
+	        			$total_marks=$randomquizresultmarksarray['total_marks'];
 
 	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
 

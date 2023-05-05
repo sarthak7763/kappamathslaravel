@@ -218,15 +218,7 @@
 
               </div>
 
-              <div class="col-md-6">  
-                <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
-                    {!! Form::label('answer', 'Correct Answer') !!}
-                    <span class="required">*</span>
-                    {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
-                    <small class="text-danger">{{ $answer_error }}</small>
-                </div>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <div class="form-group{{ $errors->has('answer_exp') ? ' has-error' : '' }}">
                   {!! Form::label('answer_exp', 'Answer Explanation') !!}
                   {!! Form::textarea('answer_exp', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Answer Explanation', 'rows' => '4']) !!}
@@ -241,6 +233,15 @@
 
               </div>
 
+              <div class="col-md-12">  
+                <div class="form-group{{ $errors->has('answer') ? ' has-error' : '' }}">
+                    {!! Form::label('answer', 'Correct Answer') !!}
+                    <span class="required">*</span>
+                    {!! Form::select('answer', array('A'=>'A', 'B'=>'B', 'C'=>'C', 'D'=>'D'),null, ['class' => 'form-control select2', 'placeholder'=>'']) !!}
+                    <small class="text-danger">{{ $answer_error }}</small>
+                </div>
+              </div>
+              
               <div class="col-md-6">
               <div class="extras-block bg-whte">
                 <h4 class="extras-heading">Video And Image For Question</h4>

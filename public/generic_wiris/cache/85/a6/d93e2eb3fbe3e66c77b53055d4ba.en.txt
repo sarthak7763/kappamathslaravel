@@ -1,0 +1,1 @@
+{"result":{"text":"t e s t o b j e c t i v e q u e s t i o n 1 third"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"t h a space k o n i"},"status":"ok"}

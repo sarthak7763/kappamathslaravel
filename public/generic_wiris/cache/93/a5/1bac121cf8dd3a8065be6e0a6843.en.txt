@@ -1,0 +1,1 @@
+{"result":{"text":"space a n s w e r space e x p l a i n space i s space square root of 5"},"status":"ok"}

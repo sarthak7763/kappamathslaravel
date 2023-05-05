@@ -7,6 +7,17 @@
 <!-- Style for html code -->
   <link type="text/css" rel="stylesheet" href="{{ env('APP_URL') }}css/editor/prism.css" />
 
+  <style type="text/css">
+    .btn-group.pull-right button.btn.btn-wave.submitbtn {
+    padding: 10px 40px;
+    margin-top: 6px;
+}
+
+section.content.container-fluid {
+    padding-bottom: 64px;
+}
+  </style>
+
 @if (session()->has('success'))
     <div class="alert alert-success">
         {!! session()->get('success')!!}        
@@ -99,7 +110,8 @@
 
               </div>
 
-              <div class="extras-block col-md-12">
+              <div class="col-md-6">
+              <div class="extras-block bg-whte">
                 <h4 class="extras-heading">Video And Image For Question</h4>
                 <div class="row">
                   <div class="col-md-6">
@@ -110,7 +122,7 @@
                         <p class="help">Please enter Vimeo Video ID</p>
                       </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <div class="form-group{{ $errors->has('question_img') ? ' has-error' : '' }}">
                         {!! Form::label('question_img', 'Add Image To Question') !!}
                         {!! Form::file('question_img') !!}
@@ -123,8 +135,10 @@
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div class="extras-block col-md-12">
+                <div class="col-md-6">
+                <div class="extras-block bg-whte">
                   <h4 class="extras-heading">Video And Image For Answer Explaination</h4>
                 <div class="row">
                     <div class="col-md-6">
@@ -136,7 +150,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <div class="form-group{{ $errors->has('answer_explaination_img') ? ' has-error' : '' }}">
                         {!! Form::label('answer_explaination_img', 'Add Image To Answer Explaination') !!}
                         {!! Form::file('answer_explaination_img') !!}
@@ -150,8 +164,9 @@
 
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                       <div class="btn-group pull-right">
                         <button class="btn btn-wave submitbtn" type="button">Add</button>
                       </div>

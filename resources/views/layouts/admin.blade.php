@@ -136,7 +136,7 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription</span></a></li>
 
-          <li class="{{ (request()->is('admin/exam-information*')) ? 'active' : '' }}"><a href="{{url('/admin/exam-information')}}" title="Manage FAQ"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage FAQ</span></a></li>
+          <li class="{{ (request()->is('admin/faq*')) ? 'active' : '' }}"><a href="{{url('/admin/faq')}}" title="Manage FAQ"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage FAQ</span></a></li>
 
           <!-- <li class="{{ (request()->is('admin/bulletin*')) ? 'active' : '' }}"><a href="{{url('/admin/bulletin')}}" title="Manage Bulletins"><i class="fa fa-bullseye" aria-hidden="true"></i> <span>Manage Bulletins</span></a></li> -->
 
@@ -152,9 +152,9 @@ $setting = App\Setting::first();
            
          <!--  <li class="{{ (request()->is('admin/settings*')) ? 'active' : '' }}"><a href="{{url('/admin/settings')}}" title="Settings"><i class="fa fa-gear"></i> <span>Settings</span></a></li> -->   
 
-          <li class="{{ Nav::isRoute('admin.payment') }}"><a href="{{route('admin.payment')}} " title="Payment History"><i class="fa fa-money"></i> <span>Payment History</span></a></li>
+          <li class="{{ (request()->is('admin/payment*')) ? 'active' : '' }}"><a href="{{route('admin.payment')}} " title="Payment History"><i class="fa fa-money"></i> <span>Payment History</span></a></li>
 
-          <li><a href="{{url('/admin/profile')}}" title="My Profile"><i class="fa fa-user" aria-hidden="true"></i> <span>My Profile</span></a></li>
+          <li class="{{ (request()->is('admin/profile*')) ? 'active' : '' }}"><a href="{{url('/admin/profile')}}" title="My Profile"><i class="fa fa-user" aria-hidden="true"></i> <span>My Profile</span></a></li>
 
           @endif
 

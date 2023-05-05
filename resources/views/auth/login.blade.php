@@ -7,6 +7,16 @@
         'csrfToken' => csrf_token(),
     ]); ?>
   </script>
+
+  <style type="text/css">
+    .field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+}
+  </style>
 @endsection
 
 @section('content')
@@ -67,8 +77,8 @@
           </div>
 
           <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            <i class="fa fa-eye"></i>
             <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password" value="{{ old('password') }}">
+            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
             <small class="text-danger">{{$password_error}}</small>
           </div>
           
@@ -107,5 +117,17 @@
         }, 4500);
       });
     });
+  </script>
+
+  <script type="text/javascript">
+    $(".toggle-password").click(function() {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
   </script>
 @endsection

@@ -122,7 +122,12 @@
 </div>
 @endsection
 
+<link rel="stylesheet" type="text/css" href="{{url('/')}}/css/toastr.min.css">
+
 @section('scripts')
+
+<script type="text/javascript" src="{{url('/')}}/js/toastr.min.js"></script>
+
 <script type="text/javascript">
   $(document).ready(function(){
     var subject="{{$subject}}";
@@ -138,7 +143,7 @@
             'dataType':'json',
             error:function()
             {
-              alert('Something went wrong');
+              toastr.error('Something went wrong', 'Oops!');
             },
             success:function(data)
             {
@@ -147,7 +152,7 @@
                 getsubjectcategoryoptionhtml(data.message,category);
               }
               else{
-                alert(data.message);
+                toastr.error(data.message, 'Oops!');
               }
             }
         });
@@ -162,7 +167,7 @@
             'dataType':'json',
             error:function()
             {
-              alert('Something went wrong');
+              toastr.error('Something went wrong', 'Oops!');
             },
             success:function(data)
             {
@@ -171,7 +176,7 @@
                 getcoursetopicoptionhtml(data.message,coursetopic);
               }
               else{
-                alert(data.message);
+                toastr.error(data.message, 'Oops!');
               }
             }
         });
@@ -179,6 +184,8 @@
   });
 
   $(document).on('change','#course',function(){
+    $('#subject_category').html('');
+    $('#course_topic').html('');
     var course=$(this).val();
     var category="";
     if(course!="")
@@ -190,7 +197,7 @@
             'dataType':'json',
             error:function()
             {
-              alert('Something went wrong');
+              toastr.error('Something went wrong', 'Oops!');
             },
             success:function(data)
             {
@@ -199,17 +206,18 @@
                 getsubjectcategoryoptionhtml(data.message,category);
               }
               else{
-                alert(data.message);
+                toastr.error(data.message, 'Oops!');
               }
             }
         });
     }
     else{
-      alert('Please choose course');
+      toastr.error('Please choose course', 'Oops!');
     }
   });
 
   $(document).on('change','#subject_category',function(){
+    $('#course_topic').html('');
     var course=$('#course').val();
     var topic=$(this).val();
     var coursetopic="";
@@ -222,7 +230,7 @@
             'dataType':'json',
             error:function()
             {
-              alert('Something went wrong');
+              toastr.error('Something went wrong', 'Oops!');
             },
             success:function(data)
             {
@@ -231,19 +239,19 @@
                 getcoursetopicoptionhtml(data.message,coursetopic);
               }
               else{
-                alert(data.message);
+                toastr.error(data.message, 'Oops!');
               }
             }
         });
     }
     else if(course!="" && topic==""){
-      alert('Please choose topic');
+      toastr.error('Please choose topic', 'Oops!');
     }
     else if(course=="" && topic!=""){
-      alert('Please choose topic');
+      toastr.error('Please choose course', 'Oops!');
     }
     else{
-      alert('Please choose course and topic');
+      toastr.error('Please choose course and topic', 'Oops!');
     }
 
   });

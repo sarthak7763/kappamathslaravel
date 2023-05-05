@@ -1,0 +1,1 @@
+{"result":{"text":"I f space 1 half p space plus space q space equals space 1 space a n d space p space minus space 1 half q space equals space 7 comma space f i n d space left parenthesis p space plus q right parenthesis."},"status":"ok"}

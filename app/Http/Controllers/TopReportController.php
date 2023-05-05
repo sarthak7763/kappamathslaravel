@@ -221,7 +221,7 @@ class TopReportController extends Controller
     	else{
     		$result_data=[];
     	}
-
+      
     	return view('admin.top_reports.index',compact('result_data','filter_date','clear_filter'));
 
     }

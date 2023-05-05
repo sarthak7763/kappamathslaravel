@@ -56,7 +56,7 @@ class ExamInformationController extends Controller
 
               $btn = '<div class="admin-table-action-block">
 
-                    <a href="' . route('exam-information.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+                    <a href="' . route('faq.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
 
                     <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
                    
@@ -176,7 +176,7 @@ class ExamInformationController extends Controller
         else{
         	try{
 		         $quiz = Examinformation::create($input);
-		           return redirect('/admin/exam-information/')->with('success', 'Exam Information has been added');
+		           return redirect('/admin/faq/')->with('success', 'Exam Information has been added');
 		        }catch(\Exception $e){
 		          return back()->with('error',$e->getMessage());     
 		       }
@@ -235,7 +235,7 @@ class ExamInformationController extends Controller
            return view('admin.examinformation.edit',compact('examinformation'));
         }
         catch(\Exception $e){
-                  return redirect('admin/exam-information/')->with('error','Something went wrong.');     
+                  return redirect('admin/faq/')->with('error','Something went wrong.');     
                }
     }
 
@@ -256,7 +256,7 @@ class ExamInformationController extends Controller
 
           $examinformation = Examinformation::find($id);
           if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('error','Something went wrong.');
+           return redirect('admin/faq/')->with('error','Something went wrong.');
         }
 
         if(isset($request->status)){
@@ -289,7 +289,7 @@ class ExamInformationController extends Controller
 
          try{
             $examinformation->save();
-          return redirect('admin/exam-information/')->with('success','Exam Information updated !');
+          return redirect('admin/faq/')->with('success','Exam Information updated !');
          }catch(\Exception $e){
             return back()->with('error',$e->getMessage());
          }
@@ -333,7 +333,7 @@ class ExamInformationController extends Controller
         $examinformation = Examinformation::find($id);
 
         if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('error','Something went wrong.');
+           return redirect('admin/faq/')->with('error','Something went wrong.');
         }
 
         try{
@@ -356,7 +356,7 @@ class ExamInformationController extends Controller
         $examinformation = Examinformation::find($id);
 
         if(is_null($examinformation)){
-           return redirect('admin/exam-information')->with('error','Something went wrong.');
+           return redirect('admin/faq/')->with('error','Something went wrong.');
         }
 
 

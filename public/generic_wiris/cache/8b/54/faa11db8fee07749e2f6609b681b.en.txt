@@ -1,0 +1,1 @@
+{"result":{"text":"2 over 3 square root of 45 cross times 1 third square root of 15"},"status":"ok"}
