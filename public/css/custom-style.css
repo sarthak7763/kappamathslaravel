@@ -1,3 +1,10 @@
+body div.login-page .logo {
+    width: 138.68px;
+    height: 138.68px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
 .card
 {
   background-color:#424242 !important;
@@ -6,7 +13,7 @@
 .vertical-center .login-page{width:550px;margin:0 auto;border-radius:4px;padding:30px 30px 30px;background-color:#FFF;box-shadow:0 7px 24px 2px rgba(0,0,0,0.1),5px 7px 17px 2px rgba(0,0,0,0.15);}
 .login-page .form button{background:#042A60;width:auto;display:block;padding:7px 50px;border-radius:50px;font-weight:bold;font-size:18px;line-height:36px;margin:0 auto 1rem;}
 a[title="Forgot Password"]{color:#042a60;font-size:17px;text-align:end;font-weight:600;float:right;}
-body .login-page .form input{background:transparent;border:0;border-bottom:1px solid #ddd;box-shadow:none;padding:10px 0px;}
+body .login-page .form input{background:transparent;border:0;border-bottom:1px solid #ddd;box-shadow:none;padding:10px 0px;font-family: monospace;}
 .login-page .logo a{height:100%;display:flex;align-items:center;max-width:100px;justify-content:center;margin:auto;}
 .login-page .logo .login-logo{position:static;}
 .login-page .user-register-heading{font-size:26px;font-weight:bold;border:0;}

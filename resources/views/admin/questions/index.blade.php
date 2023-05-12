@@ -81,7 +81,7 @@
 </div>
 
 <div class="box">
-  <h3>Questions By Topic Wise</h3>
+  <h3 style="margin-left: 15px;">Questions By Topic Wise</h3>
     <div class="box-body">
 <div class="row">
   @if ($topics)

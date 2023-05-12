@@ -28,6 +28,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use DB;
+use Illuminate\Validation\Rule;
 
 class QuestionsController extends Controller
 {
@@ -343,6 +344,16 @@ class QuestionsController extends Controller
         try{
         $request->validate([
           'topic_id' => 'required',
+          'question'=>Rule::requiredIf($request->get_question_preview=="" || $request->get_question_preview_latex==""),
+
+          'a'=>Rule::requiredIf($request->get_a_option_preview=="" || $request->get_a_option_preview_latex==""),
+
+          'b'=>Rule::requiredIf($request->get_b_option_preview=="" || $request->get_b_option_preview_latex==""),
+
+          'c'=>Rule::requiredIf($request->get_c_option_preview=="" || $request->get_c_option_preview_latex==""),
+
+          'd'=>Rule::requiredIf($request->get_d_option_preview=="" || $request->get_d_option_preview_latex==""),
+          
           'answer' => 'required'
         ]);
 

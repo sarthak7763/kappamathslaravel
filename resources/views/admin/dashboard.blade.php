@@ -229,6 +229,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="https://kappamaths.ezxdemo.com/mathml2latex-master/dist/mathml2latex.js"></script>
+
 <script>
 
   $(document).on('click','.clearfilterbtn',function(){
@@ -243,5 +245,11 @@ format: "mm/dd/yy"
 format: "mm/dd/yy"
 });
 
+</script>
+
+<script type="text/javascript">
+  const mathmlHtml = '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo>&#xA0;</mo><mi>q</mi><mi>u</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>&#xA0;</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>';
+const latex = MathML2LaTeX.convert(mathmlHtml);
+console.log(latex);
 </script>
 @endsection
