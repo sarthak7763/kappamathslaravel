@@ -33,7 +33,10 @@ var editMode;
 	var answer_preview = getAnswerEditorData();
 	if(answer_preview!="")
 	{
-		var answerlatex = MathML2LaTeX.convert(answer_preview);
+		mathhtmlanswerpreview = answer_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+		mathhtmlanswerpreview = mathhtmlanswerpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+		var answerlatex = MathML2LaTeX.convert(mathhtmlanswerpreview);
 	}
 	else{
 		var answerlatex="";

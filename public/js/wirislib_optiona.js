@@ -33,7 +33,10 @@ var editMode;
 	var optiona_preview = getOptionaEditorData();
 	if(optiona_preview!="")
 	{
-		var optionalatex = MathML2LaTeX.convert(optiona_preview);
+		mathhtmloptionapreview = optiona_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+		mathhtmloptionapreview = mathhtmloptionapreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+		var optionalatex = MathML2LaTeX.convert(mathhtmloptionapreview);
 	}
 	else{
 		var optionalatex="";

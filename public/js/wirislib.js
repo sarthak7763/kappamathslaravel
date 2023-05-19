@@ -23,7 +23,6 @@ var editMode;
  * and formulas are stored in the database (HTML tab).
  */
  function updateQuestionFunction() {
- 	console.log('question update');
  	updatetextareaquestionpreview();
  	updatequestionlatexpreview();
  }
@@ -35,18 +34,14 @@ var editMode;
 	if(question_preview)
 	{
 		console.log(question_preview,'question_preview');
+		mathhtmlquestionpreview = question_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+		mathhtmlquestionpreview = mathhtmlquestionpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
 
-		mathhtmlpreview = question_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-		mathhtmlpreview = mathhtmlpreview.replace(/<mo[^>]*> <\/mo[^>]*>/g,'<mspace/>');
-		console.log(mathhtmlpreview,'mathhtmlpreview');
-
-		var questionlatex = MathML2LaTeX.convert(mathhtmlpreview);
+		var questionlatex = MathML2LaTeX.convert(mathhtmlquestionpreview);
 	}
 	else{
 		var questionlatex="";
 	}
-
-	console.log(questionlatex,'questionlatex');
 
     var previewlatex_div = document.getElementById("get_question_preview_latex");
 	// Setting data on preview div.

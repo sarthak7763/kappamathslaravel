@@ -33,7 +33,11 @@ var editMode;
 	var optionc_preview = getOptioncEditorData();
 	if(optionc_preview!="")
 	{
-		var optionclatex = MathML2LaTeX.convert(optionc_preview);
+
+		mathhtmloptioncpreview = optionc_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+		mathhtmloptioncpreview = mathhtmloptioncpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+		var optionclatex = MathML2LaTeX.convert(mathhtmloptioncpreview);
 	}
 	else{
 		var optionclatex="";

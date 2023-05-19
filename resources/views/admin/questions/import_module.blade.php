@@ -414,7 +414,10 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('questionmathml_','');
       if(questionmathmlvalue)
       {
-        var questionlatex = MathML2LaTeX.convert(questionmathmlvalue);
+          mathhtmlquestionpreview = questionmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+          mathhtmlquestionpreview = mathhtmlquestionpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var questionlatex = MathML2LaTeX.convert(mathhtmlquestionpreview);
       }
       else{
         var questionlatex = "";
@@ -428,7 +431,11 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('optionamathml_','');
       if(optionamathmlvalue)
       {
-        var optionalatex = MathML2LaTeX.convert(optionamathmlvalue);
+
+        mathhtmloptionapreview = optionamathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+        mathhtmloptionapreview = mathhtmloptionapreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var optionalatex = MathML2LaTeX.convert(mathhtmloptionapreview);
       }
       else{
         var optionalatex = "";
@@ -442,7 +449,11 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('optionbmathml_','');
       if(optionbmathmlvalue)
       {
-        var optionblatex = MathML2LaTeX.convert(optionbmathmlvalue);
+
+        mathhtmloptionbpreview = optionbmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+        mathhtmloptionbpreview = mathhtmloptionbpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var optionblatex = MathML2LaTeX.convert(mathhtmloptionbpreview);
       }
       else{
         var optionblatex = "";
@@ -456,7 +467,11 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('optioncmathml_','');
       if(optioncmathmlvalue)
       {
-        var optionclatex = MathML2LaTeX.convert(optioncmathmlvalue);
+
+        mathhtmloptioncpreview = optioncmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+        mathhtmloptioncpreview = mathhtmloptioncpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var optionclatex = MathML2LaTeX.convert(mathhtmloptioncpreview);
       }
       else{
         var optionclatex = "";
@@ -470,7 +485,11 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('optiondmathml_','');
       if(optiondmathmlvalue)
       {
-        var optiondlatex = MathML2LaTeX.convert(optiondmathmlvalue);
+
+        mathhtmloptiondpreview = optiondmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+        mathhtmloptiondpreview = mathhtmloptiondpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var optiondlatex = MathML2LaTeX.convert(mathhtmloptiondpreview);
       }
       else{
         var optiondlatex = "";
@@ -484,7 +503,11 @@ table.que_table.table-striped {
       var id = $(this).attr("id").replace('answerexpmathml_','');
       if(answerexpmathmlvalue)
       {
-        var answerexplatex = MathML2LaTeX.convert(answerexpmathmlvalue);
+
+        mathhtmlanswerexppreview = answerexpmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+        mathhtmlanswerexppreview = mathhtmlanswerexppreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+        var answerexplatex = MathML2LaTeX.convert(mathhtmlanswerexppreview);
       }
       else{
         var answerexplatex = "";

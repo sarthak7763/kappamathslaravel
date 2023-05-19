@@ -33,7 +33,10 @@ var editMode;
 	var optionb_preview = getOptionbEditorData();
 	if(optionb_preview!="")
 	{
-		var optionblatex = MathML2LaTeX.convert(optionb_preview);
+		mathhtmloptionbpreview = optionb_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
+		mathhtmloptionbpreview = mathhtmloptionbpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
+
+		var optionblatex = MathML2LaTeX.convert(mathhtmloptionbpreview);
 	}
 	else{
 		var optionblatex="";
