@@ -94,6 +94,7 @@ class AuthController extends BaseController
                 'name' => $request->name,
                 'email' => $request->email,
                 'username'=>$request->username,
+                'country_code'=>$request->country_code,
                 'mobile'=>$request->number,
                 'password' => bcrypt($request->password),
                 'role'=>'S',

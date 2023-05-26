@@ -91,12 +91,14 @@ class ProfileController extends BaseController
 	            	{
 	            		$userdet->image=$image;
 	            		$userdet->name = $request->name;
+	            		$userdet->country_code=$request->country_code;
 	            		$userdet->mobile=$request->mobile;
             			$userdet->save();
 	            	}
 	            	else{
 	            		$userdet->name = $request->name;
 	            		$userdet->mobile=$request->mobile;
+	            		$userdet->country_code=$request->country_code;
             			$userdet->save();
 	            	}
 	            	
@@ -115,12 +117,14 @@ class ProfileController extends BaseController
 		            		$userdet->username=$request->username;
 		                	$userdet->name = $request->name;
 	            			$userdet->mobile=$request->mobile;
+	            			$userdet->country_code=$request->country_code;
             				$userdet->save();
 		            	}
 		            	else{
 		            		$userdet->username=$request->username;
 		                	$userdet->name = $request->name;
 	            			$userdet->mobile=$request->mobile;
+	            			$userdet->country_code=$request->country_code;
             				$userdet->save();
 		            	}
 		            	
