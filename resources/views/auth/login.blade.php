@@ -98,9 +98,7 @@
           <div class="form-group">
             <button type="submit" class="btn btn-wave"> Login </button>
           </div>
-         <p class="login-acc">Don't have an account <a href="https://kappamaths.ezxdemo.com/register" title="don't have an account please sign up" class="text-center btn-block">sign up</a>
 
-          
         </form>
       </div>
     </div>

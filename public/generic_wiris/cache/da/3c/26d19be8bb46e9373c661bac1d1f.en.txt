@@ -1,0 +1,1 @@
+{"result":{"text":"E x p a n d space left parenthesis 3 x space minus 2 y right parenthesis left parenthesis 3 x plus 2 y right parenthesis."},"status":"ok"}

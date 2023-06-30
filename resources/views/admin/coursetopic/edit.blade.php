@@ -119,7 +119,7 @@
                   <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
                     {!! Form::label('sort_order', 'Sort Order') !!}
                     <span class="required">*</span>
-                    {!! Form::text('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order']) !!}
+                    {!! Form::number('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order','min'=>'1']) !!}
                     <small class="text-danger">{{ $sort_order_error }}</small>
                   </div>
                 </div>

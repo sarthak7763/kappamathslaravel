@@ -311,7 +311,7 @@ class CoursetopicController extends Controller
               'topic'=>'required',
               'title' => 'required|string',
               'sort_order'=>'required',
-              'topic_video_id'=>'required'
+              //'topic_video_id'=>'required'
         ]);
 
         if(isset($request->status)){
@@ -320,17 +320,17 @@ class CoursetopicController extends Controller
           $statusvalue = "0";
         }
 
-        if($request->topic_video_id!="")
-        {
-            $checkvideo=getVideoDetails($request->topic_video_id);
-            if($checkvideo['code']=="400")
-            {
-              return back()->with('error',$checkvideo['message']);
-            }
-        }
-        else{
-          return back()->with('error','Please enter valid Video ID');
-        }
+        // if($request->topic_video_id!="")
+        // {
+        //     $checkvideo=getVideoDetails($request->topic_video_id);
+        //     if($checkvideo['code']=="400")
+        //     {
+        //       return back()->with('error',$checkvideo['message']);
+        //     }
+        // }
+        // else{
+        //   return back()->with('error','Please enter valid Video ID');
+        // }
 
         if ($file = $request->file('topic_img')) {
 
@@ -396,6 +396,13 @@ class CoursetopicController extends Controller
             }catch(\Exception $e){
                   return back()->with('error','Something went wrong.');     
                }
+
+
+          $checksortorder=Coursetopic::where('subject',$request->course)->where('category',$request->topic)->where('sort_order',$request->sort_order)->get()->first();
+          if($checksortorder)
+          {
+            return back()->with('error','Sort Order already exists.');
+          }
 
                 try{
                   $coursetopic = new Coursetopic;
@@ -518,7 +525,7 @@ class CoursetopicController extends Controller
           'topic'=>'required',
           'title' => 'required|string',
           'sort_order'=>'required',
-          'topic_video_id'=>'required'
+          //'topic_video_id'=>'required'
         ]);
 
           $coursetopic = Coursetopic::find($id);
@@ -527,17 +534,17 @@ class CoursetopicController extends Controller
 		   return redirect('admin/course-topic')->with('deleted','Something went wrong.');
 		}
 
-        if($request->topic_video_id!="")
-        {
-            $checkvideo=getVideoDetails($request->topic_video_id);
-            if($checkvideo['code']=="400")
-            {
-              return back()->with('error',$checkvideo['message']);
-            }
-        }
-        else{
-          return back()->with('error','Please enter valid Video ID');
-        }
+        // if($request->topic_video_id!="")
+        // {
+        //     $checkvideo=getVideoDetails($request->topic_video_id);
+        //     if($checkvideo['code']=="400")
+        //     {
+        //       return back()->with('error',$checkvideo['message']);
+        //     }
+        // }
+        // else{
+        //   return back()->with('error','Please enter valid Video ID');
+        // }
 
 
           if ($file = $request->file('topic_img')) {
@@ -604,7 +611,20 @@ class CoursetopicController extends Controller
                }
 
 
-
+          if($coursetopic->sort_order==$request->sort_order)
+          {
+            $coursetopic->sort_order = $request->sort_order;
+          }
+          else{
+            $checksortorder=Coursetopic::where('subject',$request->course)->where('category',$request->topic)->where('sort_order',$request->sort_order)->get()->first();
+            if($checksortorder)
+            {
+              return back()->with('error','Sort Order already exists.');
+            }
+            else{
+              $coursetopic->sort_order = $request->sort_order;
+            }
+          }
 
           if($coursetopic->topic_name==$request->title)
           {
@@ -616,7 +636,6 @@ class CoursetopicController extends Controller
   		        $coursetopic->topic_image = $topic_img;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
-              $coursetopic->sort_order=$request->sort_order;
 	          }
 	          else{
               $coursetopic->subject=$request->course;
@@ -624,7 +643,6 @@ class CoursetopicController extends Controller
   		        $coursetopic->topic_description = $request->description;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
-              $coursetopic->sort_order=$request->sort_order;
 	          }
           }
           else{
@@ -648,7 +666,6 @@ class CoursetopicController extends Controller
   		        $coursetopic->topic_image = $topic_img;
   		        $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
-              $coursetopic->sort_order=$request->sort_order;
 	          }
 	          else{
               $coursetopic->subject=$request->course;
@@ -657,7 +674,6 @@ class CoursetopicController extends Controller
 		          $coursetopic->topic_description = $request->description;
 		          $coursetopic->topic_status = $statusvalue;
               $coursetopic->topic_video_id=$request->topic_video_id;
-              $coursetopic->sort_order=$request->sort_order;
 	          }
           }
          try{

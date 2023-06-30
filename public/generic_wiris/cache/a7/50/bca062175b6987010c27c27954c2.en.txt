@@ -1,0 +1,1 @@
+{"result":{"text":"25 plus 5 over 12 square root of 45 plus 12 over 25"},"status":"ok"}

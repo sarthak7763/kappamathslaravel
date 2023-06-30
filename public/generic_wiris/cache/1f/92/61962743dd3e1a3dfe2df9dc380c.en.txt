@@ -1,0 +1,1 @@
+{"result":{"text":"t e s t space o p t i o n c space open vertical bar 5 close vertical bar space t e r s t t"},"status":"ok"}

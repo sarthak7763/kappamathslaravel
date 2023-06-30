@@ -1,0 +1,1 @@
+{"result":{"text":"F a c t o r i z e space t h e space e x p r e s s i o n space 5 x squared plus 13 x minus 6."},"status":"ok"}

@@ -121,11 +121,11 @@ $setting = App\Setting::first();
           <li class="{{ (request()->is('admin/questions*')) ? 'active' : '' }}"><a href="{{url('admin/questions')}}" title="Questions">
             <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions</span></a></li>
 
-            <li class="{{ (request()->is('admin/theory-excel-instructions*')) ? 'active' : '' }}"><a href="{{url('admin/theory-excel-instructions')}}" title="Theory Quiz Excel Instructions">
+            <!-- <li class="{{ (request()->is('admin/theory-excel-instructions*')) ? 'active' : '' }}"><a href="{{url('admin/theory-excel-instructions')}}" title="Theory Quiz Excel Instructions">
             <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Theory Quiz Excel Instructions</span></a></li>
 
             <li class="{{ (request()->is('admin/objective-excel-instructions*')) ? 'active' : '' }}"><a href="{{url('admin/objective-excel-instructions')}}" title="Objective Quiz Excel Instructions">
-            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Objective Quiz Excel Instructions</span></a></li>
+            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Objective Quiz Excel Instructions</span></a></li> -->
 
             <li class="{{ (request()->is('admin/import_questions_module*')) ? 'active' : '' }}"><a href="{{url('admin/import_questions_module')}}" title="Questions Import Module">
             <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions Import Module</span></a></li> 

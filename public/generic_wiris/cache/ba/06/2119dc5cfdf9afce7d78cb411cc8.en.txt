@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis h minus k right parenthesis squared"},"status":"ok"}

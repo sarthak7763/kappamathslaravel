@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator 6 a b plus 3 a squared over denominator 21 a squared minus 9 a b squared end fraction."},"status":"ok"}

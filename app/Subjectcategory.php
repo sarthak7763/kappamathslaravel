@@ -8,6 +8,6 @@ class Subjectcategory extends Model
 {
 	protected $table="subject_category";
     protected $fillable = [
-      'subject', 'category_name', 'category_description', 'category_image','category_status'
+      'subject', 'category_name', 'category_description', 'category_image','category_status','sort_order'
     ];
 }

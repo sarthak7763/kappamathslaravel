@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style left parenthesis k plus 2 right parenthesis squared over 12 end style"},"status":"ok"}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\TheoryQuestionsImport;
 use App\Imports\ObjectiveQuestionsImport;
+use App\Imports\ObjectiveQuestionsImageImport;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Quiztopic;
@@ -21,6 +22,7 @@ use Illuminate\Validation\ValidationException;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ObjectiveQuestionSampleExport;
+use App\Exports\ObjectiveQuestionImageSampleExport;
 use App\Exports\TheoryQuestionSampleExport;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -29,6 +31,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
 
 class QuestionsController extends Controller
 {
@@ -342,17 +345,31 @@ class QuestionsController extends Controller
     public function storeobjectivequiz(Request $request)
     {
         try{
+
+        if($request->checkboxvalue)
+        {
+          $option_status=1;
+        }
+        else{
+          $option_status=0;
+        }
+
         $request->validate([
           'topic_id' => 'required',
           'question'=>Rule::requiredIf($request->get_question_preview=="" || $request->get_question_preview_latex==""),
 
-          'a'=>Rule::requiredIf($request->get_a_option_preview=="" || $request->get_a_option_preview_latex==""),
+          'a'=>Rule::requiredIf(($request->get_a_option_preview=="" || $request->get_a_option_preview_latex=="") && $option_status==0),
 
-          'b'=>Rule::requiredIf($request->get_b_option_preview=="" || $request->get_b_option_preview_latex==""),
+          'b'=>Rule::requiredIf(($request->get_b_option_preview=="" || $request->get_b_option_preview_latex=="") && $option_status==0),
 
-          'c'=>Rule::requiredIf($request->get_c_option_preview=="" || $request->get_c_option_preview_latex==""),
+          'c'=>Rule::requiredIf(($request->get_c_option_preview=="" || $request->get_c_option_preview_latex=="") && $option_status==0),
 
-          'd'=>Rule::requiredIf($request->get_d_option_preview=="" || $request->get_d_option_preview_latex==""),
+          'd'=>Rule::requiredIf(($request->get_d_option_preview=="" || $request->get_d_option_preview_latex=="") && $option_status==0),
+
+          'optiona_image'=>Rule::requiredIf($option_status==1),
+          'optionb_image'=>Rule::requiredIf($option_status==1),
+          'optionc_image'=>Rule::requiredIf($option_status==1),
+          'optiond_image'=>Rule::requiredIf($option_status==1),
           
           'answer' => 'required'
         ]);
@@ -369,41 +386,59 @@ class QuestionsController extends Controller
           $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
         }
 
-        if($input['get_a_option_preview']=="" || $input['get_a_option_preview_latex']=="")
+        if($option_status==0)
         {
-          return back()->with('error','Option A is required.');
-        }
-        else{
-          $a_option=htmlentities($input['get_a_option_preview']);
-          $a_option_latex=htmlentities($input['get_a_option_preview_latex']);
-        }
+            if($input['get_a_option_preview']=="" || $input['get_a_option_preview_latex']=="")
+            {
+              return back()->with('error','Option A is required.');
+            }
+            else{
+              $a_option=htmlentities($input['get_a_option_preview']);
+              $a_option_latex=htmlentities($input['get_a_option_preview_latex']);
+            }
 
-        if($input['get_b_option_preview']=="" || $input['get_b_option_preview_latex']=="")
-        {
-          return back()->with('error','Option B is required.');
-        }
-        else{
-          $b_option=htmlentities($input['get_b_option_preview']);
-          $b_option_latex=htmlentities($input['get_b_option_preview_latex']);
-        }
+            if($input['get_b_option_preview']=="" || $input['get_b_option_preview_latex']=="")
+            {
+              return back()->with('error','Option B is required.');
+            }
+            else{
+              $b_option=htmlentities($input['get_b_option_preview']);
+              $b_option_latex=htmlentities($input['get_b_option_preview_latex']);
+            }
 
-        if($input['get_c_option_preview']=="" || $input['get_c_option_preview_latex']=="")
-        {
-          return back()->with('error','Option C is required.');
-        }
-        else{
-          $c_option=htmlentities($input['get_c_option_preview']);
-          $c_option_latex=htmlentities($input['get_c_option_preview_latex']);
-        }
+            if($input['get_c_option_preview']=="" || $input['get_c_option_preview_latex']=="")
+            {
+              return back()->with('error','Option C is required.');
+            }
+            else{
+              $c_option=htmlentities($input['get_c_option_preview']);
+              $c_option_latex=htmlentities($input['get_c_option_preview_latex']);
+            }
 
-        if($input['get_d_option_preview']=="" || $input['get_d_option_preview_latex']=="")
-        {
-          return back()->with('error','Option D is required.');
+            if($input['get_d_option_preview']=="" || $input['get_d_option_preview_latex']=="")
+            {
+              return back()->with('error','Option D is required.');
+            }
+            else{
+              $d_option=htmlentities($input['get_d_option_preview']);
+              $d_option_latex=htmlentities($input['get_d_option_preview_latex']);
+            }
+
         }
         else{
-          $d_option=htmlentities($input['get_d_option_preview']);
-          $d_option_latex=htmlentities($input['get_d_option_preview_latex']);
-        }
+
+              $a_option="";
+              $a_option_latex="";
+
+              $b_option="";
+              $b_option_latex="";
+
+              $c_option="";
+              $c_option_latex="";
+
+              $d_option="";
+              $d_option_latex="";
+            }   
 
 
         if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
@@ -415,6 +450,160 @@ class QuestionsController extends Controller
           $answer_exp=htmlentities($input['get_answer_exp_preview']);
           $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
         }
+
+
+        if ($optionafile = $request->file('optiona_image')) {
+
+            try{
+                $request->validate([
+                  'optiona_image' => 'required|mimes:jpeg,png,jpg'
+                ]);
+              }
+              catch(\Exception $e){
+                        if($e instanceof ValidationException){
+                            $listmessage=[];
+                            foreach($e->errors() as $key=>$list)
+                            {
+                                $listmessage[$key]=$list[0];
+                            }
+
+                            if(count($listmessage) > 0)
+                            {
+                                return back()->with('valid_error',$listmessage);
+                            }
+                            else{
+                                return back()->with('error','Something went wrong.');
+                            }
+                            
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }      
+                   }
+
+                  $optiona_imagename = 'optiona_'.time().$optionafile->getClientOriginalName();  
+                  $optionafile->move('images/questions/options/', $optiona_imagename);
+                  $optiona_image = $optiona_imagename;
+
+              }
+              else{
+                $optiona_image="";
+              }
+
+
+              if ($optionbfile = $request->file('optionb_image')) {
+
+                  try{
+                  $request->validate([
+                    'optionb_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optionb_imagename = 'optionb_'.time().$optionbfile->getClientOriginalName();  
+                  $optionbfile->move('images/questions/options/', $optionb_imagename);
+                  $optionb_image = $optionb_imagename;
+
+              }
+              else{
+                $optionb_image="";
+              }
+
+              if ($optioncfile = $request->file('optionc_image')) {
+
+                  try{
+                  $request->validate([
+                    'optionc_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optionc_imagename = 'optionc_'.time().$optioncfile->getClientOriginalName();  
+                  $optioncfile->move('images/questions/options/', $optionc_imagename);
+                  $optionc_image = $optionc_imagename;
+
+              }
+              else{
+                $optionc_image="";
+              }
+
+              if ($optiondfile = $request->file('optiond_image')) {
+
+                  try{
+                  $request->validate([
+                    'optiond_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optiond_imagename = 'optiond_'.time().$optiondfile->getClientOriginalName();  
+                  $optiondfile->move('images/questions/options/', $optiond_imagename);
+                  $optiond_image = $optiond_imagename;
+
+              }
+              else{
+                $optiond_image="";
+              }
 
 
 
@@ -458,7 +647,7 @@ class QuestionsController extends Controller
 
 
 
-        if ($file = $request->file('answer_explaination_img')) {
+        if ($answerfile = $request->file('answer_explaination_img')) {
 
             try{
             $request->validate([
@@ -487,8 +676,8 @@ class QuestionsController extends Controller
                     }      
                }
 
-            $name = 'answer_'.time().$file->getClientOriginalName();  
-            $file->move('images/questions/', $name);
+            $name = 'answer_'.time().$answerfile->getClientOriginalName();  
+            $answerfile->move('images/questions/', $name);
             $answer_explaination_img = $name;
 
         }
@@ -560,6 +749,11 @@ class QuestionsController extends Controller
 	                $question->question_video_link=$question_video_link;
 	                $question->answer_explaination_img=$answer_explaination_img;
 	                $question->answer_explaination_video_link=$answer_explaination_video_link;
+                  $question->a_image=$optiona_image;
+                  $question->b_image=$optionb_image;
+                  $question->c_image=$optionc_image;
+                  $question->d_image=$optiond_image;
+                  $question->option_status=$option_status;
 	                $question->question_status=1;
 	                $question->save();
 		          return redirect('admin/questions/'.$topicid)->with('success','Question has been added.');
@@ -581,6 +775,7 @@ class QuestionsController extends Controller
 
                     if(count($listmessage) > 0)
                     {
+                        $listmessage['option_status']=$option_status;
                         return back()->with('valid_error',$listmessage);
                     }
                         else{
@@ -600,6 +795,7 @@ class QuestionsController extends Controller
       try{
         $request->validate([
           'topic_id' => 'required',
+          'question'=>Rule::requiredIf($request->get_question_preview=="" || $request->get_question_preview_latex==""),
         ]);
 
         $input = $request->all();
@@ -765,7 +961,12 @@ class QuestionsController extends Controller
 	                $question->question_video_link=$question_video_link;
 	                $question->answer_explaination_img=$answer_explaination_img;
 	                $question->answer_explaination_video_link=$answer_explaination_video_link;
+                  $question->a_image="";
+                  $question->b_image="";
+                  $question->c_image="";
+                  $question->d_image="";
 	                $question->question_status=1;
+                  $question->option_status=0;
 	                $question->save();
 		          return redirect('admin/questions/showquiz/'.$topicid)->with('success','Question has been added.');
 		        }catch(\Exception $e){
@@ -1089,15 +1290,42 @@ class QuestionsController extends Controller
     public function update(Request $request, $id)
     {
       try{
+
+        if($request->checkboxvalue)
+        {
+          $option_status=1;
+        }
+        else{
+          $option_status=0;
+        }
+
+    $question = Question::find($id);
+        if(is_null($question)){
+       return redirect('admin/questions')->with('error','Something went wrong.');
+    }
+
         $request->validate([
           'topic_id' => 'required',
+
+           'question'=>Rule::requiredIf($request->get_question_preview=="" || $request->get_question_preview_latex==""),
+
+          'a'=>Rule::requiredIf(($request->get_a_option_preview=="" || $request->get_a_option_preview_latex=="") && $option_status==0),
+
+          'b'=>Rule::requiredIf(($request->get_b_option_preview=="" || $request->get_b_option_preview_latex=="") && $option_status==0),
+
+          'c'=>Rule::requiredIf(($request->get_c_option_preview=="" || $request->get_c_option_preview_latex=="") && $option_status==0),
+
+          'd'=>Rule::requiredIf(($request->get_d_option_preview=="" || $request->get_d_option_preview_latex=="") && $option_status==0),
+
+          'optiona_image'=>Rule::requiredIf($option_status==1 && $question->a_image==""),
+          'optionb_image'=>Rule::requiredIf($option_status==1 && $question->b_image==""),
+          'optionc_image'=>Rule::requiredIf($option_status==1 && $question->c_image==""),
+          'optiond_image'=>Rule::requiredIf($option_status==1 && $question->d_image==""),
+
           'answer' => 'required'
         ]);
 
-        $question = Question::find($id);
-        if(is_null($question)){
-		   return redirect('admin/questions')->with('error','Something went wrong.');
-		}
+       
 
         $input = $request->all();
 
@@ -1110,6 +1338,9 @@ class QuestionsController extends Controller
           $quiz_question=htmlentities($quiz_question);
           $quiz_question_latex=htmlentities($input['get_question_preview_latex']);
         }
+
+        if($option_status==0)
+        {
 
         if($input['get_a_option_preview']=="" || $input['get_a_option_preview_latex']=="")
         {
@@ -1155,6 +1386,20 @@ class QuestionsController extends Controller
           $d_option=htmlentities($d_option);
           $d_option_latex=htmlentities($input['get_d_option_preview_latex']);
         }
+      }
+      else{
+              $a_option="";
+              $a_option_latex="";
+
+              $b_option="";
+              $b_option_latex="";
+
+              $c_option="";
+              $c_option_latex="";
+
+              $d_option="";
+              $d_option_latex="";
+      }
 
         if($input['get_answer_exp_preview']=="" || $input['get_answer_exp_preview_latex']=="")
         {
@@ -1168,7 +1413,161 @@ class QuestionsController extends Controller
           $answer_exp_latex=htmlentities($input['get_answer_exp_preview_latex']);
         }
 
+
         $topicid=$question->topic_id;
+
+        if ($optionafile = $request->file('optiona_image')) {
+
+            try{
+                $request->validate([
+                  'optiona_image' => 'required|mimes:jpeg,png,jpg'
+                ]);
+              }
+              catch(\Exception $e){
+                        if($e instanceof ValidationException){
+                            $listmessage=[];
+                            foreach($e->errors() as $key=>$list)
+                            {
+                                $listmessage[$key]=$list[0];
+                            }
+
+                            if(count($listmessage) > 0)
+                            {
+                                return back()->with('valid_error',$listmessage);
+                            }
+                            else{
+                                return back()->with('error','Something went wrong.');
+                            }
+                            
+                        }
+                        else{
+                            return back()->with('error','Something went wrong.');
+                        }      
+                   }
+
+                  $optiona_imagename = 'optiona_'.time().$optionafile->getClientOriginalName();  
+                  $optionafile->move('images/questions/options/', $optiona_imagename);
+                  $optiona_image = $optiona_imagename;
+
+              }
+              else{
+                $optiona_image="";
+              }
+
+
+              if ($optionbfile = $request->file('optionb_image')) {
+
+                  try{
+                  $request->validate([
+                    'optionb_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optionb_imagename = 'optionb_'.time().$optionbfile->getClientOriginalName();  
+                  $optionbfile->move('images/questions/options/', $optionb_imagename);
+                  $optionb_image = $optionb_imagename;
+
+              }
+              else{
+                $optionb_image="";
+              }
+
+              if ($optioncfile = $request->file('optionc_image')) {
+
+                  try{
+                  $request->validate([
+                    'optionc_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optionc_imagename = 'optionc_'.time().$optioncfile->getClientOriginalName();  
+                  $optioncfile->move('images/questions/options/', $optionc_imagename);
+                  $optionc_image = $optionc_imagename;
+
+              }
+              else{
+                $optionc_image="";
+              }
+
+              if ($optiondfile = $request->file('optiond_image')) {
+
+                  try{
+                  $request->validate([
+                    'optiond_image' => 'required|mimes:jpeg,png,jpg'
+                  ]);
+                }
+                catch(\Exception $e){
+                          if($e instanceof ValidationException){
+                              $listmessage=[];
+                              foreach($e->errors() as $key=>$list)
+                              {
+                                  $listmessage[$key]=$list[0];
+                              }
+
+                              if(count($listmessage) > 0)
+                              {
+                                  return back()->with('valid_error',$listmessage);
+                              }
+                              else{
+                                  return back()->with('error','Something went wrong.');
+                              }
+                              
+                          }
+                          else{
+                              return back()->with('error','Something went wrong.');
+                          }      
+                     }
+
+                  $optiond_imagename = 'optiond_'.time().$optiondfile->getClientOriginalName();  
+                  $optiondfile->move('images/questions/options/', $optiond_imagename);
+                  $optiond_image = $optiond_imagename;
+
+              }
+              else{
+                $optiond_image="";
+              }
 
         if ($file = $request->file('question_img')) {
 
@@ -1278,60 +1677,64 @@ class QuestionsController extends Controller
 
         try
         {
-          
-          if($question_img!="" && $answer_explaination_img!="")
+
+          if($question_img!="")
           {
-          	if($question->question==$quiz_question)
-          	{
-          		$question->a=$a_option;
-              $question->a_latex=$a_option_latex;
-	            $question->b=$b_option;
-              $question->b_latex=$b_option_latex;
-	            $question->c=$c_option;
-              $question->c_latex=$c_option_latex;
-	            $question->d=$d_option;
-              $question->d_latex=$d_option_latex;
-	            $question->answer=$request->answer;
-	            $question->code_snippet="";
-	            $question->answer_exp=$answer_exp;
-              $question->answer_exp_latex=$answer_exp_latex;
-	            $question->question_img=$question_img;
-	            $question->question_video_link=$question_video_link;
-	            $question->answer_explaination_img=$answer_explaination_img;
-	            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          	}
-          	else{
-          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
-          		if($checkquizquestion)
-          		{
-          			return back()->with('error','Question already exists.');
-          		}
-          		else{
-          			$question->question=$quiz_question;
-                $question->question_latex=$quiz_question_latex;
-		            $question->a=$a_option;
-                $question->a_latex=$a_option_latex;
-		            $question->b=$b_option;
-                $question->b_latex=$b_option_latex;
-		            $question->c=$c_option;
-                $question->c_latex=$c_option_latex;
-		            $question->d=$d_option;
-                $question->d_latex=$d_option_latex;
-		            $question->answer=$request->answer;
-		            $question->code_snippet="";
-		            $question->answer_exp=$answer_exp;
-                $question->answer_exp_latex=$answer_exp_latex;
-		            $question->question_img=$question_img;
-		            $question->question_video_link=$question_video_link;
-		            $question->answer_explaination_img=$answer_explaination_img;
-		            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          		}
-          	}
+            $question->question_img=$question_img;
           }
-          elseif($question_img!="" && $answer_explaination_img=="")
+
+          if($answer_explaination_img!="")
           {
-          	if($question->question==$quiz_question)
-          	{
+            $question->answer_explaination_img=$answer_explaination_img;
+          }
+
+          if($optiona_image!="")
+          {
+            $question->a_image=$optiona_image;
+          }
+
+          if($optionb_image!="")
+          {
+            $question->b_image=$optionb_image;
+          }
+
+          if($optionc_image!="")
+          {
+            $question->c_image=$optionc_image;
+          }
+
+          if($optiond_image!="")
+          {
+            $question->d_image=$optiond_image;
+          }
+          
+        	if($question->question==$quiz_question)
+        	{
+        		$question->a=$a_option;
+            $question->a_latex=$a_option_latex;
+            $question->b=$b_option;
+            $question->b_latex=$b_option_latex;
+            $question->c=$c_option;
+            $question->c_latex=$c_option_latex;
+            $question->d=$d_option;
+            $question->d_latex=$d_option_latex;
+            $question->answer=$request->answer;
+            $question->code_snippet="";
+            $question->answer_exp=$answer_exp;
+            $question->answer_exp_latex=$answer_exp_latex;
+            $question->question_video_link=$question_video_link;   
+            $question->answer_explaination_video_link=$answer_explaination_video_link;
+            $question->option_status=$option_status;
+        	}
+        	else{
+        		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
+        		if($checkquizquestion)
+        		{
+        			return back()->with('error','Question already exists.');
+        		}
+        		else{
+        			$question->question=$quiz_question;
+              $question->question_latex=$quiz_question_latex;
 	            $question->a=$a_option;
               $question->a_latex=$a_option_latex;
 	            $question->b=$b_option;
@@ -1344,129 +1747,11 @@ class QuestionsController extends Controller
 	            $question->code_snippet="";
 	            $question->answer_exp=$answer_exp;
               $question->answer_exp_latex=$answer_exp_latex;
-	            $question->question_img=$question_img;
 	            $question->question_video_link=$question_video_link;
 	            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          	}
-          	else{
-          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
-          		if($checkquizquestion)
-          		{
-          			return back()->with('error','Question already exists.');
-          		}
-          		else{
-          			$question->question=$quiz_question;
-                $question->question_latex=$quiz_question_latex;
-		            $question->a=$a_option;
-                $question->a_latex=$a_option_latex;
-		            $question->b=$b_option;
-                $question->b_latex=$b_option_latex;
-		            $question->c=$c_option;
-                $question->c_latex=$c_option_latex;
-		            $question->d=$d_option;
-                $question->d_latex=$d_option_latex;
-		            $question->answer=$request->answer;
-		            $question->code_snippet="";
-		            $question->answer_exp=$answer_exp;
-                $question->answer_exp_latex=$answer_exp_latex;
-		            $question->question_img=$question_img;
-		            $question->question_video_link=$question_video_link;
-		            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          		}
-          	}
-          }
-          elseif($question_img=="" && $answer_explaination_img!="")
-          {
-          	if($question->question==$quiz_question)
-          	{
-          		$question->a=$a_option;
-              $question->a_latex=$a_option_latex;
-	            $question->b=$b_option;
-              $question->b_latex=$b_option_latex;
-	            $question->c=$c_option;
-              $question->c_latex=$c_option_latex;
-	            $question->d=$d_option;
-              $question->d_latex=$d_option_latex;
-	            $question->answer=$request->answer;
-	            $question->code_snippet="";
-	            $question->answer_exp=$answer_exp;
-              $question->answer_exp_latex=$answer_exp_latex;
-	            $question->question_video_link=$question_video_link;
-	            $question->answer_explaination_img=$answer_explaination_img;
-	            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          	}
-          	else{
-          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
-          		if($checkquizquestion)
-          		{
-          			return back()->with('error','Question already exists.');
-          		}
-          		else{
-          			$question->question=$quiz_question;
-                $question->question_latex=$quiz_question_latex;
-		            $question->a=$a_option;
-                $question->a_latex=$a_option_latex;
-		            $question->b=$b_option;
-                $question->b_latex=$b_option_latex;
-		            $question->c=$c_option;
-                $question->c_latex=$c_option_latex;
-		            $question->d=$d_option;
-                $question->d_latex=$d_option_latex;
-		            $question->answer=$request->answer;
-		            $question->code_snippet="";
-		            $question->answer_exp=$answer_exp;
-                $question->answer_exp_latex=$answer_exp_latex;
-		            $question->question_video_link=$question_video_link;
-		            $question->answer_explaination_img=$answer_explaination_img;
-		            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          		}
-          	}
-            
-          }
-          else{
-          	if($question->question==$quiz_question)
-          	{
-          		$question->a=$a_option;
-              $question->a_latex=$a_option_latex;
-	            $question->b=$b_option;
-              $question->b_latex=$b_option_latex;
-	            $question->c=$c_option;
-              $question->c_latex=$c_option_latex;
-	            $question->d=$d_option;
-              $question->d_latex=$d_option_latex;
-	            $question->answer=$request->answer;
-	            $question->code_snippet="";
-	            $question->answer_exp=$answer_exp;
-              $question->answer_exp_latex=$answer_exp_latex;
-	            $question->question_video_link=$question_video_link;
-	            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          	}
-          	else{
-          		$checkquizquestion=Question::where('question',$quiz_question)->get()->first();
-          		if($checkquizquestion)
-          		{
-          			return back()->with('error','Question already exists.');
-          		}
-          		else{
-          			$question->question=$quiz_question;
-                $question->question_latex=$quiz_question_latex;
-		            $question->a=$a_option;
-                $question->a_latex=$a_option_latex;
-		            $question->b=$b_option;
-                $question->b_latex=$b_option_latex;
-		            $question->c=$c_option;
-                $question->c_latex=$c_option_latex;
-		            $question->d=$d_option;
-                $question->d_latex=$d_option_latex;
-		            $question->answer=$request->answer;
-		            $question->code_snippet="";
-		            $question->answer_exp=$answer_exp;
-                $question->answer_exp_latex=$answer_exp_latex;
-		            $question->question_video_link=$question_video_link;
-		            $question->answer_explaination_video_link=$answer_explaination_video_link;
-          		}
-          	}
-          }
+              $question->option_status=$option_status;
+        		}
+        	}
 
           $question->save();
 
@@ -1489,6 +1774,7 @@ class QuestionsController extends Controller
 
                     if(count($listmessage) > 0)
                     {
+                        $listmessage['option_status']=$option_status;
                         return back()->with('valid_error',$listmessage);
                     }
                         else{
@@ -1510,6 +1796,9 @@ class QuestionsController extends Controller
       try{
         $request->validate([
           'topic_id' => 'required',
+
+          'question'=>Rule::requiredIf($request->get_question_preview=="" || $request->get_question_preview_latex==""),
+
         ]);
 
         $question = Question::find($id);
@@ -2031,11 +2320,93 @@ class QuestionsController extends Controller
             $quizid_arr=[];
           }
 
-          $excelinstructionscount=Objectiveexcelinstructions::count();
+          $excelinstructionscount=Objectiveexcelinstructions::where('option_status',0)->count();
           $headercount=2;
           $intstartrow=(int)$excelinstructionscount+(int)$headercount+1;
 
           $objectivequestionsimport = new ObjectiveQuestionsImport($quizid_arr,$intstartrow);
+
+          $objectivequestionsimport->onlySheets('ObjectiveQuizSample');
+
+          $failurearray=[];
+
+          try{
+            Excel::import($objectivequestionsimport, $request->file('question_file'));
+          }
+          catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+           $failures = $e->failures();
+           foreach ($failures as $failure) {
+               $failurearray[]=array(
+                'row'=>$failure->row(),
+                'attribute'=>$failure->attribute(),
+                'errors'=>$failure->errors()[0]
+               );
+           }
+      }
+
+        if(count($failurearray) > 0)
+        {
+          $listmessage="";
+          foreach($failurearray as $list)
+          {
+              $listmessage.=$list['errors'].' at row'.$list['row'].'<br>';
+          }
+
+          return back()->with('error', $listmessage);
+        }
+        else{
+          return back()->with('success', 'Question Imported Successfully');
+        }
+      }
+
+        return back()->with('error', 'Request data does not have any files to import');
+    }
+
+
+
+    public function importObjectivequestionImageExcelToDB(Request $request)
+    {
+
+      $validator = Validator::make(
+        [
+            'question_file' => $request->question_file,
+            'extension' => strtolower($request->question_file->getClientOriginalExtension()),
+        ],
+        [
+            'question_file' => 'required',
+            'extension' => 'required|in:xlsx,xls,csv',
+        ]
+      );
+
+      if ($validator->fails()) 
+      {
+        return back()->withErrors('error','Invalid file format Please use xlsx and csv file format !');
+      }
+
+      if($request->hasFile('question_file'))
+      {
+          DB::table('temp_questions')->delete();
+
+          $quiztopicsdata = Quiztopic::where('quiz_type',"1")->where('quiz_status','1')->get();
+          if($quiztopicsdata)
+          {
+            $quiztopicsdatalist=$quiztopicsdata->toArray();
+
+            $quizid_arr=[];
+            foreach($quiztopicsdatalist as $list)
+            {
+              $quizid_arr[]=$list['id'];
+            }
+          }
+          else{
+            $quizid_arr=[];
+          }
+
+          $excelinstructionscount=Objectiveexcelinstructions::where('option_status',1)->count();
+          $headercount=2;
+          $intstartrow=(int)$excelinstructionscount+(int)$headercount+1;
+
+          $objectivequestionsimport = new ObjectiveQuestionsImageImport($quizid_arr,$intstartrow);
 
           $objectivequestionsimport->onlySheets('ObjectiveQuizSample');
 
@@ -2212,11 +2583,13 @@ class QuestionsController extends Controller
           $quizid_arr=[];
        }
 
-        $objectiveexcelinstructionsdata=Objectiveexcelinstructions::all();
+        $objectiveexcelinstructionsdata=Objectiveexcelinstructions::where('option_status',0)->get();
        if($objectiveexcelinstructionsdata)
        {
+
+          $objectiveexcelinstructionsdataarray=$objectiveexcelinstructionsdata->toArray();
           $questionarray=[];
-          foreach($objectiveexcelinstructionsdata as $arr)
+          foreach($objectiveexcelinstructionsdataarray as $arr)
           {
             $questionarray[]=array(
               'quiz_id'=>$arr['quiz_id'],
@@ -2230,7 +2603,11 @@ class QuestionsController extends Controller
               'question_image'=>$arr['question_image'],
               'question_video_link'=>$arr['question_video_link'],
               'answer_explaination_image'=>$arr['answer_explaination_image'],
-              'answer_explaination_video_link'=>$arr['answer_explaination_video_link']
+              'answer_explaination_video_link'=>$arr['answer_explaination_video_link'],
+              'a_image'=>$arr['a_image'],
+              'b_image'=>$arr['b_image'],
+              'c_image'=>$arr['c_image'],
+              'd_image'=>$arr['d_image']
             );
           }
        }
@@ -2247,11 +2624,116 @@ class QuestionsController extends Controller
             'question_image'=>'',
             'question_video_link'=>'',
             'answer_explaination_image'=>'',
-            'answer_explaination_video_link'=>''
+            'answer_explaination_video_link'=>'',
+            'a_image'=>"",
+            'b_image'=>"",
+            'c_image'=>"",
+            'd_image'=>""
           );
        }
 
       return Excel::download(new ObjectiveQuestionSampleExport($questionarray,$quiz_topic_arr,$quizid_arr), 'objective_question_sample_export.xlsx');
+    }
+
+    public function get_objective_question_images_sample_export()
+    {
+
+      $quiztopicsdata = Quiztopic::where('quiz_type',"1")->where('quiz_status','1')->get();
+       if($quiztopicsdata)
+       {
+          $quiztopicsdatalist=$quiztopicsdata->toArray();
+          $quiz_topic_arr=[];
+          $quizid_arr=[];
+          foreach($quiztopicsdatalist as $list)
+          {
+            $subjectdata=Subject::where('id',$list['subject'])->first();
+            if(!empty($subjectdata))
+            {
+                $subjectdataarray=$subjectdata->toArray();
+                $subjectname=$subjectdataarray['title'];
+            }
+            else{
+                $subjectname="-";
+            }
+
+            $categorydata=Subjectcategory::where('id',$list['category'])->first();
+              if(!empty($categorydata))
+              {
+                  $categorydataarray=$categorydata->toArray();
+                  $categoryname=$categorydataarray['category_name'];
+              }
+              else{
+                  $categoryname="-";
+              }
+
+              $course_topicdata=Coursetopic::where('id',$list['course_topic'])->first();
+                if(!empty($course_topicdata))
+                {
+                    $course_topicdataarray=$course_topicdata->toArray();
+                    $coursetopicname=$course_topicdataarray['topic_name'];
+                }
+                else{
+                    $coursetopicname="-";
+                }
+
+                $quizid_arr[]=$list['id'];
+
+                $quiz_topic_arr[]=array(
+                  'quiz_id'=>$list['id'],
+                  'quiz_title'=>$list['title'],
+                  'course'=>$subjectname,
+                  'course_topic'=>$categoryname,
+                  'course_sub_topic'=>$coursetopicname
+                );
+          }
+       }
+       else{
+          $quiz_topic_arr=[];
+          $quizid_arr=[];
+       }
+
+        $objectiveexcelinstructionsdata=Objectiveexcelinstructions::where('option_status',1)->get();
+       if($objectiveexcelinstructionsdata)
+       {
+          $objectiveexcelinstructionsdataarray=$objectiveexcelinstructionsdata->toArray();
+
+          $questionarray=[];
+          foreach($objectiveexcelinstructionsdataarray as $arr)
+          {
+            $questionarray[]=array(
+              'quiz_id'=>$arr['quiz_id'],
+              'question'=>$arr['question'],
+              'a_image'=>$arr['a_image'],
+              'b_image'=>$arr['b_image'],
+              'c_image'=>$arr['c_image'],
+              'd_image'=>$arr['d_image'],
+              'correct_answer'=>$arr['correct_answer'],
+              'answer_explaination'=>$arr['answer_explaination'],
+              'question_image'=>$arr['question_image'],
+              'question_video_link'=>$arr['question_video_link'],
+              'answer_explaination_image'=>$arr['answer_explaination_image'],
+              'answer_explaination_video_link'=>$arr['answer_explaination_video_link']
+            );
+          }
+       }
+       else{
+          $questionarray[]=array(
+            'quiz_id'=>'',
+            'question'=>'',
+            'a_image'=>"",
+            'b_image'=>"",
+            'c_image'=>"",
+            'd_image'=>"",
+            'correct_answer'=>'',
+            'answer_explaination'=>'',
+            'question_image'=>'',
+            'question_video_link'=>'',
+            'answer_explaination_image'=>'',
+            'answer_explaination_video_link'=>''
+          );
+       }
+
+      return Excel::download(new ObjectiveQuestionImageSampleExport($questionarray,$quiz_topic_arr,$quizid_arr), 'objective_question_sample_export.xlsx');
     }
 
     public function get_theory_question_sample_export()
@@ -2534,6 +3016,74 @@ class QuestionsController extends Controller
     catch(\Exception $e){
                   return back()->with('error','Something went wrong.');     
                }
+    }
+
+
+    public function deleteimagefromdb(Request $request)
+    {
+      try{
+
+        $input = $request->all();
+
+        $request->validate([
+            'question_id'=>'required',
+            'image_type'=>'required'
+        ]);
+
+        $question_id=$request->question_id;
+        $image_type=$request->image_type;
+
+        $questiondata=Question::find($question_id);
+
+
+      if(is_null($questiondata)){
+        $data=array('code'=>'400','message'=>'Something went wrong4');
+      }
+
+      try{
+
+        if (File::exists(public_path('images/questions/'.$questiondata->$image_type))) {
+            unlink("images/questions/".$questiondata->$image_type);
+        } else {
+            unlink("images/questions/options/".$questiondata->$image_type);
+        }
+
+        $questiondata->$image_type="";
+        $questiondata->save();
+
+        $data=array('code'=>'200','message'=>'Image deleted Successfully.');
+      }
+        catch(\Exception $e)
+        {
+          $data=array('code'=>'400','message'=>'Something went wrong1.');
+        }
+      }
+      catch(\Exception $e){
+                  
+                  if($e instanceof ValidationException){
+                    $listmessage=[];
+                    foreach($e->errors() as $key=>$list)
+                    {
+                        $listmessage[$key]=$list[0];
+                    }
+
+                    if(count($listmessage) > 0)
+                    {
+                        return back()->with('valid_error',$listmessage);
+                    }
+                        else{
+                        $data=array('code'=>'400','message'=>'Something went wrong2.');
+                        }
+                        
+                    }
+                    else{
+                      $data=array('code'=>'400','message'=>'Something went wrong3.');
+                    }
+
+               }
+
+               return json_encode($data);
+
     }
 
 }

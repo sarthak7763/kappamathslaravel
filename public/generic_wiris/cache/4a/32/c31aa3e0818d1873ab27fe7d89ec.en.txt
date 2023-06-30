@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style W r i t e space fraction numerator 3 over denominator x plus 1 end fraction minus fraction numerator 2 over denominator x minus 1 end fraction space a s space a space sin g l e space f r a c t i o n. end style"},"status":"ok"}

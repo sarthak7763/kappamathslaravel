@@ -1,0 +1,1 @@
+{"result":{"text":"t e s t n e w o b j e c t i v e q u e s t i o n i m a g e"},"status":"ok"}

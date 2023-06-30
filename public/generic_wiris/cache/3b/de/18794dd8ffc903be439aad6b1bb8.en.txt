@@ -1,0 +1,1 @@
+{"result":{"text":"G i v e n space t h a t space square root of 5 divided by 6 end root equals space 4"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"B y space h o w space m u c h space d o e s space left parenthesis a plus 2 b minus c right parenthesis space e x c e e d space left parenthesis 2 b minus a minus c right parenthesis ?"},"status":"ok"}

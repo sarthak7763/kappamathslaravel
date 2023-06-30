@@ -70,6 +70,11 @@
   $answer_explaination_img_error="";
   $question_video_link_error="";
   $answer_explaination_video_link_error="";
+  $optiona_image_error="";
+  $optionb_image_error="";
+  $optionc_image_error="";
+  $optiond_image_error="";
+  $option_status_value=$question->option_status;
 
   @endphp
 
@@ -85,6 +90,15 @@
       @php $question_error=$validationmessage['question']; @endphp
       @else
       @php $question_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['option_status']))
+      @php 
+      $option_status_value=$validationmessage['option_status'];
+      @endphp
+      @else
+      @php $option_status_value=0; 
+      @endphp
       @endif
 
       @if($validationmessage!="" && isset($validationmessage['a']))
@@ -129,6 +143,30 @@
       @php $answer_explaination_img_error=""; @endphp
       @endif
 
+       @if($validationmessage!="" && isset($validationmessage['optiona_image']))
+      @php $optiona_image_error=$validationmessage['optiona_image']; @endphp
+      @else
+      @php $optiona_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['optionb_image']))
+      @php $optionb_image_error=$validationmessage['optionb_image']; @endphp
+      @else
+      @php $optionb_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['optionc_image']))
+      @php $optionc_image_error=$validationmessage['optionc_image']; @endphp
+      @else
+      @php $optionc_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['optiond_image']))
+      @php $optiond_image_error=$validationmessage['optiond_image']; @endphp
+      @else
+      @php $optiond_image_error=""; @endphp
+      @endif
+
   @endif
 
        {!! Form::model($question, ['method' => 'PATCH', 'id'=>'edit-form', 'action' => ['QuestionsController@update', $question->id], 'files' => true]) !!}
@@ -152,7 +190,19 @@
           </div>
 
           </div>  
+
+          <div class="col-md-12">  
+            <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
+              <label for="">Images Only No Text: </label>
+               <input type="checkbox" class="toggle-input" name="option_status" id="option_status" value="{{$option_status_value}}">
+               <label for="option_status"></label>
+              <br>
+            </div>
+
+            <input type="hidden" name="checkboxvalue" id="checkboxvalue" value="{{$option_status_value}}">
+          </div>
         
+        <div id="optionswithtext">
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('a') ? ' has-error' : '' }}">
               {!! Form::label('a_option', 'A - Option') !!}
@@ -222,6 +272,9 @@
               </div>
 
           </div>
+        </div>
+
+        <div id="optionswithnewdivimage"></div>
 
           <div class="col-md-12">
             <div class="form-group{{ $errors->has('answer_ex') ? ' has-error' : '' }}">
@@ -272,6 +325,8 @@
                       <div id="preview_image_question_div">
                       @if($question->question_img!="")
                       <img id="preview-image-question" src="/images/questions/{{ $question->question_img }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="question_img"><i class="fa fa-close"></i></span>
                       @else
                       <img id="preview-image-question" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
@@ -305,6 +360,8 @@
                       <div id="preview_image_answer_div">
                       @if($question->answer_explaination_img!="")
                       <img id="preview-image-answer" src="/images/questions/{{ $question->answer_explaination_img }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="answer_explaination_img"><i class="fa fa-close"></i></span>
                       @else
                       <img id="preview-image-answer" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
@@ -315,6 +372,127 @@
                   </div>
                 </div>
               </div>
+
+              <div id="optionswithimages">
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <div class="col-md-6">
+              <div class="extras-block bg-whte">
+                  <h4 class="extras-heading">Option A Image</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('optiona_image') ? ' has-error' : '' }}">
+                        {!! Form::label('optiona_image', 'Option A Image') !!}
+                        {!! Form::file('optiona_image') !!}
+                        <small class="text-danger">{{$optiona_image_error}}</small>
+                         <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
+                      </div>
+                      <div id="preview_image_optiona_div">
+
+                      @if($question->a_image!="")
+                      <img id="preview-image-optiona" src="/images/questions/options/{{ $question->a_image }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="a_image"><i class="fa fa-close"></i></span>
+                      @else
+                      <img id="preview-image-optiona" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      @endif
+                    </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-6">
+              <div class="extras-block bg-whte">
+                  <h4 class="extras-heading">Option B Image</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('optionb_image') ? ' has-error' : '' }}">
+                        {!! Form::label('optionb_image', 'Option B Image') !!}
+                        {!! Form::file('optionb_image') !!}
+                        <small class="text-danger">{{$optionb_image_error}}</small>
+                         <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
+                      </div>
+                      <div id="preview_image_optionb_div">
+
+                      @if($question->b_image!="")
+                      <img id="preview-image-optionb" src="/images/questions/options/{{ $question->b_image }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="b_image"><i class="fa fa-close"></i></span>
+                      @else
+                      <img id="preview-image-optionb" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      @endif
+                    </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+                    
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-12">
+
+                    <div class="col-md-6">
+              <div class="extras-block bg-whte">
+                  <h4 class="extras-heading">Option C Image</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('optionc_image') ? ' has-error' : '' }}">
+                        {!! Form::label('optionc_image', 'Option C Image') !!}
+                        {!! Form::file('optionc_image') !!}
+                        <small class="text-danger">{{$optionc_image_error}}</small>
+                         <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
+                      </div>
+                      <div id="preview_image_optionc_div">
+                      @if($question->c_image!="")
+                      <img id="preview-image-optionc" src="/images/questions/options/{{ $question->c_image }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="c_image"><i class="fa fa-close"></i></span>
+                      @else
+                      <img id="preview-image-optionc" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      @endif
+                    </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-6">
+              <div class="extras-block bg-whte">
+                  <h4 class="extras-heading">Option D Image</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group{{ $errors->has('optiond_image') ? ' has-error' : '' }}">
+                        {!! Form::label('optiond_image', 'Option D Image') !!}
+                        {!! Form::file('optiond_image') !!}
+                        <small class="text-danger">{{$optiond_image_error}}</small>
+                         <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
+                      </div>
+                      <div id="preview_image_optiond_div">
+                      @if($question->d_image!="")
+                      <img id="preview-image-optiond" src="/images/questions/options/{{ $question->d_image }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="d_image"><i class="fa fa-close"></i></span>
+                      @else
+                      <img id="preview-image-optiond" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      @endif
+
+                    </div>
+                    </div>
+
+                  </div>
+                </div>
+                </div>
+                    
+                  </div>
+                </div>
+                </div> 
 
         <div class="col-md-6">
             <div class="btn-group pull-right">
@@ -375,15 +553,117 @@
     </script>
 
     <script type="text/javascript">
+
+
+      $(document).on('click','.deleteimage',function(){
+        var $this=$(this);
+        var questionid=$(this).data('id');
+        var type=$(this).data('type');
+        console.log('questionid',questionid);
+        console.log('type',type);
+
+        $.ajax({
+            'url':'{{url("/")}}/admin/questions/deleteimagefromdb',
+            'data':{"_token": "{{ csrf_token() }}","question_id":questionid,"image_type":type},
+            'type':'post',
+            'dataType':'json',
+            error:function()
+            {
+              alert('Something went wrong');
+            },
+            success:function(data)
+            {
+              if(data.code=="200")
+              {
+                var imagehtml='<img id="preview-image-optiond" src="/images/noimage.jpg" style="height: auto;width: 20%;">';
+                  $this.parent().html(imagehtml);
+              }
+              else{
+                alert(data.message);
+              }
+            }
+        });  
+      });
+
+    var checkboxvalueonload=$('#option_status').val();
+    $('#checkboxvalue').val(checkboxvalueonload);
+   if(checkboxvalueonload==1)
+   {
+      $('#option_status').attr('checked','checked');
+      $('#optionswithtext').hide();
+      
       $(document).on('click','.submitbtn',function(){
         updateQuestionFunction();
-        updateoptionaFunction();
-        updateoptionbFunction();
-        updateoptioncFunction();
-        updateoptiondFunction();
-        updateanswerFunction();
+          updateanswerFunction();
         $('#edit-form').submit();
       });
+   }
+   else{
+      $('#optionswithtext').show();
+      var a_onload = $('#optionswithnewdivimage').html();
+      if(a_onload)
+      {
+       var b_onload = $('#optionswithimages').html(a_onload);
+      $('#optionswithnewdivimage').html('');
+      }
+      else{
+        $('#optionswithimages').show();
+      }
+    
+      $(document).on('click','.submitbtn',function(){
+        updateQuestionFunction();
+          updateoptionaFunction();
+          updateoptionbFunction();
+          updateoptioncFunction();
+          updateoptiondFunction();
+          updateanswerFunction();
+        $('#edit-form').submit();
+      });
+   }
+
+
+      $('#option_status').on('change', function(){
+       var checkboxvalue = this.checked ? 1 : 0;
+       $('#checkboxvalue').val(checkboxvalue);
+       if(checkboxvalue==1)
+       {
+          $('#optionswithtext').hide();
+          var a = $('#optionswithimages').html();
+        var b = $('#optionswithnewdivimage').html(a);
+        $('#optionswithimages').html('');
+
+          $(document).on('click','.submitbtn',function(){
+            updateQuestionFunction();
+              updateanswerFunction();
+            $('#edit-form').submit();
+          });
+       }
+       else{
+          $('#optionswithtext').show();
+          var a = $('#optionswithnewdivimage').html();
+          if(a)
+          {
+           var b = $('#optionswithimages').html(a);
+          $('#optionswithnewdivimage').html('');
+          }
+          else{
+            $('#optionswithimages').show();
+          }
+        
+          $(document).on('click','.submitbtn',function(){
+            updateQuestionFunction();
+              updateoptionaFunction();
+              updateoptionbFunction();
+              updateoptioncFunction();
+              updateoptiondFunction();
+              updateanswerFunction();
+            $('#edit-form').submit();
+          });
+       }
+       
+    }).change();
+
+      
     </script>
 
     <script type="text/javascript">
@@ -407,6 +687,54 @@
       $('#preview-image-answer').attr('src', e.target.result); 
     }
     answerreader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
+<script type="text/javascript">
+
+  $(document).on('change','#optiona_image',function(){
+    let optionareader = new FileReader();
+    optionareader.onload = (e) => { 
+      $('#preview-image-optiona').attr('src', e.target.result); 
+    }
+    optionareader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
+<script type="text/javascript">
+
+  $(document).on('change','#optionb_image',function(){
+    let optionbreader = new FileReader();
+    optionbreader.onload = (e) => { 
+      $('#preview-image-optionb').attr('src', e.target.result); 
+    }
+    optionbreader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
+<script type="text/javascript">
+
+  $(document).on('change','#optionc_image',function(){
+    let optioncreader = new FileReader();
+    optioncreader.onload = (e) => { 
+      $('#preview-image-optionc').attr('src', e.target.result); 
+    }
+    optioncreader.readAsDataURL(this.files[0]);
+  });
+
+</script>
+
+<script type="text/javascript">
+
+  $(document).on('change','#optiond_image',function(){
+    let optiondreader = new FileReader();
+    optiondreader.onload = (e) => { 
+      $('#preview-image-optiond').attr('src', e.target.result); 
+    }
+    optiondreader.readAsDataURL(this.files[0]);
   });
 
 </script>

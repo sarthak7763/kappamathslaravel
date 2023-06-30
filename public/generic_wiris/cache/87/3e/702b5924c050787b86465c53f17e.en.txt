@@ -1,0 +1,1 @@
+{"result":{"text":"horizontal ellipsis vertical ellipsis left right arrow rightwards double arrow leftwards arrow"},"status":"ok"}

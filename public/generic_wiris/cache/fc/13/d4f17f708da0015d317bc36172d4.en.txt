@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator a minus 1 over denominator a squared minus 1 end fraction"},"status":"ok"}

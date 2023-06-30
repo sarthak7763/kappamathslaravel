@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style space open parentheses fraction numerator k plus 2 over denominator 12 end fraction close parentheses squared end style"},"status":"ok"}

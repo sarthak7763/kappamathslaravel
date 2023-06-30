@@ -95,6 +95,55 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
               $answer_explaination_video_link="";
             }
 
+
+             // Remote image URL
+            if($row['a_image']!="")
+            {
+                $currentdate=date('Y-m-d H:i:s');
+                $a_image = 'optiona_'.strtotime($currentdate).'.png';
+                $filepath = 'images/questions/options/'.$a_image;
+                file_put_contents($filepath, file_get_contents($row['a_image']));
+            }
+            else{
+                $a_image="";
+            }
+
+             // Remote image URL
+            if($row['b_image']!="")
+            {
+                $currentdate=date('Y-m-d H:i:s');
+                $b_image = 'optionb_'.strtotime($currentdate).'.png';
+                $filepath = 'images/questions/options/'.$b_image;
+                file_put_contents($filepath, file_get_contents($row['b_image']));
+            }
+            else{
+                $b_image="";
+            }
+
+             // Remote image URL
+            if($row['c_image']!="")
+            {
+                $currentdate=date('Y-m-d H:i:s');
+                $c_image = 'optionc_'.strtotime($currentdate).'.png';
+                $filepath = 'images/questions/options/'.$c_image;
+                file_put_contents($filepath, file_get_contents($row['c_image']));
+            }
+            else{
+                $c_image="";
+            }
+
+             // Remote image URL
+            if($row['d_image']!="")
+            {
+                $currentdate=date('Y-m-d H:i:s');
+                $d_image = 'optiond_'.strtotime($currentdate).'.png';
+                $filepath = 'images/questions/options/'.$d_image;
+                file_put_contents($filepath, file_get_contents($row['d_image']));
+            }
+            else{
+                $d_image="";
+            }
+
               return new Tempquestions([
                 'topic_id' => $row['quiz_id'],
                 'question' => htmlentities($row['question']),
@@ -115,7 +164,12 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
                 'question_video_link'=>$question_video_link,
                 'answer_explaination_img'=>$answer_explaination_img,
                 'answer_explaination_video_link'=>$answer_explaination_video_link,
-                'question_status'=>1
+                'question_status'=>1,
+                'a_image'=>$a_image,
+                'b_image'=>$b_image,
+                'c_image'=>$c_image,
+                'd_image'=>$d_image,
+                'option_status'=>0
             ]);
 
         }
@@ -183,6 +237,22 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
                'nullable',
                'numeric'
             ],
+            'a_image' => [
+               'nullable',
+               'url'
+            ],
+            'b_image' => [
+               'nullable',
+               'url'
+            ],
+            'c_image' => [
+               'nullable',
+               'url'
+            ],
+            'd_image' => [
+               'nullable',
+               'url'
+            ],
         ];
     }
 
@@ -202,7 +272,11 @@ class ObjectiveQuizSheetImport implements ToModel, SkipsEmptyRows,WithValidation
             'question_image.url'=>'Please Enter Valid Question Image URL.',
             'question_video_link.numeric'=>'Question video link field should only contain numbers.',
             'answer_explaination_image.url'=>'Please Enter Valid Answer explaination Image URL.',
-            'answer_explaination_video_link.numeric'=>'Answer explaination video link field should only contain numbers.'
+            'answer_explaination_video_link.numeric'=>'Answer explaination video link field should only contain numbers.',
+            'a_image.url'=>'Please Enter Valid Option A Image URL.',
+            'b_image.url'=>'Please Enter Valid Option B Image URL.',
+            'c_image.url'=>'Please Enter Valid Option C Image URL.',
+            'd_image.url'=>'Please Enter Valid Option D Image URL.',
         ];
     }
 

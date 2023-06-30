@@ -1,0 +1,1 @@
+{"result":{"text":"P comma space Q space a n d space R space a r e space s e t s space u s c h space t h a t space P subset of Q space a n d space Q subset of R. space W h i c h space o f space t h e space f"},"status":"ok"}

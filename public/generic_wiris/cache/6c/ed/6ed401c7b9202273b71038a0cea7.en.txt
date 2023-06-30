@@ -1,0 +1,1 @@
+{"result":{"text":"F a c t o r i z e space 12 x squared minus 3 y squared space c o m p l e t e l y."},"status":"ok"}

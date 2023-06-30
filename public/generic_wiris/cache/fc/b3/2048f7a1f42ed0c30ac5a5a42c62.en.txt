@@ -1,0 +1,1 @@
+{"result":{"text":"s u b t r a c t space left parenthesis 5 y squared z plus 8 y squared minus 7 space f r o m space left parenthesis 4 y squared z minus y squared minus 3 right parenthesis."},"status":"ok"}

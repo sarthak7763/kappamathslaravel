@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 7 over denominator 12 left parenthesis x minus 7 right parenthesis end fraction"},"status":"ok"}

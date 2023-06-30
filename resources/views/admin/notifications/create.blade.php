@@ -87,10 +87,7 @@
                <div id="preview_image_div">
               <img id="preview-image" src="/images/noimage.jpg" style="height: auto;width: 50%;">
             </div>
-
-            <label for="">Status: </label>
-             <input type="checkbox" class="toggle-input" name="status" id="toggle2">
-             <label for="toggle2"></label>
+            
            </div>
 
           </div>

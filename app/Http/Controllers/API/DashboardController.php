@@ -135,10 +135,10 @@ class DashboardController extends BaseController
 
 		        if(isset($search) && $search!="")
 		        {
-		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_name', 'like', '%'.$search.'%')->where('category_status','1')->get();
+		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_name', 'like', '%'.$search.'%')->where('category_status','1')->orderBy('sort_order','ASC')->get();
 		        }
 		        else{
-		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_status','1')->get();
+		        	$coursetopicsdata=Subjectcategory::where('subject',$courseid)->where('category_status','1')->orderBy('sort_order','ASC')->get();
 		        }
 		        
 		        if($coursetopicsdata)
@@ -149,7 +149,7 @@ class DashboardController extends BaseController
 		        		$topicslist=[];
 		        		foreach($coursetopicsdataarray as $key=>$list)
 		        		{
-		        			$coursesubtopicsdata=Coursetopic::where('subject',$courseid)->where('category',$list['id'])->where('topic_status','1')->get();
+		        			$coursesubtopicsdata=Coursetopic::where('subject',$courseid)->where('category',$list['id'])->where('topic_status','1')->orderBy('sort_order','ASC')->get();
 
 		        			if($coursesubtopicsdata)
 		        			{
@@ -230,7 +230,7 @@ class DashboardController extends BaseController
 
 	        	$search=$request->search;
 
-		        $coursetopicsdata=Subjectcategory::where('category_status','1')->where('category_name', 'like', '%'.$search.'%')->get();
+		        $coursetopicsdata=Subjectcategory::where('category_status','1')->where('category_name', 'like', '%'.$search.'%')->orderBy('sort_order','ASC')->get();
 		        if($coursetopicsdata)
 		        {
 		        	$coursetopicsdataarray=$coursetopicsdata->toArray();
@@ -274,7 +274,7 @@ class DashboardController extends BaseController
 		        	$topicslist=[];
 		        }
 
-		        $coursesubtopicsdata=Coursetopic::where('topic_status','1')->where('topic_name', 'like', '%'.$search.'%')->get();
+		        $coursesubtopicsdata=Coursetopic::where('topic_status','1')->where('topic_name', 'like', '%'.$search.'%')->orderBy('sort_order','ASC')->get();
 		        if($coursesubtopicsdata)
 		        {
 		        	$coursesubtopicsdataarray=$coursesubtopicsdata->toArray();
@@ -391,7 +391,7 @@ class DashboardController extends BaseController
 			        }
 
 
-			        $coursesubtopicsdata=Coursetopic::where('subject',$courseid)->where('category',$topicid)->where('topic_status','1')->get();
+			        $coursesubtopicsdata=Coursetopic::where('subject',$courseid)->where('category',$topicid)->where('topic_status','1')->orderBy('sort_order','ASC')->get();
 
 		        			if($coursesubtopicsdata)
 		        			{
@@ -415,11 +415,19 @@ class DashboardController extends BaseController
 		        				$subtopicslist=[];
 		        			}
 
+		        	if($coursetopicsdetaildata['category_description']!="")
+		        	{
+		        		$category_description=$coursetopicsdetaildata['category_description'];
+		        	}
+		        	else{
+		        		$category_description="";
+		        	}
+
 		        	$topicdetail=array(
 		        				'course_name'=>$subject->title,
 		        				'topic_id'=>$coursetopicsdetaildata['id'],
 		        				'topic_name'=>$coursetopicsdetaildata['category_name'],
-		        				'topic_description'=>$coursetopicsdetaildata['category_description'],
+		        				'topic_description'=>$category_description,
 		        				'topic_image'=>$topic_image,
 		        				'sub_topics'=>$subtopicslist
 		        			);
@@ -612,13 +620,19 @@ class DashboardController extends BaseController
 			        	$sub_topic_image=url('/').'/images/topics/'.$coursesubtopicsdetaildata['topic_image'];
 			        }
 			        else{
-			        	if($checkvideo['code']=="400")
-			            {
-			              $sub_topic_image="";
-			            }
-			            else{
-			            	$sub_topic_image=$checkvideo['sub_topic_image'];
-			            }
+			        	if($coursesubtopicsdetaildata['topic_video_id']!="")
+			        	{
+				        	if($checkvideo['code']=="400")
+				            {
+				              $sub_topic_image="";
+				            }
+				            else{
+				            	$sub_topic_image=$checkvideo['sub_topic_image'];
+				            }
+			        	}
+			        	else{
+			        		$sub_topic_image="";
+			        	}
 			        }  
 				    
 		        		$subtopicdetail=array(

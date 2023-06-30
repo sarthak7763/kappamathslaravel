@@ -182,8 +182,15 @@ class PracticeQuizDashboardController extends BaseController
 
                 	$total_questions+=count($random_questions_final_list);
 
+                	if($quiztopicdetaildata['timer']!="")
+                	{
+                		$dbtimer=$quiztopicdetaildata['timer'];
+                	}
+                	else{
+                		$dbtimer=0;
+                	}
 
-                	$result_timer+=$quiztopicdetaildata['timer'];
+                	$result_timer+=$dbtimer;
 
                 }
                 else{
@@ -405,7 +412,15 @@ class PracticeQuizDashboardController extends BaseController
 
 					$total_questions+=count($random_questions_final_list);
 
-					$result_timer+=$quiztopicdetaildata['timer'];
+					if($quiztopicdetaildata['timer']!="")
+                	{
+                		$dbtimer=$quiztopicdetaildata['timer'];
+                	}
+                	else{
+                		$dbtimer=0;
+                	}
+
+					$result_timer+=$dbtimer;
 
 				}
 				else{
@@ -824,8 +839,16 @@ class PracticeQuizDashboardController extends BaseController
          	$previousresultmarks=$quizresultmarks->marks;
          	$newresultmarks=$previousresultmarks+$quiztopicdetaildata['per_q_mark'];
 
+         	if($quiztopicdetaildata['timer']!="")
+        	{
+        		$result_timer=$quiztopicdetaildata['timer'];
+        	}
+        	else{
+        		$result_timer=0;
+        	}
+
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -938,8 +961,16 @@ class PracticeQuizDashboardController extends BaseController
          	$previousresultmarks=$quizresultmarks->marks;
          	$newresultmarks=$previousresultmarks+0;
 
+         	if($quiztopicdetaildata['timer']!="")
+        	{
+        		$result_timer=$quiztopicdetaildata['timer'];
+        	}
+        	else{
+        		$result_timer=0;
+        	}
+
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -1054,8 +1085,16 @@ class PracticeQuizDashboardController extends BaseController
          	$previousresultmarks=$quizresultmarks->marks;
          	$newresultmarks=$previousresultmarks+0;
 
+         	if($quiztopicdetaildata['timer']!="")
+        	{
+        		$result_timer=$quiztopicdetaildata['timer'];
+        	}
+        	else{
+        		$result_timer=0;
+        	}
+
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -1711,7 +1750,15 @@ class PracticeQuizDashboardController extends BaseController
 	    		{
 	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
 
-	    			$result_timer+=$quiztopicdetaildata['timer'];
+	    			if($quiztopicdetaildata['timer']!="")
+		        	{
+		        		$dbtimer=$quiztopicdetaildata['timer'];
+		        	}
+		        	else{
+		        		$dbtimer=0;
+		        	}
+
+	    			$result_timer+=$dbtimer;
 
 	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
 
@@ -1955,7 +2002,15 @@ class PracticeQuizDashboardController extends BaseController
 	    		{
 	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
 
-	    			$result_timer+=$quiztopicdetaildata['timer'];
+	    			if($quiztopicdetaildata['timer']!="")
+		        	{
+		        		$dbtimer=$quiztopicdetaildata['timer'];
+		        	}
+		        	else{
+		        		$dbtimer=0;
+		        	}
+
+	    			$result_timer+=$dbtimer;
 
 	    			$quiztopicdetaildata=$quiztopicdetail->toArray();
 

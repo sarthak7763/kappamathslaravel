@@ -1,0 +1,1 @@
+{"result":{"text":"G i v e n space t h a t space bevelled fraction numerator square root of 5 over denominator 6 end fraction space equals space 4"},"status":"ok"}

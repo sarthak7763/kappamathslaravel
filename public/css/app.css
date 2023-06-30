@@ -8411,6 +8411,13 @@ button.btn-wave {
   max-width: 550px;
 }
 
+@media(max-width: 767px){
+  .login-page .form {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
+
 .login-page .form input {
   outline: 0;
   background: #F2F2F2;

@@ -1,0 +1,1 @@
+{"result":{"text":"G i v e n space t h a t space space fraction numerator square root of 3 plus square root of 5 over denominator square root of 5 end fraction equals x plus y square root of 15 comma space f i n d space t h e space v a l u e space o f space left parenthesis x plus y right parenthesis."},"status":"ok"}

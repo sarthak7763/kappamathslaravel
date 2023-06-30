@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 2 cross times 232 to the power of 5 end fraction U space equals s b f s h k f n k s f s u i k u k s j b f"},"status":"ok"}

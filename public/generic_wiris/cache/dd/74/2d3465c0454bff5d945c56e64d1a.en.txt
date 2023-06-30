@@ -1,0 +1,1 @@
+{"result":{"text":"E x p r e s s space fraction numerator 1 over denominator 3 left parenthesis x minus y right parenthesis end fraction minus fraction numerator 1 over denominator 4 left parenthesis x minus y right parenthesis end fraction space a s space a space s i m p l e space f r a c t i o n."},"status":"ok"}

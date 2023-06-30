@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 4 x squared plus x plus 1 right parenthesis minus left parenthesis 3 x squared minus 4 x minus 1 right parenthesis\nequals 4 x squared plus x plus 1 minus 3 x squared plus 4 x plus 1\nequals x squared plus 5 x plus 2"},"status":"ok"}

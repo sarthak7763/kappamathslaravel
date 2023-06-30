@@ -1,0 +1,1 @@
+{"result":{"text":"s i m p l i f y space left parenthesis 5 a plus 3 b right parenthesis minus left parenthesis 2 a minus 7 b right parenthesis.\n"},"status":"ok"}

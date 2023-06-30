@@ -134,6 +134,9 @@ section.content.container-fluid {
                        <div id="preview_image_question_div">
                       @if($question->question_img!="")
                       <img id="preview-image-question" src="/images/questions/{{ $question->question_img }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="question_img"><i class="fa fa-close"></i></span>
+
                       @else
                       <img id="preview-image-question" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
@@ -167,6 +170,9 @@ section.content.container-fluid {
                       <div id="preview_image_answer_div">
                       @if($question->answer_explaination_img!="")
                       <img id="preview-image-answer" src="/images/questions/{{ $question->answer_explaination_img }}" style="height: auto;width: 20%;">
+
+                      <span class="deleteimage" data-id="{{$question->id}}" data-type="answer_explaination_img"><i class="fa fa-close"></i></span>
+
                       @else
                       <img id="preview-image-answer" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
@@ -215,6 +221,38 @@ section.content.container-fluid {
     </script>
 
     <script type="text/javascript">
+
+      $(document).on('click','.deleteimage',function(){
+        var $this=$(this);
+        var questionid=$(this).data('id');
+        var type=$(this).data('type');
+        console.log('questionid',questionid);
+        console.log('type',type);
+
+        $.ajax({
+            'url':'{{url("/")}}/admin/questions/deleteimagefromdb',
+            'data':{"_token": "{{ csrf_token() }}","question_id":questionid,"image_type":type},
+            'type':'post',
+            'dataType':'json',
+            error:function()
+            {
+              alert('Something went wrong');
+            },
+            success:function(data)
+            {
+              if(data.code=="200")
+              {
+                var imagehtml='<img id="preview-image-optiond" src="/images/noimage.jpg" style="height: auto;width: 20%;">';
+                  $this.parent().html(imagehtml);
+              }
+              else{
+                alert(data.message);
+              }
+            }
+        });  
+      });
+
+      
       $(document).on('click','.submitbtn',function(){
         updateQuestionFunction();
         updateanswerFunction();

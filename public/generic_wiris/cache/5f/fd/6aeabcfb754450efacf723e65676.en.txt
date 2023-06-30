@@ -1,0 +1,1 @@
+{"result":{"text":"9 x squared minus 4 y squared"},"status":"ok"}

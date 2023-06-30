@@ -1,0 +1,1 @@
+{"result":{"text":"F a c t o r i z e space space c o m p l e t e l y space t h e space e x p r e s s i o n space\nleft parenthesis h squared minus k squared right parenthesis minus p left parenthesis h plus k right parenthesis."},"status":"ok"}

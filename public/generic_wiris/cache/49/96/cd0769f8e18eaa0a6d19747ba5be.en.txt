@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y colon space 3 x minus left parenthesis p minus x right parenthesis minus left parenthesis r minus p right parenthesis."},"status":"ok"}

@@ -24,7 +24,12 @@ class Question extends Model
       'answer_exp_latex',
       'question_img',
       'question_video_link',
-      'question_status'
+      'a_image',
+      'b_image',
+      'c_image',
+      'd_image',
+      'question_status',
+      'option_status'
     ];
 
     public function answers() {

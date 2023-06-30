@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 2 plus 2 end fraction empty set open square brackets 3 close square brackets plus 3 divided by 3 divided by 3456 plus-or-minus 35345 subset of w e 5 t w g d s v d G s a d v s v"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator negative q minus 5 over denominator open parentheses q minus 3 close parentheses open parentheses q plus 2 close parentheses end fraction"},"status":"ok"}

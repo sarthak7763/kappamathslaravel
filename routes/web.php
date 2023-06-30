@@ -114,6 +114,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::post('/admin/questions/','QuestionsController@index')->name('questionsindex');
 
+  Route::post('/admin/questions/deleteimagefromdb','QuestionsController@deleteimagefromdb')->name('deleteimagefromdb');
+
   Route::get('/admin/view-question/{id}','QuestionsController@viewquestion')->name('viewquestion');
 
   Route::get('/admin/import_questions_module','QuestionsController@import_questions_module')->name('import_questions_module');
@@ -123,6 +125,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::post('/admin/questions/submitimporttempquestions', 'QuestionsController@submitimporttempquestions')->name('submitimporttempquestions');
 
   Route::post('/admin/questions/import_objective_questions', 'QuestionsController@importObjectivequestionExcelToDB')->name('import_objective_questions');
+
+  Route::post('/admin/questions/import_objective_questions_images', 'QuestionsController@importObjectivequestionImageExcelToDB')->name('import_objective_questions_images');
   
   Route::resource('/admin/answers', 'AnswersController');
   Route::resource('/admin/settings', 'SettingController');
@@ -194,6 +198,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::post('/admin/notifications/sendNotification','NotificationController@sendNotification')->name('sendNotification');
 
+  Route::post('/admin/notifications/sendNotificationtomultipledevices','NotificationController@sendNotificationtomultipledevices')->name('sendNotificationtomultipledevices');
+
   Route::resource('/admin/faq', 'ExamInformationController');
   Route::post('/admin/faq/changestatus','ExamInformationController@changestatus')->name('examinformationchangestatus');
 
@@ -214,6 +220,8 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::get('/admin/get_objective_question_sample_export','QuestionsController@get_objective_question_sample_export')->name('get_objective_question_sample_export');
 
   Route::get('/admin/get_theory_question_sample_export','QuestionsController@get_theory_question_sample_export')->name('get_theory_question_sample_export');
+
+  Route::get('/admin/get_objective_question_images_sample_export','QuestionsController@get_objective_question_images_sample_export')->name('get_objective_question_images_sample_export');
 
   Route::any('/admin/payment', 'PaymentController@index')->name('admin.payment');
   

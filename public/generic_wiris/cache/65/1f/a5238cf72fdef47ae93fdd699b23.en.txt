@@ -1,0 +1,1 @@
+{"result":{"text":"negative y squared z plus 7 y squared plus 4"},"status":"ok"}

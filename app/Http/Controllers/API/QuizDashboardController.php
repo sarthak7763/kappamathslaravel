@@ -142,12 +142,20 @@ class QuizDashboardController extends BaseController
             					$current_score=0;
             					$current_quiz=1;
 
+            					if($quiztopicdetaildata['timer']!="")
+            					{
+            						$result_timer=$quiztopicdetaildata['timer'];
+            					}
+            					else{
+            						$result_timer=0;
+            					}
+
 			                    $resultmarks = new Resultmarks;
 			                    $resultmarks->topic_id=$quiztopicdetaildata['id'];
 			                    $resultmarks->user_id=$user->id;
 			                    $resultmarks->subject=$courseid;
 			                    $resultmarks->marks=0;
-			                    $resultmarks->result_timer=$quiztopicdetaildata['timer'];
+			                    $resultmarks->result_timer=$result_timer;
 			                    $resultmarks->total_questions=count($random_questions_final_list);
 			                    $resultmarks->total_marks=$total_score;
 			                    $resultmarks->result_marks_date=$result_date;
@@ -564,7 +572,16 @@ class QuizDashboardController extends BaseController
          	$newresultmarks=$previousresultmarks+$quiztopicdetaildata['per_q_mark'];
 
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+
+         	if($quiztopicdetaildata['timer']!="")
+         	{
+         		$result_timer=$quiztopicdetaildata['timer'];
+         	}
+         	else{
+         		$result_timer=0;
+         	}
+
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -674,8 +691,17 @@ class QuizDashboardController extends BaseController
          	$previousresultmarks=$quizresultmarks->marks;
          	$newresultmarks=$previousresultmarks+0;
 
+
+         	if($quiztopicdetaildata['timer']!="")
+         	{
+         		$result_timer=$quiztopicdetaildata['timer'];
+         	}
+         	else{
+         		$result_timer=0;
+         	}
+
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -786,8 +812,16 @@ class QuizDashboardController extends BaseController
          	$previousresultmarks=$quizresultmarks->marks;
          	$newresultmarks=$previousresultmarks+0;
 
+         	if($quiztopicdetaildata['timer']!="")
+         	{
+         		$result_timer=$quiztopicdetaildata['timer'];
+         	}
+         	else{
+         		$result_timer=0;
+         	}
+
          	$quizresultmarks->marks=$newresultmarks;
-			$quizresultmarks->result_timer=$quiztopicdetaildata['timer'];
+			$quizresultmarks->result_timer=$result_timer;
 			$quizresultmarks->question_ids=$finalnewdbquestion_ids;
 
 			try{
@@ -1405,7 +1439,16 @@ class QuizDashboardController extends BaseController
 	        $theoryquizresult->topic_id=$quiztopicdetaildata['id'];
 
 	        $theoryquizresult->user_id=$userid;
-	        $theoryquizresult->result_timer=$quiztopicdetaildata['timer'];
+
+	        if($quiztopicdetaildata['timer']!="")
+         	{
+         		$result_timer=$quiztopicdetaildata['timer'];
+         	}
+         	else{
+         		$result_timer=0;
+         	}
+
+	        $theoryquizresult->result_timer=$result_timer;
 	        $theoryquizresult->total_questions=$total_questions;
 	        
 	        $theoryquizresult->result_type=1;
@@ -1550,7 +1593,16 @@ class QuizDashboardController extends BaseController
 	        $theoryquizresult->topic_id=$quiztopicdetaildata['id'];
 
 	        $theoryquizresult->user_id=$userid;
-	        $theoryquizresult->result_timer=$quiztopicdetaildata['timer'];
+
+	        if($quiztopicdetaildata['timer']!="")
+         	{
+         		$result_timer=$quiztopicdetaildata['timer'];
+         	}
+         	else{
+         		$result_timer=0;
+         	}
+
+	        $theoryquizresult->result_timer=$result_timer;
 	        $theoryquizresult->total_questions=$total_questions;
 	        
 	        $theoryquizresult->result_type=1;

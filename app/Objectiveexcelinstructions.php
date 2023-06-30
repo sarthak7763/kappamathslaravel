@@ -8,7 +8,7 @@ class Objectiveexcelinstructions extends Model
 {
   protected $table="objective_excel_instructions";
     protected $fillable = [
-      'quiz_id', 'question', 'a','b','c','d','correct_answer','answer_explaination', 'question_image','question_video_link','answer_explaination_image','answer_explaination_video_link'
+      'quiz_id', 'question', 'a','b','c','d','correct_answer','answer_explaination', 'question_image','question_video_link','answer_explaination_image','answer_explaination_video_link','a_image','b_image','c_image','d_image','option_status'
     ];
     
 

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x squared minus 5 x minus 14 over denominator x squared minus 9 x plus 14 end fraction"},"status":"ok"}

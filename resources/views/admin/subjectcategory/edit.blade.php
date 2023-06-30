@@ -22,6 +22,7 @@
   $title_error="";
   $description_error="";
   $image_error="";
+  $sort_order_error="";
   @endphp
 
   @if (session()->has('valid_error'))
@@ -37,6 +38,12 @@
       @php $title_error=$validationmessage['title']; @endphp
       @else
       @php $title_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['sort_order']))
+      @php $sort_order_error=$validationmessage['sort_order']; @endphp
+      @else
+      @php $sort_order_error=""; @endphp
       @endif
 
       @if($validationmessage!="" && isset($validationmessage['topic_img']))
@@ -79,6 +86,14 @@
               <span class="required">*</span>
               {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Title']) !!}
               <small class="text-danger">{{ $title_error }}</small>
+            </div>
+
+
+            <div class="form-group{{ $errors->has('sort_order') ? ' has-error' : '' }}">
+              {!! Form::label('sort_order', 'Sort Order') !!}
+              <span class="required">*</span>
+              {!! Form::number('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order','min'=>1]) !!}
+              <small class="text-danger">{{ $sort_order_error }}</small>
             </div>
 
               <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">

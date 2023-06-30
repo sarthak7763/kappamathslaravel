@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator left parenthesis 2 x right parenthesis to the power of 4 over denominator 2 x to the power of 4 end fraction\nequals fraction numerator 16 x to the power of 4 over denominator 2 x to the power of 4 end fraction\nequals 16 over 2\nequals 8"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator 2 over denominator q minus 3 end fraction minus fraction numerator 3 over denominator q plus 2 end fraction."},"status":"ok"}

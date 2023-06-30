@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis h plus k right parenthesis left parenthesis h minus k right parenthesis"},"status":"ok"}

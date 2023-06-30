@@ -46,7 +46,11 @@ class ObjectiveQuizQuestionsSampleExport implements FromArray, WithHeadings,With
             "question_image",
             "question_video_link",
             "answer_explaination_image",
-            "answer_explaination_video_link"
+            "answer_explaination_video_link",
+            "a_image",
+            "b_image",
+            "c_image",
+            "d_image"
         ];
 
         return [$headers1,$headers2]; 
@@ -206,7 +210,51 @@ class ObjectiveQuizQuestionsSampleExport implements FromArray, WithHeadings,With
                 ->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()
-                ->setARGB('042a60');     
+                ->setARGB('042a60');
+
+                $sheet->getStyle('M2')->getFont()
+                ->setSize(12)
+                ->setBold(true)
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('M2')
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('042a60'); 
+
+                $sheet->getStyle('N2')->getFont()
+                ->setSize(12)
+                ->setBold(true)
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('N2')
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('042a60'); 
+
+                $sheet->getStyle('O2')->getFont()
+                ->setSize(12)
+                ->setBold(true)
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('O2')
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('042a60'); 
+
+                $sheet->getStyle('P2')->getFont()
+                ->setSize(12)
+                ->setBold(true)
+                ->getColor()->setRGB('ffffff');
+
+                $sheet->getStyle('P2')
+                ->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setARGB('042a60');       
 
                 // set columns to autosize
                 for ($i = 1; $i <= $column_count; $i++) {

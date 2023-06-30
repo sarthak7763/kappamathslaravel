@@ -9,6 +9,7 @@ use Exception;
 use DB;
 use Illuminate\Validation\ValidationException;
 use Validator;
+use Illuminate\Validation\Rule;
 
 class ObjectiveExcelController extends Controller
 {
@@ -126,23 +127,38 @@ class ObjectiveExcelController extends Controller
     public function store(Request $request)
     {
         try{
+
+        if($request->checkboxvalue)
+        {
+          $option_status=1;
+        }
+        else{
+          $option_status=0;
+        }
+
           $input = $request->all();
           $request->validate([
             'quiz_id' => 'required',
             'question' => 'required',
-            'a'=>'required',
-            'b'=>'required',
-            'c'=>'required',
-            'd'=>'required',
+            'a'=>Rule::requiredIf($option_status==0),
+            'b'=>Rule::requiredIf($option_status==0),
+            'c'=>Rule::requiredIf($option_status==0),
+            'd'=>Rule::requiredIf($option_status==0),
             'correct_answer'=>'required',
             'answer_explaination' => 'required',
             'question_image' => 'required',
             'question_video_link' => 'required',
             'answer_explaination_image' => 'required',
-            'answer_explaination_video_link' => 'required'
+            'answer_explaination_video_link' => 'required',
+            'a_image'=>Rule::requiredIf($option_status==1),
+            'b_image'=>Rule::requiredIf($option_status==1),
+            'c_image'=>Rule::requiredIf($option_status==1),
+            'd_image'=>Rule::requiredIf($option_status==1),
           ]);
 
         try{
+
+            $input['option_status']=$option_status;
 		      $objectiveexceldata = Objectiveexcelinstructions::create($input);
 		    return redirect('/admin/objective-excel-instructions/')->with('success', 'Instructions has been added');
 		    }catch(\Exception $e){
@@ -159,6 +175,7 @@ class ObjectiveExcelController extends Controller
 
                       if(count($listmessage) > 0)
                       {
+                            $listmessage['option_status']=$option_status;
                           return back()->with('valid_error',$listmessage);
                       }
                         else{
@@ -212,19 +229,31 @@ class ObjectiveExcelController extends Controller
     {
         try{
 
+        if($request->checkboxvalue)
+        {
+          $option_status=1;
+        }
+        else{
+          $option_status=0;
+        }
+
           $request->validate([
             'quiz_id' => 'required',
             'question' => 'required',
-            'a'=>'required',
-            'b'=>'required',
-            'c'=>'required',
-            'd'=>'required',
+            'a'=>Rule::requiredIf($option_status==0),
+            'b'=>Rule::requiredIf($option_status==0),
+            'c'=>Rule::requiredIf($option_status==0),
+            'd'=>Rule::requiredIf($option_status==0),
             'correct_answer'=>'required',
             'answer_explaination' => 'required',
             'question_image' => 'required',
             'question_video_link' => 'required',
             'answer_explaination_image' => 'required',
-            'answer_explaination_video_link' => 'required'
+            'answer_explaination_video_link' => 'required',
+            'a_image'=>Rule::requiredIf($option_status==1),
+            'b_image'=>Rule::requiredIf($option_status==1),
+            'c_image'=>Rule::requiredIf($option_status==1),
+            'd_image'=>Rule::requiredIf($option_status==1),
           ]);
 
           $objectiveexceldata = Objectiveexcelinstructions::find($id);
@@ -232,12 +261,33 @@ class ObjectiveExcelController extends Controller
            return redirect('admin/objective-excel-instructions')->with('error','Something went wrong.');
         }
 
+        if($option_status==0)
+        {
+            $objectiveexceldata->a = $request->a;
+            $objectiveexceldata->b = $request->b;
+            $objectiveexceldata->c = $request->c;
+            $objectiveexceldata->d = $request->d;
+
+            $objectiveexceldata->a_image = "";
+            $objectiveexceldata->b_image = "";
+            $objectiveexceldata->c_image = "";
+            $objectiveexceldata->d_image = "";
+        }
+        else{
+            $objectiveexceldata->a = "";
+            $objectiveexceldata->b = "";
+            $objectiveexceldata->c = "";
+            $objectiveexceldata->d = "";
+
+            $objectiveexceldata->a_image = $request->a_image;
+            $objectiveexceldata->b_image = $request->b_image;
+            $objectiveexceldata->c_image = $request->c_image;
+            $objectiveexceldata->d_image = $request->d_image;
+        }
+
         $objectiveexceldata->quiz_id = $request->quiz_id;
         $objectiveexceldata->question = $request->question;
-        $objectiveexceldata->a = $request->a;
-        $objectiveexceldata->b = $request->b;
-        $objectiveexceldata->c = $request->c;
-        $objectiveexceldata->d = $request->d;
+        $objectiveexceldata->option_status=$option_status;
         $objectiveexceldata->correct_answer = $request->correct_answer;
         $objectiveexceldata->answer_explaination = $request->answer_explaination;
         $objectiveexceldata->question_image = $request->question_image;
@@ -263,6 +313,7 @@ class ObjectiveExcelController extends Controller
 
                   if(count($listmessage) > 0)
                   {
+                    $listmessage['option_status']=$option_status;
                     return back()->with('valid_error',$listmessage);
                  }
                     else{

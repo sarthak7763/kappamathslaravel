@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style S i m p l i f y space fraction numerator a minus b over denominator 3 end fraction plus fraction numerator 3 a over denominator 2 end fraction. end style"},"status":"ok"}

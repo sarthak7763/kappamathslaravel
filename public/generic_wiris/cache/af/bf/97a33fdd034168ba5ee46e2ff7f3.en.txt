@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style fraction numerator 3 x plus 1 over denominator x left parenthesis 1 minus x right parenthesis end fraction end style"},"status":"ok"}

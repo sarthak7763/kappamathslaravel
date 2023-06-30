@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator left parenthesis 2 x right parenthesis to the power of 4 over denominator 2 x to the power of 4 end fraction"},"status":"ok"}

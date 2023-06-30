@@ -1,0 +1,1 @@
+{"result":{"text":"B y space h o w space m u c h space i s space t h e space s u m space o f space 3 x comma space left parenthesis 6 x minus 5 right parenthesis comma space 9 x space a n d space left parenthesis 4 x plus 1 right parenthesis space l e s s space t h a n space 30 x ? space"},"status":"ok"}

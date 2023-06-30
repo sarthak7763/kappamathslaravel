@@ -1,0 +1,1 @@
+{"result":{"text":"t e s x t space t h e o r y space"},"status":"ok"}

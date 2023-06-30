@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 20px style fraction numerator 5 x plus 1 over denominator x squared minus 1 end fraction end style"},"status":"ok"}

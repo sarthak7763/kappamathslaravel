@@ -42,10 +42,10 @@ class SubjectcategoryController extends Controller
 
           $filter_end_date=date('Y-m-d', strtotime("+1 day", strtotime($filter_end_date)));
 
-          $subjectcategory = \DB::table('subject_category')->where('created_at','<=',$filter_end_date)->select('id','subject','category_name','category_status');
+          $subjectcategory = \DB::table('subject_category')->where('created_at','<=',$filter_end_date)->select('id','subject','category_name','category_status','sort_order');
         }
         else{
-          $subjectcategory = \DB::table('subject_category')->select('id','subject','category_name','category_status');
+          $subjectcategory = \DB::table('subject_category')->select('id','subject','category_name','category_status','sort_order');
         }
         
 
@@ -75,6 +75,7 @@ class SubjectcategoryController extends Controller
             ->addColumn('category_name',function($row){
                 return $row->category_name;
             })
+
             ->addColumn('category_status',function($row){
 
             if($row->category_status=="1")
@@ -86,6 +87,9 @@ class SubjectcategoryController extends Controller
             }
 
                 return $statusvalue;
+            })
+            ->addColumn('sort_order',function($row){
+                return $row->sort_order;
             })
 
             ->addColumn('action',function($row){
@@ -170,7 +174,7 @@ class SubjectcategoryController extends Controller
               return $btn;
             })
             ->escapeColumns(['action'])
-            ->rawColumns(['subject','category_name','category_status','action'])
+            ->rawColumns(['subject','category_name','category_status','sort_order','action'])
             ->make(true);
 
           }
@@ -216,7 +220,8 @@ class SubjectcategoryController extends Controller
 
         $request->validate([
             'course'=>'required',
-            'title' => 'required|string'
+            'title' => 'required|string',
+            'sort_order'=>'required'
         ]);
 
         if(isset($request->status)){
@@ -279,11 +284,19 @@ class SubjectcategoryController extends Controller
                   return back()->with('error','Something went wrong.');     
                }
 
+          
+          $checksortorder=Subjectcategory::where('subject',$request->course)->where('sort_order',$request->sort_order)->get()->first();
+          if($checksortorder)
+          {
+            return back()->with('error','Sort Order already exists.');
+          }
+
 
         	try{
                 $subjectcategory = new Subjectcategory;
                 $subjectcategory->subject = $request->course;
                 $subjectcategory->category_name = $request->title;
+                $subjectcategory->sort_order = $request->sort_order;
                 $subjectcategory->category_description = $request->description;
                 $subjectcategory->category_image = $topic_img;
                 $subjectcategory->category_status = $statusvalue;
@@ -380,7 +393,8 @@ class SubjectcategoryController extends Controller
       try{
         $request->validate([
         	'course'=>'required',
-          'title' => 'required|string'
+          'title' => 'required|string',
+          'sort_order'=>'required'
         ]);
 
           $subjectcategory = Subjectcategory::find($id);
@@ -442,6 +456,21 @@ class SubjectcategoryController extends Controller
                   return back()->with('error','Something went wrong.');     
                }
 
+
+          if($subjectcategory->sort_order==$request->sort_order)
+          {
+            $subjectcategory->sort_order = $request->sort_order;
+          }
+          else{
+            $checksortorder=Subjectcategory::where('subject',$request->course)->where('sort_order',$request->sort_order)->get()->first();
+            if($checksortorder)
+            {
+              return back()->with('error','Sort Order already exists.');
+            }
+            else{
+              $subjectcategory->sort_order = $request->sort_order;
+            }
+          }
 
           if($subjectcategory->category_name==$request->title)
           {

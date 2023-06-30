@@ -161,16 +161,12 @@ class NotificationController extends Controller
           'message'=>'required'
         ]);
 
-        if(isset($request->status)){
-          $input['status'] = "1";
-        }else{
-          $input['status'] = "0";
-        }
+        $input['status'] = "1";
 
         if($file = $request->file('image')) {
           try{
             $request->validate([
-              'image' => 'required|mimes:jpeg,png,jpg'
+              'image' => 'required|mimes:jpeg,png,jpg|max:1024'
             ]);
           } catch(\Exception $e){
             if($e instanceof ValidationException){
@@ -197,30 +193,26 @@ class NotificationController extends Controller
         }
         $input['image']=$image;
         try{
-          $notificationsdata=Notifications::where('title',$request->title)->first();
-          if($notificationsdata){
-        	  return back()->with('error','Title already exists.');
-          }else{
-        	  try{
-		          $quiz = Notifications::create($input);
-              if($quiz){
-                $users = User::where('role','S')->get();
-                foreach($users as $value){
-                  $user_notification = [
-                    'user_id'         => $value['id'],
-                    'notification_id' => $quiz->id,
-                    'image'     => $image ?? ''
-                  ];
-                  UserNotification::create($user_notification);
-                }
-              }
-		          return redirect('/admin/notifications/')->with('success', 'Notification has been added');
-            }catch(\Exception $e){
-              return back()->with('error',$e->getMessage());     
+
+          $quiz = Notifications::create($input);
+          if($quiz){
+            $users = User::where('role','S')->get();
+            foreach($users as $value){
+              $user_notification = [
+                'user_id'         => $value['id'],
+                'notification_id' => $quiz->id,
+                'notification_type'=>'admin'
+              ];
+              UserNotification::create($user_notification);
             }
+
+            $sendnotify=$this->sendNotificationtomultipledevices($quiz);
           }
+
+          return redirect('/admin/notifications/')->with('success', 'Notification has been added');
+
         }catch(\Exception $e){
-          return back()->with('error','Something went wrong.');     
+          return back()->with('error',$e->getMessage());     
         }
 
       }catch(\Exception $e){
@@ -459,74 +451,108 @@ class NotificationController extends Controller
     }
 
 
-    public function sendNotificationtomultipledevices(Request $request)
+    public function sendNotificationtomultipledevices($quiz)
     {
-        $firebaseTokendata = User::where('email','mitsa896@mailinator.com')->get()->first()->toArray();
+        $firebaseTokendata = User::where('push_notifications','1')->where('status','1')->get();
 
-        $firebasetokens=[];
-        foreach($firebaseTokendata as $list)
+        if($firebaseTokendata)
         {
-          $firebasetokens[]=$firebaseTokendata['device_id'];
-        }
+          $firebaseTokendataarray=$firebaseTokendata->toArray();
 
+          $firebasetokens=[];
+          foreach($firebaseTokendata as $list)
+          {
+            if($list['device_id']!="")
+            {
+              $firebasetokens[]=$list['device_id'];
+            }
+          }
+
+          if(count($firebasetokens) > 0)
+          {
+            $SERVER_API_KEY = env('FCM_SERVER_KEY');
+            if($quiz->image!="")
+            {
+              $quiz_image=url('/').'/images/notifications/'.$quiz->image;
+            }
+            else{
+              $quiz_image="";
+            }
+
+          $data = [
+              "registration_ids" => $firebasetokens,
+              "notification" => [
+                  "title" => $quiz->title,
+                  "body" => $quiz->message,
+                  "image"=>$quiz_image,
+              ]
+          ];
+
+          $dataString = json_encode($data);
+
+            $headers = [
+              'Authorization: key=' . $SERVER_API_KEY,
+              'Content-Type: application/json',
+          ];
       
-        $SERVER_API_KEY = env('FCM_SERVER_KEY');
-    
-        $data = [
-            "registration_ids" => $firebasetokens,
-            "notification" => [
-                "title" => $request->title,
-                "body" => $request->message,  
-            ]
-        ];
-        $dataString = json_encode($data);
-      
-        $headers = [
-            'Authorization: key=' . $SERVER_API_KEY,
-            'Content-Type: application/json',
-        ];
-      
-        $ch = curl_init();
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                     
+            $response = curl_exec($ch);
+
+            $responsearray=json_decode($response);
         
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-                 
-        $response = curl_exec($ch);
+            return true;
 
-        $responsearray=json_decode($response);
-        print_r($responsearray);
-        die;
-    
-        return back()->with('success', 'Notification send successfully.');
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
     }
 
 
-    public function sendNotification(Request $request)
+    public function sendNotification($quiz)
     {
-        $firebaseTokendata = User::where('email','mitsa896@mailinator.com')->where('push_notification','1')->get()->first()->toArray();
+        $firebaseTokendata = User::where('email','nahap96510@pyadu.com')->where('push_notifications','1')->get()->first();
 
-        if(!$firebaseTokendata)
+        if($firebaseTokendata)
         {
-          return back()->with('success', 'Cannot send push notification to this device.');
-        }
+          $firebaseTokendataarray=$firebaseTokendata->toArray();
+          $firebaseToken=$firebaseTokendataarray['device_id'];
+          $SERVER_API_KEY = env('FCM_SERVER_KEY');
 
-        $firebaseToken=$firebaseTokendata['device_id'];
-       
-        $SERVER_API_KEY = env('FCM_SERVER_KEY');
-    
-        $data = [
+          if($quiz->image!="")
+          {
+            $quiz_image=url('/').'/images/notifications/'.$quiz->image;
+          }
+          else{
+            $quiz_image="";
+          }
+
+          $data = [
             "to" => $firebaseToken,
             "notification" => [
-                "title" => $request->title,
-                "body" => $request->message,  
+                "title" => $quiz->title,
+                "body" => $quiz->message,
+                "image"=>$quiz_image,
+                'sound' => true,
+                'priority' => "high",
+                'vibration'=>true,
+                'sound'=> "Enabled",  
             ]
         ];
         $dataString = json_encode($data);
-      
+
         $headers = [
             'Authorization: key=' . $SERVER_API_KEY,
             'Content-Type: application/json',
@@ -544,10 +570,13 @@ class NotificationController extends Controller
         $response = curl_exec($ch);
 
         $responsearray=json_decode($response);
-        print_r($responsearray);
-        die;
-    
-        return back()->with('success', 'Notification send successfully.');
+
+        return true;
+
+        }
+        else{
+          return false;
+        }
     }
 
 }

@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style S i m p l i f y space fraction numerator 3 x minus 9 x squared over denominator 3 x end fraction comma space w h e r e space x not equal to 0. end style"},"status":"ok"}

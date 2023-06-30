@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 5 a plus 3 b right parenthesis minus left parenthesis 2 a minus 7 b right parenthesis\nequals 5 a plus 3 b minus 2 a plus 7 b plus 7 b\nequals 3 a plus 10 b"},"status":"ok"}

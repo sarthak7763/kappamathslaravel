@@ -1,0 +1,1 @@
+{"result":{"text":"W h a t space i s space t h e space r e s u l t space o f space s u b t r a c t i n g space 3 x squared minus 4 x minus 1 space f r o m space 4 x squared plus x plus 1 ?"},"status":"ok"}

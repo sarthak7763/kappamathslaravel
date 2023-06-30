@@ -1,0 +1,1 @@
+{"result":{"text":"E x p a n d colon space left parenthesis x minus square root of 2 right parenthesis end root space left parenthesis x plus square root of 2 right parenthesis. end root space"},"status":"ok"}

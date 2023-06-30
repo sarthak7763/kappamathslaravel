@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style\nfraction numerator 3 x minus 9 x squared over denominator 3 x end fraction\nequals fraction numerator 3 x left parenthesis 1 minus 3 x right parenthesis over denominator 3 x end fraction\nequals 1 minus 3 x end style"},"status":"ok"}

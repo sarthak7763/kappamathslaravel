@@ -1,0 +1,1 @@
+{"result":{"text":"A p p l y i n g space d i f f e r e n c e space o f space t w o space s q u a r e s space\nspace left parenthesis x minus square root of 2 space right parenthesis left parenthesis x plus square root of 2 space right parenthesis\nequals x squared minus left parenthesis square root of 2 right parenthesis squared equals x squared minus 2\n"},"status":"ok"}

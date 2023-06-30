@@ -31,6 +31,7 @@
             <th>Course</th>
             <th>Title</th>
             <th>Status</th>
+            <th>Sort Order</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -84,6 +85,7 @@ $(function () {
       {data: 'subject', name: 'category'},
       {data: 'category_name', name: 'title'},
       {data: 'category_status', name: 'status'},
+      {data: 'sort_order', name: 'sort_order'},
       {data: 'action', name: 'action',orderable: false,searchable: false}
 
       ]

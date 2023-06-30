@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style fraction numerator 11 a minus b over denominator 6 end fraction end style"},"status":"ok"}

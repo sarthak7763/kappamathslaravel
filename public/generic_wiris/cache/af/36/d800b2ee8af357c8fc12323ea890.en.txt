@@ -1,0 +1,1 @@
+{"result":{"text":"begin mathsize 22px style S i m p l i f y space 1 third plus k over 3 plus k squared over 12 end style"},"status":"ok"}

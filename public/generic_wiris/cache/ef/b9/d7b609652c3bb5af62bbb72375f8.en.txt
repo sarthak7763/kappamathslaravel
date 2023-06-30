@@ -1,0 +1,1 @@
+{"result":{"text":"E x p r e s s space a s space a space sin g l e space f r a c t i o n space fraction numerator x over denominator x minus 2 end fraction minus fraction numerator x plus 1 over denominator x plus 3 end fraction"},"status":"ok"}

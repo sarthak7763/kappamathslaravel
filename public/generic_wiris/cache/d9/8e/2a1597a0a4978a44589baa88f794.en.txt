@@ -1,0 +1,1 @@
+{"result":{"text":"thin space I I I space o n l y"},"status":"ok"}

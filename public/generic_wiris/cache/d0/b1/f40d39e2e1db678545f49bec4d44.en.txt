@@ -1,0 +1,1 @@
+{"result":{"text":"t e s t space o b j e c t i v e space q u e s t i o n"},"status":"ok"}

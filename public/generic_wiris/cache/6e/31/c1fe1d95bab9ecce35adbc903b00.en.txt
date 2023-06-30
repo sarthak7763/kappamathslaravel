@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator 4 minus x squared over denominator 2 x minus x squared end fraction space w h e r e space x not equal to 0 space a n d space x not equal to 2."},"status":"ok"}

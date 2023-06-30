@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 x squared plus 2 x plus 2 over denominator left parenthesis x minus 2 right parenthesis left parenthesis x plus 3 right parenthesis end fraction"},"status":"ok"}

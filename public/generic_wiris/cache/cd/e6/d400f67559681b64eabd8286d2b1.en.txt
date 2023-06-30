@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis a plus 2 b minus c right parenthesis space e x c e e d s space left parenthesis 2 b minus a minus c right parenthesis space b y\nequals left parenthesis a plus 2 b minus c right parenthesis minus left parenthesis 2 b minus a minus c right parenthesis\nequals a plus 2 b minus c minus 2 b plus a plus c\nequals 2 a"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space t h e space e x p r e s s i o n space\nleft parenthesis 2 a plus b right parenthesis left parenthesis a minus b right parenthesis plus 2 a minus b right parenthesis left parenthesis a plus b right parenthesis."},"status":"ok"}

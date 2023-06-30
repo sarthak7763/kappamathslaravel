@@ -110,6 +110,8 @@ section.content.container-fluid {
 
               </div>
 
+              <div class="row">
+                <div class="col-md-12">
               <div class="col-md-6">
               <div class="extras-block bg-whte">
                 <h4 class="extras-heading">Video And Image For Question</h4>
@@ -165,6 +167,8 @@ section.content.container-fluid {
                   </div>
                 </div>
               </div>
+            </div>
+            </div>
 
                 <div class="col-md-12">
                       <div class="btn-group pull-right">

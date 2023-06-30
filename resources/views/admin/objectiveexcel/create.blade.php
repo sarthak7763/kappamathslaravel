@@ -30,6 +30,11 @@
   $question_video_link_error="";
   $answer_explaination_image_error="";
   $answer_explaination_video_link_error="";
+  $a_image_error="";
+  $b_image_error="";
+  $c_image_error="";
+  $d_image_error="";
+  $option_status_value=0;
   @endphp
 
   @if (session()->has('valid_error'))
@@ -45,6 +50,15 @@
       @php $question_error=$validationmessage['question']; @endphp
       @else
       @php $question_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['option_status']))
+      @php 
+      $option_status_value=$validationmessage['option_status'];
+      @endphp
+      @else
+      @php $option_status_value=0; 
+      @endphp
       @endif
 
       @if($validationmessage!="" && isset($validationmessage['a']))
@@ -107,6 +121,30 @@
       @php $answer_explaination_video_link_error=""; @endphp
       @endif
 
+      @if($validationmessage!="" && isset($validationmessage['a_image']))
+      @php $a_image_error=$validationmessage['a_image']; @endphp
+      @else
+      @php $a_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['b_image']))
+      @php $b_image_error=$validationmessage['b_image']; @endphp
+      @else
+      @php $b_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['c_image']))
+      @php $c_image_error=$validationmessage['c_image']; @endphp
+      @else
+      @php $c_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['d_image']))
+      @php $d_image_error=$validationmessage['d_image']; @endphp
+      @else
+      @php $d_image_error=""; @endphp
+      @endif
+
   @endif
 
 
@@ -139,6 +177,18 @@
             </div>
           </div> 
 
+          <div class="col-md-12">  
+            <div class="form-group {{ $errors->has('status') ? ' has-error' : '' }}">
+              <label for="">Options With Images Only: </label>
+               <input type="checkbox" class="toggle-input" name="option_status" id="option_status" value="{{$option_status_value}}">
+               <label for="option_status"></label>
+              <br>
+            </div>
+
+            <input type="hidden" name="checkboxvalue" id="checkboxvalue" value="{{$option_status_value}}">
+          </div>
+
+          <div id="optionswithtext">
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('a') ? ' has-error' : '' }}">
               {!! Form::label('a', 'A') !!}
@@ -170,6 +220,9 @@
               <small class="text-danger">{{$d_error}}</small>
             </div>
           </div>
+        </div>
+
+        <div id="optionswithnewdivimage"></div>
 
           <div class="col-md-6">
             <div class="form-group{{ $errors->has('correct_answer') ? ' has-error' : '' }}">
@@ -219,6 +272,40 @@
             </div>
           </div> 
 
+          <div id="optionswithimages">
+          <div class="col-md-6">
+            <div class="form-group{{ $errors->has('a_image') ? ' has-error' : '' }}">
+              {!! Form::label('a_image', 'Option A Image') !!}
+              {!! Form::textarea('a_image', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{$a_image_error}}</small>
+            </div>
+          </div> 
+
+          <div class="col-md-6">
+            <div class="form-group{{ $errors->has('b_image') ? ' has-error' : '' }}">
+              {!! Form::label('b_image', 'Option B Image') !!}
+              {!! Form::textarea('b_image', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{$b_image_error}}</small>
+            </div>
+          </div> 
+
+          <div class="col-md-6">
+            <div class="form-group{{ $errors->has('c_image') ? ' has-error' : '' }}">
+              {!! Form::label('c_image', 'Option C Image') !!}
+              {!! Form::textarea('c_image', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{$c_image_error}}</small>
+            </div>
+          </div> 
+
+          <div class="col-md-6">
+            <div class="form-group{{ $errors->has('d_image') ? ' has-error' : '' }}">
+              {!! Form::label('d_image', 'Option D Image') !!}
+              {!! Form::textarea('d_image', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{$d_image_error}}</small>
+            </div>
+          </div> 
+        </div>
+
           </div>
         </div>
 
@@ -228,4 +315,62 @@
       {!! Form::close() !!}
   </div>
 </div>
+@endsection
+
+@section('scripts')
+
+<script type="text/javascript">
+  var checkboxvalueonload=$('#option_status').val();
+    $('#checkboxvalue').val(checkboxvalueonload);
+    if(checkboxvalueonload==1)
+    {
+      $('#option_status').attr('checked','checked');
+      $('#optionswithtext').hide();
+      var a_onload = $('#optionswithimages').html();
+      var b_onload = $('#optionswithnewdivimage').html(a_onload);
+      $('#optionswithimages').html('');
+    }
+    else{
+      $('#optionswithtext').show();
+      var a_onload = $('#optionswithnewdivimage').html();
+      if(a_onload)
+      {
+       var b_onload = $('#optionswithimages').html(a_onload);
+      $('#optionswithnewdivimage').html('');
+      }
+      else{
+        $('#optionswithimages').show();
+      }
+    }
+
+
+    $('#option_status').on('change', function(){
+       var checkboxvalue = this.checked ? 1 : 0;
+       $('#checkboxvalue').val(checkboxvalue);
+
+       if(checkboxvalue==1)
+       {
+          $('#optionswithtext').hide();
+          var a = $('#optionswithimages').html();
+          var b = $('#optionswithnewdivimage').html(a);
+          $('#optionswithimages').html('');
+       }
+       else{
+          $('#optionswithtext').show();
+          var a = $('#optionswithnewdivimage').html();
+          if(a)
+          {
+           var b = $('#optionswithimages').html(a);
+          $('#optionswithnewdivimage').html('');
+          }
+          else{
+            $('#optionswithimages').show();
+          }
+       }
+
+
+     });
+
+</script>
+
 @endsection
