@@ -1,0 +1,1 @@
+{"result":{"text":"S o l v e space t h e space e q u a t i o n colon\nleft parenthesis 100 right parenthesis subscript 2 Y minus 11 subscript 2 left parenthesis Y minus 1 right parenthesis equals 1000 subscript 2 comma space l e a v i n g space y o u r space a n s w e r space i n space b a s e space 2."},"status":"ok"}

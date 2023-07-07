@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator begin display style fraction numerator 1001 subscript 3 over denominator negative 122 subscript 3 end fraction end style over denominator 102 subscript 3 end fraction"},"status":"ok"}

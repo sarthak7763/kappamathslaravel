@@ -1,0 +1,1 @@
+{"result":{"text":"If space 23 subscript straight x equals 32 subscript 5 comma space find space the space value space of space straight x"},"status":"ok"}

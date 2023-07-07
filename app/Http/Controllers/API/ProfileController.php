@@ -415,9 +415,11 @@ class ProfileController extends BaseController
 	            $subscribed_coursesubtopics=$userdet->subscribed_coursesubtopics;
 	            if($subscribed_coursesubtopics!="")
 	            {
+	            	
 	            	$subscribed_coursesubtopicsarray=explode(',',$subscribed_coursesubtopics);
 	            	if(count($subscribed_coursesubtopicsarray) > 0)
 	            	{
+	            		
 	            		$complete_subtopiclist=$this->completesubscribecourselist($userid,$subscribed_coursesubtopicsarray);
 
 	            		$new_subtopiclist=$this->newongoingsubscribecourselist($userid,$subscribed_coursesubtopicsarray);
@@ -624,6 +626,7 @@ class ProfileController extends BaseController
 				$resultmarksdet=Resultmarks::where('id', $result_id)->get()->first();
 				if($resultmarksdet)
 				{
+					
 					$resultmarksdetdata=$resultmarksdet->toArray();
 					if($resultmarksdetdata)
 					{
@@ -657,7 +660,7 @@ class ProfileController extends BaseController
 
 	    			if($coursesubtopicsdetdata['topic_video_id']!="")
 					{
-						$checkvideo=checkvimeovideoid($coursesubtopicsdetdata['topic_video_id']);
+						$checkvideo=getVideoDetails($coursesubtopicsdetdata['topic_video_id']);
 						if($checkvideo['code']=="400")
 						{
 	    					if($coursesubtopicsdetdata['topic_image']!="")
@@ -764,7 +767,7 @@ class ProfileController extends BaseController
     				$subject=$list['subject'];
     				if($list['topic_video_id']!="")
     				{
-    					$checkvideo=checkvimeovideoid($list['topic_video_id']);
+    					$checkvideo=getVideoDetails($list['topic_video_id']);
     					if($checkvideo['code']=="400")
     					{
 	    					if($list['topic_image']!="")
@@ -860,7 +863,7 @@ class ProfileController extends BaseController
     				$subject=$list['subject'];
     				if($list['topic_video_id']!="")
     				{
-    					$checkvideo=checkvimeovideoid($list['topic_video_id']);
+    					$checkvideo=getVideoDetails($list['topic_video_id']);
     					if($checkvideo['code']=="400")
     					{
 	    					if($list['topic_image']!="")
@@ -952,7 +955,7 @@ class ProfileController extends BaseController
     				$subject=$list['subject'];
     				if($list['topic_video_id']!="")
     				{
-    					$checkvideo=checkvimeovideoid($list['topic_video_id']);
+    					$checkvideo=getVideoDetails($list['topic_video_id']);
     					if($checkvideo['code']=="400")
     					{
 	    					if($list['topic_image']!="")

@@ -1,0 +1,1 @@
+{"result":{"text":"space I f space 23 subscript x space plus 101 subscript x equals 130 x comma space f i n d space t h e space v a l u e space space o f space x."},"status":"ok"}

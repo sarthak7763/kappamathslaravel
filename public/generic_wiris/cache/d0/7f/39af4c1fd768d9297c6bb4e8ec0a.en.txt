@@ -1,0 +1,1 @@
+{"result":{"text":"I f space 23 subscript y equals 1111 subscript t w o end subscript comma space f i n d space t h e space v a l u e space o f space y.\n"},"status":"ok"}

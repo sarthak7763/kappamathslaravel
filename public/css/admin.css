@@ -195,3 +195,28 @@ width: 100%;
 .dashboard-block {
     padding-bottom: 30px;
 }
+
+span.deleteimage {
+    display: inline-block;
+    position: absolute;
+    right: 4px;
+    top: -6px;
+    font-size: 20px;
+    color: #ff3614;
+}
+
+.preview_image_div {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    float: left;
+}
+.preview_image_div img {
+    height: auto !important;
+    width: 100% !important;
+}
+.close{position:absolute;right:32px;top:32px;width:32px;height:32px;opacity:0.3;}
+.close:hover{opacity:1;}
+.fa-close:before,.fa-close:after{position:absolute;left:1px;content:' ';height:20px;width:2px;background-color:#ff3614;display:inline-block;top:-2px;}
+.fa-close:before{transform:rotate(50deg);}
+.fa-close:after{transform:rotate(-50deg);}

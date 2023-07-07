@@ -1,0 +1,1 @@
+{"result":{"text":"If space straight X subscript four space end subscript equals 145 subscript six comma end subscript space find space straight X."},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"stack attributes charalign center stackalign right end attributes 303 subscript 5 row plus 104 subscript 5 end row horizontal line 412 subscript 5 end stack"},"status":"ok"}

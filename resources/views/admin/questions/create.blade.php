@@ -210,7 +210,7 @@
                   {!! Form::label('a_option', 'A - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('a_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
-                  <small class="text-danger">{{ $a_error }}</small>
+                  <small class="text-danger options_error">{{ $a_error }}</small>
                 </div>
 
                 <div style="display: none;">
@@ -226,7 +226,7 @@
                   {!! Form::label('b_option', 'B - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('b_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
-                  <small class="text-danger">{{ $b_error }}</small>
+                  <small class="text-danger options_error">{{ $b_error }}</small>
                 </div>
 
                 <div style="display: none;">
@@ -242,7 +242,7 @@
                   {!! Form::label('c_option', 'C - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('c_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
-                  <small class="text-danger">{{ $c_error }}</small>
+                  <small class="text-danger options_error">{{ $c_error }}</small>
                 </div>
 
                  <div style="display: none;">
@@ -258,7 +258,7 @@
                   {!! Form::label('d_option', 'D - Option') !!}
                   <span class="required">*</span>
                   {!! Form::textarea('d_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
-                  <small class="text-danger">{{ $d_error }}</small>
+                  <small class="text-danger options_error">{{ $d_error }}</small>
                 </div>
 
                  <div style="display: none;">
@@ -365,7 +365,7 @@
                       <div class="form-group{{ $errors->has('optiona_image') ? ' has-error' : '' }}">
                         {!! Form::label('optiona_image', 'Option A Image') !!}
                         {!! Form::file('optiona_image') !!}
-                        <small class="text-danger">{{$optiona_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optiona_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optiona_div">
@@ -385,7 +385,7 @@
                       <div class="form-group{{ $errors->has('optionb_image') ? ' has-error' : '' }}">
                         {!! Form::label('optionb_image', 'Option B Image') !!}
                         {!! Form::file('optionb_image') !!}
-                        <small class="text-danger">{{$optionb_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optionb_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optionb_div">
@@ -411,7 +411,7 @@
                       <div class="form-group{{ $errors->has('optionc_image') ? ' has-error' : '' }}">
                         {!! Form::label('optionc_image', 'Option C Image') !!}
                         {!! Form::file('optionc_image') !!}
-                        <small class="text-danger">{{$optionc_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optionc_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optionc_div">
@@ -431,7 +431,7 @@
                       <div class="form-group{{ $errors->has('optiond_image') ? ' has-error' : '' }}">
                         {!! Form::label('optiond_image', 'Option D Image') !!}
                         {!! Form::file('optiond_image') !!}
-                        <small class="text-danger">{{$optiond_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optiond_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optiond_div">
@@ -496,6 +496,7 @@
     $('#checkboxvalue').val(checkboxvalueonload);
    if(checkboxvalueonload==1)
    {
+      $('.options_error').html('');
    		$('#option_status').attr('checked','checked');
    		$('#optionswithtext').hide();
 
@@ -506,6 +507,7 @@
     	});
    }
    else{
+      $('.options_error_image').html('');
    		$('#optionswithtext').show();
    		var a_onload = $('#optionswithnewdivimage').html();
    		if(a_onload)
@@ -532,8 +534,10 @@
       $('#option_status').on('change', function(){
 		   var checkboxvalue = this.checked ? 1 : 0;
 		   $('#checkboxvalue').val(checkboxvalue);
+       
 		   if(checkboxvalue==1)
 		   {
+          $('.options_error').html('');
 		   		$('#optionswithtext').hide();
 		   		var a = $('#optionswithimages').html();
 				var b = $('#optionswithnewdivimage').html(a);
@@ -546,6 +550,7 @@
 		    	});
 		   }
 		   else{
+          $('.options_error_image').html('');
 		   		$('#optionswithtext').show();
 		   		var a = $('#optionswithnewdivimage').html();
 		   		if(a)

@@ -210,7 +210,7 @@
               <p id="previeweditoptiona" style="display:none;">{{html_entity_decode($question->a)}}</p>
 
               {!! Form::textarea('a_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter A Option']) !!}
-              <small class="text-danger">{{ $a_error }}</small>
+              <small class="text-danger options_error">{{ $a_error }}</small>
             </div>
 
             <div style="display: none;">
@@ -227,7 +227,7 @@
               <p id="previeweditoptionb" style="display:none;">{{html_entity_decode($question->b)}}</p>
 
               {!! Form::textarea('b_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter B Option']) !!}
-              <small class="text-danger">{{ $b_error }}</small>
+              <small class="text-danger options_error">{{ $b_error }}</small>
             </div>
 
             <div style="display: none;">
@@ -244,7 +244,7 @@
               <p id="previeweditoptionc" style="display:none;">{{html_entity_decode($question->c)}}</p>
 
               {!! Form::textarea('c_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter C Option']) !!}
-              <small class="text-danger">{{ $c_error }}</small>
+              <small class="text-danger options_error">{{ $c_error }}</small>
             </div>
 
             <div style="display: none;">
@@ -262,7 +262,7 @@
               <p id="previeweditoptiond" style="display:none;">{{html_entity_decode($question->d)}}</p>
 
               {!! Form::textarea('d_option', null, ['class' => 'form-control', 'placeholder' => 'Please Enter D Option']) !!}
-              <small class="text-danger">{{ $d_error }}</small>
+              <small class="text-danger options_error">{{ $d_error }}</small>
             </div>
 
             <div style="display: none;">
@@ -322,13 +322,15 @@
                         <small class="text-danger">{{ $question_img_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_question_div">
+                      <div id="preview_image_question_div" class="preview_image_div">
                       @if($question->question_img!="")
-                      <img id="preview-image-question" src="/images/questions/{{ $question->question_img }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-question_img" class="preview_image" src="/images/questions/{{ $question->question_img }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="question_img"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="question_img_delete" id="question_img_delete" value="0">
                       @else
-                      <img id="preview-image-question" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-question_img" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
                     </div>
                     
@@ -357,13 +359,16 @@
                         <small class="text-danger">{{ $answer_explaination_img_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_answer_div">
+                      <div id="preview_image_answer_div" class="preview_image_div">
                       @if($question->answer_explaination_img!="")
-                      <img id="preview-image-answer" src="/images/questions/{{ $question->answer_explaination_img }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-answer_explaination_img" class="preview_image" src="/images/questions/{{ $question->answer_explaination_img }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="answer_explaination_img"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="answer_explaination_img_delete" id="answer_explaination_img_delete" value="0">
+                      
                       @else
-                      <img id="preview-image-answer" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-answer_explaination_img" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
                     </div>
 
@@ -385,17 +390,19 @@
                       <div class="form-group{{ $errors->has('optiona_image') ? ' has-error' : '' }}">
                         {!! Form::label('optiona_image', 'Option A Image') !!}
                         {!! Form::file('optiona_image') !!}
-                        <small class="text-danger">{{$optiona_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optiona_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_optiona_div">
+                      <div id="preview_image_optiona_div" class="preview_image_div">
 
                       @if($question->a_image!="")
-                      <img id="preview-image-optiona" src="/images/questions/options/{{ $question->a_image }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-optiona_image" class="preview_image" src="/images/questions/options/{{ $question->a_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="a_image"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="a_image_delete" id="a_image_delete" value="0">
                       @else
-                      <img id="preview-image-optiona" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-optiona_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
                     </div>
                     </div>
@@ -412,17 +419,19 @@
                       <div class="form-group{{ $errors->has('optionb_image') ? ' has-error' : '' }}">
                         {!! Form::label('optionb_image', 'Option B Image') !!}
                         {!! Form::file('optionb_image') !!}
-                        <small class="text-danger">{{$optionb_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optionb_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_optionb_div">
+                      <div id="preview_image_optionb_div" class="preview_image_div">
 
                       @if($question->b_image!="")
-                      <img id="preview-image-optionb" src="/images/questions/options/{{ $question->b_image }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-optionb_image" class="preview_image" src="/images/questions/options/{{ $question->b_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="b_image"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="b_image_delete" id="b_image_delete" value="0">
                       @else
-                      <img id="preview-image-optionb" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-optionb_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
                     </div>
                     </div>
@@ -445,16 +454,18 @@
                       <div class="form-group{{ $errors->has('optionc_image') ? ' has-error' : '' }}">
                         {!! Form::label('optionc_image', 'Option C Image') !!}
                         {!! Form::file('optionc_image') !!}
-                        <small class="text-danger">{{$optionc_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optionc_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_optionc_div">
+                      <div id="preview_image_optionc_div" class="preview_image_div">
                       @if($question->c_image!="")
-                      <img id="preview-image-optionc" src="/images/questions/options/{{ $question->c_image }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-optionc_image" class="preview_image" src="/images/questions/options/{{ $question->c_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="c_image"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="c_image_delete" id="c_image_delete" value="0">
                       @else
-                      <img id="preview-image-optionc" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-optionc_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
                     </div>
                     </div>
@@ -471,16 +482,19 @@
                       <div class="form-group{{ $errors->has('optiond_image') ? ' has-error' : '' }}">
                         {!! Form::label('optiond_image', 'Option D Image') !!}
                         {!! Form::file('optiond_image') !!}
-                        <small class="text-danger">{{$optiond_image_error}}</small>
+                        <small class="text-danger options_error_image">{{$optiond_image_error}}</small>
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
-                      <div id="preview_image_optiond_div">
+                      <div id="preview_image_optiond_div" class="preview_image_div">
                       @if($question->d_image!="")
-                      <img id="preview-image-optiond" src="/images/questions/options/{{ $question->d_image }}" style="height: auto;width: 20%;">
+                      <img id="preview-image-optiond_image" class="preview_image" src="/images/questions/options/{{ $question->d_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="d_image"><i class="fa fa-close"></i></span>
+
+                      <input type="hidden" name="d_image_delete" id="d_image_delete" value="0">
+
                       @else
-                      <img id="preview-image-optiond" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+                      <img id="preview-image-optiond_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
                       @endif
 
                     </div>
@@ -559,36 +573,16 @@
         var $this=$(this);
         var questionid=$(this).data('id');
         var type=$(this).data('type');
-        console.log('questionid',questionid);
-        console.log('type',type);
 
-        $.ajax({
-            'url':'{{url("/")}}/admin/questions/deleteimagefromdb',
-            'data':{"_token": "{{ csrf_token() }}","question_id":questionid,"image_type":type},
-            'type':'post',
-            'dataType':'json',
-            error:function()
-            {
-              alert('Something went wrong');
-            },
-            success:function(data)
-            {
-              if(data.code=="200")
-              {
-                var imagehtml='<img id="preview-image-optiond" src="/images/noimage.jpg" style="height: auto;width: 20%;">';
-                  $this.parent().html(imagehtml);
-              }
-              else{
-                alert(data.message);
-              }
-            }
-        });  
+        var imagehtml='<img id="preview-image-'+type+'" src="/images/noimage.jpg" style="height: auto;width: 20%;"><input type="hidden" name="'+type+'_delete" id="'+type+'_delete" value="1">';
+        $(this).parent().html(imagehtml);  
       });
 
     var checkboxvalueonload=$('#option_status').val();
     $('#checkboxvalue').val(checkboxvalueonload);
    if(checkboxvalueonload==1)
    {
+      $('.options_error').html('');
       $('#option_status').attr('checked','checked');
       $('#optionswithtext').hide();
       
@@ -599,6 +593,7 @@
       });
    }
    else{
+      $('.options_error_image').html('');
       $('#optionswithtext').show();
       var a_onload = $('#optionswithnewdivimage').html();
       if(a_onload)
@@ -627,6 +622,7 @@
        $('#checkboxvalue').val(checkboxvalue);
        if(checkboxvalue==1)
        {
+          $('.options_error').html('');
           $('#optionswithtext').hide();
           var a = $('#optionswithimages').html();
         var b = $('#optionswithnewdivimage').html(a);
@@ -639,6 +635,7 @@
           });
        }
        else{
+          $('.options_error_image').html('');
           $('#optionswithtext').show();
           var a = $('#optionswithnewdivimage').html();
           if(a)
@@ -671,7 +668,7 @@
   $(document).on('change','#question_img',function(){
     let questionreader = new FileReader();
     questionreader.onload = (e) => { 
-      $('#preview-image-question').attr('src', e.target.result); 
+      $('#preview-image-question_img').attr('src', e.target.result); 
     }
     questionreader.readAsDataURL(this.files[0]);
   });
@@ -684,7 +681,7 @@
   $(document).on('change','#answer_explaination_img',function(){
     let answerreader = new FileReader();
     answerreader.onload = (e) => { 
-      $('#preview-image-answer').attr('src', e.target.result); 
+      $('#preview-image-answer_explaination_img').attr('src', e.target.result); 
     }
     answerreader.readAsDataURL(this.files[0]);
   });
@@ -696,7 +693,7 @@
   $(document).on('change','#optiona_image',function(){
     let optionareader = new FileReader();
     optionareader.onload = (e) => { 
-      $('#preview-image-optiona').attr('src', e.target.result); 
+      $('#preview-image-optiona_image').attr('src', e.target.result); 
     }
     optionareader.readAsDataURL(this.files[0]);
   });
@@ -708,7 +705,7 @@
   $(document).on('change','#optionb_image',function(){
     let optionbreader = new FileReader();
     optionbreader.onload = (e) => { 
-      $('#preview-image-optionb').attr('src', e.target.result); 
+      $('#preview-image-optionb_image').attr('src', e.target.result); 
     }
     optionbreader.readAsDataURL(this.files[0]);
   });
@@ -720,7 +717,7 @@
   $(document).on('change','#optionc_image',function(){
     let optioncreader = new FileReader();
     optioncreader.onload = (e) => { 
-      $('#preview-image-optionc').attr('src', e.target.result); 
+      $('#preview-image-optionc_image').attr('src', e.target.result); 
     }
     optioncreader.readAsDataURL(this.files[0]);
   });
@@ -732,7 +729,7 @@
   $(document).on('change','#optiond_image',function(){
     let optiondreader = new FileReader();
     optiondreader.onload = (e) => { 
-      $('#preview-image-optiond').attr('src', e.target.result); 
+      $('#preview-image-optiond_image').attr('src', e.target.result); 
     }
     optiondreader.readAsDataURL(this.files[0]);
   });

@@ -25,6 +25,11 @@ class Tempquestions extends Model
       'answer_exp_latex',
       'question_img',
       'question_video_link',
-      'question_status'
+      'question_status',
+      'a_image',
+      'b_image',
+      'c_image',
+      'd_image',
+      'option_status'
     ];
 }

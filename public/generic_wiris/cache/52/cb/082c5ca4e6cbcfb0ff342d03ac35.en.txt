@@ -1,0 +1,1 @@
+{"result":{"text":"Solve space the space equation colon\nleft parenthesis 100 right parenthesis subscript 2 straight Y minus 11 subscript 2 left parenthesis straight Y minus 1 right parenthesis equals 1000 subscript 2 comma leaving space your space answer space in space base space 2."},"status":"ok"}

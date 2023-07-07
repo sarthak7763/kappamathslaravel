@@ -1,0 +1,1 @@
+{"result":{"text":"I f space 243 subscript n plus 452 subscript n equals 1135 subscript n comma space f i n d space t h e space v a l u e space o f space n."},"status":"ok"}

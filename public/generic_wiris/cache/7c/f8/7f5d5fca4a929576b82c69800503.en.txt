@@ -1,0 +1,1 @@
+{"result":{"text":"If space 4 straight m 4 subscript five space end subscript equals 119 subscript ten comma space what space is space the space value space of space straight m space ?"},"status":"ok"}

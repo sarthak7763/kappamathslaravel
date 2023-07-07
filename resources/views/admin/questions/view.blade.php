@@ -34,40 +34,64 @@
             @if($topic->quiz_type==1)
             <div class="ans_op">
               <label>Option A</label>
+              @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptionavalue" style="display: none;">{{html_entity_decode($question->a)}}</textarea>
               <p id="renderer_optiona" class="mathrender" style="color: black;font-size: 20px;">
                 
               </p>
+              @else
+                @if($question->a_image!="")
+                <img src="{{url('/')}}/images/questions/options/{{$question->a_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->a_image}}">
+                @endif
+              @endif
             </div>
             @endif
 
             @if($topic->quiz_type==1)
             <div class="ans_op">
               <label>Option B</label>
+              @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptionbvalue" style="display: none;">{{html_entity_decode($question->b)}}</textarea>
               <p id="renderer_optionb" class="mathrender" style="color: black;font-size: 20px;">
                 
               </p>
+              @else
+                @if($question->b_image!="")
+                <img src="{{url('/')}}/images/questions/options/{{$question->b_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->b_image}}">
+                @endif
+              @endif
             </div>
             @endif
 
             @if($topic->quiz_type==1)
             <div class="ans_op">
               <label>Option C</label>
+              @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptioncvalue" style="display: none;">{{html_entity_decode($question->c)}}</textarea>
               <p id="renderer_optionc" class="mathrender" style="color: black;font-size: 20px;">
                 
               </p>
+              @else
+                @if($question->c_image!="")
+                <img src="{{url('/')}}/images/questions/options/{{$question->c_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->c_image}}">
+                @endif
+              @endif
             </div>
             @endif
 
             @if($topic->quiz_type==1)
             <div class="ans_op">
               <label>Option D</label>
+              @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptiondvalue" style="display: none;">{{html_entity_decode($question->d)}}</textarea>
               <p id="renderer_optiond" class="mathrender" style="color: black;font-size: 20px;">
                 
               </p>
+              @else
+                @if($question->d_image!="")
+                <img src="{{url('/')}}/images/questions/options/{{$question->d_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->d_image}}">
+                @endif
+              @endif
             </div>
             @endif
 

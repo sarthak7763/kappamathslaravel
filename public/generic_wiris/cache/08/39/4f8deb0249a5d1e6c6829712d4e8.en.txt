@@ -1,0 +1,1 @@
+{"result":{"text":"Arrange space the space following space in space descending space order space of space magnitude colon space 20 subscript eight comma end subscript 30 subscript six comma 23 subscript seven comma end subscript 19 subscript twelve space end subscript"},"status":"ok"}

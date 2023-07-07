@@ -372,6 +372,19 @@ class QuestionsController extends Controller
           'optiond_image'=>Rule::requiredIf($option_status==1),
           
           'answer' => 'required'
+        ],
+        [
+          'topic_id.required'=>'Topic is required',
+          'question.required'=>'The question field is required.',
+          'a.required'=>'The a field is required.',
+          'b.required'=>'The b field is required.',
+          'c.required'=>'The c field is required.',
+          'd.required'=>'The d field is required.',
+          'optiona_image.required'=>'Image field is required',
+          'optionb_image.required'=>'Image field is required',
+          'optionc_image.required'=>'Image field is required',
+          'optiond_image.required'=>'Image field is required',
+          'answer.required'=>'The answer field is required.'
         ]);
 
          // return $request;
@@ -1010,7 +1023,7 @@ class QuestionsController extends Controller
     {
         $topic = Quiztopic::findOrFail($id);
         
-        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','a','b','c','d','answer','question_status');
+        $questions = \DB::table('questions')->where('topic_id', $topic->id)->select('id','question','a','b','c','d','answer','question_status','a_image','b_image','c_image','d_image','option_status');
 
         if($request->ajax())
         {
@@ -1024,20 +1037,67 @@ class QuestionsController extends Controller
               //return $row->question;
           })
           ->addColumn('a',function($row){
+            if($row->option_status=="1")
+            {
+              if($row->a_image!="")
+              {
+                return '<img src="'.url('/').'/images/questions/options/'.$row->a_image.'" style="width: 80%;height: auto;" alt="'.url('/').'/images/questions/options/'.$row->a_image.'">';
+              }
+              
+            }
+            else{
               return '<textarea class="textarea" id="textareaoptionavalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->a).'</textarea>
               <p id="rendereroptiona_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
+            }
+              
           })
           ->addColumn('b',function($row){
+
+            if($row->option_status=="1")
+            {
+              if($row->b_image!="")
+              {
+                return '<img src="'.url('/').'/images/questions/options/'.$row->b_image.'" style="width: 80%;height: auto;" alt="'.url('/').'/images/questions/options/'.$row->b_image.'">';
+              }
+              
+            }
+            else{
               return '<textarea class="textarea" id="textareaoptionbvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->b).'</textarea>
               <p id="rendereroptionb_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
+            }
+              
           })
           ->addColumn('c',function($row){
+
+            if($row->option_status=="1")
+            {
+              if($row->c_image!="")
+              {
+                return '<img src="'.url('/').'/images/questions/options/'.$row->c_image.'" style="width: 80%;height: auto;" alt="'.url('/').'/images/questions/options/'.$row->c_image.'">';
+              }
+              
+            }
+            else{
               return '<textarea class="textarea" id="textareaoptioncvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->c).'</textarea>
               <p id="rendereroptionc_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
+            }
+              
           })
           ->addColumn('d',function($row){
+
+            if($row->option_status=="1")
+            {
+              if($row->d_image!="")
+              {
+                return '<img src="'.url('/').'/images/questions/options/'.$row->d_image.'" style="width: 80%;height: auto;" alt="'.url('/').'/images/questions/options/'.$row->d_image.'">';
+              }
+              
+            }
+            else{
               return '<textarea class="textarea" id="textareaoptiondvalue_'.$row->id.'" style="display: none;">'.html_entity_decode($row->d).'</textarea>
               <p id="rendereroptiond_'.$row->id.'" class="mathrender" style="color: black;font-size: 20px;"></p>';
+            }
+              
           })
           ->addColumn('answer',function($row){
               return $row->answer;
@@ -1317,12 +1377,25 @@ class QuestionsController extends Controller
 
           'd'=>Rule::requiredIf(($request->get_d_option_preview=="" || $request->get_d_option_preview_latex=="") && $option_status==0),
 
-          'optiona_image'=>Rule::requiredIf($option_status==1 && $question->a_image==""),
-          'optionb_image'=>Rule::requiredIf($option_status==1 && $question->b_image==""),
-          'optionc_image'=>Rule::requiredIf($option_status==1 && $question->c_image==""),
-          'optiond_image'=>Rule::requiredIf($option_status==1 && $question->d_image==""),
+          'optiona_image'=>Rule::requiredIf($option_status==1 && ($question->a_image=="" || $request->a_image_delete==1)),
+          'optionb_image'=>Rule::requiredIf($option_status==1 && ($question->b_image=="" || $request->b_image_delete==1)),
+          'optionc_image'=>Rule::requiredIf($option_status==1 && ($question->c_image=="" || $request->c_image_delete==1)),
+          'optiond_image'=>Rule::requiredIf($option_status==1 && ($question->d_image=="" || $request->d_image_delete==1)),
 
           'answer' => 'required'
+        ],
+        [
+          'topic_id.required'=>'Topic is required',
+          'question.required'=>'The question field is required.',
+          'a.required'=>'The a field is required.',
+          'b.required'=>'The b field is required.',
+          'c.required'=>'The c field is required.',
+          'd.required'=>'The d field is required.',
+          'optiona_image.required'=>'Image field is required',
+          'optionb_image.required'=>'Image field is required',
+          'optionc_image.required'=>'Image field is required',
+          'optiond_image.required'=>'Image field is required',
+          'answer.required'=>'The answer field is required.'
         ]);
 
        
@@ -1677,6 +1750,73 @@ class QuestionsController extends Controller
 
         try
         {
+
+
+        if(isset($request->a_image_delete) && $request->a_image_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->a_image))) {
+                unlink("images/questions/".$question->a_image);
+            } else {
+                unlink("images/questions/options/".$question->a_image);
+            }
+
+            $question->a_image="";
+        }
+
+        if(isset($request->b_image_delete) && $request->b_image_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->b_image))) {
+                unlink("images/questions/".$question->b_image);
+            } else {
+                unlink("images/questions/options/".$question->b_image);
+            }
+
+            $question->b_image="";
+        }
+
+        if(isset($request->c_image_delete) && $request->c_image_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->c_image))) {
+                unlink("images/questions/".$question->c_image);
+            } else {
+                unlink("images/questions/options/".$question->c_image);
+            }
+
+            $question->c_image="";
+        }
+
+        if(isset($request->d_image_delete) && $request->d_image_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->d_image))) {
+                unlink("images/questions/".$question->d_image);
+            } else {
+                unlink("images/questions/options/".$question->d_image);
+            }
+
+            $question->d_image="";
+        }
+
+        if(isset($request->answer_explaination_img_delete) && $request->answer_explaination_img_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->answer_explaination_img))) {
+                unlink("images/questions/".$question->answer_explaination_img);
+            } else {
+                unlink("images/questions/options/".$question->answer_explaination_img);
+            }
+
+            $question->answer_explaination_img="";
+        }
+
+        if(isset($request->question_img_delete) && $request->question_img_delete=="1")
+        {
+            if (File::exists(public_path('images/questions/'.$question->question_img))) {
+                unlink("images/questions/".$question->question_img);
+            } else {
+                unlink("images/questions/options/".$question->question_img);
+            }
+
+            $question->question_img="";
+        }
 
           if($question_img!="")
           {

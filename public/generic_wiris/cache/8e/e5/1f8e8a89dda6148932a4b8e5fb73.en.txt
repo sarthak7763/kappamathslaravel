@@ -1,0 +1,1 @@
+{"result":{"text":"S u b s t r a c t space 122 subscript 3 space f r o m space 1001 subscript 3."},"status":"ok"}
