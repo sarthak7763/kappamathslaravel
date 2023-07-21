@@ -195,7 +195,7 @@ section.content.container-fluid {
 
 <script type="text/javascript" src="{{ env('APP_URL') }}js/wirislib_answer.js"></script>
 
-<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+<!-- <script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script> -->
 
 <!-- Prism JS script to beautify the HTML code -->
     <script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
@@ -233,5 +233,6 @@ section.content.container-fluid {
   });
 
 </script>
+
 @endsection
 

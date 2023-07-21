@@ -1,0 +1,1 @@
+{"result":{"text":"z equals fraction numerator a x minus R minus k cubed b x over denominator k cubed end fraction"},"status":"ok"}

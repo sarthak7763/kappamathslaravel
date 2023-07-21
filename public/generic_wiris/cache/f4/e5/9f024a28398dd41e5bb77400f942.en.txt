@@ -1,0 +1,1 @@
+{"result":{"text":"4 over 5 cubed"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"S o l v e space t h e space e q u a t i o n space 243 subscript x equals 73 space w h e r e space x space i s space t h e space b a s e space o f space t h e space n u m b e r."},"status":"ok"}

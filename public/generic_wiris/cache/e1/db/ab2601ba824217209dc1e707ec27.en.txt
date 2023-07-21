@@ -1,0 +1,1 @@
+{"result":{"text":"cross times x to the power of 0"},"status":"ok"}

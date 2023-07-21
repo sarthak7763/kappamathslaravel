@@ -124,13 +124,6 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                    {!! Form::label('description', 'Description') !!}
-                    {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-                    <small class="text-danger">{{ $description_error }}</small>
-                  </div>
-                </div>
-                <div class="col-md-6">
                   <div class="form-group{{ $errors->has('topic_video_id') ? ' has-error' : '' }}">
                     {!! Form::label('topic_video_id', 'Topic Video ID') !!}
                     <span class="required">*</span>
@@ -160,6 +153,15 @@
                    <input {{ $coursetopic->topic_status ==1 ? "checked" : "" }} type="checkbox" class="toggle-input" name="status" id="toggle2">
                    <label for="toggle2"></label>
                 </div>
+
+                <div class="col-md-12">
+                  <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                    {!! Form::label('description', 'Description') !!}
+                    {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+                    <small class="text-danger">{{ $description_error }}</small>
+                  </div>
+                </div>
+
             </div>
           </div>
         </div>
@@ -227,4 +229,9 @@
   }
 
   </script>
+
+  <script>
+  CKEDITOR.replace( 'description' );
+</script>
+
 @endsection

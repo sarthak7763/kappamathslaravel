@@ -1,0 +1,1 @@
+{"result":{"text":"3 square root of 500 minus 2 square root of 125\nequals 3 square root of 100 cross times 5 end root minus 2 square root of 25 cross times 5 end root\nequals 3 cross times 10 square root of 5 minus 2 cross times 5 square root of 5\nequals 30 square root of 5 minus 10 square root of 5\nequals 20 square root of 5"},"status":"ok"}

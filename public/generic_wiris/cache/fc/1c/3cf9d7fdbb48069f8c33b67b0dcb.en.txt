@@ -1,0 +1,1 @@
+{"result":{"text":"Simplify colon space 3 over 4 square root of 128 minus square root of 32 minus 1 fifth square root of 50"},"status":"ok"}

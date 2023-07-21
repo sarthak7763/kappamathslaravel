@@ -1,0 +1,1 @@
+{"result":{"text":"6 square root of 3 minus 17"},"status":"ok"}

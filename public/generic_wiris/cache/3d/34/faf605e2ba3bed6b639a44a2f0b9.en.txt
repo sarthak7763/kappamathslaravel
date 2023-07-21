@@ -1,0 +1,1 @@
+{"result":{"text":"2 left parenthesis 37 subscript x right parenthesis space equals 45 subscript c"},"status":"ok"}

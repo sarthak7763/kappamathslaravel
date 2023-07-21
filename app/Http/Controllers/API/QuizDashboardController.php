@@ -271,26 +271,56 @@ class QuizDashboardController extends BaseController
 			        }
 
 
-					        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
+					        $quizquestion=html_entity_decode($questiondataarray['question']);
 
-					        $quiz_option_a='\('.$questiondataarray['a_latex'].'\)';
+					        $quiz_option_a=html_entity_decode($questiondataarray['a']);
 
-					        $quiz_option_b='\('.$questiondataarray['b_latex'].'\)';
+					        $quiz_option_b=html_entity_decode($questiondataarray['b']);
 
-					        $quiz_option_c='\('.$questiondataarray['c_latex'].'\)';
+					        $quiz_option_c=html_entity_decode($questiondataarray['c']);
 
-					        $quiz_option_d='\('.$questiondataarray['d_latex'].'\)';
+					        $quiz_option_d=html_entity_decode($questiondataarray['d']);
 
-					        if($questiondataarray['answer_exp_latex']!="")
+					        if($questiondataarray['answer_exp']!="")
 					        {
-					        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
+					        	$quiz_answer_exp=html_entity_decode($questiondataarray['answer_exp']);
 					        }
 					        else{
 					        	$quiz_answer_exp="";
 					        }
+
+					if($questiondataarray['a_image']!="")
+			        {
+			        	$option_image_a=url('/').'/images/questions/options/'.$questiondataarray['a_image'];
+			        }
+			        else{
+			        	$option_image_a='';
+			        }
+
+			        if($questiondataarray['b_image']!="")
+			        {
+			        	$option_image_b=url('/').'/images/questions/options/'.$questiondataarray['b_image'];
+			        }
+			        else{
+			        	$option_image_b='';
+			        }
+
+			        if($questiondataarray['c_image']!="")
+			        {
+			        	$option_image_c=url('/').'/images/questions/options/'.$questiondataarray['c_image'];
+			        }
+			        else{
+			        	$option_image_c='';
+			        }
+
+			        if($questiondataarray['d_image']!="")
+			        {
+			        	$option_image_d=url('/').'/images/questions/options/'.$questiondataarray['d_image'];
+			        }
+			        else{
+			        	$option_image_d='';
+			        }
 					        
-
-
 					        $questionslist=array(
 					        		'course_id'=>(int)$courseid,
 			        				'course_name'=>$subject->title,
@@ -314,7 +344,12 @@ class QuizDashboardController extends BaseController
 			        				'current_score'=>$current_score,
 			        				'total_score'=>$total_score,
 			        				'total_questions'=>count($random_questions_final_list),
-			        				'current_quiz'=>$current_quiz
+			        				'current_quiz'=>$current_quiz,
+			        				'option_status'=>$questiondataarray['option_status'],
+			        				'a_image'=>$option_image_a,
+			        				'b_image'=>$option_image_b,
+			        				'c_image'=>$option_image_c,
+			        				'd_image'=>$option_image_d
 			        			);
                 		}
                 		else{
@@ -387,7 +422,7 @@ class QuizDashboardController extends BaseController
 
 		        		if(in_array($questionid, $random_questions_final_list))
 		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','!=','0')->get()->first();
 		        			if($questiondetail)
 		        			{
 		        				$questiondetaildata=$questiondetail->toArray();
@@ -515,9 +550,9 @@ class QuizDashboardController extends BaseController
             return $data;     
          }
 
-        if($questiondetaildata['answer_exp_latex']!="")
+        if($questiondetaildata['answer_exp']!="")
         {
-        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        	$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
         }
         else{
         	$quiz_answer_exp="";
@@ -634,9 +669,9 @@ class QuizDashboardController extends BaseController
             return $data;     
          }
 
-         if($questiondetaildata['answer_exp_latex']!="")
+         if($questiondetaildata['answer_exp']!="")
         {
-        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        	$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
         }
         else{
         	$quiz_answer_exp="";
@@ -755,9 +790,9 @@ class QuizDashboardController extends BaseController
             return $data;     
          }
 
-         if($questiondetaildata['answer_exp_latex']!="")
+         if($questiondetaildata['answer_exp']!="")
         {
-        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
+        	$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
         }
         else{
         	$quiz_answer_exp="";
@@ -909,7 +944,7 @@ class QuizDashboardController extends BaseController
 
 		        		if(in_array($questionid, $random_questions_final_list))
 		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','!=','0')->get()->first();
 		        			if($questiondetail)
 		        			{
 		        				$questiondetaildata=$questiondetail->toArray();
@@ -997,28 +1032,61 @@ class QuizDashboardController extends BaseController
 			        	$answer_explaination_video_link="";
 			        }
 
+
+			        if($questiondetaildata['a_image']!="")
+			        {
+			        	$option_image_a=url('/').'/images/questions/options/'.$questiondetaildata['a_image'];
+			        }
+			        else{
+			        	$option_image_a='';
+			        }
+
+			        if($questiondetaildata['b_image']!="")
+			        {
+			        	$option_image_b=url('/').'/images/questions/options/'.$questiondetaildata['b_image'];
+			        }
+			        else{
+			        	$option_image_b='';
+			        }
+
+			        if($questiondetaildata['c_image']!="")
+			        {
+			        	$option_image_c=url('/').'/images/questions/options/'.$questiondetaildata['c_image'];
+			        }
+			        else{
+			        	$option_image_c='';
+			        }
+
+			        if($questiondetaildata['d_image']!="")
+			        {
+			        	$option_image_d=url('/').'/images/questions/options/'.$questiondetaildata['d_image'];
+			        }
+			        else{
+			        	$option_image_d='';
+			        }
+
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
 	        			$total_marks=$randomquizresultmarksarray['total_marks'];
 
-	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+				        $quizquestion=html_entity_decode($questiondetaildata['question']);
 
-					    $quiz_option_a='\('.$questiondetaildata['a_latex'].'\)';
+						$quiz_option_a=html_entity_decode($questiondetaildata['a']);
 
-					    $quiz_option_b='\('.$questiondetaildata['b_latex'].'\)';
+						$quiz_option_b=html_entity_decode($questiondetaildata['b']);
 
-					     $quiz_option_c='\('.$questiondetaildata['c_latex'].'\)';
+						$quiz_option_c=html_entity_decode($questiondetaildata['c']);
 
-					    $quiz_option_d='\('.$questiondetaildata['d_latex'].'\)';
+						$quiz_option_d=html_entity_decode($questiondetaildata['d']);
 
-				        if($questiondetaildata['answer_exp_latex']!="")
-				        {
-				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
-				        }
-				        else{
-				        	$quiz_answer_exp="";
-				        }
+						if($questiondetaildata['answer_exp']!="")
+						{
+							$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
+						}
+						else{
+							$quiz_answer_exp="";
+						}
 
 	        			$questiondet=array(
 		        		 			'course_id'=>$course_id,
@@ -1120,7 +1188,7 @@ class QuizDashboardController extends BaseController
 
 		        		if(in_array($questionid, $random_questions_final_list))
 		        		{
-		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+		        			$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','!=','0')->get()->first();
 		        			if($questiondetail)
 		        			{
 		        				$questiondetaildata=$questiondetail->toArray();
@@ -1207,28 +1275,62 @@ class QuizDashboardController extends BaseController
 			        	$answer_explaination_video_link="";
 			        }
 
+
+			        if($questiondetaildata['a_image']!="")
+			        {
+			        	$option_image_a=url('/').'/images/questions/options/'.$questiondetaildata['a_image'];
+			        }
+			        else{
+			        	$option_image_a='';
+			        }
+
+			        if($questiondetaildata['b_image']!="")
+			        {
+			        	$option_image_b=url('/').'/images/questions/options/'.$questiondetaildata['b_image'];
+			        }
+			        else{
+			        	$option_image_b='';
+			        }
+
+			        if($questiondetaildata['c_image']!="")
+			        {
+			        	$option_image_c=url('/').'/images/questions/options/'.$questiondetaildata['c_image'];
+			        }
+			        else{
+			        	$option_image_c='';
+			        }
+
+			        if($questiondetaildata['d_image']!="")
+			        {
+			        	$option_image_d=url('/').'/images/questions/options/'.$questiondetaildata['d_image'];
+			        }
+			        else{
+			        	$option_image_d='';
+			        }
+
+
 				        $current_score=$randomquizresultmarksarray['marks'];
 				        $total_questions=count($random_questions_final_list);
 
 	        			$total_marks=$randomquizresultmarksarray['total_marks'];
 
-	        			$quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+				        $quizquestion=html_entity_decode($questiondetaildata['question']);
 
-					    $quiz_option_a='\('.$questiondetaildata['a_latex'].'\)';
+						$quiz_option_a=html_entity_decode($questiondetaildata['a']);
 
-					    $quiz_option_b='\('.$questiondetaildata['b_latex'].'\)';
+						$quiz_option_b=html_entity_decode($questiondetaildata['b']);
 
-					     $quiz_option_c='\('.$questiondetaildata['c_latex'].'\)';
+						$quiz_option_c=html_entity_decode($questiondetaildata['c']);
 
-					    $quiz_option_d='\('.$questiondetaildata['d_latex'].'\)';
+						$quiz_option_d=html_entity_decode($questiondetaildata['d']);
 
-				        if($questiondetaildata['answer_exp_latex']!="")
-				        {
-				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
-				        }
-				        else{
-				        	$quiz_answer_exp="";
-				        }
+						if($questiondetaildata['answer_exp']!="")
+						{
+							$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
+						}
+						else{
+							$quiz_answer_exp="";
+						}
 				        
 
 	        			$questionslist=array(
@@ -1257,7 +1359,12 @@ class QuizDashboardController extends BaseController
 			        				'current_quiz'=>$current_quiz,
 			        				'result_id'=>(int)$result_id,
 			        				'next_quiz_id'=>$quiztopicdetaildata['id'],
-			        				'previous_quiz_id'=>$quiztopicdetaildata['id']
+			        				'previous_quiz_id'=>$quiztopicdetaildata['id'],
+			        				'option_status'=>$questiondetaildata['option_status'],
+			        				'a_image'=>$option_image_a,
+			        				'b_image'=>$option_image_b,
+			        				'c_image'=>$option_image_c,
+			        				'd_image'=>$option_image_d
 			        			);
 
 
@@ -1546,15 +1653,14 @@ class QuizDashboardController extends BaseController
 		        	$answer_explaination_video_link="";
 		        }
 
-		        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
-
-		        if($questiondataarray['answer_exp_latex']!="")
-		        {
-		        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
-		        }
-		        else{
-		        	$quiz_answer_exp="";
-		        }
+		        $quizquestion=html_entity_decode($questiondataarray['question']);
+		        if($questiondataarray['answer_exp']!="")
+				{
+					$quiz_answer_exp=html_entity_decode($questiondataarray['answer_exp']);
+				}
+				else{
+					$quiz_answer_exp="";
+				}
 
 		        $questionslist=array(
         				'course_name'=>$subject->title,
@@ -1700,15 +1806,15 @@ class QuizDashboardController extends BaseController
 		        	$answer_explaination_video_link="";
 		        }
 
-		        $quizquestion='\('.$questiondataarray['question_latex'].'\)';
+		        $quizquestion=html_entity_decode($questiondataarray['question']);
 
-		        if($questiondataarray['answer_exp_latex']!="")
-		        {
-		        	$quiz_answer_exp='\('.$questiondataarray['answer_exp_latex'].'\)';
-		        }
-		        else{
-		        	$quiz_answer_exp="";
-		        }
+		        if($questiondataarray['answer_exp']!="")
+				{
+					$quiz_answer_exp=html_entity_decode($questiondataarray['answer_exp']);
+				}
+				else{
+					$quiz_answer_exp="";
+				}
 
 		        $questionslist=array(
         				'course_name'=>$subject->title,
@@ -1779,7 +1885,7 @@ class QuizDashboardController extends BaseController
 	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
 	        			if(in_array($questionid, $random_questions_final_list))
 	        			{
-	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','!=','0')->get()->first();
 	        				if($questiondetail)
 	        				{
 	        					$questiondetaildata=$questiondetail->toArray();
@@ -1863,15 +1969,15 @@ class QuizDashboardController extends BaseController
 			        	$answer_explaination_video_link="";
 			        }
 
-				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+				        $quizquestion=html_entity_decode($questiondetaildata['question']);
 
-				        if($questiondetaildata['answer_exp_latex']!="")
-				        {
-				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
-				        }
-				        else{
-				        	$quiz_answer_exp="";
-				        }
+				        if($questiondetaildata['answer_exp']!="")
+						{
+							$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
+						}
+						else{
+							$quiz_answer_exp="";
+						}
 
 				        $questiondet=array(
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],
@@ -1957,7 +2063,7 @@ class QuizDashboardController extends BaseController
 	        			$random_questions_final_list=json_decode($random_question_ids_db,true);
 	        			if(in_array($questionid, $random_questions_final_list))
 	        			{
-	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','1')->get()->first();
+	        				$questiondetail=Question::where('topic_id',$quizid)->where('id',$questionid)->where('question_status','!=','0')->get()->first();
 	        				if($questiondetail)
 	        				{
 	        					$questiondetaildata=$questiondetail->toArray();
@@ -2040,15 +2146,15 @@ class QuizDashboardController extends BaseController
 			        	$answer_explaination_video_link="";
 			        }
 
-				        $quizquestion='\('.$questiondetaildata['question_latex'].'\)';
+				        $quizquestion=html_entity_decode($questiondetaildata['question']);
 
-				        if($questiondetaildata['answer_exp_latex']!="")
-				        {
-				        	$quiz_answer_exp='\('.$questiondetaildata['answer_exp_latex'].'\)';
-				        }
-				        else{
-				        	$quiz_answer_exp="";
-				        }
+				        if($questiondetaildata['answer_exp']!="")
+						{
+							$quiz_answer_exp=html_entity_decode($questiondetaildata['answer_exp']);
+						}
+						else{
+							$quiz_answer_exp="";
+						}
 
 				        $questionslist=array(
 			        				'quiz_type'=>$quiztopicdetaildata['quiz_type'],

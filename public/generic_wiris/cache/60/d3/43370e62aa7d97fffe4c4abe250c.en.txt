@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator x squared minus 2 x over denominator x squared minus 4 end fraction.\n"},"status":"ok"}

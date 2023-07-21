@@ -1,0 +1,1 @@
+{"result":{"text":"S t a t e space t h e space v a l u e space o f space d i g i t space 6 space i n space t h e space n u m b e r\n3621 subscript 8 comma space i n space t h e space b a s e space 10."},"status":"ok"}

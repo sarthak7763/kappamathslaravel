@@ -1,0 +1,1 @@
+{"result":{"text":"z equals fraction numerator left parenthesis a plus b x right parenthesis k cubed over denominator R minus a x end fraction"},"status":"ok"}

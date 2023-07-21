@@ -1,0 +1,1 @@
+{"result":{"text":"open square brackets 3 close square brackets less or equal than 3 to the power of 4"},"status":"ok"}

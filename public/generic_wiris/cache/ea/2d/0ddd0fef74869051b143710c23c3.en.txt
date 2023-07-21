@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x over denominator x minus 2 end fraction"},"status":"ok"}

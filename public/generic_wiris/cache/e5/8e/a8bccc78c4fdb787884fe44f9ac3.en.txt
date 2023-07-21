@@ -1,0 +1,1 @@
+{"result":{"text":"Simplify space fraction numerator 15 over denominator square root of 50 end fraction."},"status":"ok"}

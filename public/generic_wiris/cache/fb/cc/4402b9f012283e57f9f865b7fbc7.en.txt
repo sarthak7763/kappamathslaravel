@@ -1,0 +1,1 @@
+{"result":{"text":"F a c t o r i z e space space x plus y minus a x minus a y.\n"},"status":"ok"}

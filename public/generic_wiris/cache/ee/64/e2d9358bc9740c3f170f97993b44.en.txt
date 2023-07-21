@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses 2 to the power of 96 space plus space 1 close parentheses"},"status":"ok"}

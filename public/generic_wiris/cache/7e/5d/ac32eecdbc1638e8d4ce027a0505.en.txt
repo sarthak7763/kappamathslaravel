@@ -1,0 +1,1 @@
+{"result":{"text":"C a n n o t space b e space d e t e r m i n e d"},"status":"ok"}

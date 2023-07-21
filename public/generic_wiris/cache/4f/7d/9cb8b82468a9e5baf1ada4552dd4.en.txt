@@ -1,0 +1,1 @@
+{"result":{"text":"x cubed space plus space y over 4 space equals space 32"},"status":"ok"}

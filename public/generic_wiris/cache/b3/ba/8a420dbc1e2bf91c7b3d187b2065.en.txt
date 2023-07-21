@@ -1,0 +1,1 @@
+{"result":{"text":"15 over 32"},"status":"ok"}

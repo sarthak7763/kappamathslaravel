@@ -75,6 +75,10 @@
   $optionc_image_error="";
   $optiond_image_error="";
   $option_status_value=$question->option_status;
+  $a_image_delete=0;
+  $b_image_delete=0;
+  $c_image_delete=0;
+  $d_image_delete=0;
 
   @endphp
 
@@ -165,6 +169,30 @@
       @php $optiond_image_error=$validationmessage['optiond_image']; @endphp
       @else
       @php $optiond_image_error=""; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['a_image_delete']))
+      @php $a_image_delete=$validationmessage['a_image_delete']; @endphp
+      @else
+      @php $a_image_delete=0; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['b_image_delete']))
+      @php $b_image_delete=$validationmessage['b_image_delete']; @endphp
+      @else
+      @php $b_image_delete=0; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['c_image_delete']))
+      @php $c_image_delete=$validationmessage['c_image_delete']; @endphp
+      @else
+      @php $c_image_delete=0; @endphp
+      @endif
+
+      @if($validationmessage!="" && isset($validationmessage['d_image_delete']))
+      @php $d_image_delete=$validationmessage['d_image_delete']; @endphp
+      @else
+      @php $d_image_delete=0; @endphp
       @endif
 
   @endif
@@ -395,14 +423,16 @@
                       </div>
                       <div id="preview_image_optiona_div" class="preview_image_div">
 
-                      @if($question->a_image!="")
+                      @if($question->a_image!="" && $a_image_delete==0)
                       <img id="preview-image-optiona_image" class="preview_image" src="/images/questions/options/{{ $question->a_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="a_image"><i class="fa fa-close"></i></span>
 
-                      <input type="hidden" name="a_image_delete" id="a_image_delete" value="0">
+                      <input type="hidden" name="a_image_delete" id="a_image_delete" value="{{$a_image_delete}}">
                       @else
                       <img id="preview-image-optiona_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+
+                      <input type="hidden" name="a_image_delete" id="a_image_delete" value="1">
                       @endif
                     </div>
                     </div>
@@ -424,14 +454,16 @@
                       </div>
                       <div id="preview_image_optionb_div" class="preview_image_div">
 
-                      @if($question->b_image!="")
+                      @if($question->b_image!="" && $b_image_delete==0)
                       <img id="preview-image-optionb_image" class="preview_image" src="/images/questions/options/{{ $question->b_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="b_image"><i class="fa fa-close"></i></span>
 
-                      <input type="hidden" name="b_image_delete" id="b_image_delete" value="0">
+                      <input type="hidden" name="b_image_delete" id="b_image_delete" value="{{$b_image_delete}}">
                       @else
                       <img id="preview-image-optionb_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+
+                      <input type="hidden" name="b_image_delete" id="b_image_delete" value="1">
                       @endif
                     </div>
                     </div>
@@ -458,14 +490,16 @@
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optionc_div" class="preview_image_div">
-                      @if($question->c_image!="")
+                      @if($question->c_image!="" && $c_image_delete==0)
                       <img id="preview-image-optionc_image" class="preview_image" src="/images/questions/options/{{ $question->c_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="c_image"><i class="fa fa-close"></i></span>
 
-                      <input type="hidden" name="c_image_delete" id="c_image_delete" value="0">
+                      <input type="hidden" name="c_image_delete" id="c_image_delete" value="{{$c_image_delete}}">
                       @else
                       <img id="preview-image-optionc_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
+
+                      <input type="hidden" name="c_image_delete" id="c_image_delete" value="1">
                       @endif
                     </div>
                     </div>
@@ -486,12 +520,12 @@
                          <p class="help">Please Choose Only .JPG, .JPEG and .PNG</p>
                       </div>
                       <div id="preview_image_optiond_div" class="preview_image_div">
-                      @if($question->d_image!="")
+                      @if($question->d_image!="" && $d_image_delete==0)
                       <img id="preview-image-optiond_image" class="preview_image" src="/images/questions/options/{{ $question->d_image }}" style="height: auto;width: 20%;">
 
                       <span class="deleteimage" data-id="{{$question->id}}" data-type="d_image"><i class="fa fa-close"></i></span>
 
-                      <input type="hidden" name="d_image_delete" id="d_image_delete" value="0">
+                      <input type="hidden" name="d_image_delete" id="d_image_delete" value="{{$d_image_delete}}">
 
                       @else
                       <img id="preview-image-optiond_image" src="/images/noimage.jpg" style="height: auto;width: 20%;">
@@ -541,7 +575,7 @@
 
 <script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
 
-<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+<!-- <script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script> -->
 
 
     <script type="text/javascript">

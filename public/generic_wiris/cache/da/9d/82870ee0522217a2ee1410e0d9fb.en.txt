@@ -1,0 +1,1 @@
+{"result":{"text":"n o n e space o f space t h e s e"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"Find space straight y space in space the space expression.\nsquare root of 24 plus square root of 96 minus square root of 600 equals y square root of 6\n"},"status":"ok"}

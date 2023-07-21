@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 2 to the power of 16 space plus space 1 right parenthesis"},"status":"ok"}

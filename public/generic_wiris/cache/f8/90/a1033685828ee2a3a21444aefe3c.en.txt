@@ -1,0 +1,1 @@
+{"result":{"text":"x l f a d d\nL A K D\nD D J\nD P D\nleft curly bracket D D"},"status":"ok"}

@@ -24,7 +24,6 @@ var editMode;
  */
  function updateoptionaFunction() {
  	updatetextareaoptionapreview();
- 	updateoptionalatexpreview();
  }
 
  function updateoptionalatexpreview() {
@@ -36,7 +35,9 @@ var editMode;
 		mathhtmloptionapreview = optiona_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
 		mathhtmloptionapreview = mathhtmloptionapreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
 
-		var optionalatex = MathML2LaTeX.convert(mathhtmloptionapreview);
+		mathhtmloptionapreview = mathhtmloptionapreview.replace(/<mspace linebreak="newline"\/>/g,'<mfenced open="{" close="}"><mspace/><mspace/></mfenced>');
+
+		var optionalatex="";
 	}
 	else{
 		var optionalatex="";
@@ -45,6 +46,7 @@ var editMode;
     var previewlatex_div = document.getElementById("get_a_option_preview_latex");
 	// Setting data on preview div.
 	previewlatex_div.innerHTML = optionalatex;
+	
 }
 
  function updatetextareaoptionapreview() {

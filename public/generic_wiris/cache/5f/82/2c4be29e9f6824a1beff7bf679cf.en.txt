@@ -1,0 +1,1 @@
+{"result":{"text":"M a k e space z space t h e space s u b j e c t y space o f space t h e space r e l a t i o n\nk equals cube root of fraction numerator a x minus R over denominator z plus b x end fraction end root."},"status":"ok"}

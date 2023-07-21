@@ -1,0 +1,1 @@
+{"result":{"text":"Evaluate space 3 square root of 5 open parentheses fraction numerator 3 over denominator square root of 5 end fraction plus square root of 5 close parentheses."},"status":"ok"}

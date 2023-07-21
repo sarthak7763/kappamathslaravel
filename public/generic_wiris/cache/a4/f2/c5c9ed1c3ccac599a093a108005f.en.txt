@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 4.5 end fraction 13.5 space equals space 3 space c m"},"status":"ok"}

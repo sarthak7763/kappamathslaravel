@@ -114,6 +114,10 @@ Route::group(['middleware'=> 'isadmin'], function(){
 
   Route::post('/admin/questions/','QuestionsController@index')->name('questionsindex');
 
+  Route::get('/admin/quiz_editor','QuestionsController@quizEditor')->name('quizEditor');
+
+  Route::post('/admin/questions/moveQtnAns','QuestionsController@moveQtnAns')->name('moveQtnAns');
+
   Route::post('/admin/questions/deleteimagefromdb','QuestionsController@deleteimagefromdb')->name('deleteimagefromdb');
 
   Route::get('/admin/view-question/{id}','QuestionsController@viewquestion')->name('viewquestion');

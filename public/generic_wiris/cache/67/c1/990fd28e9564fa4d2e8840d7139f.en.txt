@@ -1,0 +1,1 @@
+{"result":{"text":"Simplify colon space 2 square root of 3 minus fraction numerator 6 over denominator square root of 3 end fraction plus fraction numerator 3 over denominator square root of 27 end fraction."},"status":"ok"}

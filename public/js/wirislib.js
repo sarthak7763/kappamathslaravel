@@ -24,7 +24,6 @@ var editMode;
  */
  function updateQuestionFunction() {
  	updatetextareaquestionpreview();
- 	updatequestionlatexpreview();
  }
 
  function updatequestionlatexpreview() {
@@ -37,7 +36,9 @@ var editMode;
 		mathhtmlquestionpreview = question_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
 		mathhtmlquestionpreview = mathhtmlquestionpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
 
-		var questionlatex = MathML2LaTeX.convert(mathhtmlquestionpreview);
+		mathhtmlquestionpreview = mathhtmlquestionpreview.replace(/<mspace linebreak="newline"\/>/g,'<mfenced open="{" close="}"><mspace/><mspace/></mfenced>');
+
+		var questionlatex="";
 	}
 	else{
 		var questionlatex="";

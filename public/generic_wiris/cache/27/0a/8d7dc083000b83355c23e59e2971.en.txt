@@ -1,0 +1,1 @@
+{"result":{"text":"Total space number space of space students space equals 30\nStudents space who space space kept space more space than space one space pet\nequals 5 plus 10 plus 3 equals 18\nTherefore comma space straight P left parenthesis student space kept space more space than space one space pet right parenthesis\nequals 18 over 30 equals 3 over 5"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses 3 squared over 4 close parentheses"},"status":"ok"}

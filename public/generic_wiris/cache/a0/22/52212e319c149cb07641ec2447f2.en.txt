@@ -1,0 +1,1 @@
+{"result":{"text":"straight A space fair space die space is space tossed space twice. space What space is space the space probability\nspace that space the space sum space of space the space digits space is space straight a space perfect space square ? space"},"status":"ok"}

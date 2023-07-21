@@ -603,6 +603,8 @@ class DashboardController extends BaseController
 			        {
 			        	$checkvideo=getVideoDetails($coursesubtopicsdetaildata['topic_video_id']);
 
+			        	$checkvideochapters=getallchaptersofthevideo($coursesubtopicsdetaildata['topic_video_id']);
+
 			        	if($checkvideo['code']=="400")
 			            {
 			              $subtopicvideourl="";
@@ -646,7 +648,8 @@ class DashboardController extends BaseController
 		        				'previous_topic_key'=>$previous_topic_key,
 		        				'next_topic_key'=>$next_topic_key,
 		        				'quiz_complete_status'=>$quiz_complete_status,
-		        				'quiz_retake_time'=>$quiz_retake_time
+		        				'quiz_retake_time'=>$quiz_retake_time,
+		        				'chapters_list'=>$checkvideochapters
 
 		        			);
 

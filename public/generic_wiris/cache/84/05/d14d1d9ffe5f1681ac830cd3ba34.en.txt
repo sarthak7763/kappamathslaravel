@@ -1,0 +1,1 @@
+{"result":{"text":"S i m p l i f y space fraction numerator 2 over denominator 2 minus x end fraction plus fraction numerator 2 over denominator 2 minus x end fraction."},"status":"ok"}

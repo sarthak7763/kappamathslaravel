@@ -1,0 +1,1 @@
+{"result":{"text":"square root of 147 minus square root of 75 plus square root of 27\nequals square root of 49 cross times 3 end root minus square root of 25 cross times 3 end root plus square root of 9 cross times 3 end root\nequals 7 square root of 3 minus 5 square root of 5 plus 3 square root of 3\nequals 5 square root of 3"},"status":"ok"}

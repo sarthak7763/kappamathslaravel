@@ -113,6 +113,28 @@ function getVideoDetails($video_id)
   }
 
 
+  function getallchaptersofthevideo($video_id)
+  {
+    if($video_id=="")
+    {
+      $data=array('code'=>'400','message'=>'Please enter valid Video ID');
+      return $data;
+    }
+
+      $vimeo_api_key=env('Vimeo_access_token');   
+      $options = array('http' => array(
+          'method'  => 'GET',
+          'header' => 'Authorization: Bearer '.$vimeo_api_key
+      ));
+      $context  = stream_context_create($options);
+
+      $hash = json_decode(file_get_contents("https://api.vimeo.com/videos/{$video_id}/chapters",false, $context));
+      header("Content-Type: text/plain");
+
+      return $hash;
+  }
+
+
 function checkusersubscription($userid)
 {
     if($userid!="")

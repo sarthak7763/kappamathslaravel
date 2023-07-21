@@ -1,0 +1,1 @@
+{"result":{"text":"A space n u m b e r space i s space w r i t t e n space a s space 37 space i n space b a s e space x.\nspace T w i c e space t h e space n u m b e r space i s space w r i t t e n space a s space 75 space i n space b a s e space x.\nspace F i n d space t h e space v a l u e space o f space x space"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 square root of 5 open parentheses fraction numerator 3 over denominator square root of 5 end fraction plus square root of 5 close parentheses\nequals fraction numerator 9 square root of 5 over denominator square root of 5 end fraction plus 3 left parenthesis 5 right parenthesis equals 9 plus 15 equals 24"},"status":"ok"}

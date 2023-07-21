@@ -1,0 +1,1 @@
+{"result":{"text":"I f space 110 subscript x equals 1020 subscript f o u r comma end subscript f i i n d space t h e space v a l u e space o f space x\n"},"status":"ok"}

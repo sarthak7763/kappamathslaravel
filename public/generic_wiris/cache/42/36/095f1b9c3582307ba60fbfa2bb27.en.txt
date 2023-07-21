@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 7 space asterisk times space 2 to the power of 23 right parenthesis"},"status":"ok"}

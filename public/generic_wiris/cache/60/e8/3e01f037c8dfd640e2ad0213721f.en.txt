@@ -1,0 +1,1 @@
+{"result":{"text":"3 square root of 500 minus 2 square root of 125\n"},"status":"ok"}

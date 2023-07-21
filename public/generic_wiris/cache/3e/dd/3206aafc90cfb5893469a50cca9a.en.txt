@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 5 begin display style blank over blank end style end fraction"},"status":"ok"}

@@ -153,30 +153,6 @@ table.que_table.table-striped {
 
           <input type="hidden" name="question_id[]" id="importquestion_{{$list['question_id']}}" value="{{$list['question_id']}}">
 
-          <input type="hidden" name="questionmathml[]" id="questionmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['question'])}}">
-
-          <input type="hidden" name="questionlatex[]" id="questionlatex_{{$list['question_id']}}" value="">
-
-          <input type="hidden" name="optionamathml[]" id="optionamathml_{{$list['question_id']}}" value="{{html_entity_decode($list['a'])}}">
-
-          <input type="hidden" name="optionalatex[]" id="optionalatex_{{$list['question_id']}}" value="">
-
-          <input type="hidden" name="optionbmathml[]" id="optionbmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['b'])}}">
-
-          <input type="hidden" name="optionblatex[]" id="optionblatex_{{$list['question_id']}}" value="">
-
-          <input type="hidden" name="optioncmathml[]" id="optioncmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['c'])}}">
-
-          <input type="hidden" name="optionclatex[]" id="optionclatex_{{$list['question_id']}}" value="">
-
-          <input type="hidden" name="optiondmathml[]" id="optiondmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['d'])}}">
-
-          <input type="hidden" name="optiondlatex[]" id="optiondlatex_{{$list['question_id']}}" value="">
-
-          <input type="hidden" name="answerexpmathml[]" id="answerexpmathml_{{$list['question_id']}}" value="{{html_entity_decode($list['answer_exp'])}}">
-
-          <input type="hidden" name="answerexplatex[]" id="answerexplatex_{{$list['question_id']}}" value="">
-
         </td>
       </tr>
       @php $i++; @endphp
@@ -580,8 +556,6 @@ table.que_table.table-striped {
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
-
 <script type="text/javascript">
   var checkboxvalueonload=$('#option_status').val();
   $('#checkboxvalue').val(checkboxvalueonload);
@@ -622,113 +596,6 @@ table.que_table.table-striped {
       $("#renderer_"+id).empty();
       $("#renderer_"+id).append(textareavalue);
       MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("#renderer_"+id)[0]])
-    });
-
-  $('[id^=questionmathml_]').each(function(){
-      var questionmathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('questionmathml_','');
-      if(questionmathmlvalue)
-      {
-          mathhtmlquestionpreview = questionmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-          mathhtmlquestionpreview = mathhtmlquestionpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var questionlatex = MathML2LaTeX.convert(mathhtmlquestionpreview);
-      }
-      else{
-        var questionlatex = "";
-      }
-      
-      $("#questionlatex_"+id).val(questionlatex);
-    });
-
-    $('[id^=optionamathml_]').each(function(){
-      var optionamathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('optionamathml_','');
-      if(optionamathmlvalue)
-      {
-
-        mathhtmloptionapreview = optionamathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-        mathhtmloptionapreview = mathhtmloptionapreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var optionalatex = MathML2LaTeX.convert(mathhtmloptionapreview);
-      }
-      else{
-        var optionalatex = "";
-      }
-      
-      $("#optionalatex_"+id).val(optionalatex);
-    });
-
-    $('[id^=optionbmathml_]').each(function(){
-      var optionbmathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('optionbmathml_','');
-      if(optionbmathmlvalue)
-      {
-
-        mathhtmloptionbpreview = optionbmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-        mathhtmloptionbpreview = mathhtmloptionbpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var optionblatex = MathML2LaTeX.convert(mathhtmloptionbpreview);
-      }
-      else{
-        var optionblatex = "";
-      }
-      
-      $("#optionblatex_"+id).val(optionblatex);
-    });
-
-    $('[id^=optioncmathml_]').each(function(){
-      var optioncmathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('optioncmathml_','');
-      if(optioncmathmlvalue)
-      {
-
-        mathhtmloptioncpreview = optioncmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-        mathhtmloptioncpreview = mathhtmloptioncpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var optionclatex = MathML2LaTeX.convert(mathhtmloptioncpreview);
-      }
-      else{
-        var optionclatex = "";
-      }
-      
-      $("#optionclatex_"+id).val(optionclatex);
-    });
-
-    $('[id^=optiondmathml_]').each(function(){
-      var optiondmathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('optiondmathml_','');
-      if(optiondmathmlvalue)
-      {
-
-        mathhtmloptiondpreview = optiondmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-        mathhtmloptiondpreview = mathhtmloptiondpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var optiondlatex = MathML2LaTeX.convert(mathhtmloptiondpreview);
-      }
-      else{
-        var optiondlatex = "";
-      }
-      
-      $("#optiondlatex_"+id).val(optiondlatex);
-    });
-
-    $('[id^=answerexpmathml_]').each(function(){
-      var answerexpmathmlvalue = $(this).val();
-      var id = $(this).attr("id").replace('answerexpmathml_','');
-      if(answerexpmathmlvalue)
-      {
-
-        mathhtmlanswerexppreview = answerexpmathmlvalue.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
-        mathhtmlanswerexppreview = mathhtmlanswerexppreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
-
-        var answerexplatex = MathML2LaTeX.convert(mathhtmlanswerexppreview);
-      }
-      else{
-        var answerexplatex = "";
-      }
-      
-      $("#answerexplatex_"+id).val(answerexplatex);
     });
 
 </script>

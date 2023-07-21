@@ -207,7 +207,7 @@ section.content.container-fluid {
 
 <script type="text/javascript" src="{{ env('APP_URL') }}js/prism.js"></script>
 
-<script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script>
+<!-- <script type="text/javascript" src="{{ env('APP_URL') }}mathml2latex-master/dist/mathml2latex.js"></script> -->
 
 
     <script type="text/javascript">

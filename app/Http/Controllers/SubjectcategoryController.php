@@ -268,7 +268,10 @@ class SubjectcategoryController extends Controller
         }
 
         try{
-        $subjectcategorydata=Subjectcategory::where('category_name',$request->title)->first();
+        $course_id= $request->course;
+          
+        $subjectcategorydata=Subjectcategory::where('category_name',$request->title)->where('subject',$course_id)->first();
+       // print_r($subjectcategorydata);die;
         if($subjectcategorydata)
         {
         	return back()->with('error','Title already exists.');
@@ -489,7 +492,7 @@ class SubjectcategoryController extends Controller
           }
           else{
           		try{
-		        $subjectcategorydata=Subjectcategory::where('category_name',$request->title)->first();
+		        $subjectcategorydata=Subjectcategory::where('category_name',$request->title)->where('subject',$request->course)->first();
 		        if($subjectcategorydata)
 		        {
 		        	return back()->with('error','Title already exists.');

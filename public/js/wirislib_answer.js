@@ -24,7 +24,6 @@ var editMode;
  */
  function updateanswerFunction() {
  	updatetextareaanswerpreview();
- 	updateanswerlatexpreview();
  }
 
  function updateanswerlatexpreview() {
@@ -36,7 +35,10 @@ var editMode;
 		mathhtmlanswerpreview = answer_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
 		mathhtmlanswerpreview = mathhtmlanswerpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
 
-		var answerlatex = MathML2LaTeX.convert(mathhtmlanswerpreview);
+		mathhtmlanswerpreview = mathhtmlanswerpreview.replace(/<mspace linebreak="newline"\/>/g,'<mfenced open="{" close="}"><mspace/><mspace/></mfenced>');
+		
+
+		var answerlatex="";
 	}
 	else{
 		var answerlatex="";

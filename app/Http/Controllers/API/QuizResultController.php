@@ -293,9 +293,9 @@ class QuizResultController extends BaseController
 		        					$questiondetarray=$questiondet->toArray();
 		        					$questionquiz_id=$questiondetarray['topic_id'];
 		        					$question_id=$questiondetarray['id'];
-		        					$question=$questiondetarray['question_latex'];
+		        					$question=$questiondetarray['question'];
 		        					$correct_answer=$questiondetarray['answer'];
-		        					$answer_explaination=$questiondetarray['answer_exp_latex'];
+		        					$answer_explaination=$questiondetarray['answer_exp'];
 		        				}
 		        				else{
 		        					$questionquiz_id="";
@@ -321,7 +321,7 @@ class QuizResultController extends BaseController
 
 		        			if($question!="")
 		        			{
-		        				$quizquestion='\('.$question.'\)';
+		        				$quizquestion=html_entity_decode($question);
 		        			}
 		        			else{
 		        				$quizquestion="";
@@ -329,7 +329,7 @@ class QuizResultController extends BaseController
 
 		        			if($answer_explaination!="")
 					        {
-					        	$quiz_answer_exp='\('.$answer_explaination.'\)';
+					        	$quiz_answer_exp=html_entity_decode($answer_explaination);
 					        }
 					        else{
 					        	$quiz_answer_exp="";

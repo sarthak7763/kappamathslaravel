@@ -124,14 +124,6 @@
               {!! Form::number('sort_order', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Sort Order','min'=>'1']) !!}
               <small class="text-danger">{{ $sort_order_error }}</small>
             </div>
-          </div>
-
-            <div class="col-md-6">
-            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-              {!! Form::label('description', 'Description') !!}
-              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
-              <small class="text-danger">{{ $description_error }}</small>
-            </div>
           </div>   
 
             <div class="col-md-6">
@@ -161,6 +153,15 @@
              <input type="checkbox" class="toggle-input" name="status" id="toggle2">
              <label for="toggle2"></label>
            </div>
+
+           <div class="col-md-12">
+            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+              {!! Form::label('description', 'Description') !!}
+              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Description']) !!}
+              <small class="text-danger">{{ $description_error }}</small>
+            </div>
+          </div>
+
            </div>
           </div>
         </div>
@@ -228,6 +229,10 @@
       $('#subject_category').html(optionhtml);
   }
 
+</script>
+
+ <script>
+  CKEDITOR.replace( 'description' );
 </script>
 
 @endsection

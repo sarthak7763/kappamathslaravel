@@ -127,6 +127,9 @@ $setting = App\Setting::first();
             <li class="{{ (request()->is('admin/objective-excel-instructions*')) ? 'active' : '' }}"><a href="{{url('admin/objective-excel-instructions')}}" title="Objective Quiz Excel Instructions">
             <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Objective Quiz Excel Instructions</span></a></li> -->
 
+            <li class="{{ (request()->is('admin/quiz_editor*')) ? 'active' : '' }}"><a href="{{url('admin/quiz_editor')}}" title="Quiz Editor">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Quiz Editor</span></a></li>
+
             <li class="{{ (request()->is('admin/import_questions_module*')) ? 'active' : '' }}"><a href="{{url('admin/import_questions_module')}}" title="Questions Import Module">
             <i class="fa fa-question-circle" aria-hidden="true"></i>  <span>Questions Import Module</span></a></li> 
 
@@ -224,6 +227,8 @@ $setting = App\Setting::first();
 <script src="{{asset('js/adminlte.min.js')}}"></script>
 
 <script src="{{asset('js/fontawesome-iconpicker.min.js')}}"></script>
+
+<script src="https://cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
 
 
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

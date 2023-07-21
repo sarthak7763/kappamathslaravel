@@ -1,0 +1,1 @@
+{"result":{"text":"A space n u m b e r space i s space w r i t t e n space a s space 14 subscript n. space i f space t h r e e space t i m e s space t h e space n u m b e r space\ni s space e q u a l space t o space 45 subscript n comma space f i n d space t h e space v a l u e space o f space n.\n\n"},"status":"ok"}

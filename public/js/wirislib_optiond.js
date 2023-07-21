@@ -24,7 +24,6 @@ var editMode;
  */
  function updateoptiondFunction() {
  	updatetextareaoptiondpreview();
- 	updateoptiondlatexpreview();
  }
 
  function updateoptiondlatexpreview() {
@@ -37,7 +36,9 @@ var editMode;
 		mathhtmloptiondpreview = optiond_preview.replace(/<mo[^>]*>&#xA0;<\/mo[^>]*>/g,'<mspace/>');
 		mathhtmloptiondpreview = mathhtmloptiondpreview.replace(/<mo[^>]*>&#160;<\/mo[^>]*>/g,'<mspace/>');
 
-		var optiondlatex = MathML2LaTeX.convert(mathhtmloptiondpreview);
+		mathhtmloptiondpreview = mathhtmloptiondpreview.replace(/<mspace linebreak="newline"\/>/g,'<mfenced open="{" close="}"><mspace/><mspace/></mfenced>');
+
+		var optiondlatex="";
 	}
 	else{
 		var optiondlatex="";
