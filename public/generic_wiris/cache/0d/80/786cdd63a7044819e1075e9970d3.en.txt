@@ -1,0 +1,1 @@
+{"result":{"text":"w with ¨ on top"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"greater or equal than less or equal than divided by space space space space 6 greater or equal than 6"},"status":"ok"}

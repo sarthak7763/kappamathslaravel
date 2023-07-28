@@ -1,0 +1,1 @@
+{"result":{"text":"space x subscript c"},"status":"ok"}

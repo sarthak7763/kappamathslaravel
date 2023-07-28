@@ -1,0 +1,1 @@
+{"result":{"text":"2 begin inline style 1 third end style plus left parenthesis 1 begin inline style 3 over 7 end style divided by begin inline style 15 over 28 end style right parenthesis"},"status":"ok"}

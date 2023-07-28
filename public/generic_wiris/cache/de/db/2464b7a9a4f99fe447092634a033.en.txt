@@ -1,0 +1,1 @@
+{"result":{"text":"1 subscript 2 superscript 1 plus 2 subscript 3 superscript 1 cross times begin inline style 3 over 4 end style minus begin inline style 1 half end style"},"status":"ok"}

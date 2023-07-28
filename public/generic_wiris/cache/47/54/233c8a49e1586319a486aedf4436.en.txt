@@ -1,0 +1,1 @@
+{"result":{"text":"4 over 56 plus square root of 3"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 2 greater or equal than 7"},"status":"ok"}

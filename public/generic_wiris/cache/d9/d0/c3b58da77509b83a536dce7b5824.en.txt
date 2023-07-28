@@ -1,0 +1,1 @@
+{"result":{"text":"straight a xa squared space plus space bx squared space plus space cx cubed space equals space 2 ab space"},"status":"ok"}

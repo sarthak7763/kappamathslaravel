@@ -1,0 +1,1 @@
+{"result":{"text":"Simplify colon fraction numerator 8 over denominator square root of 18 end fraction."},"status":"ok"}

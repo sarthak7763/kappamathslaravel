@@ -1,0 +1,1 @@
+{"result":{"text":"If space square root of 75 minus square root of 27 plus 48 equals straight p square root of 3 comma space find space the space value space of space straight p."},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"space space space space space open vertical bar q close vertical bar space space space"},"status":"ok"}

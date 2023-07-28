@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html>
 @php
 $setting = App\Setting::first();
@@ -6,7 +6,7 @@ $setting = App\Setting::first();
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="icon" type="image/ico" href="{{asset('/images/logo/'. $setting->favicon)}}">
+  <link rel="icon" type="image/ico" href="{{asset('/images/logo/kappa-fav.png')}}">
   <!--[if IE]>
   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
   <![endif]-->
@@ -204,7 +204,7 @@ $setting = App\Setting::first();
     <!-- Default to the left -->
     <strong>
         
-        {{ $copyright }}
+       ©2023 Kappa Maths
 
     </strong>
   </footer>

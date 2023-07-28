@@ -615,6 +615,7 @@ class DashboardController extends BaseController
 			        }
 			        else{
 			        	$subtopicvideourl="";
+			        	$checkvideochapters=[];
 			        }
 
 			        if($coursesubtopicsdetaildata['topic_image']!="")
@@ -649,7 +650,7 @@ class DashboardController extends BaseController
 		        				'next_topic_key'=>$next_topic_key,
 		        				'quiz_complete_status'=>$quiz_complete_status,
 		        				'quiz_retake_time'=>$quiz_retake_time,
-		        				'chapters_list'=>$checkvideochapters
+		        				'chapters_list'=>(object)$checkvideochapters
 
 		        			);
 

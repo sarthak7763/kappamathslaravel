@@ -1,0 +1,1 @@
+{"result":{"text":"mu equals left curly bracket x colon negative 2 less or equal than x less or equal than 5 right curly bracket. space"},"status":"ok"}

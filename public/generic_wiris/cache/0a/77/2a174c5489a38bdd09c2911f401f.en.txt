@@ -1,0 +1,1 @@
+{"result":{"text":"Which space of space the space shaded space regions space in space the\nspace Venn space diagrams space illustrates space the space set space straight P apostrophe union straight Q apostrophe ?"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"n left parenthesis P union Q right parenthesis equals 69 comma"},"status":"ok"}

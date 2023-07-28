@@ -1,0 +1,1 @@
+{"result":{"text":"P equals left curly bracket x colon x less than 6 right curly bracket comma space Q space equals left curly bracket y colon 3 less than y less than 8 right curly bracket space"},"status":"ok"}

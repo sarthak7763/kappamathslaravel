@@ -1,0 +1,1 @@
+{"result":{"text":"1 squared greater or equal than 45 less or equal than 4545"},"status":"ok"}

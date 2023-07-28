@@ -1,0 +1,1 @@
+{"result":{"text":"P apostrophe intersection Q intersection R apostrophe"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"Simplify colon space fraction numerator square root of 72 over denominator square root of 48 minus square root of 3 end fraction.\n"},"status":"ok"}

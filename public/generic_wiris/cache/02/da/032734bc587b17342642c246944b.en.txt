@@ -1,0 +1,1 @@
+{"result":{"text":"X intersection left parenthesis Y apostrophe union Z right parenthesis"},"status":"ok"}

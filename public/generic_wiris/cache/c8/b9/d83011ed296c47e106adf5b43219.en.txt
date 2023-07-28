@@ -1,0 +1,1 @@
+{"result":{"text":"If space fraction numerator square root of 2 over denominator 2 end fraction left parenthesis 1 minus square root of 2 right parenthesis squared space is space expressed space inb space the space form space\nstraight a plus straight b square root of 2 comma space find space left parenthesis straight a plus straight b right parenthesis.\n"},"status":"ok"}

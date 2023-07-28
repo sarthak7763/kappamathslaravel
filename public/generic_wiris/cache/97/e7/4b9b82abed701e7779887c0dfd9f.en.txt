@@ -1,0 +1,1 @@
+{"result":{"text":"straight X apostrophe intersection straight Y equals straight U"},"status":"ok"}

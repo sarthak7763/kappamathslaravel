@@ -1,0 +1,1 @@
+{"result":{"text":"X union Y equals left curly bracket 1 comma 2 comma 3 comma 5 comma 6 comma 7 comma 8 right curly bracket\nrightwards double arrow left parenthesis X union Y right parenthesis apostrophe equals left curly bracket 4 comma 9 comma 10 right curly bracket\n\ntherefore\n"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"1 over 6 square root of 2"},"status":"ok"}

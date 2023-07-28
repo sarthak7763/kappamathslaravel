@@ -19,7 +19,7 @@
 
 
   <div class="margin-bottom">
-    <a href="{{route('subject.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Course</a>
+    <!-- <a href="{{route('subject.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Course</a> -->
   </div>
 
   <div class="box">

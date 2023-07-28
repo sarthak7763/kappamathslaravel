@@ -1,0 +1,1 @@
+{"result":{"text":"s to the power of 1"},"status":"ok"}

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/ico" href="{{asset('/images/logo/'. $setting->favicon)}}">
+    <link rel="icon" type="image/ico" href="{{asset('/images/logo/kappa-fav.png')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/custom-style.css')}}">
     <!--[if IE]>
@@ -35,7 +35,7 @@
         <div class="container" >
             <div class="row">
                 <div class="col-md-12 text-center">
-                    {{ $ct->name }}
+                     ©2023 Kappa Maths
                 </div>
                 <div class="col-md-6">
                     @php

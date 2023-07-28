@@ -1,0 +1,1 @@
+{"result":{"text":"3 less than cross times less or equal than 7"},"status":"ok"}

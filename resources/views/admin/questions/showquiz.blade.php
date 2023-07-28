@@ -75,7 +75,7 @@
                         <p>Do you really want to move the questions to some other Quiz.</p>
 
                         <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Select Quiz</label>
                             <br>

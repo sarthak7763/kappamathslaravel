@@ -1,0 +1,1 @@
+{"result":{"text":"P intersection Q intersection R equals left curly bracket space right curly bracket"},"status":"ok"}

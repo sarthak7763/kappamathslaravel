@@ -1,0 +1,1 @@
+{"result":{"text":"6.4 cross times 10 to the power of 8 cross times 3.1 cross times 10 to the power of negative 5 end exponent\nequals 19.84 cross times 10 cubed\nequals 1.984 cross times 10 to the power of 1 cross times 10 cubed\nequals 1.984 cross times 10 to the power of 4"},"status":"ok"}

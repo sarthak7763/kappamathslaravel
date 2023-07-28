@@ -1,0 +1,1 @@
+{"result":{"text":"space fraction numerator x squared minus 2 x over denominator x squared minus 4 end fraction.\n"},"status":"ok"}

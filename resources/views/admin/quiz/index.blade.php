@@ -72,7 +72,7 @@ $(function () {
     var table = $('#topicsTable').DataTable({
       processing: true,
       serverSide: false,
-      responsive: true,
+      responsive: false,
       autoWidth: false,
       scrollCollapse: true,
 

@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket vertical line 24"},"status":"ok"}

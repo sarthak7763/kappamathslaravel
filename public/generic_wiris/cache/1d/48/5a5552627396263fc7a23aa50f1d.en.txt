@@ -1,0 +1,1 @@
+{"result":{"text":"u equals left curly bracket x colon 0 less than x less or equal than 10 comma"},"status":"ok"}

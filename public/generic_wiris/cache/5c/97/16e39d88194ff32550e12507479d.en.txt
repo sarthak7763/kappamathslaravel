@@ -1,0 +1,1 @@
+{"result":{"text":"d less or equal than 23"},"status":"ok"}

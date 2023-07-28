@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 1 third end style"},"status":"ok"}

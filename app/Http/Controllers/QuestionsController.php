@@ -115,7 +115,7 @@ class QuestionsController extends Controller
           foreach($topics as $key=>$list)
           {
             $topic_id=$list['id'];
-            $counttopicquestions=Question::where('topic_id',$topic_id)->count();
+            $counttopicquestions=Question::where('topic_id',$topic_id)->where('question_status','!=','2')->count();
             if($counttopicquestions)
             {
               $topics[$key]['qu_count']=$counttopicquestions;
@@ -145,7 +145,7 @@ class QuestionsController extends Controller
             foreach($topics as $key=>$list)
             {
               $topic_id=$list['id'];
-            $counttopicquestions=Question::where('topic_id',$topic_id)->count();
+            $counttopicquestions=Question::where('topic_id',$topic_id)->where('question_status','!=','2')->count();
               if($counttopicquestions)
               {
                 $topics[$key]['qu_count']=$counttopicquestions;
@@ -798,7 +798,7 @@ class QuestionsController extends Controller
       }
 
       
-      if(isset($request->checkmyids) && count($request->checkmyids) == 0)
+      if(isset($request->checkmyids) && $request->checkmyids=="")
       {
       	return back()->with('error','Please choose at least one question to proceed.');
       }
@@ -846,7 +846,7 @@ class QuestionsController extends Controller
       return back()->with('success','Question moved to the other Quiz successfully');
   	}
 	catch(\Exception $e){
-          return back()->with('error','Something went wrong.');     
+          return back()->with('error',$e->getMessage());     
        }
     }
 
@@ -860,7 +860,7 @@ class QuestionsController extends Controller
 
         $input = $request->all();
 
-        $quiz_question=htmlentities($input['get_question_preview']);
+        $quiz_question=htmlentities($input['get_question_preview']); 
         $quiz_question_latex="";
 
         if($input['get_answer_exp_preview']=="")
@@ -993,7 +993,7 @@ class QuestionsController extends Controller
       		}
       		else{
 	      			try{
-	  				$question = new Question;
+	  				       $question = new Question;
 	                $question->topic_id=$request->topic_id;
 	                $question->question=$quiz_question;
                   $question->question_latex=$quiz_question_latex;

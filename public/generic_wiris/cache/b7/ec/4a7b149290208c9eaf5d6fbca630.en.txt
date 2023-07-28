@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 fourth cross times 2 1 half over denominator 12 divided by 1 1 half end fraction.\n"},"status":"ok"}

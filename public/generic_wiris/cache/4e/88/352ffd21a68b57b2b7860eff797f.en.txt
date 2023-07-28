@@ -1,0 +1,1 @@
+{"result":{"text":"space left curly bracket straight x colon negative 2 less than straight x less or equal than 10 right curly bracket comma"},"status":"ok"}

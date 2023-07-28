@@ -1,0 +1,1 @@
+{"result":{"text":"If space fraction numerator square root of 2 plus square root of 3 over denominator square root of 3 end fraction is space simplified space as space straight m plus straight n square root of 6 comma space find space the space value space of space left parenthesis straight m plus straight n right parenthesis.\n\nspace"},"status":"ok"}

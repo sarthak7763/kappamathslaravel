@@ -1,0 +1,1 @@
+{"result":{"text":"4 over 3 square root of 2"},"status":"ok"}

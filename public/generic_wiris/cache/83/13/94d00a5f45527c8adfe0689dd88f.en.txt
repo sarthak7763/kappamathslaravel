@@ -1,0 +1,1 @@
+{"result":{"text":"P intersection Q intersection R."},"status":"ok"}

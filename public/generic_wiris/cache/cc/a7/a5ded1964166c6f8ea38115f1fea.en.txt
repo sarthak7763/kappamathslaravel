@@ -1,0 +1,1 @@
+{"result":{"text":"In space the space diagram space above comma space straight X space and space straight Y space are space finite space sets.\nwhich space of space the space following space statements space is bold space bold true bold space bold ? bold space"},"status":"ok"}

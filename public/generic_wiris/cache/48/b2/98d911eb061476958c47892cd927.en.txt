@@ -1,0 +1,1 @@
+{"result":{"text":"1.47 cross times 10 squared"},"status":"ok"}

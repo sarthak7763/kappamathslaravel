@@ -1,0 +1,1 @@
+{"result":{"text":"75.00"},"status":"ok"}

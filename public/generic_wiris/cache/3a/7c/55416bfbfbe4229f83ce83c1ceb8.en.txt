@@ -1,0 +1,1 @@
+{"result":{"text":"P equals open curly brackets 1 comma 2 close curly brackets comma space Q equals open curly brackets 1 comma 2 comma 3 comma 4 comma 5 comma 6 close curly brackets.\nspace P intersection Q ?"},"status":"ok"}

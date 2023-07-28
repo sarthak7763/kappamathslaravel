@@ -1,0 +1,1 @@
+{"result":{"text":"n left parenthesis P intersection Q apostrophe right parenthesis"},"status":"ok"}

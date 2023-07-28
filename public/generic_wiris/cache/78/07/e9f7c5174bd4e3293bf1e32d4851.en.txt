@@ -1,0 +1,1 @@
+{"result":{"text":"I f space P subset of Q space a n d space Q subset of R comma space t h e n space P subset of R.\nT h e space c o r r e c t space i l l u s t r a t i o n space o f space s e t s space P comma space Q space a n d space R space i s colon thin space"},"status":"ok"}

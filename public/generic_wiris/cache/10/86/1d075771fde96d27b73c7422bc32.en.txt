@@ -1,0 +1,1 @@
+{"result":{"text":"If space square root of 75 plus square root of 27 plus straight k square root of 3 equals 0 comma\nfind space the space value space of space straight k.\n"},"status":"ok"}

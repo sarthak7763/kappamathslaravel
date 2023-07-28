@@ -1,0 +1,1 @@
+{"result":{"text":"Evaluate colon space 2 square root of 28 minus 3 square root of 50 plus square root of 72.\n"},"status":"ok"}

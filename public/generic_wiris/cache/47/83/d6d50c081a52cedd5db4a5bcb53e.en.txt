@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 3.09 right parenthesis squared equals 9.5481 equals 9.5 space left parenthesis 1 space d. p. right parenthesis"},"status":"ok"}

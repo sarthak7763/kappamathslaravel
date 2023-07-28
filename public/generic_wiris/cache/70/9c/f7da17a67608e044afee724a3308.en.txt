@@ -1,0 +1,1 @@
+{"result":{"text":"6.02 cross times 10 to the power of 9"},"status":"ok"}

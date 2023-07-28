@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 3 begin inline style 1 fourth end style plus 4 begin inline style 1 fourth end style right parenthesis divided by left parenthesis begin inline style 5 over 6 end style minus begin inline style 2 over 3 end style right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 begin inline style 1 half end style minus 1 begin inline style 1 third end style cross times 2 begin inline style 5 over 8 end style."},"status":"ok"}

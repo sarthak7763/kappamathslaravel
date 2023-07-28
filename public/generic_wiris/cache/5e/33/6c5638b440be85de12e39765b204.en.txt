@@ -1,0 +1,1 @@
+{"result":{"text":"straight x greater than negative 2"},"status":"ok"}

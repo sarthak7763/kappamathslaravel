@@ -1,0 +1,1 @@
+{"result":{"text":"U equals left curly bracket x colon 0 less or equal than x less or equal than 6 right curly bracket"},"status":"ok"}

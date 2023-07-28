@@ -1,0 +1,1 @@
+{"result":{"text":"n left parenthesis P intersection Q intersection R right parenthesis equals 0"},"status":"ok"}
