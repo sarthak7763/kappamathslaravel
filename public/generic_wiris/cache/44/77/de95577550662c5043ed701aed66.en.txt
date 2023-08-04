@@ -1,0 +1,1 @@
+{"result":{"text":"angle E W Z equals 70 degree"},"status":"ok"}

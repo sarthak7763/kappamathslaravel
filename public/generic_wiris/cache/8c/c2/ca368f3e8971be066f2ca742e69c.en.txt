@@ -1,0 +1,1 @@
+{"result":{"text":"112 subscript 7 equals 322 subscript 4"},"status":"ok"}

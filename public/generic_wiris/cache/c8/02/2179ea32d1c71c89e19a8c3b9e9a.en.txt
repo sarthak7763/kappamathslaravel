@@ -1,0 +1,1 @@
+{"result":{"text":"3 x comma space left parenthesis 6 x minus 5 right parenthesis comma space 9 x"},"status":"ok"}

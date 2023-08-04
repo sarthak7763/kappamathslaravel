@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 4 m minus 15 equals m plus 75\nrightwards double arrow 4 m minus m equals 75 plus 15\nrightwards double arrow 3 m equals 90\nm equals 30"},"status":"ok"}

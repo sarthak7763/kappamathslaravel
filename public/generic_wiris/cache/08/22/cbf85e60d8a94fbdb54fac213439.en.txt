@@ -1,0 +1,1 @@
+{"result":{"text":"equals 180 left parenthesis n minus 2 right parenthesis equals 180 left parenthesis 6 minus 2 right parenthesis equals 180 left parenthesis 4 right parenthesis equals 720 degree\ntherefore 2 r plus 3 r plus 2 r plus 5 r plus r plus 2 r equals 720\n15 r equals 720\nr equals 720 over 15 equals 48 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 1 half left parenthesis a minus b minus c right parenthesis end style"},"status":"ok"}

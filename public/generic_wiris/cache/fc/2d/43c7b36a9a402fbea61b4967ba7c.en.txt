@@ -1,0 +1,1 @@
+{"result":{"text":"23 subscript x plus 101 subscript x equals 130 subscript x"},"status":"ok"}

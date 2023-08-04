@@ -1,0 +1,1 @@
+{"result":{"text":"angle T P Q equals 108 degree\nx plus y equals 108 degree\n36 degree plus y equals 108 degree\ny equals 108 degree minus 36 degree\ny equals 72 degree\ntherefore angle S P Q equals 72 degree"},"status":"ok"}

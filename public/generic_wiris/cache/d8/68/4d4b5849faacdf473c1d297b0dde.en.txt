@@ -1,0 +1,1 @@
+{"result":{"text":"p squared q squared minus 6 p q r plus 9 r squared\n"},"status":"ok"}

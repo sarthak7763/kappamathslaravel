@@ -1,0 +1,1 @@
+{"result":{"text":"6 a x minus 12 b y minus 9 a y plus 8 b x\nequals 6 a x minus 9 a y plus 8 b x minus 12 b y\nequals 3 a left parenthesis 2 x minus 3 y right parenthesis plus 4 b left parenthesis 2 x minus 3 y right parenthesis\nequals left parenthesis 3 a plus 4 b right parenthesis left parenthesis 2 x minus 3 y right parenthesis"},"status":"ok"}

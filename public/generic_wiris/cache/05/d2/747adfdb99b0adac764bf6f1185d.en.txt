@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 3 m over denominator 9 m squared minus 1 end fraction minus fraction numerator 1 over denominator 2 left parenthesis 3 m minus 1 end fraction"},"status":"ok"}

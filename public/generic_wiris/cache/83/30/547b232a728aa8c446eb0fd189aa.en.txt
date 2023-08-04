@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 4 x squared plus 3 x minus 1 right parenthesis left parenthesis 3 x plus 1 right parenthesis\nequals 12 x cubed plus 4 x squared plus 9 x squared plus 3 x minus 3 x minus 1\n12 x cubed plus 13 x squared plus 0 x minus 1\n"},"status":"ok"}

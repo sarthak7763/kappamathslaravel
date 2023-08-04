@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 62 degree plus 48 plus x equals 360 degree\nrightwards double arrow 310 degree plus x equals 360 degree\nx equals 360 degree minus 310 degree equals 50 degree"},"status":"ok"}

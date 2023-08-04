@@ -1,0 +1,1 @@
+{"result":{"text":"equals 30 x minus left parenthesis 22 x minus 4 right parenthesis\nequals 30 x minus 22 x plus 4 equals 8 x plus 4"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x squared plus 2 x minus 3 over denominator x minus 1 end fraction comma space x not equal to 1"},"status":"ok"}

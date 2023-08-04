@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow theta equals fraction numerator 130 degree plus 140 degree over denominator 2 end fraction equals fraction numerator 270 degree over denominator 2 end fraction equals 135 degree\nrightwards double arrow"},"status":"ok"}

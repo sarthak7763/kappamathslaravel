@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 3 over denominator x plus 3 end fraction minus fraction numerator 2 left parenthesis x minus 3 right parenthesis over denominator x squared minus 9 end fraction"},"status":"ok"}

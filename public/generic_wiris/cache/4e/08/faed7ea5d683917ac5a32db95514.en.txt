@@ -1,0 +1,1 @@
+{"result":{"text":"23 subscript y equals 1111 subscript t w o end subscript"},"status":"ok"}

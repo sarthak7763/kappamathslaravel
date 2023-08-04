@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 x plus 1 over denominator 2 end fraction minus fraction numerator 3 x minus 7 over denominator 9 end fraction minus 5 over 18"},"status":"ok"}

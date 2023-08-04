@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style fraction numerator 20 square root of 3 over denominator 3 end fraction end style space c m"},"status":"ok"}

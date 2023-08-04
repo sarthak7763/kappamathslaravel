@@ -1,0 +1,1 @@
+{"result":{"text":"7 x squared space plus 33 x minus 10\nequals 7 x squared plus 35 x minus 2 x minus 10\nequals 7 x left parenthesis x plus 5 right parenthesis minus 2 left parenthesis x plus 5 right parenthesis\nequals left parenthesis 7 x minus 2 right parenthesis left parenthesis x minus 5 right parenthesis"},"status":"ok"}

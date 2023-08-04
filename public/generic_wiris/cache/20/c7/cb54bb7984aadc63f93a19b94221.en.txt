@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator z over denominator z plus 2 end fraction minus fraction numerator z minus 2 over denominator z minus 3 end fraction"},"status":"ok"}

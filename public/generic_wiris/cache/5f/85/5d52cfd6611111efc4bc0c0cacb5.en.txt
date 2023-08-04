@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator begin display style fraction numerator space space space 5162 over denominator negative 2644 end fraction end style over denominator space space space 2 asterisk times space 1 space 5 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"space space space space space 3 minus x minus 2 x squared\nequals 3 minus 3 x plus 2 x minus 2 x squared\nequals 3 left parenthesis 1 minus x right parenthesis plus 2 x left parenthesis 1 minus x right parenthesis\nequals left parenthesis 2 x plus 3 right parenthesis left parenthesis 1 minus x right parenthesis"},"status":"ok"}

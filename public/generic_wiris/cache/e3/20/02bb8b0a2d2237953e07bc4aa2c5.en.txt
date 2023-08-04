@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator left parenthesis p minus r right parenthesis squared minus r squared over denominator 2 p squared minus 4 p r end fraction"},"status":"ok"}

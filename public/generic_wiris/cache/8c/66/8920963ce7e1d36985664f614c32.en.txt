@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q P H equals angle E F H equals 50 degree"},"status":"ok"}

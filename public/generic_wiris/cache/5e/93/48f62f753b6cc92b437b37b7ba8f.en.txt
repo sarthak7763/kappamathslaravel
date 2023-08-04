@@ -1,0 +1,1 @@
+{"result":{"text":"3 left parenthesis 3 y minus 1 right parenthesis left parenthesis 6 y minus 5 right parenthesis."},"status":"ok"}

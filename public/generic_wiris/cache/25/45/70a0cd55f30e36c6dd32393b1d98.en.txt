@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P Q R equals angle P S T equals 75 degree\n"},"status":"ok"}

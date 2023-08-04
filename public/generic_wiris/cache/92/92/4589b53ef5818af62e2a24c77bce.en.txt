@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Y Z X plus angle F Y Z equals 180 degree\nrightwards double arrow p plus 40 degree plus 60 degree equals 180 degree\nrightwards double arrow p plus 100 degree equals 180 degree\nrightwards double arrow p plus 100 degree equals 180 degree\nrightwards double arrow p equals 180 degree minus 100 degree equals 80 degree"},"status":"ok"}

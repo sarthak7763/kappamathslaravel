@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator negative x minus 9 over denominator x squared minus 25 end fraction"},"status":"ok"}

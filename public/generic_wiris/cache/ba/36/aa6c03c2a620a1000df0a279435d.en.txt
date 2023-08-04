@@ -1,0 +1,1 @@
+{"result":{"text":"increment P S T colon\nx plus x plus 108 degree equals 180 degree\n2 x equals 180 degree minus 108 degree\n2 x equals 72 degree\nx equals 36 degree space"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis x minus square root of 2 right parenthesis end root left parenthesis x plus square root of 2 right parenthesis\nequals x squared minus left parenthesis square root of 2 right parenthesis end root squared\nequals x squared minus 2"},"status":"ok"}

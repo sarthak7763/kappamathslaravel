@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 180 left parenthesis n minus 2 right parenthesis equals 135 n"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"20 square root of 3 space end root c m"},"status":"ok"}

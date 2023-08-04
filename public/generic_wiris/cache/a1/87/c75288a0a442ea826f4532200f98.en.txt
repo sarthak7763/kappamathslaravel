@@ -1,0 +1,1 @@
+{"result":{"text":"38 degree plus 71 degree plus a equals 180 degree."},"status":"ok"}

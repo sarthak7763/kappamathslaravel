@@ -1,0 +1,1 @@
+{"result":{"text":"y equals fraction numerator x plus 3 over denominator x squared minus 4 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Y X W equals 60 degree\nrightwards double arrow angle U X Y plus 25 degree equals 60 degree\nrightwards double arrow angle U X Y equals 60 degree minus 25 degree\nequals 35 degree"},"status":"ok"}

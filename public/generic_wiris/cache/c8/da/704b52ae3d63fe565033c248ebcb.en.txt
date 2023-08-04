@@ -1,0 +1,1 @@
+{"result":{"text":"angle M Q S."},"status":"ok"}

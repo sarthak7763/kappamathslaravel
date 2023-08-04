@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator m k over denominator 3 m plus 3 k end fraction cross times fraction numerator m plus k over denominator m end fraction\nfraction numerator m k over denominator 3 left parenthesis m plus k right parenthesis end fraction cross times fraction numerator m plus k over denominator m end fraction\nequals k over 3"},"status":"ok"}

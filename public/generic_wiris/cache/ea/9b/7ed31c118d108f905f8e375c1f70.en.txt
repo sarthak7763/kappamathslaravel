@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator begin display style fraction numerator begin display style 11011 subscript 2 over 11111 subscript 2 end style over denominator plus 10000 subscript 2 end fraction end style over denominator 1001010 subscript 2 end fraction\ntherefore\n\n\nspace space space\n"},"status":"ok"}

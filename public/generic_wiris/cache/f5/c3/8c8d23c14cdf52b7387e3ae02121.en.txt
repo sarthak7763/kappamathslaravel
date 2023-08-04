@@ -1,0 +1,1 @@
+{"result":{"text":"25 a squared minus 4 equals left parenthesis 5 a right parenthesis squared minus 2 squared\nequals left parenthesis 5 a minus 2 right parenthesis left parenthesis 5 a plus 2 right parenthesis"},"status":"ok"}

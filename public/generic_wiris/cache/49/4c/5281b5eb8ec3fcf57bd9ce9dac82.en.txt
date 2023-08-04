@@ -1,0 +1,1 @@
+{"result":{"text":"9 x squared t squared minus 1\nequals space left parenthesis 3 x t right parenthesis squared minus 1 squared\nequals left parenthesis 3 x t minus 1 right parenthesis left parenthesis 3 x t plus 1 right parenthesis\n\n"},"status":"ok"}

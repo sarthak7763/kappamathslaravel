@@ -1,0 +1,1 @@
+{"result":{"text":"bevelled fraction numerator 2 over denominator 3 space plus space end fraction square root of 5\n2 over 3 space plus space square root of 5"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle S P T equals angle P S T equals x"},"status":"ok"}

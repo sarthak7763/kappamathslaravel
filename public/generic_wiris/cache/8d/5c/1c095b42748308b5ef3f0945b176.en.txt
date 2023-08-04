@@ -1,0 +1,1 @@
+{"result":{"text":"3 x plus 6 x minus 5 plus 9 x plus 4 x plus 1 equals 22 x minus 4"},"status":"ok"}

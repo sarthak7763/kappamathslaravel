@@ -1,0 +1,1 @@
+{"result":{"text":"\ntable row cell bold 2 bold space bold space end cell bold 5 cell bold space bold space bold R end cell row 2 2 1 row 2 1 0 row blank 0 1 end table\ntherefore space straight Y equals 101 subscript 2\n"},"status":"ok"}

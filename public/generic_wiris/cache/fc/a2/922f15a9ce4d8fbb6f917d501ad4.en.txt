@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 60 degree plus 35 degree equals 180 degree\nx plus 95 degree equals 180 degree\nx equals 180 degree minus 95 degree equals 85 degree"},"status":"ok"}

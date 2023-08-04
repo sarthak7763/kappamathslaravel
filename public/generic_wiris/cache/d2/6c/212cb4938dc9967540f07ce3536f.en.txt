@@ -1,0 +1,1 @@
+{"result":{"text":"a over b minus b over a minus c over b\nequals fraction numerator a squared minus b squared minus a c over denominator a b end fraction"},"status":"ok"}

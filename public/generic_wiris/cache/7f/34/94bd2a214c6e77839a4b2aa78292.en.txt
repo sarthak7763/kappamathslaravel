@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator begin display style fraction numerator space space 303 subscript 5 over denominator plus space 104 subscript 5 end fraction end style over denominator space space space space space 412 subscript 5 end fraction"},"status":"ok"}

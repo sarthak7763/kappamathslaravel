@@ -1,0 +1,1 @@
+{"result":{"text":"n squared minus 5 n minus 6 equals 0\nleft parenthesis n plus 1 right parenthesis left parenthesis n minus 6 right parenthesis equals 0\nn equals 1 comma space n equals 6\nn equals 6"},"status":"ok"}

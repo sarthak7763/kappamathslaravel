@@ -1,0 +1,1 @@
+{"result":{"text":"M subscript 6 equals 123 subscript 5 space\n"},"status":"ok"}

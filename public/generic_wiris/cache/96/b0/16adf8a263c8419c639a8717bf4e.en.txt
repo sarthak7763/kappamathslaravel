@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus 22 degree plus 58 degree plus 41 degree equals 360 degree\nrightwards double arrow x plus 121 degree equals 360 degree\nrightwards double arrow x equals 360 degree minus 121 degree\nrightwards double arrow x equals 239 degree"},"status":"ok"}

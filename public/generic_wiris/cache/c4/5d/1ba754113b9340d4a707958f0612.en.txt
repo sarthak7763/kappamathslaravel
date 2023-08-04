@@ -1,0 +1,1 @@
+{"result":{"text":"angle S U T equals 42 degree"},"status":"ok"}

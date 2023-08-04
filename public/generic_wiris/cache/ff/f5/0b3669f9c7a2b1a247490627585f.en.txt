@@ -1,0 +1,1 @@
+{"result":{"text":"angle P S R equals 22 degree comma space space angle S P Q equals 58 degree"},"status":"ok"}

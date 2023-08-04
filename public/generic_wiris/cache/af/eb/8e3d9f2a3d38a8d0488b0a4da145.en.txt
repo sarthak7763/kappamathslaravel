@@ -1,0 +1,1 @@
+{"result":{"text":"angle U W X equals angle U X W equals n\nrightwards double arrow n plus n plus 130 degree equals 180 degree\nrightwards double arrow 2 n equals 180 degree minus 130 degree\nrightwards double arrow 2 n equals 50 degree\nrightwards double arrow n equals 25 degree\nrightwards double arrow angle U X W equals 25 degree"},"status":"ok"}

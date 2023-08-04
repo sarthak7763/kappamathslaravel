@@ -1,0 +1,1 @@
+{"result":{"text":"M subscript s i x space end subscript equals 123 subscript f i v e end subscript"},"status":"ok"}

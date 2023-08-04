@@ -1,0 +1,1 @@
+{"result":{"text":"19 subscript t w e l v e comma end subscript 30 subscript s i x comma end subscript space 23 subscript s e v e n comma end subscript space 20 subscript e i g h t comma end subscript"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 k left parenthesis h plus 2 k right parenthesis"},"status":"ok"}

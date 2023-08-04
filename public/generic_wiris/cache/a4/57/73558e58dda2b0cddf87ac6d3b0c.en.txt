@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 3 x plus 5 right parenthesis degree plus left parenthesis x plus 2 right parenthesis degree plus 5 x degree plus left parenthesis 6 x minus 8 right parenthesis degree plus left parenthesis x plus 9 right parenthesis degree equals 360 degree\n16 x plus 8 degree equals 360 degree\n16 x equals 352 degree\nx equals 22 degree"},"status":"ok"}

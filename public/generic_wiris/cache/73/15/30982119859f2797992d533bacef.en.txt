@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 5 y squared z plus 8 y squared minus 7 right parenthesis space"},"status":"ok"}

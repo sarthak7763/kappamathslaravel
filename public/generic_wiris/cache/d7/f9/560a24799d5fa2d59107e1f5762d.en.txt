@@ -1,0 +1,1 @@
+{"result":{"text":"X subscript f o u r end subscript equals 145 subscript s i x end subscript"},"status":"ok"}

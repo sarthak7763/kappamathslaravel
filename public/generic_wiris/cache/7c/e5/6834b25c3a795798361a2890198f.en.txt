@@ -1,0 +1,1 @@
+{"result":{"text":"space straight X subscript four space end subscript equals 145 subscript six comma end subscript\n\n\n\n"},"status":"ok"}

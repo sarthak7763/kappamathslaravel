@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x degree plus 60 degree equals 2 x degree\nrightwards double arrow x degree minus 2 x degree equals negative 60\nrightwards double arrow negative x equals negative 60\ntherefore x equals 60"},"status":"ok"}

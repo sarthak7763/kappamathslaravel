@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 100 right parenthesis subscript 2 straight Y minus 11 subscript 2 left parenthesis straight Y minus 1 right parenthesis equals 1000 subscript 2\n\n"},"status":"ok"}

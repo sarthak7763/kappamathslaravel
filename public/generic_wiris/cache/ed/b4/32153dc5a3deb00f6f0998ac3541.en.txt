@@ -1,0 +1,1 @@
+{"result":{"text":"equals 180 left parenthesis n minus 2 right parenthesis equals 180 left parenthesis 6 minus 2 right parenthesis\nequals 180 left parenthesis 4 right parenthesis equals 720 degree\nH e n c e\n2 m plus 2 m plus 2 m plus 3 m plus 5 m plus m equals 720 degree\nequals 15 m equals 720 degree\nm equals 48 degree"},"status":"ok"}

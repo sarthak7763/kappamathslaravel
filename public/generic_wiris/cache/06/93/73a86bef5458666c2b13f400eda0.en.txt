@@ -1,0 +1,1 @@
+{"result":{"text":"equals 180 left parenthesis n minus 2 right parenthesis equals 180 left parenthesis 3 right parenthesis equals 540 degree\nrightwards double arrow 2 x plus x plus 2 x plus 3 x plus x equals 540 degree\nrightwards double arrow 9 x equals 540 degree\nrightwards double arrow x equals 60 degree"},"status":"ok"}

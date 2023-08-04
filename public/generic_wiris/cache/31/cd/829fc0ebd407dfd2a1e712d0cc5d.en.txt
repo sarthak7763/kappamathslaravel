@@ -1,0 +1,1 @@
+{"result":{"text":"W Û X equals 130 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 70 degree plus 30 degree plus angle L G W equals 180 degree\nrightwards double arrow 100 degree plus angle L G W equals 180 degree\nrightwards double arrow angle L G W equals 180 degree minus 100 degree equals 80 degree"},"status":"ok"}

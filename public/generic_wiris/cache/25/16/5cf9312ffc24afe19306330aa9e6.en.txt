@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x equals begin inline style 1 fourth end style left parenthesis 180 minus x right parenthesis\nrightwards double arrow 4 x equals 180 minus x\nrightwards double arrow 5 x equals 180\ntherefore x equals 36 degree"},"status":"ok"}

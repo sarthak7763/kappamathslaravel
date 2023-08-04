@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus n plus m equals 180 degree comma space space therefore x plus m plus n equals 180 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"m squared n minus 2 m n squared plus n cubed"},"status":"ok"}

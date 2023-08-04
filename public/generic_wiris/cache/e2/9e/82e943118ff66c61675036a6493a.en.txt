@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator begin display style fraction numerator n space n over denominator plus 1 end fraction end style over denominator 100 end fraction"},"status":"ok"}

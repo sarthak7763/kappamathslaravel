@@ -1,0 +1,1 @@
+{"result":{"text":"6 a x minus 12 b y minus 9 a y plus 8 b x"},"status":"ok"}

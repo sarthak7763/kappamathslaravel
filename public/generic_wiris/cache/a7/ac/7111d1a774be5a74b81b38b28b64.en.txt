@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator m squared minus n squared over denominator n minus m end fraction"},"status":"ok"}

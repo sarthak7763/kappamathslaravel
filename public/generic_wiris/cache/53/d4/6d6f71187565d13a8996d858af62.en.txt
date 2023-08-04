@@ -1,0 +1,1 @@
+{"result":{"text":"3 a x plus y minus 3 x minus a y\nequals 3 a x minus 3 x minus a y plus y\nequals 3 x left parenthesis a minus 1 right parenthesis minus y left parenthesis a minus 1 right parenthesis\nequals left parenthesis a minus 1 right parenthesis left parenthesis 3 x minus y right parenthesis\n"},"status":"ok"}

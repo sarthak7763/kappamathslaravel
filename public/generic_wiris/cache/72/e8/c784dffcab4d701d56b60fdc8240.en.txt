@@ -1,0 +1,1 @@
+{"result":{"text":"12 r plus 16 s\nequals 4 left parenthesis 3 r plus 4 s right parenthesis"},"status":"ok"}

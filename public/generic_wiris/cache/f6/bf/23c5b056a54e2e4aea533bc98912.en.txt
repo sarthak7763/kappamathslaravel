@@ -1,0 +1,1 @@
+{"result":{"text":"54 y squared minus 63 y plus 15"},"status":"ok"}

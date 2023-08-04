@@ -1,0 +1,1 @@
+{"result":{"text":"angle P N M equals 90 degree"},"status":"ok"}

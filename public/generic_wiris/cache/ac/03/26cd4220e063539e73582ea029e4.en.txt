@@ -1,0 +1,1 @@
+{"result":{"text":"2 x y minus 6 p q minus 3 p y plus 4 q x\nequals 2 x y plus 4 q x minus 3 p y minus 6 p q\nequals 2 x left parenthesis y plus 2 q right parenthesis minus 3 p left parenthesis y plus 2 q right parenthesis\nequals left parenthesis y plus 2 q right parenthesis left parenthesis 2 x minus 3 p right parenthesis"},"status":"ok"}

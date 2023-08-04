@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 180 left parenthesis n minus 2 right parenthesis over denominator n end fraction equals 135 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus 90 degree equals 110\nrightwards double arrow x equals 110 degree minus 90 degree equals 20 degree\n"},"status":"ok"}

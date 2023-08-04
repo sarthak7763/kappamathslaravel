@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 360 degree over denominator n end fraction\nrightwards double arrow 45 degree equals fraction numerator 360 degree over denominator n end fraction\nrightwards double arrow n equals fraction numerator 360 degree over denominator 45 degree end fraction equals 8\n"},"status":"ok"}

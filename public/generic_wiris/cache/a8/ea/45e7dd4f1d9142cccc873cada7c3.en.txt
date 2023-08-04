@@ -1,0 +1,1 @@
+{"result":{"text":"t r minus p s minus p t plus r s ?"},"status":"ok"}

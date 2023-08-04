@@ -1,0 +1,1 @@
+{"result":{"text":"10 m 10 n 0 subscript 2\nm equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q S R plus 38 degree plus 42 degree equals 180 degree\nrightwards double arrow angle Q S R plus 80 degree equals 180 degree\nrightwards double arrow angle Q S R equals 180 degree minus 80 equals 100 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"7 x squared plus 33 x minus 10 space"},"status":"ok"}

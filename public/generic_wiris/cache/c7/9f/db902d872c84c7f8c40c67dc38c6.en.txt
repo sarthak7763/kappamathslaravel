@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 180 n minus 360 equals 135 n\nrightwards double arrow 180 n minus 135 n equals 360\nrightwards double arrow 45 n equals 360\nrightwards double arrow n equals 8\ntherefore"},"status":"ok"}

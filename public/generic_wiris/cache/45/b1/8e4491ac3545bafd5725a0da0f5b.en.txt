@@ -1,0 +1,1 @@
+{"result":{"text":"9 r squared minus 16 s squared\nequals left parenthesis 3 r minus 4 s right parenthesis left parenthesis 3 r plus 4 s right parenthesis\n"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q N P equals 27 degree"},"status":"ok"}

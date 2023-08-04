@@ -1,0 +1,1 @@
+{"result":{"text":"S R Q equals 360 degree minus 160 degree equals 200 degree"},"status":"ok"}

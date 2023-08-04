@@ -1,0 +1,1 @@
+{"result":{"text":"4 left parenthesis begin inline style 1 half end style m plus 3 n"},"status":"ok"}
