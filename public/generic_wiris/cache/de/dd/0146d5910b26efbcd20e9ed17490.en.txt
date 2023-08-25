@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 125 equals 180 degree space rightwards double arrow x equals 180 degree minus 125 degree equals 55 degree"},"status":"ok"}

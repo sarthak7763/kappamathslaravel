@@ -1,0 +1,1 @@
+{"result":{"text":"u equals square root of 25 minus 16 v squared end root"},"status":"ok"}

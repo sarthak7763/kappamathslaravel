@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle M N P plus angle P N O equals 180 degree\n4 a plus a equals 180 degree\n5 a equals 180 degree\na equals 36 degree"},"status":"ok"}

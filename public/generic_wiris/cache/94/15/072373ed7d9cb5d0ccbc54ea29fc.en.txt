@@ -1,0 +1,1 @@
+{"result":{"text":"space space space space space space space x plus theta equals 360 degree\n230 degree plus theta equals 360 degree\nspace space space space space space space space space space space space theta equals 130 degree\nspace space space space space space space space space space space space"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle T Q U plus angle Q T U plus Q U T equals 180 degree\nangle T Q U plus 48 degree plus 60 degree equals 180 degree\nangle T Q U plus 108 degree equals 180 degree\nangle T Q U plus 108 degree equals 180 degree\nangle T Q U equals 72 degree"},"status":"ok"}

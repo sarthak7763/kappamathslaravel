@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 3 x plus 60 degree plus 60 degree plus 60 degree equals 540 degree\n5 x plus 180 degree equals 540 degree\n5 x equals 540 degree minus 180 degree equals 360 degree\n5 x equals 360 degree\nx equals 72 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals left parenthesis 5 minus 2 right parenthesis cross times 180 degree space equals 3 cross times 180 degree equals space 540 degree"},"status":"ok"}

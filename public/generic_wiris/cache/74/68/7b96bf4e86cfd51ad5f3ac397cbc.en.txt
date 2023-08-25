@@ -1,0 +1,1 @@
+{"result":{"text":"x plus y plus angle X O Z equals 180 degree.............. left parenthesis 2 right parenthesis"},"status":"ok"}

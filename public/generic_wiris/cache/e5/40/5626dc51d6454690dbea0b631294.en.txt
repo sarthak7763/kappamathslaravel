@@ -1,0 +1,1 @@
+{"result":{"text":"N 3 comma 000000.00"},"status":"ok"}

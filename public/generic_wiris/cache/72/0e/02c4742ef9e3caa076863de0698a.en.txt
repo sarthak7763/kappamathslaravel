@@ -1,0 +1,1 @@
+{"result":{"text":"k equals cube root of fraction numerator a x minus R over denominator z plus b x end fraction end root"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"a x minus R minus k cubed b x space"},"status":"ok"}

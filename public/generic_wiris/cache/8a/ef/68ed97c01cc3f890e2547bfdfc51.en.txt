@@ -1,0 +1,1 @@
+{"result":{"text":"4 x plus 1 greater or equal than x plus 7 space"},"status":"ok"}

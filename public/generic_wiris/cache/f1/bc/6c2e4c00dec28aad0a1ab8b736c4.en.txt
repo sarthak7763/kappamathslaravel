@@ -1,0 +1,1 @@
+{"result":{"text":"y degree comma space 2 x degree comma space 3 x degree comma space 2 x degree"},"status":"ok"}

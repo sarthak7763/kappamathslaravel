@@ -1,0 +1,1 @@
+{"result":{"text":"equals y over 100 cross times m space equals space y over 100 cross times 20 over 3 r space equals fraction numerator r y over denominator 15 end fraction"},"status":"ok"}

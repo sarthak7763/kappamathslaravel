@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q O R plus R O S plus S O T equals 180 degree\n2 m plus 3 n minus 20 degree plus n equals 180 degree\n2 left parenthesis 30 degree right parenthesis plus 3 n minus 20 degree plus n equals 180 degree\n60 plus 3 n minus 20 degree plus n equals 180\n4 n plus 40 degree equals 180 degree\n4 n equals 140 degree\nn equals 35 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x plus y equals n x\ny equals n x minus x\ny equals x left parenthesis n minus 1 right parenthesis"},"status":"ok"}

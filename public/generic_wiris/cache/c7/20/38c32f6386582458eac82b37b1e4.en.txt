@@ -1,0 +1,1 @@
+{"result":{"text":"stack P T comma with bar on top space stack Q T comma with bar on top space stack R G with bar on top\n"},"status":"ok"}

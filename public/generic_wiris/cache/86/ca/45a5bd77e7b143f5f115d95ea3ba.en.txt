@@ -1,0 +1,1 @@
+{"result":{"text":"f greater or equal than N 3 comma 000 comma 000.00 greater than k"},"status":"ok"}

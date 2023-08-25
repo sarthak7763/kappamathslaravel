@@ -1,0 +1,1 @@
+{"result":{"text":"40 degree plus 54 degree plus x equals 180 degree\n94 plus x equals 180 degree\nx equals 180 degree minus 94 degree\nx equals 86 degree"},"status":"ok"}

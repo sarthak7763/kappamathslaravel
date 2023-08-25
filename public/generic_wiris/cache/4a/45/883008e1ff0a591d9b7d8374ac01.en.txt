@@ -1,0 +1,1 @@
+{"result":{"text":"x plus y plus z equals 130 degree"},"status":"ok"}

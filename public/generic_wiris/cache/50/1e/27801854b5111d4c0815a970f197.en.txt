@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space angle M N P equals space angle N P Q\nrightwards double arrow 2 x equals 3 x minus 50\n2 x minus 3 x equals negative 50\nminus x equals negative 50\nx equals 50\nangle N P Q equals 3 x minus 50 degree equals 3 left parenthesis 50 degree right parenthesis minus 50\nequals 150 degree minus 50 degree\nequals 100 degree"},"status":"ok"}

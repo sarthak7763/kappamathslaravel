@@ -1,0 +1,1 @@
+{"result":{"text":"p plus p plus 36 equals 180 rightwards double arrow 2 p equals 144 rightwards double arrow p equals 72 degree"},"status":"ok"}

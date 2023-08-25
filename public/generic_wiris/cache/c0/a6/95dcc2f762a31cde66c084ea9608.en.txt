@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space 150 plus 90 degree plus 45 degree plus angle P Q R equals 360 degree\n285 plus angle P Q R equals 360 degree\nangle P Q R equals 360 degree minus 285 equals 75 degree"},"status":"ok"}

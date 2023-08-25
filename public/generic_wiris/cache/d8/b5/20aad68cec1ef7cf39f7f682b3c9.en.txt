@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator 3 y N over denominator 2 end fraction equals open parentheses square root of x squared plus m end root space close parentheses"},"status":"ok"}

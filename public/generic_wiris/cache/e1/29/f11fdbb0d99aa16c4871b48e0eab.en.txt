@@ -1,0 +1,1 @@
+{"result":{"text":"x over 2 minus 1 fifth equals x over 3 plus 1 fourth"},"status":"ok"}

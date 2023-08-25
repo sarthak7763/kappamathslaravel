@@ -1,0 +1,1 @@
+{"result":{"text":"P equals 5 minus x"},"status":"ok"}

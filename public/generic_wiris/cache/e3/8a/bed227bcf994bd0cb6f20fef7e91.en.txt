@@ -1,0 +1,1 @@
+{"result":{"text":"z equals fraction numerator y squared plus 1 over denominator y squared plus x end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 left parenthesis plus 1 right parenthesis less or equal than 5 left parenthesis x plus 2 right parenthesis plus 15"},"status":"ok"}

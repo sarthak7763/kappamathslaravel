@@ -1,0 +1,1 @@
+{"result":{"text":"y equals x squared plus 1 space ?"},"status":"ok"}

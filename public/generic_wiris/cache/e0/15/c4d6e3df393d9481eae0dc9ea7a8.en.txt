@@ -1,0 +1,1 @@
+{"result":{"text":"k equals fraction numerator H T over denominator left parenthesis T minus 1 right parenthesis squared end fraction"},"status":"ok"}

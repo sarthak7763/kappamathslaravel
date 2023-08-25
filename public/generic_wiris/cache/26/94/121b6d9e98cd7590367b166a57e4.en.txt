@@ -1,0 +1,1 @@
+{"result":{"text":"x plus x plus y plus y equals 180 degree\n2 x plus 2 y equals 180 degree"},"status":"ok"}

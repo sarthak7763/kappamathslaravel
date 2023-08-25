@@ -1,0 +1,1 @@
+{"result":{"text":"angle T X W equals space 60 degree"},"status":"ok"}

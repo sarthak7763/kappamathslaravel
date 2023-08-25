@@ -1,0 +1,1 @@
+{"result":{"text":"T equals space square root of fraction numerator T k minus H over denominator k minus H end fraction end root"},"status":"ok"}

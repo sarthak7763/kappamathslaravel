@@ -1,0 +1,1 @@
+{"result":{"text":"angle S T U equals angle R S T equals 68 degree"},"status":"ok"}

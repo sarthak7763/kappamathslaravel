@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line P M vertical line equals 10 space c m comma space vertical line M N vertical line equals 6 space c m"},"status":"ok"}

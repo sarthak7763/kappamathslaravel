@@ -1,0 +1,1 @@
+{"result":{"text":"angle P R T equals 100 degree"},"status":"ok"}

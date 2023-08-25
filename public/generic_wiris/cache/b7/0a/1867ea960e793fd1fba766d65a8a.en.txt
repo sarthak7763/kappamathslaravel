@@ -1,0 +1,1 @@
+{"result":{"text":"angle S P Q equals 113 degree"},"status":"ok"}

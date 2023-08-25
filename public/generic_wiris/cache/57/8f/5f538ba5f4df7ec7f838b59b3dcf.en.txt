@@ -1,0 +1,1 @@
+{"result":{"text":"M Q divided by divided by P Q comma space vertical line N P vertical line equals vertical line P O vertical line space angle M N P equals 4 a degree"},"status":"ok"}

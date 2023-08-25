@@ -1,0 +1,1 @@
+{"result":{"text":"x plus y equals negative 10 over 12\nx plus y equals negative 5 over 6"},"status":"ok"}

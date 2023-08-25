@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator left parenthesis n minus 2 right parenthesis cross times 180 degree over denominator n end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"v equals fraction numerator square root of 25 minus u squared end root over denominator 4 end fraction\n4 v equals square root of 25 minus u squared end root"},"status":"ok"}

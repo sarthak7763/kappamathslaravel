@@ -1,0 +1,1 @@
+{"result":{"text":"1 over R equals 1 over 6 plus 1 over 9"},"status":"ok"}

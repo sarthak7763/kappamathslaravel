@@ -1,0 +1,1 @@
+{"result":{"text":"I. space left parenthesis 3 comma 8 right parenthesis space space space space space I I. space left parenthesis 2 square root of 2 comma end root 9 right parenthesis space space space space space space I I I. space left parenthesis 2 square root of 2 comma end root 8 right parenthesis\n"},"status":"ok"}

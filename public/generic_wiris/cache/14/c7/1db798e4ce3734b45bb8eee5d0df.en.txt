@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 68 degree plus 246 degree equals 360 degree\nx plus 314 degree equals 360 degree\nx equals 360 degree minus 314 degree\nx equals 46 degree"},"status":"ok"}

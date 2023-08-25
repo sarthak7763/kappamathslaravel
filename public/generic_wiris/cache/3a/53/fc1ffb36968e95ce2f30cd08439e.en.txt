@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle P Q R plus angle Q R P equals N P R\ntherefore angle N P R equals 50 plus 80 equals 130 degree"},"status":"ok"}

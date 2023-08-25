@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 3 over 4 end style x plus 2 begin inline style 1 half end style x equals 13\nbegin inline style 3 over 4 end style x plus begin inline style 5 over 2 end style x equals 13"},"status":"ok"}

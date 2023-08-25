@@ -1,0 +1,1 @@
+{"result":{"text":"angle R O S equals left parenthesis 3 n minus 20 degree right parenthesis comma space angle P O T equals 2 m comma angle S O T equals n comma angle P O L equals m"},"status":"ok"}

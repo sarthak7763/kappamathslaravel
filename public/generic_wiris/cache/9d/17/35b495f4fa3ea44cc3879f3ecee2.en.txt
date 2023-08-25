@@ -1,0 +1,1 @@
+{"result":{"text":"a colon b colon c equals 4 colon 3 colon 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis n minus 2 right parenthesis cross times 180 degree equals 3 equals 360 degree\n180 n minus 360 equals 1080\n180 n equals 1080 plus 360\n180 n equals 1440\nn equals 1440 over 180 equals 8"},"status":"ok"}

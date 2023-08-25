@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus m equals 180 degree\n2 left parenthesis 68 degree right parenthesis plus m equals 180 degree\n136 degree plus m equals 180 degree\nm equals 44 degree"},"status":"ok"}

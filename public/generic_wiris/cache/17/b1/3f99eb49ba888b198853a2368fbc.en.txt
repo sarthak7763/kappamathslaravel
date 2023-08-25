@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 2 x y right parenthesis to the power of negative 1 end exponent plus 4 over y to the power of negative 1 end exponent"},"status":"ok"}

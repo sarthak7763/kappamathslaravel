@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space angle R Q S equals angle Q S T equals 45 degree"},"status":"ok"}

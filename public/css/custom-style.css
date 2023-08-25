@@ -52,11 +52,29 @@ div.login-page{margin-bottom:40px;}
     right: 0;
     top: 10px;
 }
-
+.vertical-center {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: calc(100vh - 40px);
+}
 @media(max-width : 1600px){
 body div.login-page .logo{    width: 138.68px;
     height: 138.68px;}
+}
+@media(max-width:1366px){
+    .vertical-center .login-page {
+    padding-bottom: 0;
+}
 
+body div.login-page .logo {
+    width: 108.68px;
+    height: 108.68px;
+}
+
+.login-page .logo .login-logo {
+    width: 85%;
+}
 }
 @media(max-width : 767px){
 .vertical-center .login-page,  div.login-page {

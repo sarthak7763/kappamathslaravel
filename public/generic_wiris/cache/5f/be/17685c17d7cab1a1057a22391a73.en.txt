@@ -1,0 +1,1 @@
+{"result":{"text":"x over q minus 2 equals x over p"},"status":"ok"}

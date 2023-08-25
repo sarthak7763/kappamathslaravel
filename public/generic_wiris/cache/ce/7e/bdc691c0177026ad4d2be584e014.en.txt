@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 360 degree over denominator n end fraction space rightwards double arrow 30 degree equals fraction numerator 360 degree over denominator n end fraction space rightwards double arrow n equals fraction numerator 360 degree over denominator 30 degree end fraction equals 12"},"status":"ok"}

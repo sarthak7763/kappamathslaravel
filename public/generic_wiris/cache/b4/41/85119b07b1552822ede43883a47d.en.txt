@@ -1,0 +1,1 @@
+{"result":{"text":"m plus n equals 2 m\nm plus 80 equals 2 m\n80 degree equals 2 m minus m\n80 degree equals m\ntherefore space space space m equals 80 degree"},"status":"ok"}

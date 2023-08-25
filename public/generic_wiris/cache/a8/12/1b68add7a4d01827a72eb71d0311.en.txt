@@ -1,0 +1,1 @@
+{"result":{"text":"30 x minus 12 equals 20 x plus 15\n30 x minus 20 x equals 15 plus 12\n10 x equals 27\nx equals 2.7"},"status":"ok"}

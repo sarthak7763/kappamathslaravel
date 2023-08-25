@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space 140 degree plus z equals 180 degree\nz equals 180 degree plus 140 degree\nz equals 40 degree"},"status":"ok"}

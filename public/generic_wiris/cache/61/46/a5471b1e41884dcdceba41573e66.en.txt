@@ -1,0 +1,1 @@
+{"result":{"text":"n plus left parenthesis 180 minus x right parenthesis equals y space rightwards double arrow n plus 180 minus x equals y\nrightwards double arrow n equals x plus y minus 180\n"},"status":"ok"}

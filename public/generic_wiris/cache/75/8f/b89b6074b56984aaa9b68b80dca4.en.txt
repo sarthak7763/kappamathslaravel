@@ -1,0 +1,1 @@
+{"result":{"text":"5 over 9 less than fraction numerator 9 x over denominator 9 end fraction less than 8 over 9\ntherefore 5 over 9 less than x less than 8 over 9"},"status":"ok"}

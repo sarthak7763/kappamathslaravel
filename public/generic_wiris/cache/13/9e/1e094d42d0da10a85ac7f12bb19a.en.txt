@@ -1,0 +1,1 @@
+{"result":{"text":"m over n minus 1 7 over 9 plus n over r"},"status":"ok"}

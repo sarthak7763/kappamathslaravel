@@ -1,0 +1,1 @@
+{"result":{"text":"negative 1 fourth less than 3 over 4 left parenthesis 3 x minus 2 right parenthesis less than 1 half"},"status":"ok"}

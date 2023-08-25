@@ -1,0 +1,1 @@
+{"result":{"text":"angle Z Y X equals m"},"status":"ok"}

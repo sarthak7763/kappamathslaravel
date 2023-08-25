@@ -1,0 +1,1 @@
+{"result":{"text":"angle U Q T equals 70 degree"},"status":"ok"}

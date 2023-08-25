@@ -1,0 +1,1 @@
+{"result":{"text":"stack P Q space with bar on top divided by divided by stack S R with bar on top"},"status":"ok"}

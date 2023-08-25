@@ -1,0 +1,1 @@
+{"result":{"text":"m equals begin inline style 1 half end style left parenthesis x plus y plus z right parenthesis\nm equals begin inline style 1 half end style left parenthesis 180 minus m right parenthesis\n2 m equals 180 minus m\n2 m plus m equals 180 degree\n3 m equals 180 degree\nm equals 60 degree"},"status":"ok"}

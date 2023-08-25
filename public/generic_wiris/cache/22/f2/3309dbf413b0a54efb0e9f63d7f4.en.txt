@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle P Q U equals angle Q U T equals 55 degree"},"status":"ok"}

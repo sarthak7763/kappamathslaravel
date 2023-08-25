@@ -1,0 +1,1 @@
+{"result":{"text":"x plus x plus 108 degree equals 180 degree rightwards double arrow 2 x equals 72 rightwards double arrow x equals 36 degree\ntherefore angle Z M N equals 36 degree"},"status":"ok"}

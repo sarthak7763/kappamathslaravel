@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator r y over denominator 15 end fraction"},"status":"ok"}

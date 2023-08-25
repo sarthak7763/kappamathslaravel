@@ -1,0 +1,1 @@
+{"result":{"text":"5 y squared minus 16 y minus 380 equals 0"},"status":"ok"}

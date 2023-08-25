@@ -1,0 +1,1 @@
+{"result":{"text":"180 left parenthesis n minus 2 right parenthesis equals 180 left parenthesis 5 minus 2 right parenthesis equals 180 left parenthesis 3 right parenthesis equals 540 degree"},"status":"ok"}

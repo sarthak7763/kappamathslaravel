@@ -1,0 +1,1 @@
+{"result":{"text":"2 over 3 plus 2 over b equals fraction numerator 1 over denominator 15 over 4 end fraction\n2 over 3 plus 2 over b equals 4 over 15"},"status":"ok"}

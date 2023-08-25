@@ -1,0 +1,1 @@
+{"result":{"text":"3 x plus 2 left parenthesis x plus 10 equals 42 space space space rightwards double arrow space 3 x plus 2 x plus 2 equals 42\nrightwards double arrow 5 x equals 40 space space space space space space space space space space space space space space space space rightwards double arrow space x equals 8"},"status":"ok"}

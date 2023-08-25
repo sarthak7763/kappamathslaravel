@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle P S Q plus angle S P Q plus angle P Q S equals 180 degree\nspace space space angle P S Q plus 113 degree plus 22 equals 180 degree\nspace space space angle P S Q plus 135 degree equals 180 degree\nspace space space angle P S Q equals 45 degree"},"status":"ok"}

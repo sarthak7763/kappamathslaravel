@@ -1,0 +1,1 @@
+{"result":{"text":"2 less or equal than begin inline style 1 third end style left parenthesis 2 x minus 5 right parenthesis less or equal than 3"},"status":"ok"}

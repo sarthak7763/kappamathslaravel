@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis m plus n right parenthesis equals 120 degree"},"status":"ok"}

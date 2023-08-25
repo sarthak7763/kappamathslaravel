@@ -1,0 +1,1 @@
+{"result":{"text":"m plus n equals 120 degree................ left parenthesis 1 right parenthesis\nn plus r equals 100 degree.................. left parenthesis 2 right parenthesis"},"status":"ok"}

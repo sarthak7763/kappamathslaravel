@@ -1,0 +1,1 @@
+{"result":{"text":"x greater than 7 over 22"},"status":"ok"}

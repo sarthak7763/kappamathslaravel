@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 2 left parenthesis 1 fifth right parenthesis left parenthesis 2 right parenthesis end fraction plus 4 left parenthesis 2 right parenthesis equals fraction numerator 1 over denominator 4 over 5 end fraction plus 8 space equals 37 over 4 equals 9 begin inline style 1 fourth end style"},"status":"ok"}

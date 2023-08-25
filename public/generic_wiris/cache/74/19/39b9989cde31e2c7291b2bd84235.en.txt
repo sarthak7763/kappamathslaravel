@@ -1,0 +1,1 @@
+{"result":{"text":"t equals fraction numerator 3 r squared plus 1 over denominator 1 plus r squared end fraction"},"status":"ok"}

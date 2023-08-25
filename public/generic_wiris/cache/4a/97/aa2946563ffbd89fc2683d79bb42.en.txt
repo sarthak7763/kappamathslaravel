@@ -1,0 +1,1 @@
+{"result":{"text":"Z Y X equals 36 degree minus m"},"status":"ok"}

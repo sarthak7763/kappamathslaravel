@@ -1,0 +1,1 @@
+{"result":{"text":"y equals p x squared minus 2 x plus 4\nA t space. left parenthesis negative 2 comma space 4 right parenthesis\n4 equals p left parenthesis negative 2 right parenthesis squared minus 2 left parenthesis negative 2 right parenthesis plus 4\n4 equals 4 p plus 4 plus 4\n4 equals 4 p plus 8\nminus 4 equals 4 p\np equals negative 1"},"status":"ok"}

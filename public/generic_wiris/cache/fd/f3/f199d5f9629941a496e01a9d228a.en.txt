@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space begin inline style 5 over 6 end style x equals 5 plus begin inline style 2 over 3 end style x"},"status":"ok"}

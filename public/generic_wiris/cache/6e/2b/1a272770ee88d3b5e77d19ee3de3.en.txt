@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 30 degree plus 40 plus 60 plus x left parenthesis 46 degree right parenthesis equals 360 degree\n130 degree plus 46 x equals 360 degree\n46 x equals 360 degree minus 130 degree\n46 x equals 230 degree\nx equals 230 over 46 equals 5"},"status":"ok"}

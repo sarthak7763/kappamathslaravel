@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis x plus y plus z right parenthesis equals 130 degree"},"status":"ok"}

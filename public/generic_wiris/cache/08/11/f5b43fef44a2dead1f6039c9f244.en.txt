@@ -1,0 +1,1 @@
+{"result":{"text":"equals left parenthesis n minus 2 right parenthesis cross times 180 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q R T plus R T S equals 180 degree\n48 degree plus x equals 180 degree\nx equals 132 degree"},"status":"ok"}

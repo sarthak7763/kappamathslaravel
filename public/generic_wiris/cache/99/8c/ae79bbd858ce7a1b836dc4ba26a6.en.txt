@@ -1,0 +1,1 @@
+{"result":{"text":"110 degree plus 90 degree plus 90 degree plus 20 plus x equals 540 degree\n310 degree plus x equals 540 degree\nx equals 230 degree"},"status":"ok"}

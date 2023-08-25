@@ -1,0 +1,1 @@
+{"result":{"text":"r equals square root of fraction numerator t minus 3 over denominator 9 minus t end fraction end root"},"status":"ok"}

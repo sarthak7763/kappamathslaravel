@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle O N U equals angle O P N plus angle N O P equals 35 degree plus 50 degree equals 85 degree"},"status":"ok"}

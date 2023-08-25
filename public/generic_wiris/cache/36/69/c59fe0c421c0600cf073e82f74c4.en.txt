@@ -1,0 +1,1 @@
+{"result":{"text":"stack M N space with bar on top space divided by divided by stack P Q with bar on top space comma angle M N P equals 2 x"},"status":"ok"}

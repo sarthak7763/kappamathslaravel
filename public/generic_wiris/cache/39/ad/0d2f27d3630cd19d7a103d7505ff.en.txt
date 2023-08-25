@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket space 3 space right curly bracket"},"status":"ok"}

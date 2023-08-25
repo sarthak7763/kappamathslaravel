@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 2 y plus 68 degree equals 180 degree\n2 x plus 2 y plus 68 degree equals 180 degree\n2 x plus 2 y equals 112 degree\nx plus y equals 56 degree................ left parenthesis 1 right parenthesis"},"status":"ok"}

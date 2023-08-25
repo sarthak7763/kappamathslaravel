@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space angle O T S equals angle O S T space equals 50 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 minus x over denominator 4 end fraction minus fraction numerator 2 x over denominator 8 end fraction greater than 3 over 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"f less than N 3 comma 000 comma 000.00 less or equal than k"},"status":"ok"}

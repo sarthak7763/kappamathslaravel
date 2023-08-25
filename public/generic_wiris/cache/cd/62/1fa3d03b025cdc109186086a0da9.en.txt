@@ -1,0 +1,1 @@
+{"result":{"text":"x element of left curly bracket I n t e g e r s right curly bracket\nrightwards double arrow space x equals left curly bracket 2 comma space 3 space comma 4.... right curly bracket"},"status":"ok"}

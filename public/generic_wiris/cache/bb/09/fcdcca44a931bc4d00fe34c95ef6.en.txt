@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 125 over 100 cross times p equals 5 over 100 cross times 400\nrightwards double arrow begin inline style 5 over 4 end style p equals 20 space space rightwards double arrow 5 p equals 80\nrightwards double arrow p equals 16"},"status":"ok"}

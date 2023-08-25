@@ -1,0 +1,1 @@
+{"result":{"text":"15 t minus 27 equals negative 16\n15 t equals negative 16 plus 27\n15 t equals negative 11\ntherefore space space space t equals negative 11 over 15"},"status":"ok"}

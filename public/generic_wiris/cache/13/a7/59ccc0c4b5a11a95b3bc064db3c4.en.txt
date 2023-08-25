@@ -1,0 +1,1 @@
+{"result":{"text":"angle W Z Y equals 32 degree comma angle Y X W equals 23 degree comma angle Z W X"},"status":"ok"}

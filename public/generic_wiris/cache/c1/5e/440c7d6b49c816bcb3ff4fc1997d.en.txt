@@ -1,0 +1,1 @@
+{"result":{"text":"angle U V W equals 70 degree"},"status":"ok"}

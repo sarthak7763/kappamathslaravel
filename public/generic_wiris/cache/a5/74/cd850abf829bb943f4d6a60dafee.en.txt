@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space angle E F G plus angle Q F G space equals 180 degree\nspace angle E F G plus 105 degree equals 180 degree\nangle E F G equals 180 degree minus 105 degree\nangle E F G equals 75 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle R H Q equals 65 degree"},"status":"ok"}

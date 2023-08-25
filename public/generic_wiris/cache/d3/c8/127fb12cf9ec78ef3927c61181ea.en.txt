@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis x minus 10 degree right parenthesis"},"status":"ok"}

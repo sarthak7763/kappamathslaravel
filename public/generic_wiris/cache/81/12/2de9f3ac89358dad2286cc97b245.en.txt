@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space 5 x equals 30 plus 4 x space space space rightwards double arrow space 5 x minus 4 x equals 30\nrightwards double arrow space x equals 30"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x minus 60 degree plus y plus 30 degree equals 180 degree\nrightwards double arrow x plus y equals 180 degree plus 60 degree minus 30 degree\nrightwards double arrow x plus y equals 210 degree"},"status":"ok"}

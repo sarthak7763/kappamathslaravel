@@ -1,0 +1,1 @@
+{"result":{"text":"angle T S R equals 20 degree"},"status":"ok"}

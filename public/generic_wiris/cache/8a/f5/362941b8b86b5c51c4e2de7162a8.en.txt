@@ -1,0 +1,1 @@
+{"result":{"text":"square root of 4 h left parenthesis 2 R minus h right parenthesis end root"},"status":"ok"}

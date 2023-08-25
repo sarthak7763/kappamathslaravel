@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q R P plus 100 degree equals 180 degree\nangle Q R P equals 180 degree minus 100 degree\nangle Q R P equals 80 degree"},"status":"ok"}

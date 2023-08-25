@@ -1,0 +1,1 @@
+{"result":{"text":"6 square root of 2 c m"},"status":"ok"}

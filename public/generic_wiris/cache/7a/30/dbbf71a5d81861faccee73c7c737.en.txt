@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket x colon x less than begin inline style 8 over 5 end style right curly bracket"},"status":"ok"}

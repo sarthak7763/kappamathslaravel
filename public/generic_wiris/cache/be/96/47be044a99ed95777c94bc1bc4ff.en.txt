@@ -1,0 +1,1 @@
+{"result":{"text":"1 fifth left parenthesis 2 plus t right parenthesis equals begin inline style 1 half end style left parenthesis t minus 1 right parenthesis"},"status":"ok"}

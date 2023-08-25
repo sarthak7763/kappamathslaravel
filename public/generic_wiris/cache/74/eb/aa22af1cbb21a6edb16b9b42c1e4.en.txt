@@ -1,0 +1,1 @@
+{"result":{"text":"angle P Q R equals 48 degree"},"status":"ok"}

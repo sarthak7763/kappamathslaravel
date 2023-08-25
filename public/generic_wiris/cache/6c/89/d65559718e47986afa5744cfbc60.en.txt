@@ -1,0 +1,1 @@
+{"result":{"text":"angle M Z N equals 180 degree minus p equals 180 degree minus 72 degree equals 108 degree"},"status":"ok"}

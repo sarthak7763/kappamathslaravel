@@ -1,0 +1,1 @@
+{"result":{"text":"increment S O T"},"status":"ok"}

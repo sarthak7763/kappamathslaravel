@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator P plus 2 over denominator 6 end fraction minus fraction numerator P minus 3 over denominator 3 end fraction equals P"},"status":"ok"}

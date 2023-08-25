@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 25 minus n right parenthesis space y e a r s"},"status":"ok"}

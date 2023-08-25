@@ -1,0 +1,1 @@
+{"result":{"text":"120 degree plus 3 x plus 5 x equals 360"},"status":"ok"}

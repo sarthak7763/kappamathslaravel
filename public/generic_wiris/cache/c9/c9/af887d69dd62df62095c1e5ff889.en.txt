@@ -1,0 +1,1 @@
+{"result":{"text":"x comma space 2 x comma space 2 x comma space left parenthesis x plus 30 degree right parenthesis comma space left parenthesis x plus 20 degree right parenthesis"},"status":"ok"}

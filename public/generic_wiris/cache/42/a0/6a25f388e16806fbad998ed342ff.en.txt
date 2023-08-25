@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 open parentheses square root of x squared plus m end root space close parentheses over denominator 3 N end fraction comma"},"status":"ok"}

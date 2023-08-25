@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space angle P T U space plus angle S T U plus"},"status":"ok"}

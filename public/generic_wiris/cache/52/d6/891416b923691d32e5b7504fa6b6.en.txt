@@ -1,0 +1,1 @@
+{"result":{"text":"6 left parenthesis 2 x right parenthesis plus 6 open parentheses 1 third x close parentheses equals 6 open parentheses 31 over 6 close parentheses\n12 x plus 2 x equals 31\n14 x equals 31\nx equals 31 over 14 equals 2 3 over 14"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"y equals negative 19"},"status":"ok"}

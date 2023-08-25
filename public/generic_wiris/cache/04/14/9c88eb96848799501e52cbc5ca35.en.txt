@@ -1,0 +1,1 @@
+{"result":{"text":"y equals space 2 x minus 1\nw h e n space x equals negative 2\nrightwards double arrow space y equals 2 left parenthesis negative 2 right parenthesis minus 1 equals negative 5"},"status":"ok"}

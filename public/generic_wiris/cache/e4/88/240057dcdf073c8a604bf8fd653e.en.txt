@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 1 half over denominator 2 2 over 3 end fraction equals x over 96"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle X Z T plus angle Z X T plus Z T X equals 180 degree\n116 degree plus n plus n equals 180 degree\n2 n equals 180 degree minus 116 degree\n2 n equals 64 degree\nn equals 32 degree\ntherefore angle Z T X equals 32"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"5 x plus 1 greater than 10 x minus 9"},"status":"ok"}

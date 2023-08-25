@@ -26,7 +26,7 @@
             <div class="que-text">
               <label>Question</label>
               <textarea class="textarea" id="textareavalue" style="display: none;">{{html_entity_decode($question->question)}}</textarea>
-              <p id="renderer" class="mathrender" style="color: black;font-size: 20px;">
+              <p id="renderer" class="mathrender">
                 
               </p>
             </div>
@@ -36,13 +36,10 @@
               <label>Option A</label>
               @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptionavalue" style="display: none;">{{html_entity_decode($question->a)}}</textarea>
-              <p id="renderer_optiona" class="mathrender" style="color: black;font-size: 20px;">
-                
-              </p>
-              @else
-                @if($question->a_image!="")
-                <img src="{{url('/')}}/images/questions/options/{{$question->a_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->a_image}}">
-                @endif
+              <p id="renderer_optiona" class="mathrender"></p>
+              @endif
+              @if($question->a_image!="")
+              <img src="{{url('/')}}/images/questions/options/{{$question->a_image}}" alt="{{url('/')}}/images/questions/options/{{$question->a_image}}">
               @endif
             </div>
             @endif
@@ -52,13 +49,10 @@
               <label>Option B</label>
               @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptionbvalue" style="display: none;">{{html_entity_decode($question->b)}}</textarea>
-              <p id="renderer_optionb" class="mathrender" style="color: black;font-size: 20px;">
-                
-              </p>
-              @else
-                @if($question->b_image!="")
-                <img src="{{url('/')}}/images/questions/options/{{$question->b_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->b_image}}">
-                @endif
+              <p id="renderer_optionb" class="mathrender"></p>
+              @endif
+              @if($question->b_image!="")
+              <img src="{{url('/')}}/images/questions/options/{{$question->b_image}}" alt="{{url('/')}}/images/questions/options/{{$question->b_image}}">
               @endif
             </div>
             @endif
@@ -68,13 +62,10 @@
               <label>Option C</label>
               @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptioncvalue" style="display: none;">{{html_entity_decode($question->c)}}</textarea>
-              <p id="renderer_optionc" class="mathrender" style="color: black;font-size: 20px;">
-                
-              </p>
-              @else
-                @if($question->c_image!="")
-                <img src="{{url('/')}}/images/questions/options/{{$question->c_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->c_image}}">
-                @endif
+              <p id="renderer_optionc" class="mathrender"></p>
+              @endif
+              @if($question->c_image!="")
+              <img src="{{url('/')}}/images/questions/options/{{$question->c_image}}" alt="{{url('/')}}/images/questions/options/{{$question->c_image}}">
               @endif
             </div>
             @endif
@@ -84,14 +75,11 @@
               <label>Option D</label>
               @if($question->option_status=="0")
               <textarea class="textarea" id="textareaoptiondvalue" style="display: none;">{{html_entity_decode($question->d)}}</textarea>
-              <p id="renderer_optiond" class="mathrender" style="color: black;font-size: 20px;">
-                
-              </p>
-              @else
-                @if($question->d_image!="")
-                <img src="{{url('/')}}/images/questions/options/{{$question->d_image}}" style="width: 5%;height: auto;margin-left: 20px;" alt="{{url('/')}}/images/questions/options/{{$question->d_image}}">
-                @endif
+              <p id="renderer_optiond" class="mathrender"></p>
               @endif
+            @if($question->d_image!="")
+            <img src="{{url('/')}}/images/questions/options/{{$question->d_image}}" alt="{{url('/')}}/images/questions/options/{{$question->d_image}}">
+            @endif
             </div>
             @endif
 
@@ -107,7 +95,7 @@
             <div class="result-gp">
               <label>Answer Explaination</label>
               <textarea class="textarea" id="textareaanswerexpvalue" style="display: none;">{{html_entity_decode($question->answer_exp)}}</textarea>
-              <p id="renderer_answer_exp" class="mathrender" style="color: black;font-size: 20px;">
+              <p id="renderer_answer_exp" class="mathrender">
                 
               </p>
             </div>

@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space angle P T U equals angle Q P T space equals x"},"status":"ok"}

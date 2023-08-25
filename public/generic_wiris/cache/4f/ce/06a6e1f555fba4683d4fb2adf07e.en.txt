@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 50 degree plus 71 degree plus y equals 180 degree\nrightwards double arrow 121 degree plus y equals 180 degree\nrightwards double arrow y equals 180 degree minus 121 degree\ny equals 59 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space x plus y plus m plus z equals 180 degree\nx plus y plus z equals 180 minus m"},"status":"ok"}

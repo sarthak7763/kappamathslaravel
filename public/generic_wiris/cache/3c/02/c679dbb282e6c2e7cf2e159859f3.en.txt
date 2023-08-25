@@ -1,0 +1,1 @@
+{"result":{"text":"15 over 100 cross times m equals r space space space rightwards double arrow space 3 over 20 m equals r\nrightwards double arrow 3 m equals 20 r space space space space rightwards double arrow space space m equals 20 over 3 r"},"status":"ok"}

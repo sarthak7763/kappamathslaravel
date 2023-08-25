@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 2 x equals 2 left parenthesis 72 degree right parenthesis equals 144 degree"},"status":"ok"}

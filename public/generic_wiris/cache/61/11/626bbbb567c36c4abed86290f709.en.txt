@@ -1,0 +1,1 @@
+{"result":{"text":"angle O X Z equals angle O X Y equals x"},"status":"ok"}

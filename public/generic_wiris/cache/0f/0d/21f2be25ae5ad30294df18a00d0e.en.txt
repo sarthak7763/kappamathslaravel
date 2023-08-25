@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis y plus 30 right parenthesis degree"},"status":"ok"}

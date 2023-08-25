@@ -1,0 +1,1 @@
+{"result":{"text":"t minus 9 over 5 equals negative 1 1 over 15"},"status":"ok"}

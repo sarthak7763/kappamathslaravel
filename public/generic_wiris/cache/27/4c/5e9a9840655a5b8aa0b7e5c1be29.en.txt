@@ -1,0 +1,1 @@
+{"result":{"text":"angle G E F plus angle E F G plus angle E G F equals 180 degree\ntherefore space 50 degree plus 75 plus m equals 180 degree\n125 degree plus m equals 180 degree\nm equals 180 degree minus 125 degree\nm equals 55 degree"},"status":"ok"}

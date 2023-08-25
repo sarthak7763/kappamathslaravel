@@ -1,0 +1,1 @@
+{"result":{"text":"120 plus r equals 180 degree rightwards double arrow r equals 60 degree"},"status":"ok"}

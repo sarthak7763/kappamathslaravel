@@ -1,0 +1,1 @@
+{"result":{"text":"angle N O P equals angle R Q P equals 50 degree"},"status":"ok"}

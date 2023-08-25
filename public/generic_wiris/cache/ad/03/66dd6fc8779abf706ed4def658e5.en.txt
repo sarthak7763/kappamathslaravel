@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle Q U T plus angle Q T U plus angle U Q T equals 180 degree\nrightwards double arrow x plus x plus 70 degree equals 180 degree\nrightwards double arrow 2 x equals 180 degree minus 70\nrightwards double arrow 2 x equals 110 degree\nrightwards double arrow x equals 55 degree\ntherefore angle Q U T equals angle Q T U equals 55 degree"},"status":"ok"}

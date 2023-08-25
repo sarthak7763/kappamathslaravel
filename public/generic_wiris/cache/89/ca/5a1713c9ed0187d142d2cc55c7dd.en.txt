@@ -1,0 +1,1 @@
+{"result":{"text":"x greater than negative begin inline style 3 over 5 end style"},"status":"ok"}

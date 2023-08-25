@@ -1,0 +1,1 @@
+{"result":{"text":"3 x space 10 x equals 52\n13 x equals 52\nx equals 4"},"status":"ok"}

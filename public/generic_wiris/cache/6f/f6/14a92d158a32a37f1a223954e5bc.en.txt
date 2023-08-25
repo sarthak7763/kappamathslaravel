@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator square root of 9 y squared N squared minus 2 m end root over denominator 2 end fraction"},"status":"ok"}

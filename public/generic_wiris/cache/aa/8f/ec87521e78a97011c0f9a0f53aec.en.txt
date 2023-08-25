@@ -1,0 +1,1 @@
+{"result":{"text":"x greater or equal than negative 14"},"status":"ok"}

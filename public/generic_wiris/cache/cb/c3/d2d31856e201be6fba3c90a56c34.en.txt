@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle G S Q equals angle R S T equals 22 degree"},"status":"ok"}

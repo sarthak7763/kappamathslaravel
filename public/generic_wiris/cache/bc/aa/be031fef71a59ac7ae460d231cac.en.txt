@@ -1,0 +1,1 @@
+{"result":{"text":"y equals begin inline style fraction numerator 3 x over denominator 2 end fraction end style"},"status":"ok"}

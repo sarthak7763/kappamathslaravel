@@ -1,0 +1,1 @@
+{"result":{"text":"stack P F space with bar on top space space\n"},"status":"ok"}

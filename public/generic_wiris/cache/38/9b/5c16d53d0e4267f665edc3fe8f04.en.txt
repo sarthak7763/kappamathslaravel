@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 1 third x equals 5 1 over 6\n2 x plus 1 third x equals 31 over 6"},"status":"ok"}

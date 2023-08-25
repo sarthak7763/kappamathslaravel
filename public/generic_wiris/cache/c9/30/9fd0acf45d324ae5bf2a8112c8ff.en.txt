@@ -1,0 +1,1 @@
+{"result":{"text":"m plus 100 degree equals 180 degree space rightwards double arrow m equals 80 degree\ntherefore space space m plus r equals 80 degree plus 60 degree equals 140 degree"},"status":"ok"}

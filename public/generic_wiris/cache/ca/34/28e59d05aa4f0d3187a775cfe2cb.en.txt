@@ -1,0 +1,1 @@
+{"result":{"text":"108 degree equals fraction numerator left parenthesis n minus 2 right parenthesis cross times 180 degree over denominator n end fraction\n108 n equals left parenthesis n minus 2 right parenthesis cross times 180 degree\n108 n equals 180 n minus 360\n108 n minus 180 n equals negative 360\nminus 72 n equals negative 360\nn equals 5"},"status":"ok"}

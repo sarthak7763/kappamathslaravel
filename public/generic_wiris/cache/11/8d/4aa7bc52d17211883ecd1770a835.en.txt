@@ -1,0 +1,1 @@
+{"result":{"text":"2 over 3 plus 2 over b equals 1 over c"},"status":"ok"}

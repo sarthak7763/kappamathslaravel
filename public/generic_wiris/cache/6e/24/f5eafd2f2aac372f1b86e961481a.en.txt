@@ -1,0 +1,1 @@
+{"result":{"text":"120 degree plus 3 x plus 5 x equals 360\n8 x equals 360 degree minus 120 degree\n8 x equals 240 degree\nx equals 30"},"status":"ok"}

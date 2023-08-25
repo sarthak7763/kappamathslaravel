@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus y equals 180 degree space rightwards double arrow 95 degree plus y equals 180 degree space rightwards double arrow y equals 180 degree minus 95 degree space therefore y equals 85 degree"},"status":"ok"}

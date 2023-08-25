@@ -1,0 +1,1 @@
+{"result":{"text":"6 plus 5 less or equal than 2 x minus 5 plus 5 less or equal than 9 plus 5\n11 less or equal than 2 x less or equal than 14"},"status":"ok"}

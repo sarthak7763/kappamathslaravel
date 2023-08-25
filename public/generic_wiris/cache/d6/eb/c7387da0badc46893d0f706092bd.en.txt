@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q U T equals U Y X equals 60 degree"},"status":"ok"}

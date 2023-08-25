@@ -1,0 +1,1 @@
+{"result":{"text":"1 over R equals 1 over 6 plus 1 over 9 space space space rightwards double arrow 1 over R equals fraction numerator 3 plus 2 over denominator 18 end fraction\nrightwards double arrow space 1 over R equals 5 over 18 space space space rightwards double arrow space R equals 18 over 5 equals 3.6"},"status":"ok"}

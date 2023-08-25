@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space space space y equals 3 x\nrightwards double arrow space y equals 3 left parenthesis 30 right parenthesis equals 90 degree"},"status":"ok"}

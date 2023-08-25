@@ -1,0 +1,1 @@
+{"result":{"text":"1 over m equals t minus 1 over n"},"status":"ok"}

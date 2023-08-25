@@ -1,0 +1,1 @@
+{"result":{"text":"angle R O P space plus angle O P Q space equals 180 degree\n80 degree plus angle O P Q equals 180 degree\nangle O P Q equals 180 degree minus 80 degree\nangle O P Q equals 100 degree"},"status":"ok"}

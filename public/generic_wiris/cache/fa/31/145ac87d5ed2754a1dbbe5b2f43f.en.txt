@@ -1,0 +1,1 @@
+{"result":{"text":"n plus 100 degree equals 180 degree\nn equals 180 degree minus 100 degree\nn equals 80 degree"},"status":"ok"}

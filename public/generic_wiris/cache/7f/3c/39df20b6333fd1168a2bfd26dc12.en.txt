@@ -1,0 +1,1 @@
+{"result":{"text":"element of left curly bracket i n t e g e r s right curly bracket"},"status":"ok"}

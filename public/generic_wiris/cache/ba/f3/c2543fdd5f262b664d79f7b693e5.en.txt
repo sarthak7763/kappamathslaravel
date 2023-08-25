@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q O R equals angle P O T equals 2 m"},"status":"ok"}

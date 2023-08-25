@@ -1,0 +1,1 @@
+{"result":{"text":"42 degree plus y degree equals 65 degree\nspace y degree equals 65 degree minus 42 degree\ny degree equals 23"},"status":"ok"}

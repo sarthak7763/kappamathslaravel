@@ -1,0 +1,1 @@
+{"result":{"text":"angle X Y Z plus angle Y X Z plus Y Z X equals 180 degree\ntherefore space 52 degree plus m plus m equals 180 degree\n2 m equals 180 degree minus 52 degree\n2 m equals 128 degree\nm equals 64 degree\ntherefore space angle Y X Z equals 64 degree"},"status":"ok"}

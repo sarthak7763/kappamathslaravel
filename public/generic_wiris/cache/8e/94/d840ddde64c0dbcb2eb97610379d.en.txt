@@ -1,0 +1,1 @@
+{"result":{"text":"angle S O T equals 180 degree minus angle O S T minus angle O T S\nequals 180 degree minus 50 degree minus 50 degree\nequals 80 degree"},"status":"ok"}

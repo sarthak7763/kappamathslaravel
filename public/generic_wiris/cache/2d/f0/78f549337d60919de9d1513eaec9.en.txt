@@ -1,0 +1,1 @@
+{"result":{"text":"R equals space h over 2 plus fraction numerator d squared over denominator 8 h end fraction"},"status":"ok"}

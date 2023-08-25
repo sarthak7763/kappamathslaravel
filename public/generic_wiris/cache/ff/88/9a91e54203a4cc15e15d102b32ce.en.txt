@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 32 degree plus 90 degree plus 23 degree plus left parenthesis 360 degree minus m right parenthesis equals 360 degree\n505 degree minus m equals 360 degree\nm equals 505 degree minus 360 degree\nm equals 145 degree"},"status":"ok"}

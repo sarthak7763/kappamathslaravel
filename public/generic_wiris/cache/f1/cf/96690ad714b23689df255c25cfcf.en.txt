@@ -1,0 +1,1 @@
+{"result":{"text":"k greater or equal than 3 comma 000 comma 000 space left parenthesis o r space 3 comma 000 comma 000 less or equal than k right parenthesis."},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle N P Q equals space left parenthesis 3 x minus 50 degree right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"56 degree plus angle X O Z equals 180 degree\nangle X O Z equals 180 degree minus 56 degree\nangle X O Z equals 124 degree"},"status":"ok"}

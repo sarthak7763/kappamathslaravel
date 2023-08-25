@@ -370,7 +370,8 @@ class CoursetopicController extends Controller
         }
 
         try{
-        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
+        $course_id= $request->course;
+        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->where('subject',$course_id)->first();
         if($coursetopicdata)
         {
         	return back()->with('error','Title already exists.');
@@ -647,7 +648,7 @@ class CoursetopicController extends Controller
           }
           else{
           		try{
-		        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->first();
+		        $coursetopicdata=Coursetopic::where('topic_name',$request->title)->where('subject',$request->course)->first();
 		        if($coursetopicdata)
 		        {
 		        	return back()->with('error','Title already exists.');

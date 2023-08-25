@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P O L plus angle Q O L plus angle Q O R equals 180 degree\nm plus 90 degree plus 2 m equals 180 degree\n3 m equals 90 degree\nm equals 30 degree"},"status":"ok"}

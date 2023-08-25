@@ -1,0 +1,1 @@
+{"result":{"text":"P equals negative 1 begin inline style 2 over 5 end style"},"status":"ok"}

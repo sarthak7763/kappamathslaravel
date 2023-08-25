@@ -1,0 +1,1 @@
+{"result":{"text":"c equals 3 begin inline style 3 over 4 end style equals begin inline style 15 over 4 end style"},"status":"ok"}

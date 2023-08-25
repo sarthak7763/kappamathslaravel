@@ -1,0 +1,1 @@
+{"result":{"text":"x less than fraction numerator negative 7 over denominator 27 end fraction"},"status":"ok"}

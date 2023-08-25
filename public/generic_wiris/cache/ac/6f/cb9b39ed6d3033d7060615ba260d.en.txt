@@ -1,0 +1,1 @@
+{"result":{"text":"angle P Q T equals 150 degree comma vertical line Q T vertical line equals vertical line Q S vertical line comma P Q divided by divided by U T comma space Q R divided by divided by T S space"},"status":"ok"}

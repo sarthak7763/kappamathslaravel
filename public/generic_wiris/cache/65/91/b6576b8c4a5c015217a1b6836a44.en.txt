@@ -1,0 +1,1 @@
+{"result":{"text":"angle M N P equals angle N P Q space equals space 90 degree"},"status":"ok"}

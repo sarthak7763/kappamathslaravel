@@ -1,0 +1,1 @@
+{"result":{"text":"18 plus x equals 3 plus 6 x space space space rightwards double arrow space space x minus 6 x equals 3 minus 18\nrightwards double arrow negative 5 x equals negative 15 space space space rightwards double arrow space space x equals 3"},"status":"ok"}

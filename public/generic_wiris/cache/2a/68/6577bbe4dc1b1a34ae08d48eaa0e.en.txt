@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle Y Z X plus X Z T equals 180 degree equals space 64 degree plus angle X Z T equals 180 degree space rightwards double arrow angle X Z T equals 180 degree minus 64 degree rightwards double arrow angle X Z T equals 116 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle O S T equals 50 degree"},"status":"ok"}

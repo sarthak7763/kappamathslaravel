@@ -1,0 +1,1 @@
+{"result":{"text":"5 x plus greater than 10 x minus 9 space space space space rightwards double arrow space 5 x minus 10 x greater than negative 9 minus 1\nrightwards double arrow space minus 5 x greater than negative 10 space space space rightwards double arrow space x less than 2"},"status":"ok"}

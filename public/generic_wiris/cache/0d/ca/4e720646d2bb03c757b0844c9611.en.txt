@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space angle P O N equals angle Q P O equals a degree"},"status":"ok"}

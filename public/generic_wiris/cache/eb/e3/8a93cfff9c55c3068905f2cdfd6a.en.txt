@@ -1,0 +1,1 @@
+{"result":{"text":"68 degree plus x equals 2 x\n2 x minus x equals 68 degree\nx equals 68 degree"},"status":"ok"}

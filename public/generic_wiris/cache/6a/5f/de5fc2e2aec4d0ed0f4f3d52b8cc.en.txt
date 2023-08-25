@@ -1,0 +1,1 @@
+{"result":{"text":"4 cross times 1 fourth less than cross times 3 over 4 left parenthesis 3 x minus 2 right parenthesis less than 4 cross times 1 half\nminus less than 3 left parenthesis 3 x minus 2 right parenthesis less than 2\nminus 1 less than 9 x minus 6 less than 2"},"status":"ok"}

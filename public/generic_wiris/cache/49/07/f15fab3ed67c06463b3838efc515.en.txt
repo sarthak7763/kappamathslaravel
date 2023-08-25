@@ -1,0 +1,1 @@
+{"result":{"text":"m plus n plus r equals 180 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"top enclose S Y space end enclose space divided by divided by top enclose U W space end enclose space comma space top enclose S V space end enclose space divided by divided by top enclose X W end enclose space comma angle S Y T equals 40 degree space\n\n\n\n\n"},"status":"ok"}

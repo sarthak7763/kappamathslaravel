@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space angle R O P equals angle S O T equals 80 degree"},"status":"ok"}

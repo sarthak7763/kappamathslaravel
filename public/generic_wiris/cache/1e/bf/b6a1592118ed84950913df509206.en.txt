@@ -1,0 +1,1 @@
+{"result":{"text":"s equals fraction numerator r over denominator p squared minus q squared end fraction"},"status":"ok"}

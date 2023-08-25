@@ -1,0 +1,1 @@
+{"result":{"text":"angle R O P space"},"status":"ok"}

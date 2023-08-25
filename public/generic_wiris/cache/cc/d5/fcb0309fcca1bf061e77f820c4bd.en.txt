@@ -1,0 +1,1 @@
+{"result":{"text":"x plus y plus 40 degree equals 130 degree\nx plus y equals 130 degree minus 40 degree\nx plus y equals 90 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 left parenthesis 2 minus 3 x right parenthesis less than 1 minus begin inline style 2 over 3 end style x\n6 minus 9 x less than 1 minus begin inline style 2 over 3 end style x"},"status":"ok"}

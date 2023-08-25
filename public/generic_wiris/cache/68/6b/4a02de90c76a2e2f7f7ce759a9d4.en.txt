@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 x minus 5"},"status":"ok"}

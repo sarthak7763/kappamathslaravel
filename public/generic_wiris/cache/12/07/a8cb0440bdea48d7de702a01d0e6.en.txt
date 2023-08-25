@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 2 over 3 end style left parenthesis x minus 1 right parenthesis greater than begin inline style 1 half end style left parenthesis 1 minus 2 x right parenthesis plus begin inline style 1 half end style"},"status":"ok"}

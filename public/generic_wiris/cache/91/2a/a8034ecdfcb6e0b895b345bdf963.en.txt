@@ -1,0 +1,1 @@
+{"result":{"text":"18 minus 27 x less than 3 minus 2 x\nminus 27 x plus 2 x less than 3 minus 18\nminus 25 x less than negative 15\nx greater than fraction numerator negative 15 over denominator negative 25 end fraction\nx greater than 3 over 5"},"status":"ok"}

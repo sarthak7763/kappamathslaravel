@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle U Y X equals angle T X W equals 60 degree"},"status":"ok"}

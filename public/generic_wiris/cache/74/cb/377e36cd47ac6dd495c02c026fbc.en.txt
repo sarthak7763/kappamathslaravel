@@ -1,0 +1,1 @@
+{"result":{"text":"t equals 13 over 15"},"status":"ok"}

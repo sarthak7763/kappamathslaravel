@@ -1,0 +1,1 @@
+{"result":{"text":"y equals square root of fraction numerator x plus z over denominator x minus z end fraction end root"},"status":"ok"}

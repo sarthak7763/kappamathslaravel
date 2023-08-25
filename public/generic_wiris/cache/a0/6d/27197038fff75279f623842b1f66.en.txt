@@ -1,0 +1,1 @@
+{"result":{"text":"negative begin inline style 3 over 4 end style"},"status":"ok"}

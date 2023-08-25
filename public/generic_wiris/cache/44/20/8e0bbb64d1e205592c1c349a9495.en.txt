@@ -1,0 +1,1 @@
+{"result":{"text":"y equals k x minus 1\nw h e n space y equals 3 comma space x equals 2\n3 equals k left parenthesis 2 right parenthesis minus 1 space space space rightwards double arrow space space 3 equals 2 k minus 1\nrightwards double arrow space 2 k equals 4 space space space space space rightwards double arrow space space k equals 2"},"status":"ok"}

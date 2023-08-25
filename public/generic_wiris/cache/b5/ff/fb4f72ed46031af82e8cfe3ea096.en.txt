@@ -1,0 +1,1 @@
+{"result":{"text":"angle Q P O space equals a degree"},"status":"ok"}
