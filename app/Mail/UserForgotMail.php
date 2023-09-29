@@ -32,7 +32,14 @@ class UserForgotMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('User Forgot Mail')
+        if($this->details['type']=="admin")
+        {
+            $subject="Admin Forgot Mail";
+        }
+        else{
+            $subject="User Forgot Mail";
+        }
+        return $this->subject($subject)
                     ->view('email.userforgotmail');
     }
 }

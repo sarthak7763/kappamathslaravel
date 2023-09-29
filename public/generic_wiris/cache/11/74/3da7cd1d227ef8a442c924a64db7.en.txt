@@ -1,0 +1,1 @@
+{"result":{"text":"x minus 3 comma space space y equals negative 3"},"status":"ok"}

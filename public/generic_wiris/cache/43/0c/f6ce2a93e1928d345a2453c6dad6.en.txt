@@ -1,0 +1,1 @@
+{"result":{"text":"10 over 40 equals 1 fourth"},"status":"ok"}

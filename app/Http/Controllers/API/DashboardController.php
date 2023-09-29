@@ -19,6 +19,7 @@ use App\Notifications;
 use App\UserNotification;
 use Validator;
 use Hash;
+use App\SubscriptionCoupon;
 
 class DashboardController extends BaseController
 {
@@ -693,10 +694,29 @@ class DashboardController extends BaseController
 		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
 		        }
 
+		        if(isset($request->coupon_code) && $request->coupon_code!="")
+		        {
+		        	$coupon_code=$request->coupon_code;
+		        }
+		        else{
+		        	$coupon_code="";
+		        }
+
     			$reference_id=$request->reference_id;
     			$subscription_id=$request->subscription_id;
 
     			$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+
+    			if($coupon_code!="")
+    			{
+    				$checkcouponcode=SubscriptionCoupon::where('coupon_name',$coupon_code)->where('coupon_subscription_type',$subscription_id)->get()->first();
+
+    				$coupon_code_id=$checkcouponcode->id;
+    			}
+    			else{
+    				$coupon_code_id=0;
+    			}
+    			
 
     			$verifytransaction_data=$this->verifytransaction($reference_id);
 
@@ -741,6 +761,7 @@ class DashboardController extends BaseController
 		            $usersubscription->subscription_start=$currentdate;
 		            $usersubscription->subscription_end=$subscription_end;
 		            $usersubscription->subscription_status=1;
+		            $usersubscription->coupon_code_id=$coupon_code_id;
 		            $usersubscription->save();
 
 		            $this->sendpaymentsuccessnotification($user->id);
@@ -1072,6 +1093,440 @@ class DashboardController extends BaseController
 	    catch(\Exception $e){
                   return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
                }
+    }
+
+    public function getsubscriptionplandetails(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    		$validator = Validator::make($request->all(), [
+		            'subscription_id'=>'required',
+		        ]);
+
+    			if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+    			$subscription_id=$request->subscription_id;
+    			$checksubscription=Subscription::where('id',$subscription_id)->where('subscription_status','1')->get()->first();
+    			if($checksubscription)
+    			{
+    				$checksubarray=$checksubscription->toArray();
+    				$usersubscription=Usersubscriptions::where('subscription_id',$checksubarray['id'])->where('user_id',$user->id)->where('subscription_status',1)->get()->first();
+    				if($usersubscription)
+    				{
+    					$usersubscriptionarray=$usersubscription->toArray();
+    					if($usersubscriptionarray)
+    					{
+    						$currentdate=date('Y-m-d');
+		        			$subscription_start=$usersubscriptionarray['subscription_start'];
+
+		        			$subscription_end=$usersubscriptionarray['subscription_end'];
+
+		        			if($currentdate >= $subscription_start && $currentdate <= $subscription_end)
+		        			{
+		        				$active_status=1;
+		        			}
+		        			else{
+		        				$active_status=0;
+		        			}
+    					}
+    					else{
+    						$active_status=0;
+    					}
+    				}
+    				else{
+    					$active_status=0;
+    				}
+
+    				$subscription_date=$checksubarray['subscription_tenure'].' '.$checksubarray['subscription_plan'];
+
+    				$subscriptiondet=array(
+    					'subscription_id'=>$checksubarray['id'],
+    					'paystack_link'=>env('paystack_pay_url').$checksubarray['paystack_slug'],
+    					'title'=>$checksubarray['title'],
+    					'price'=>$checksubarray['price'],
+    					'subscription_date'=>$subscription_date,
+    					'description'=>$checksubarray['description'],
+    					'active_status'=>$active_status
+    				);
+
+    				$success['subscriptiondet']=$subscriptiondet;
+					return $this::sendResponse($success, 'Subscription Plan details.');
+    			}
+    			else{
+    				return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+    			}
+    		}
+    		else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+    }
+
+    public function applysubscriptioncoupon(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    		$validator = Validator::make($request->all(), [
+		            'coupon_code'=>'required',
+		            'subscription_id'=>'required'
+		        ]);
+
+    			if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+    		$coupon_code=$request->coupon_code;
+    		$subscription_id=$request->subscription_id;
+    		$checkcouponcode=SubscriptionCoupon::where('coupon_name',$coupon_code)->where('coupon_status','1')->get()->first();
+
+    		$checksubscription=Subscription::where('id',$subscription_id)->where('subscription_status','1')->get()->first();
+    		if(!$checksubscription)
+    		{
+    			return $this::sendError('Unauthorised.', ['error'=>'Invalid Subscription Plan.']);
+    		}
+
+    			if($checkcouponcode)
+    			{
+    				if($checkcouponcode->coupon_subscription_type==$subscription_id)
+    				{
+    					if($checkcouponcode->coupon_type=="1")
+    					{
+    						$subtotal=$checksubscription->price;
+    						$coupon_discount=round(($subtotal*100)/100);
+    						$total_amount=$subtotal-$coupon_discount;
+    					}
+    					else{
+    						$subtotal=$checksubscription->price;
+    						$coupon_discount=round(($subtotal*$checkcouponcode->coupon_discount)/100);
+    						$total_amount=$subtotal-$coupon_discount;
+    					}
+
+    					$checksubscriptionarray=$checksubscription->toArray();
+
+    					$checksubscriptionarray['total_amount']=$total_amount;
+    					$checksubscriptionarray['coupon_code']=$coupon_code;
+
+    					$amountarray=array(
+    							'subtotal'=>$subtotal,
+    							'coupon_discount'=>$coupon_discount,
+    							'total_amount'=>$total_amount
+    						);
+
+    					if($total_amount==0)
+    					{
+    						$amountarray['paystack_slug']="";
+    					}
+    					else{
+    						$paystack_create_payment_page=$this->createpaymentpage($checksubscriptionarray);
+
+	    					if($paystack_create_payment_page['code']==200)
+			        		{
+			        			$paystack_slug=$paystack_create_payment_page['slug'];
+
+			        			$amountarray['paystack_slug']=$paystack_slug;	
+			        		}
+			        		else{
+			        			return $this::sendError('Unauthorised.', ['error'=>$paystack_create_payment_page['message']]);
+			        		}
+    					}
+
+    					$success['amountarray']=$amountarray;
+						return $this::sendResponse($success, 'Coupon code applies successfully.');
+    					
+    				}
+    				else{
+    					return $this::sendError('Unauthorised.', ['error'=>'Coupon not applied to this subscription.']);
+    				}
+    			}
+    			else{
+    				return $this::sendError('Unauthorised.', ['error'=>'Invalid Code.']);
+    			}
+    		}
+    		else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>'Something went wrong.']);    
+               }
+    }
+
+
+    public function createpaymentpage($input)
+    {
+
+		  $url = "https://api.paystack.co/page";
+		  $custom=[
+		  	'plan_date'=>$input['subscription_tenure'],
+		  	'plan_time'=>$input['subscription_plan'],
+		  	'coupon_code'=>$input['coupon_code']
+		  ];
+
+		  $fields = [
+		    'name' => $input['title'],
+		    'description' => $input['description'],
+		    'amount' => $input['total_amount']*100,
+		    'redirect_url'=>url('/').'/successpage',
+		    'custom_fields'=>$custom
+		  ];
+
+		  $fields_string = http_build_query($fields);
+
+		  //open connection
+		  $ch = curl_init();
+		  
+		  //set the url, number of POST vars, POST data
+		  curl_setopt($ch,CURLOPT_URL, $url);
+		  curl_setopt($ch,CURLOPT_POST, true);
+		  curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		    "Authorization: Bearer ".env('Paystack_secret_key'),
+		    "Cache-Control: no-cache",
+		  ));
+		  
+		  //So that curl_exec returns the contents of the cURL; rather than echoing it
+		  curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+		  
+		  //execute post
+		  $result = curl_exec($ch);
+		  curl_close($ch);
+
+		  $resultarray=json_decode($result);
+		  if($resultarray->status==1)
+		  {
+		  	$successdata=$resultarray->data;
+		  	$returndata=array('code'=>200,'message'=>$resultarray->message,'slug'=>$successdata->slug);
+		  }
+		  else{
+		  	$returndata=array('code'=>400,'message'=>$resultarray->message);
+		  }
+		  return $returndata;
+    }
+
+    public function activatefreeamountsubscription(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    		$validator = Validator::make($request->all(), [
+    				'coupon_code'=>'required',
+		            'subscription_id'=>'required'
+		        ]);
+
+    			if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+		        $coupon_code=$request->coupon_code;
+    			$subscription_id=$request->subscription_id;
+
+    			$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+    			if($checksubscription)
+    			{
+    				$checkcouponcode=SubscriptionCoupon::where('coupon_name',$coupon_code)->where('coupon_subscription_type',$subscription_id)->get()->first();
+    				if(!$checkcouponcode)
+    				{
+    					return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+    				}
+
+    				$user_subscriptions_list=Usersubscriptions::where('user_id',$user->id)->where('subscription_status',1)->get();
+    				if($user_subscriptions_list)
+    				{
+    					$user_subscriptions_listarr=$user_subscriptions_list->toArray();
+    					if($user_subscriptions_listarr)
+    					{
+    						foreach($user_subscriptions_listarr as $list)
+    						{
+    							$usersubscriptionupdate=Usersubscriptions::find($list['id']);
+    							$usersubscriptionupdate->subscription_status=0;
+		            			$usersubscriptionupdate->save();
+    						}
+    					}
+    				}
+
+    				$currentdate=date('Y-m-d');
+    				$subscription_date=$checksubscription->subscription_plan;
+    				$subscription_tenure=$checksubscription->subscription_tenure;
+    				
+    				$subscription_end=date('Y-m-d', strtotime($currentdate. ' + '.$subscription_tenure.' '.$subscription_date.''));
+
+    				$usersubscription = new Usersubscriptions;
+		            $usersubscription->user_id=$user->id;
+		            $usersubscription->subscription_id=$subscription_id;
+		            $usersubscription->transaction_id=0;
+		            $usersubscription->subscription_payment=$checksubscription->price;
+		            $usersubscription->subscription_start=$currentdate;
+		            $usersubscription->subscription_end=$subscription_end;
+		            $usersubscription->subscription_status=1;
+		            $usersubscription->coupon_code_id=$checkcouponcode->id;
+		            $usersubscription->save();
+
+		            $this->sendsubscriptionsuccessnotification($user->id);
+		            $success=[];
+                	return $this::sendResponse($success,'Subscription activate successfully');
+    			}
+    			else{
+    				return $this::sendError('Unauthorised.', ['error'=>'Something went wrong.']);
+    			}
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+
+    }
+
+    public function applysubscriptioncouponnew(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    		$validator = Validator::make($request->all(), [
+		            'coupon_code'=>'required',
+		            'subscription_id'=>'required'
+		        ]);
+
+    			if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+    		$coupon_code=$request->coupon_code;
+    		$subscription_id=$request->subscription_id;
+    		$checkcouponcode=SubscriptionCoupon::where('coupon_name',$coupon_code)->where('coupon_status','1')->get()->first();
+
+    		$checksubscription=Subscription::where('id',$subscription_id)->where('subscription_status','1')->get()->first();
+    		if(!$checksubscription)
+    		{
+    			return $this::sendError('Unauthorised.', ['error'=>'Invalid Subscription Plan.']);
+    		}
+
+    			if($checkcouponcode)
+    			{
+    				if($checkcouponcode->coupon_subscription_type==$subscription_id)
+    				{
+    					if($checkcouponcode->coupon_users!="0")
+    					{
+    						$responsedata=$this->applycoupontospecificusers($checkcouponcode,$user->id);
+    					}
+    					else{
+    						$responsedata=$this->applycoupontoallusers($checkcouponcode,$user->id);
+    					}
+
+    					if($responsedata['code']==200)
+    					{
+
+	    				if($checkcouponcode->coupon_type=="1")
+						{
+							$subtotal=$checksubscription->price;
+							$coupon_discount=round(($subtotal*100)/100);
+							$total_amount=$subtotal-$coupon_discount;
+						}
+						else{
+							$subtotal=$checksubscription->price;
+							$coupon_discount=round(($subtotal*$checkcouponcode->coupon_discount)/100);
+							$total_amount=$subtotal-$coupon_discount;
+						}
+
+						$checksubscriptionarray=$checksubscription->toArray();
+
+    					$checksubscriptionarray['total_amount']=$total_amount;
+    					$checksubscriptionarray['coupon_code']=$coupon_code;
+
+    					$amountarray=array(
+    							'subtotal'=>$subtotal,
+    							'coupon_discount'=>$coupon_discount,
+    							'total_amount'=>$total_amount
+    						);
+
+    						$success['amountarray']=$amountarray;
+							return $this::sendResponse($success, 'Coupon code applies successfully.');
+    					}
+    					else{
+    						return $this::sendError('Unauthorised.', ['error'=>$responsedata['message']]);
+    					}
+    				}
+    				else{
+    					return $this::sendError('Unauthorised.', ['error'=>'Coupon not applied to this subscription.']);
+    				}
+    			}
+    			else{
+    				return $this::sendError('Unauthorised.', ['error'=>'Invalid Code.']);
+    			}
+    		}
+    		else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+    }
+
+    public function applycoupontospecificusers($checkcouponcode,$userid)
+    {
+    	if($checkcouponcode->coupon_users!="0")
+    	{
+    		$coupon_users_arr=explode(',',$checkcouponcode->coupon_users);
+    		if(in_array($userid,$coupon_users_arr))
+    		{
+    			$getcodeuseperusercount=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->groupBy('user_id')->get()->count();
+
+	    		if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
+	    		{
+	    			$data=array('code'=>200,'message'=>'Coupon valid user.');
+	    			return $data;
+	    		}
+	    		else{
+	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+	    			return $data;
+	    		}
+    		}
+    		else{
+    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+    			return $data;
+    		}
+    	}
+    }
+
+    public function applycoupontoallusers($checkcouponcode,$userid)
+    {
+    	if($checkcouponcode->coupon_users=="0")
+    	{
+    		$getcodeuserlimit=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->groupBy('user_id')->get()->count();
+
+    		$getcodeuseperusercount=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->groupBy('user_id')->get()->count();
+
+    		if($checkcouponcode->coupon_user_limit >= $getcodeuserlimit)
+    		{
+				if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
+	    		{
+	    			$data=array('code'=>200,'message'=>'Coupon valid user.');
+	    			return $data;
+	    		}
+	    		else{
+	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+	    			return $data;
+	    		}
+    		}
+    		else{
+    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+    			return $data;
+    		}
+    	}
     }
 
 

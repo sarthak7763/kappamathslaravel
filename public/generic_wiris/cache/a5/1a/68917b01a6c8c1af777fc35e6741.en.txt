@@ -1,0 +1,1 @@
+{"result":{"text":"I equals fraction numerator P cross times 6 cross times 5 over denominator 100 end fraction equals fraction numerator 3 P over denominator 10 end fraction"},"status":"ok"}

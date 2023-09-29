@@ -1,0 +1,1 @@
+{"result":{"text":"equals space 3600 cross times 0.029 equals 104.4 space m m\nequals 1.044 cross times 10 squared space m m"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow d over 10 plus fraction numerator d over denominator 10.5 end fraction equals 1 begin inline style 1 fourth end style\nrightwards double arrow d over 10 plus fraction numerator d over denominator 10.5 end fraction equals 1.25"},"status":"ok"}

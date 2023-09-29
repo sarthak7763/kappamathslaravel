@@ -1,0 +1,1 @@
+{"result":{"text":"x k m h to the power of negative 1 end exponent equals fraction numerator x k m over denominator 1 h r end fraction equals fraction numerator x cross times 1000 over denominator 1 cross times 3600 end fraction m s to the power of negative 1 end exponent"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"5 x squared"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"l equals a plus left parenthesis n minus 1 right parenthesis d"},"status":"ok"}

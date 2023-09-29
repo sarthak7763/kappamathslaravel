@@ -1,0 +1,1 @@
+{"result":{"text":"equals 60 over 100 cross times 60 percent sign\nequals 36 percent sign"},"status":"ok"}

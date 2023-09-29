@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 4 over 3 end style plus open parentheses negative begin inline style 3 over 7 end style close parentheses equals begin inline style 19 over 21 end style"},"status":"ok"}

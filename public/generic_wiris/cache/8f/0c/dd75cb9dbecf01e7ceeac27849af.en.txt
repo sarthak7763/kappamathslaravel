@@ -1,0 +1,1 @@
+{"result":{"text":"x squared plus 5 x minus 14 equals 0\nrightwards double arrow left parenthesis x minus 2 right parenthesis left parenthesis x plus 7 right parenthesis equals 0\nrightwards double arrow x equals 2 comma space x equals negative 7\ntherefore x equals left curly bracket 2 comma negative 7 right curly bracket"},"status":"ok"}

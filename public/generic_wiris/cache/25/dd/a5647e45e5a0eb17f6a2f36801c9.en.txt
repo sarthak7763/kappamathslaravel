@@ -1,0 +1,1 @@
+{"result":{"text":"f left parenthesis x right parenthesis equals x squared plus p x minus 10\nx plus 2 equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"25 percent sign equals G H S 12 comma 500"},"status":"ok"}

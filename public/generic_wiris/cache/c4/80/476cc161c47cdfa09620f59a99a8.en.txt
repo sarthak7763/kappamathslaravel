@@ -1,0 +1,1 @@
+{"result":{"text":"y plus 3 x equals 1................. left parenthesis 1 right parenthesis\nx minus y equals 2 space space space................. left parenthesis 2 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus begin inline style 1 over 6 end style x minus begin inline style 1 over 6 end style equals 0\n6 x squared minus x minus 1 equals 0"},"status":"ok"}

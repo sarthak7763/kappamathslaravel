@@ -1,0 +1,1 @@
+{"result":{"text":"equals 5 cross times G H S 210 equals G H S 1050"},"status":"ok"}

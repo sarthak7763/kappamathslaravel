@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space u minus 2 v equals 2........... left parenthesis 1 right parenthesis"},"status":"ok"}

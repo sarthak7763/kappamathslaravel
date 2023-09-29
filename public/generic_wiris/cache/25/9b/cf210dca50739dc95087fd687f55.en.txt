@@ -1,0 +1,1 @@
+{"result":{"text":"equals 33.33 cross times 10 equals 333.3 space m"},"status":"ok"}

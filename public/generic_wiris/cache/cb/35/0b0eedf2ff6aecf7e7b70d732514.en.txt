@@ -1,0 +1,1 @@
+{"result":{"text":"R equals 5 percent sign"},"status":"ok"}

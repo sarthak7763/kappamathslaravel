@@ -1,0 +1,1 @@
+{"result":{"text":"q equals negative 3"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals open parentheses 8 over 20 cross times 7 over 19 close parentheses plus open parentheses 7 over 20 cross times 6 over 19 close parentheses plus open parentheses 5 over 20 cross times 4 over 19 close parentheses\nequals 14 over 95 plus 21 over 190 plus 1 over 19\nequals 59 over 190"},"status":"ok"}

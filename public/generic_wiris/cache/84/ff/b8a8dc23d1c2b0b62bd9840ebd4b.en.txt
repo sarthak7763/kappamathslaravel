@@ -1,0 +1,1 @@
+{"result":{"text":"100 percent sign equals 15 comma 000"},"status":"ok"}

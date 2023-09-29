@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow a equals 1 comma space b equals k space"},"status":"ok"}

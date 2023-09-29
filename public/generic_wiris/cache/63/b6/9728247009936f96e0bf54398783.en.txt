@@ -1,0 +1,1 @@
+{"result":{"text":"I equals A minus P equals 6 comma 000 minus 5 comma 500 equals G H S 500"},"status":"ok"}

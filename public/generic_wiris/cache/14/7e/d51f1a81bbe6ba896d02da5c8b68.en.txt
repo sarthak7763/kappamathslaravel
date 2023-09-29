@@ -1,0 +1,1 @@
+{"result":{"text":"equals b over 1 cross times a equals N space a b"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space x plus y equals 15.................... left parenthesis 1 right parenthesis"},"status":"ok"}

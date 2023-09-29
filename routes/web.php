@@ -28,6 +28,14 @@ Route::get('/', function(){
 
 Route::post('/login/checkwebuserlogin','Auth\LoginController@checkwebuserlogin')->name('checkwebuserlogin');
 
+Route::post('/password/adminforgotpassword','Auth\ForgotPasswordController@adminforgotpassword')->name('adminforgotpassword');
+
+Route::get('/password/reset-password','Auth\ForgotPasswordController@resetpassword')->name('resetpassword');
+
+Route::get('/password/reset-password/{code}','Auth\ForgotPasswordController@resetpassword')->name('resetpassword');
+
+Route::post('/password/adminresetpassword','Auth\ForgotPasswordController@adminresetpassword')->name('adminresetpassword');
+
   Auth::routes();
 
   Route::get('/home', function(){
@@ -165,6 +173,10 @@ Route::group(['middleware'=> 'isadmin'], function(){
   Route::resource('/admin/course-category', 'SubjectcategoryController');
   
   Route::post('/admin/course-category/changestatus','SubjectcategoryController@changestatus')->name('subjectcategorychangestatus');
+
+  Route::resource('/admin/subscription-coupon', 'SubscriptionCodeController');
+  
+  Route::post('/admin/subscription-coupon/changestatus','SubscriptionCodeController@changestatus')->name('subscriptioncouponchangestatus');
 
   Route::resource('/admin/course-topic', 'CoursetopicController');
 

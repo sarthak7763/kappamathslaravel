@@ -1,0 +1,1 @@
+{"result":{"text":"equals 77.0 minus 75.6 equals 1.4 g"},"status":"ok"}

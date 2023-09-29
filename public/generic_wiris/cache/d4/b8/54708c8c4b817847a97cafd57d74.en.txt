@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1260 over 5 equals G H S 252"},"status":"ok"}

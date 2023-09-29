@@ -1,0 +1,1 @@
+{"result":{"text":"s c a l e squared"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1.8 m over denominator 5.7 m end fraction cross times 100 percent sign\nequals 31.6 percent sign"},"status":"ok"}

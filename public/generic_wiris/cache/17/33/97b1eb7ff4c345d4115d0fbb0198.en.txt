@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1000 over 60 cross times 1 over 10 equals 5 over 3 equals 5 colon 3"},"status":"ok"}

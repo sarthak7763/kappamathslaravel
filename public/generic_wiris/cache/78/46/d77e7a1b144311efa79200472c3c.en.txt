@@ -1,0 +1,1 @@
+{"result":{"text":"equals G H S 12 comma 500"},"status":"ok"}

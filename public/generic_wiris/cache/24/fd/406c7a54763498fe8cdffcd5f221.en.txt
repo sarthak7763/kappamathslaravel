@@ -1,0 +1,1 @@
+{"result":{"text":"21 x squared plus 7 x minus 4 equals 0"},"status":"ok"}

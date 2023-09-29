@@ -1,0 +1,1 @@
+{"result":{"text":"equals 7.5 m minus 5.7 m equals 1.8 m"},"status":"ok"}

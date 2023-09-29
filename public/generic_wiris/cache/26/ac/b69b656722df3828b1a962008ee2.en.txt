@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 10 over 12 end style equals begin inline style 5 over 6 end style"},"status":"ok"}

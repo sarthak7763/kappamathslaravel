@@ -1,0 +1,1 @@
+{"result":{"text":"negative 141 equals 2 plus left parenthesis n minus 1 right parenthesis left parenthesis negative 11 right parenthesis\nminus 141 equals 2 minus 11 n plus 11\nminus 141 equals negative 11 n plus 13\n11 n equals 2 plus 13 plus 141\n11 n equals 154\nn equals 154 over 11 equals 14"},"status":"ok"}

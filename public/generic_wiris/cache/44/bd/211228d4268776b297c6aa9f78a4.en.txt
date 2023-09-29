@@ -1,0 +1,1 @@
+{"result":{"text":"l b equals left parenthesis a plus b right parenthesis h"},"status":"ok"}

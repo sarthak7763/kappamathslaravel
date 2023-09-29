@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 13 plus 5 left parenthesis negative 2 right parenthesis\ny equals 13 minus 10\ny equals 3\ntherefore space x equals negative 2 comma space y equals 3"},"status":"ok"}

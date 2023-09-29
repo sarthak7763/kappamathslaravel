@@ -149,7 +149,7 @@ class PagesController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        	$notificationdata=UserNotification::where('user_id',$user->id)->with('getNotification')->get();
+	        	$notificationdata=UserNotification::where('user_id',$user->id)->with('getNotification')->orderBy('created_at','DESC')->get();
 	        	if($notificationdata)
 	        	{
 	        		$notificationdataarray=$notificationdata->toArray();

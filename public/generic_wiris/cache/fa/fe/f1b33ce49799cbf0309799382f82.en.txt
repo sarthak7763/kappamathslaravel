@@ -1,0 +1,1 @@
+{"result":{"text":"16 over 4 equals y over 16\nrightwards double arrow 4 equals y over 16\nrightwards double arrow y equals 4 cross times 16 equals 64"},"status":"ok"}

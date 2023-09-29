@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator P over denominator C P end fraction cross times 100 percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x equals negative begin inline style 3 over 2 end style space o r space 5"},"status":"ok"}

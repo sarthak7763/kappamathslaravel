@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 2 y equals 8"},"status":"ok"}

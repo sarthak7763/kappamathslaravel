@@ -1,0 +1,1 @@
+{"result":{"text":"12 over y minus 2 d squared"},"status":"ok"}

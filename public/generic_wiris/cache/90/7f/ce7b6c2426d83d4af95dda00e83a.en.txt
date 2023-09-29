@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 60 minus 24 right parenthesis equals 36"},"status":"ok"}

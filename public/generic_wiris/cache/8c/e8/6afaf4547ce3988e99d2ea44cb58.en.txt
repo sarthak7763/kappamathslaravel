@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript n equals left parenthesis negative 2 right parenthesis to the power of n"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"space space space space space 3 p equals 4 q\nrightwards double arrow space 3 p minus 4 q equals 0.............. left parenthesis 1 right parenthesis"},"status":"ok"}

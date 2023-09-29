@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 84 minus 35\ny equals 49"},"status":"ok"}

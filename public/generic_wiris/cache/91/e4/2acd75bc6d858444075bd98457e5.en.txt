@@ -1,0 +1,1 @@
+{"result":{"text":"c p equals 100 divided by 100 plus p percent sign cross times S P"},"status":"ok"}

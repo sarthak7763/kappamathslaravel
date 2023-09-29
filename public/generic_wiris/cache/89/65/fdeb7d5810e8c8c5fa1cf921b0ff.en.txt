@@ -1,0 +1,1 @@
+{"result":{"text":"x equals fraction numerator m n over denominator 3 end fraction"},"status":"ok"}

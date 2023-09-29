@@ -1,0 +1,1 @@
+{"result":{"text":"u over 2 minus v equals 1"},"status":"ok"}

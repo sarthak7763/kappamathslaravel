@@ -1,0 +1,1 @@
+{"result":{"text":"N open parentheses begin inline style a over b end style close parentheses"},"status":"ok"}

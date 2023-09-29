@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space 26 left parenthesis x minus y right parenthesis equals 52\nrightwards double arrow space x minus y equals 2.............. left parenthesis 3 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"T equals fraction numerator 100 cross times I over denominator P cross times R end fraction equals fraction numerator 100 cross times 13 comma 000 over denominator 65 comma 000 cross times 5 end fraction equals 4"},"status":"ok"}

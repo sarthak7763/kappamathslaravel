@@ -1,0 +1,1 @@
+{"result":{"text":"U subscript 1 equals 3 space space space space rightwards double arrow a equals 3............ left parenthesis 1 right parenthesis\nU subscript 5 equals 48 space space rightwards double arrow a r to the power of 4 equals 48............ left parenthesis 2 right parenthesis"},"status":"ok"}

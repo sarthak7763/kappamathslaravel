@@ -1,0 +1,1 @@
+{"result":{"text":"u equals negative 6 comma space v equals 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"14 plus y equals 26\ny equals 26 minus 14\ny equals 12"},"status":"ok"}

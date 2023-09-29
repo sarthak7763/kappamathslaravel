@@ -1,0 +1,1 @@
+{"result":{"text":"I equals P cross times R cross times T divided by 100"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis a plus b right parenthesis equals negative 2 plus 3 over 2 equals negative 1 half"},"status":"ok"}

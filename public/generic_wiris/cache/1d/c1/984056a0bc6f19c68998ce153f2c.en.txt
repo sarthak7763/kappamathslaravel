@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis x minus p right parenthesis left parenthesis 2 x plus 1 right parenthesis equals 0"},"status":"ok"}

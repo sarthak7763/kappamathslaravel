@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 over 6 plus 1 over 6 plus 1 over 6 equals 3 over 6 equals 1 half"},"status":"ok"}

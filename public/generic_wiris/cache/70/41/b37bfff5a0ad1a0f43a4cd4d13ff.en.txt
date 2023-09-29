@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space 10.5 d plus space 10 d equals 131.25\nrightwards double arrow 20.5 d equals 131.25\nrightwards double arrow space d equals fraction numerator 131.25 over denominator 20.5 end fraction equals 6.4"},"status":"ok"}

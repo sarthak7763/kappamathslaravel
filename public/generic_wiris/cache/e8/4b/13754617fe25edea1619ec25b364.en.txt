@@ -1,0 +1,1 @@
+{"result":{"text":"cross times 100 percent sign"},"status":"ok"}

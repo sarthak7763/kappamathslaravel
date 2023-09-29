@@ -1,0 +1,1 @@
+{"result":{"text":"0.8 cross times 60"},"status":"ok"}

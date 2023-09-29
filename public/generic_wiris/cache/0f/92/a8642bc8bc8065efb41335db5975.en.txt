@@ -1,0 +1,1 @@
+{"result":{"text":"s equals fraction numerator n r p over denominator m r plus m squared end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space begin inline style x over y end style equals begin inline style 5 over 7 end style.............. left parenthesis 2 right parenthesis"},"status":"ok"}

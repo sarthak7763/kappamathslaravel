@@ -1,0 +1,1 @@
+{"result":{"text":"y equals negative 6 comma"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 250 comma 000 minus 100 comma 000 equals N 150 comma 000"},"status":"ok"}

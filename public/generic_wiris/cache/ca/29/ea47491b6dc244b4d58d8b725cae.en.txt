@@ -1,0 +1,1 @@
+{"result":{"text":"equals N 6 comma 600 minus N 6 comma 000 equals N 600"},"status":"ok"}

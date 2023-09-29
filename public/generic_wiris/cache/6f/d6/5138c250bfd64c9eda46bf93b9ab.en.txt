@@ -1,0 +1,1 @@
+{"result":{"text":"3 x plus 5 y equals negative 6 comma space 2 x minus 3 y equals 15"},"status":"ok"}

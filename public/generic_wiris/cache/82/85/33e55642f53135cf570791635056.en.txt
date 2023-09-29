@@ -1,0 +1,1 @@
+{"result":{"text":"equals 100 over 5 cross times 40 equals N 800"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals negative begin inline style 3 over 2 end style cross times 5 equals negative begin inline style 15 over 2 end style"},"status":"ok"}

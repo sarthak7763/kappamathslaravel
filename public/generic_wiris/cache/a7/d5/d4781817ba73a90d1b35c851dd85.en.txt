@@ -1,0 +1,1 @@
+{"result":{"text":"space space space space space x squared plus 4 x identical to left parenthesis x plus 2 right parenthesis squared plus k\nrightwards double arrow x squared plus 4 x minus k equals left parenthesis x plus 2 right parenthesis squared\nrightwards double arrow x squared plus 4 x minus k equals x squared plus 4 x plus 4"},"status":"ok"}

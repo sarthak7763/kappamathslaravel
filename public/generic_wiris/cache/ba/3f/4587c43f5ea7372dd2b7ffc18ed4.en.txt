@@ -1,0 +1,1 @@
+{"result":{"text":"5 x minus 4 x equals 45 comma 000\nx equals 45 comma 000"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus left parenthesis negative begin inline style 5 over 2 end style right parenthesis x plus begin inline style 3 over 2 end style equals 0\nx squared plus begin inline style 5 over 2 end style x plus begin inline style 3 over 2 end style equals 0\n2 x squared plus 5 x plus 3 equals 0"},"status":"ok"}

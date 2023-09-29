@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 minus 49 over 60 equals 11 over 60"},"status":"ok"}

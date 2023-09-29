@@ -1,0 +1,1 @@
+{"result":{"text":"percent sign E r r o r equals fraction numerator E r r o r over denominator A c t u a l space space space space m a s s end fraction cross times 100 percent sign"},"status":"ok"}

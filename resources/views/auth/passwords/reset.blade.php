@@ -10,57 +10,63 @@
 @endsection
 
 @section('content')
-  <div class="vertical-center">
-    <div class="container">
-      @if (Session::has('error'))
-        <div class="alert alert-danger sessionmodal">
-          {{session('error')}}
-        </div>
+
+@if (session()->has('success'))
+    <div class="alert alert-success">
+        {!! session()->get('success')!!}        
+    </div>
+  @endif
+
+
+  @if (session()->has('error'))
+      <div class="alert alert-danger">
+          {!! session()->get('error')!!}        
+      </div>
+  @endif
+
+  @php 
+  $password_error="";
+  $password_confirm_error="";
+  @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['password']))
+      @php $password_error=$validationmessage['password']; @endphp
+      @else
+      @php $password_error=""; @endphp
       @endif
+
+      @if($validationmessage!="" && isset($validationmessage['password_confirmation']))
+      @php $password_confirm_error=$validationmessage['password_confirmation']; @endphp
+      @else
+      @php $password_confirm_error=""; @endphp
+      @endif
+  @endif
+
+  <div style="margin-top: -25px;" class="">
+    <div class="container">
       <div class="login-page">
         <div class="logo">
           @if ($setting)
             <a href="{{url('/')}}" title="{{$setting->welcome_txt}}"><img src="{{asset('/images/logo/'.$setting->logo)}}" class="login-logo img-responsive" alt="{{$setting->welcome_txt}}"></a>
           @endif
         </div>
-        <h4 class="user-register-heading text-center">Reset Password</h4>
+        <h4 class="user-register-heading text-center">Admin Reset Password</h4>
       
-         <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
+         <form class="form-horizontal" method="POST" action="{{ route('adminresetpassword') }}">
                         {{ csrf_field() }}
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                          <div class="row">
-
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                  <label for="email" class="control-label">E-Mail Address</label>
-                                  <input id="email" placeholder="Email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
-                                </div>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                          </div>
-                            
-                        </div>
+                        
+                        <input type="hidden" name="forgot_token" value="{{$forgot_token}}">
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                           <div class="row">
                              <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-8">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control" name="password">
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                               <small class="text-danger">{{$password_error}}</small>
                             </div>
                           </div>
                            
@@ -70,13 +76,9 @@
                           <div class="row">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
                             <div class="col-md-8">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
 
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
+                                <small class="text-danger">{{$password_confirm_error}}</small>
                             </div>
                           </div>
                             

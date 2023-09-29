@@ -1,0 +1,1 @@
+{"result":{"text":"If space 2 square root of 5 plus square root of 125 minus square root of 45 plus 4 identical to straight a plus straight b square root of straight c comma end root"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"49 minus 35 equals 14"},"status":"ok"}

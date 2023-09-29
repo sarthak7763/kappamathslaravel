@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus begin inline style 19 over 21 end style x minus begin inline style 4 over 7 end style equals 0\n21 x squared minus 19 x minus 12 equals 0"},"status":"ok"}

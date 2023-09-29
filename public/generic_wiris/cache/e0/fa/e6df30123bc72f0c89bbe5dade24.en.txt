@@ -1,0 +1,1 @@
+{"result":{"text":"x left parenthesis x plus 6 over x minus 1 right parenthesis equals 12\nx squared plus 6 minus x equals 12\nx squared minus x plus 6 minus 12 equals 0\nx squared minus x minus 6 equals 0\nleft parenthesis x minus 3 right parenthesis left parenthesis x plus 2 right parenthesis equals 0\nx equals 3 comma x equals negative 2"},"status":"ok"}

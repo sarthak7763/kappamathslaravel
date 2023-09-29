@@ -1,0 +1,1 @@
+{"result":{"text":"space open parentheses fraction numerator 10 square root of 3 over denominator square root of 5 end fraction minus square root of 15 close parentheses squared."},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 left parenthesis 4 right parenthesis plus y equals 15 space space rightwards double arrow 8 plus y equals 15 space space rightwards double arrow y equals 7\ntherefore space space x squared plus 2 y equals 4 squared plus 2 left parenthesis 7 right parenthesis space space equals space 16 plus 14 equals 30"},"status":"ok"}

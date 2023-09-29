@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 u over denominator 3 end fraction minus v equals 12"},"status":"ok"}

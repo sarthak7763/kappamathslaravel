@@ -1,0 +1,1 @@
+{"result":{"text":"c p equals fraction numerator 100 over denominator 100 plus p end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"V equals L e space 1 comma 850 space R equals 15 percent sign comma space n equals 3 space y e a r s"},"status":"ok"}

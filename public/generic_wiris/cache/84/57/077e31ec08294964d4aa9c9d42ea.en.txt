@@ -1,0 +1,1 @@
+{"result":{"text":"I equals A minus P"},"status":"ok"}

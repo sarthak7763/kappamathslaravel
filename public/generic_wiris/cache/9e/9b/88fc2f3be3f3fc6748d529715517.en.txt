@@ -1,0 +1,1 @@
+{"result":{"text":"5 over 9 x minus 4 over 9 x equals 5 comma 000"},"status":"ok"}

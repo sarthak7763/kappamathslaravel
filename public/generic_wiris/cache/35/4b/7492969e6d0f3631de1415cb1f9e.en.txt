@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow left parenthesis x minus 2 right parenthesis left parenthesis x plus 1 right parenthesis equals 0\nrightwards double arrow x squared plus x minus 2 x minus 2 equals 0\nrightwards double arrow x squared minus x plus 2 equals 0"},"status":"ok"}

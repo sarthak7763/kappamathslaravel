@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 1.4 over denominator 75.6 end fraction cross times 100 percent sign\nequals 1.851 percent sign equals 1.9 percent sign"},"status":"ok"}

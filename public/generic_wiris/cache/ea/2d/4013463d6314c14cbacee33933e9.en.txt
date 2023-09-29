@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow n left parenthesis E right parenthesis equals 4"},"status":"ok"}

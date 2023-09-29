@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 100 percent sign equals fraction numerator 100 percent sign over denominator 80 percent sign end fraction cross times 525 equals"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 x minus y equals 5................. left parenthesis 1 right parenthesis\n2 x plus y equals 15............... left parenthesis 2 right parenthesis\nleft parenthesis 1 right parenthesis plus left parenthesis 2 right parenthesis colon\n5 x equals 20 space space space space space space rightwards double arrow x equals 4"},"status":"ok"}

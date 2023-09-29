@@ -1,0 +1,1 @@
+{"result":{"text":"U subscript 4 equals 37\ntherefore space a plus 3 d equals 37"},"status":"ok"}

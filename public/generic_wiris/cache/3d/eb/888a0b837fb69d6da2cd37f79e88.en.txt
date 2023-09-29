@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 over 5 cross times 875.08 equals G H S 350.032"},"status":"ok"}

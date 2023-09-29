@@ -1,0 +1,1 @@
+{"result":{"text":"equals negative begin inline style 1 half end style plus begin inline style 2 over 3 end style equals begin inline style 1 over 6 end style"},"status":"ok"}

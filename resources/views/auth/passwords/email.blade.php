@@ -18,6 +18,19 @@
         </div>
       @endif
 
+    @php 
+      $email_error="";
+    @endphp
+
+  @if (session()->has('valid_error'))
+     @php $validationmessage=session()->get('valid_error'); @endphp
+      @if($validationmessage!="" && isset($validationmessage['email']))
+      @php $email_error=$validationmessage['email']; @endphp
+      @else
+      @php $email_error=""; @endphp
+      @endif
+  @endif
+
       <div class="login-page">
         <div class="logo">
           @if ($setting)
@@ -34,18 +47,14 @@
           </div>
         @endif
 
-        <form class="form form-login" method="POST" action="{{ route('password.email') }}">
+        <form class="form form-login" method="POST" action="{{ route('adminforgotpassword') }}">
             {{ csrf_field() }}
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
               <!-- <label for="email" class="control-label text-center">E-Mail Address</label> -->
                 <i class="fa fa-envelope"></i>
-                    <input id="email" placeholder="Email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
+                    <input id="email" placeholder="Email" type="text" class="form-control" name="email" value="{{ old('email') }}">
+                    <small class="text-danger">{{$email_error}}</small>
                 </div> 
               
                         <div class="form-group text-center">

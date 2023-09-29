@@ -1,0 +1,1 @@
+{"result":{"text":"equals 330 minus 300 equals G H S 30"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"negative 20 plus 3 d equals 37\n3 d equals 37 plus 20\n3 d equals 57\nd equals 57 over 3 equals 19"},"status":"ok"}

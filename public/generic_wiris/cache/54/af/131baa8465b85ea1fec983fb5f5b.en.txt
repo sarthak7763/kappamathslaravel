@@ -1,0 +1,1 @@
+{"result":{"text":"L divided by C P cross times 100 percent sign"},"status":"ok"}

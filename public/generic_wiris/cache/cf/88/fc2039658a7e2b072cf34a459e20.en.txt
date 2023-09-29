@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow u minus 2 left parenthesis 2 right parenthesis equals 2 space space space rightwards double arrow u minus 4 equals 2\nrightwards double arrow u equals 6\ntherefore u equals 6 comma space v equals 2"},"status":"ok"}

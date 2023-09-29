@@ -1,0 +1,1 @@
+{"result":{"text":"10 comma 400 equals P plus fraction numerator 3 P over denominator 10 end fraction\n104 comma 000 equals 10 P plus 3 P\n104 comma 000 equals 13 P\nP equals fraction numerator 104 comma 000 over denominator 13 end fraction equals 8 comma 000"},"status":"ok"}

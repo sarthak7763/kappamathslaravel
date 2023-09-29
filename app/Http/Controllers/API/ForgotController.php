@@ -55,6 +55,7 @@ class ForgotController extends BaseController
             $forgotlink=url('/').'/user/forgot-password/'.$newforgototp;
 
             $details = [
+              'type'=>'user',
               'name' =>$userdet->name,
               'link' =>$forgotlink
             ];

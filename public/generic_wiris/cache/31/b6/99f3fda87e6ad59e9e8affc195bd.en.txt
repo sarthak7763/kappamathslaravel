@@ -1,0 +1,1 @@
+{"result":{"text":"L equals C P minus S P equals 800 minus 600 equals N 200"},"status":"ok"}

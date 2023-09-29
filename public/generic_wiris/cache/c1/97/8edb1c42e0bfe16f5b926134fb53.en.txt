@@ -1,0 +1,1 @@
+{"result":{"text":"12 space m s to the power of negative 1 end exponent equals fraction numerator 12 m over denominator 1 s end fraction equals fraction numerator 12 over 1000 k m over denominator 1 over 3600 h end fraction\nequals 12 over 1000 cross times 3600 over 1\nequals 43.2 space k m h to the power of negative 1 end exponent"},"status":"ok"}

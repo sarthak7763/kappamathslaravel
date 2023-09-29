@@ -1,0 +1,1 @@
+{"result":{"text":"S subscript n equals 2 n squared minus 3 n\nS subscript 6 equals end subscript 2 left parenthesis 6 right parenthesis squared minus 3 left parenthesis 6 right parenthesis\nequals 72 minus 18 equals 54"},"status":"ok"}

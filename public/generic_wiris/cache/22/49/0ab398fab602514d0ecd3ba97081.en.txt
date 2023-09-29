@@ -1,0 +1,1 @@
+{"result":{"text":"U subscript n equals a r to the power of n minus 1 end exponent\nrightwards double arrow space U subscript 8 equals 32 open parentheses begin inline style 1 half end style close parentheses to the power of 8 minus 1 end exponent"},"status":"ok"}

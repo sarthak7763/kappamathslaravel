@@ -1,0 +1,1 @@
+{"result":{"text":"x equals fraction numerator 12 over denominator 2 d squared plus y end fraction"},"status":"ok"}

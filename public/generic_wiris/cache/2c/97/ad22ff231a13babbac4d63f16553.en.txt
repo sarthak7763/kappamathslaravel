@@ -1,0 +1,1 @@
+{"result":{"text":"I equals fraction numerator 8400 cross times 26.5 cross times 2 over 3 over denominator 100 end fraction equals G H S 1484"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"square root of 3 plus open parentheses 3 close parentheses end root space infinity open square brackets 5 close square brackets"},"status":"ok"}

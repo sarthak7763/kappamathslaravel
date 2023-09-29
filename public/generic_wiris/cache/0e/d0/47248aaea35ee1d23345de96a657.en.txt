@@ -1,0 +1,1 @@
+{"result":{"text":"P union Q equals left curly bracket 1 comma space 2 comma space 4 comma space 6 comma space 7 comma space 8 right curly bracket"},"status":"ok"}

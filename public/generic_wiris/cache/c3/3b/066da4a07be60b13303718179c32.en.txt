@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket x colon x equals 3 comma space x equals negative 9 right curly bracket"},"status":"ok"}

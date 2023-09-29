@@ -1,0 +1,1 @@
+{"result":{"text":"n equals r left parenthesis w squared plus v right parenthesis minus m squared"},"status":"ok"}

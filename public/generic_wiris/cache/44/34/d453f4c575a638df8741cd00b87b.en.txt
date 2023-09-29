@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 1 over 10 end style cross times 30 comma 000 equals G H S 3 comma 000"},"status":"ok"}

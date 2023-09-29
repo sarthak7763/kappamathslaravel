@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 100 minus 15 right parenthesis percent sign equals 85 percent sign"},"status":"ok"}

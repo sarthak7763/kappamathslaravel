@@ -1,0 +1,1 @@
+{"result":{"text":"U equals left curly bracket 1 comma space 2 comma space 3 comma space 4 comma space....40 comma right curly bracket\nrightwards double arrow n left parenthesis U right parenthesis equals 40"},"status":"ok"}

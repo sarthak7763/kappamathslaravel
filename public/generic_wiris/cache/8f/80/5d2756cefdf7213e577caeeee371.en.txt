@@ -1,0 +1,1 @@
+{"result":{"text":"5 comma 500 comma 000 equals 10 x plus x\n5 comma 500 comma 000 equals 11 x\nx equals fraction numerator 5 comma 500 comma 000 over denominator 11 end fraction equals N 500 comma 000"},"status":"ok"}

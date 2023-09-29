@@ -1,0 +1,1 @@
+{"result":{"text":"b squared minus 4 a c equals 0"},"status":"ok"}

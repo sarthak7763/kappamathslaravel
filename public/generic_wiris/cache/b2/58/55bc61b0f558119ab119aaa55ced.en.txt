@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 150 comma 000 over denominator 8 end fraction N 18 comma 750.00"},"status":"ok"}

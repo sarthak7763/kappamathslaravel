@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket x colon x equals begin inline style 1 third end style comma negative 2 right curly bracket"},"status":"ok"}

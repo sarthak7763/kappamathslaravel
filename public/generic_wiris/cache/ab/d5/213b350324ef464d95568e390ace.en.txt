@@ -1,0 +1,1 @@
+{"result":{"text":"T over M equals T over O cross times O over M\nT over M equals 1 half cross times 4 over 5\nT over M equals 2 over 5\ntherefore space space space T colon M equals 2 colon 5"},"status":"ok"}

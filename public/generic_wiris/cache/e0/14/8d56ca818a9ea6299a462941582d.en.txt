@@ -1,0 +1,1 @@
+{"result":{"text":"1 minus begin inline style 3 over 5 end style equals begin inline style 2 over 5 end style"},"status":"ok"}

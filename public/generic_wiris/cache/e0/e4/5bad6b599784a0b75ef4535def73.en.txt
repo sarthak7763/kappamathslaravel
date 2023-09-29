@@ -1,0 +1,1 @@
+{"result":{"text":"x squared plus k x plus begin inline style 16 over 9 end style\nrightwards double arrow a equals 1 comma space b equals k space"},"status":"ok"}

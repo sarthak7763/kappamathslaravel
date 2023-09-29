@@ -1,0 +1,1 @@
+{"result":{"text":"I equals G H S 60 comma space R equals ?\nR equals fraction numerator 100 cross times I over denominator P cross times T end fraction\nR equals fraction numerator 100 cross times 60 over denominator 2 comma 000 cross times 3 over 4 end fraction equals 4 percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 100 over denominator 100 plus p percent sign end fraction cross times space S P"},"status":"ok"}

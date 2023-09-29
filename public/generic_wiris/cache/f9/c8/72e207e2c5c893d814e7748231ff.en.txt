@@ -1,0 +1,1 @@
+{"result":{"text":"equals 5 begin inline style 3 over 12 end style y r s equals 5 begin inline style 1 fourth end style y r s"},"status":"ok"}

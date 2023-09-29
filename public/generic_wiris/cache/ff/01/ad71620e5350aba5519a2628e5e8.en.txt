@@ -1,0 +1,1 @@
+{"result":{"text":"x equals 6 over d squared plus 12 over y"},"status":"ok"}

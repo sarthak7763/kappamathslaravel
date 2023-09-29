@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript 2 equals 17"},"status":"ok"}

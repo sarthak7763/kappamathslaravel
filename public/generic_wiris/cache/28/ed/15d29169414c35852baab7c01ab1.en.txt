@@ -1,0 +1,1 @@
+{"result":{"text":"h to the power of negative 1 end exponent"},"status":"ok"}

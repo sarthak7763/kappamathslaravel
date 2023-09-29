@@ -1,0 +1,1 @@
+{"result":{"text":"2 equals 2 over 10 cross times 50 equals G H S 10"},"status":"ok"}

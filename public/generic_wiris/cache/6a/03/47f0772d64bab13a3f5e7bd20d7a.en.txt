@@ -1,0 +1,1 @@
+{"result":{"text":"equals 4 cross times 10 to the power of negative 12 end exponent cross times 10 to the power of 12 c m squared\nequals 4 c m squared"},"status":"ok"}

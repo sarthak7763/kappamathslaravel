@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket negative 2 right curly bracket"},"status":"ok"}

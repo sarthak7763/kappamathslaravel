@@ -1,0 +1,1 @@
+{"result":{"text":"6 plus 2 q equals 2 space space rightwards double arrow 2 q equals negative 4 space space rightwards double arrow space q equals negative 2\ntherefore space left parenthesis p plus q right parenthesis equals 6 plus 9 minus 2 right parenthesis equals 4"},"status":"ok"}

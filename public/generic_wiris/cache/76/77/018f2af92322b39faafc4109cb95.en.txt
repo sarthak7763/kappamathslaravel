@@ -1,0 +1,1 @@
+{"result":{"text":"equals 7 x minus 10\nequals 7 open parentheses begin inline style 17 over 7 end style close parentheses minus 10\nequals 17 minus 10 equals 7"},"status":"ok"}

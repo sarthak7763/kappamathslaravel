@@ -1,0 +1,1 @@
+{"result":{"text":"P left parenthesis R subscript 1 intersection B subscript 2 right parenthesis equals 5 over 9 cross times 4 over 9 equals 20 over 81"},"status":"ok"}

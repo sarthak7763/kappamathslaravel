@@ -1,0 +1,1 @@
+{"result":{"text":"S P space equals space N 6 comma 900 comma space P percent sign space equals space 15 percent sign"},"status":"ok"}

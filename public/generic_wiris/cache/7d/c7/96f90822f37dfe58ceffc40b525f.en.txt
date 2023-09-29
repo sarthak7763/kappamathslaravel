@@ -1,0 +1,1 @@
+{"result":{"text":"x equals begin inline style 2 over 3 end style"},"status":"ok"}

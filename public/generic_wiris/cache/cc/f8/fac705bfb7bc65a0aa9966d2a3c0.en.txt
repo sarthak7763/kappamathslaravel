@@ -1,0 +1,1 @@
+{"result":{"text":"a equals 2 comma space space d equals negative 9 minus 2 equals negative 11 comma space l equals negative 141"},"status":"ok"}

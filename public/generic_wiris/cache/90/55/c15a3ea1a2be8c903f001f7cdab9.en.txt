@@ -1,0 +1,1 @@
+{"result":{"text":"$ 0.075 equals N 1\n$ 15 comma 000 equals fraction numerator 15 comma 000 cross times 1 over denominator 0.075 end fraction equals N space 200 comma 000"},"status":"ok"}

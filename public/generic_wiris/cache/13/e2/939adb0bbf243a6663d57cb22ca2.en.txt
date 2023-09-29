@@ -1,0 +1,1 @@
+{"result":{"text":"r equals begin inline style fraction numerator 4 over denominator negative 2 end fraction end style equals negative 2"},"status":"ok"}

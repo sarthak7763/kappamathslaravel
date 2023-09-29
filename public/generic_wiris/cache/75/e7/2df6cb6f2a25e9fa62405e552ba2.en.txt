@@ -1,0 +1,1 @@
+{"result":{"text":"equals 6 cross times 55 equals G H S 330"},"status":"ok"}

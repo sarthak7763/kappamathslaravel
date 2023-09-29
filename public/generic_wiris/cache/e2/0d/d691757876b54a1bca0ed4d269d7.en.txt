@@ -1,0 +1,1 @@
+{"result":{"text":"equals 95 over 120 equals 19 over 24"},"status":"ok"}

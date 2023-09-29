@@ -1,0 +1,1 @@
+{"result":{"text":"equals 200 over 800 cross times 100 percent sign equals 25 percent sign"},"status":"ok"}

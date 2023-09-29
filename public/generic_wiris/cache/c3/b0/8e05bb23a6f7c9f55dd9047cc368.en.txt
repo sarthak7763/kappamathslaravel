@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator s p e e d over denominator v e l o c i t y end fraction plus fraction numerator 4 percent sign over denominator n o t cross times percent sign end fraction\n4 over 5"},"status":"ok"}

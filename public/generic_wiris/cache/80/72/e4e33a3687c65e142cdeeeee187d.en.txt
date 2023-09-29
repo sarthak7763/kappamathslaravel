@@ -1,0 +1,1 @@
+{"result":{"text":"equals 7 over 36"},"status":"ok"}

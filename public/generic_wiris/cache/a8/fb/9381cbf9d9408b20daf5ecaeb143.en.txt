@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x over denominator x plus 1 end fraction equals fraction numerator 2 over denominator 3 x plus 7 end fraction\n"},"status":"ok"}

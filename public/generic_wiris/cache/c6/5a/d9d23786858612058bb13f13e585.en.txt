@@ -1,0 +1,1 @@
+{"result":{"text":"d equals 2 begin inline style 1 half end style minus 1 equals 1 begin inline style 1 half end style equals begin inline style 3 over 2 end style"},"status":"ok"}

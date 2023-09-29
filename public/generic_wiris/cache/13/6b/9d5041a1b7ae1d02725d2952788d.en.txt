@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus begin inline style 13 over 2 end style x plus begin inline style 15 over 2 end style equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 begin inline style 1 half end style percent sign comma space I equals N 500"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 1 space k m divided by m i n over denominator 10 space m divided by s end fraction equals fraction numerator 100 m divided by 60 s over denominator 10 m divided by 1 s end fraction"},"status":"ok"}

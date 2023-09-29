@@ -1,0 +1,1 @@
+{"result":{"text":"15 percent sign equals 15 over 85 cross times 36 comma 000 equals G H S 6 comma 352.94"},"status":"ok"}

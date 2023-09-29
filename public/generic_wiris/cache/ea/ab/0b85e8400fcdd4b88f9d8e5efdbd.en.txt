@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 4 over x equals 16 over 4\nrightwards double arrow 4 over x equals 4\nrightwards double arrow x equals 4 over 4 equals 1\n"},"status":"ok"}

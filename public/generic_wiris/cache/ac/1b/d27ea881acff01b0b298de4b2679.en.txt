@@ -1,0 +1,1 @@
+{"result":{"text":"30 comma 000 minus 3 comma 000 equals space G H S 27 comma 000"},"status":"ok"}

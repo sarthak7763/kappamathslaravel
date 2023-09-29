@@ -1,0 +1,1 @@
+{"result":{"text":"C P equals fraction numerator 100 over denominator 100 plus P percent sign end fraction"},"status":"ok"}

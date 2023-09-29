@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x squared plus 2 x minus 63 equals 0\nrightwards double arrow left parenthesis x minus 7 right parenthesis left parenthesis x plus 9 right parenthesis equals 0\nrightwards double arrow x equals 7 comma space x equals negative 9"},"status":"ok"}

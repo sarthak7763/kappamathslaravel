@@ -1,0 +1,1 @@
+{"result":{"text":"1.044 cross times 10 to the power of 2 space end exponent m m"},"status":"ok"}

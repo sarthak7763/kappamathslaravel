@@ -1,0 +1,1 @@
+{"result":{"text":"5 space y e a r s space i s space r e l a t i v e l y space t o space 10"},"status":"ok"}

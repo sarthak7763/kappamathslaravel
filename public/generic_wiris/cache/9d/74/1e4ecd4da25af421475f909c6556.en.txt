@@ -1,0 +1,1 @@
+{"result":{"text":"therefore left parenthesis negative 2 right parenthesis squared plus p left parenthesis negative 2 right parenthesis minus 10 equals 0\n4 minus 2 p minus 10 equals 0\nminus 2 p equals 10 minus 4\nminus 2 p equals 6\np equals negative 3"},"status":"ok"}

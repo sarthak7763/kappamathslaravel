@@ -1,0 +1,1 @@
+{"result":{"text":"x equals open square brackets fraction numerator 2 y left parenthesis E minus z over denominator k end fraction close square brackets squared"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 2 straight a minus straight b right parenthesis equals 2 left parenthesis 4 right parenthesis minus 4\nequals 8 minus 4 equals 4"},"status":"ok"}

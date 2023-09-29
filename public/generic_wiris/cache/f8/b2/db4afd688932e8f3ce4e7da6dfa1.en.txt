@@ -1,0 +1,1 @@
+{"result":{"text":"equals 8400 plus 1484 equals G H S 9884.00"},"status":"ok"}

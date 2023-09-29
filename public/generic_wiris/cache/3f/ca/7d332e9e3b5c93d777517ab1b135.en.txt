@@ -1,0 +1,1 @@
+{"result":{"text":"d equals begin inline style 7 over 15 end style minus begin inline style 2 over 3 end style equals negative begin inline style 1 fifth end style"},"status":"ok"}

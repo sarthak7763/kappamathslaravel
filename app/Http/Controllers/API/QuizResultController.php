@@ -390,7 +390,7 @@ class QuizResultController extends BaseController
 	        $user=auth()->user();
 	        if($user)
 	        {
-	        $quizresultmarks=Resultmarks::where('user_id',$user->id)->get();
+	        $quizresultmarks=Resultmarks::where('user_id',$user->id)->orderBy('id','DESC')->get();
 	        if($quizresultmarks)
 	        {
 	        	$quizresultmarksarray=$quizresultmarks->toArray();

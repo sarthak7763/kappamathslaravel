@@ -1,0 +1,1 @@
+{"result":{"text":"m equals fraction numerator y minus k squared over denominator k squared plus 1 end fraction"},"status":"ok"}

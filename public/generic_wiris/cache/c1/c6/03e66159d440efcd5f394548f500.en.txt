@@ -1,0 +1,1 @@
+{"result":{"text":"A equals space G H S 6 comma 000"},"status":"ok"}

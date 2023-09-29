@@ -1,0 +1,1 @@
+{"result":{"text":"P equals N 4 comma 000 comma space R equals 2 begin inline style 1 half end style comma T equals 6 y e a r s\nI equals fraction numerator P cross times R cross times T over denominator 100 end fraction equals fraction numerator 4 comma 000 cross times 2 1 half over denominator 100 end fraction equals N 600"},"status":"ok"}

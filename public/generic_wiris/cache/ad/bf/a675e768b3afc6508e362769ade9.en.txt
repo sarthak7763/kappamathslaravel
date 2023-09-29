@@ -1,0 +1,1 @@
+{"result":{"text":"3 left parenthesis 13 plus 5 x right parenthesis plus 2 x equals 5\n39 plus 15 x plus 2 x equals 5\n15 x plus 2 x equals 5 minus 39\nspace space space space space space space space 17 x equals negative 34\nspace space space space space space space space space space space space x equals negative 2"},"status":"ok"}

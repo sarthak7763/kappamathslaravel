@@ -1,0 +1,1 @@
+{"result":{"text":"equals 10 over 12 y r equals 5 over 6 y r"},"status":"ok"}

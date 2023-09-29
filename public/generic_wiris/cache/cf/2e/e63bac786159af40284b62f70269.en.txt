@@ -1,0 +1,1 @@
+{"result":{"text":"k squared equals open parentheses square root of fraction numerator m minus y over denominator m plus 1 end fraction end root close parentheses squared\nk squared equals fraction numerator m minus y over denominator m plus 1 end fraction"},"status":"ok"}

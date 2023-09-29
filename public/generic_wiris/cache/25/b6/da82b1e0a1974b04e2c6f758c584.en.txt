@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator d over denominator 10.5 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus left parenthesis negative begin inline style 13 over 4 end style right parenthesis x minus 3 equals 0\nx squared plus begin inline style 13 over 4 end style x minus 3 equals 0\n4 x squared plus 13 x minus 12 equals 0"},"status":"ok"}

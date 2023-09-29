@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 3 over 4 end style cross times left parenthesis negative 4 right parenthesis equals negative 3"},"status":"ok"}

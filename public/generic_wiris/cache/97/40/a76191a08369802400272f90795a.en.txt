@@ -1,0 +1,1 @@
+{"result":{"text":"4 plus 3 y equals 7\n3 y equals 7 minus 4\n3 y equals 3\ny equals begin inline style 3 over 3 end style equals 1\ntherefore space x minus 4 comma space y equals 1\n"},"status":"ok"}

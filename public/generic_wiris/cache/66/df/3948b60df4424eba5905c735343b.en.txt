@@ -1,0 +1,1 @@
+{"result":{"text":"A equals P open parentheses 1 plus R over 100 close parentheses to the power of n equals 2 comma 000 comma 000 open parentheses 1 plus 8 over 100 close parentheses squared\nequals 2 comma 332 comma 800"},"status":"ok"}

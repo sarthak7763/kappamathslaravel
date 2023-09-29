@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 fourth plus 2 over 5 plus 1 over 6 equals 49 over 60"},"status":"ok"}

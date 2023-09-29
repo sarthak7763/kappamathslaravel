@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 1 third cross times 3 over 5 equals 1 fifth end style"},"status":"ok"}

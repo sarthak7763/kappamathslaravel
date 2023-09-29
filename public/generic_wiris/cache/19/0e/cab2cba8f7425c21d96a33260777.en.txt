@@ -1,0 +1,1 @@
+{"result":{"text":"straight a equals 4 comma space straight b equals 4 comma space straight c equals 5"},"status":"ok"}

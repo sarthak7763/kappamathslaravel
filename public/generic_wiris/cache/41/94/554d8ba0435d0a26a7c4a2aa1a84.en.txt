@@ -1,0 +1,1 @@
+{"result":{"text":"P left parenthesis P with bar on top intersection Q with bar on top right parenthesis equals begin inline style 4 over 5 end style cross times begin inline style 3 over 4 end style equals begin inline style 3 over 5 end style"},"status":"ok"}

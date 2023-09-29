@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x squared minus begin inline style 1 over 6 end style x minus begin inline style 1 third end style equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 m equals 3 over 1000 k m equals 0.003 k m\n24 c m equals fraction numerator 24 over denominator 100 comma 000 end fraction k m equals 0.00024 k m\ntherefore space 3 m space 24 c m equals 0.003 plus 0.00024\nequals 0.00324 k m\nequals 3.24 cross times 10 to the power of negative 3 end exponent k m"},"status":"ok"}

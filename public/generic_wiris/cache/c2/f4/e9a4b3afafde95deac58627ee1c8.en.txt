@@ -1,0 +1,1 @@
+{"result":{"text":"R equals fraction numerator 100 cross times 1 over denominator P cross times T end fraction equals fraction numerator 100 cross times 500 over denominator 5 comma 500 cross times 5 over 6 end fraction equals 10.91 percent sign equals 11 percent sign"},"status":"ok"}

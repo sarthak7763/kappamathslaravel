@@ -72,7 +72,16 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('gettransactiondetails', [DashboardController::class, 'gettransactiondetails']);
 
+    Route::post('getsubscriptionplandetails', [DashboardController::class, 'getsubscriptionplandetails']);
+
+    Route::post('applysubscriptioncoupon', [DashboardController::class, 'applysubscriptioncoupon']);
+
+    Route::post('activatefreeamountsubscription', [DashboardController::class, 'activatefreeamountsubscription']);
+
     Route::post('getsubscriptionnotification', [DashboardController::class, 'getsubscriptionnotification']);
+
+
+    Route::post('applysubscriptioncouponnew', [DashboardController::class, 'applysubscriptioncouponnew']);
 
     //dashboard controller end
 

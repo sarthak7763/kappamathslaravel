@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 480 over denominator 24 comma 000 end fraction cross times 100 percent sign equals 2 percent sign"},"status":"ok"}

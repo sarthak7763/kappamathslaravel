@@ -1,0 +1,1 @@
+{"result":{"text":"1.044 cross times 10 space m m"},"status":"ok"}

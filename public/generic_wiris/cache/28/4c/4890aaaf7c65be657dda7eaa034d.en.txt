@@ -1,0 +1,1 @@
+{"result":{"text":"p minus begin inline style 1 half end style q equals 7"},"status":"ok"}

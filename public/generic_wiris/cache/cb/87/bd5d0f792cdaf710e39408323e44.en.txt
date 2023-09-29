@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses fraction numerator 1 over denominator 500 comma 000 end fraction close parentheses"},"status":"ok"}

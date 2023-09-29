@@ -1,0 +1,1 @@
+{"result":{"text":"space fraction numerator square root of 3 plus square root of 5 over denominator square root of 5 end fraction equals straight x plus straight y square root of 15"},"status":"ok"}

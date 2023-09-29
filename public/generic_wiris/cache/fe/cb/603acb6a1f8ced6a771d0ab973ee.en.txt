@@ -1,0 +1,1 @@
+{"result":{"text":"4.00 percent sign"},"status":"ok"}

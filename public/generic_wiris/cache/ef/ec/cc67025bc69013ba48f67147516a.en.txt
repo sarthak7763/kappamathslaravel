@@ -1,0 +1,1 @@
+{"result":{"text":"a squared plus 6 a plus k equals left parenthesis a plus 3 right parenthesis left parenthesis a plus 3 right parenthesis\na squared plus 6 a plus k equals a squared plus 3 a plus 3 a plus 9\na squared plus 6 a plus k equals a squared plus 6 a plus 9"},"status":"ok"}

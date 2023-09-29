@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 3 a squared b minus 9 a b squared"},"status":"ok"}

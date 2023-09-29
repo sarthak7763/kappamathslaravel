@@ -1,0 +1,1 @@
+{"result":{"text":"almost equal to 100 percent sign"},"status":"ok"}

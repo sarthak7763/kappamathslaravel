@@ -1,0 +1,1 @@
+{"result":{"text":"equals 4 over 15 cross times 3 over 14 equals 2 over 35"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 1 over denominator 5 x end fraction plus 1 over x equals 3"},"status":"ok"}

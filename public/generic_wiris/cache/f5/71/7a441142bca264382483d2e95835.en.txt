@@ -1,0 +1,1 @@
+{"result":{"text":"p minus 6 equals 14 minus p\np plus p equals 14 plus 6\n2 p equals 20\np equals 10"},"status":"ok"}

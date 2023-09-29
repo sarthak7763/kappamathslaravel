@@ -1,0 +1,1 @@
+{"result":{"text":"x equals square root of 2 y k left parenthesis E plus z right parenthesis end root"},"status":"ok"}

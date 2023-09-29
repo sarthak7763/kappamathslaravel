@@ -1,0 +1,1 @@
+{"result":{"text":"9 p equals 8 q minus 12"},"status":"ok"}

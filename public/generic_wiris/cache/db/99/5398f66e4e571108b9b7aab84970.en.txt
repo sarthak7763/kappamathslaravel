@@ -1,0 +1,1 @@
+{"result":{"text":"U subscript n equals a r to the power of n minus 1 end exponent"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 14.29 over denominator 1 end fraction cross times 14 k m"},"status":"ok"}

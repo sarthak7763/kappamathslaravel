@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript n equals n squared minus n minus 2\nT subscript 1 equals 1 squared minus 1 minus 2 equals negative 2\nT subscript 3 equals 3 squared minus 3 minus 2 equals 4\ntherefore space T subscript 1 plus T subscript 3 equals left parenthesis negative 2 right parenthesis plus 4 equals 2"},"status":"ok"}

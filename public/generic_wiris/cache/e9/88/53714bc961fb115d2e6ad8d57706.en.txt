@@ -1,0 +1,1 @@
+{"result":{"text":"u over 2 minus v equals 1 comma space fraction numerator 2 u over denominator 3 end fraction minus v equals 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x over denominator 84 minus x end fraction equals 5 over 7\n7 x equals 5 left parenthesis 84 minus x right parenthesis\n7 x equals 420 minus 5 x\n7 x plus 5 x equals 420\n12 x equals 420\nx equals 35"},"status":"ok"}

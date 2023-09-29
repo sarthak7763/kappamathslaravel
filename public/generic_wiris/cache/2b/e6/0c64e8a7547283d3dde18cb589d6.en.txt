@@ -1,0 +1,1 @@
+{"result":{"text":"100 percent sign equals 100 over 35 cross times 147 g space equals 420 g"},"status":"ok"}

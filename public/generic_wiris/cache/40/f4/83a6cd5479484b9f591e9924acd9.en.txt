@@ -1,0 +1,1 @@
+{"result":{"text":"equals P plus I\nequals 4000 plus 600\nequals N 4 comma 600"},"status":"ok"}

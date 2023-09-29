@@ -1,0 +1,1 @@
+{"result":{"text":"C P equals G H S 15 comma 000 comma space P percent sign equals 12.5 percent sign"},"status":"ok"}

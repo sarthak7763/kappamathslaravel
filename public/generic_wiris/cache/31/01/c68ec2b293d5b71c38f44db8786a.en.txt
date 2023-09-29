@@ -1,0 +1,1 @@
+{"result":{"text":"x left parenthesis x plus 6 over x minus 1 right parenthesis equals 12."},"status":"ok"}

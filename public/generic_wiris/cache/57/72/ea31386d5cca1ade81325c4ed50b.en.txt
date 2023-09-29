@@ -1,0 +1,1 @@
+{"result":{"text":"equals 78 comma 000 minus 65 comma 000 equals G H S 13 comma 000"},"status":"ok"}

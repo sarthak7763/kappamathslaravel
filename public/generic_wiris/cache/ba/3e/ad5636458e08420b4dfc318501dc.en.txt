@@ -1,0 +1,1 @@
+{"result":{"text":"therefore left parenthesis m plus n right parenthesis equals negative 3 plus left parenthesis negative 9 right parenthesis equals negative 12"},"status":"ok"}

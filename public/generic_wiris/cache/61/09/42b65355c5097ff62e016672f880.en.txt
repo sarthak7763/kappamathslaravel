@@ -1,0 +1,1 @@
+{"result":{"text":"1 over r minus fraction numerator 2 q over denominator s end fraction equals t"},"status":"ok"}

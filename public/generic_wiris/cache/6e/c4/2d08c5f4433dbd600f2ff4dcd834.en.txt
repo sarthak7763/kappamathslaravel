@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space 5 left parenthesis x plus 20 right parenthesis plus 4 left parenthesis x right parenthesis equals 18 comma 100\n5 x plus 100 plus 4 x equals 18 comma 100\n9 x equals 18 comma 000\nx equals 2 comma 000"},"status":"ok"}

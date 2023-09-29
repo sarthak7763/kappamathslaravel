@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space x squared minus y squared equals 52........... left parenthesis 2 right parenthesis"},"status":"ok"}

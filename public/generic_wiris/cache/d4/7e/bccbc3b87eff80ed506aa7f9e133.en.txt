@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator n left parenthesis E right parenthesis over denominator n left parenthesis U right parenthesis end fraction equals 2 over 6 equals 1 third"},"status":"ok"}

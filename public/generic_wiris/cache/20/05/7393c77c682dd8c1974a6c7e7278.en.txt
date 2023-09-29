@@ -1,0 +1,1 @@
+{"result":{"text":"\nsquare root of 147 minus square root of 75 plus square root of 27"},"status":"ok"}

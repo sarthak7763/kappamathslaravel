@@ -1,0 +1,1 @@
+{"result":{"text":"negative k equals 4\ntherefore k equals negative 4"},"status":"ok"}

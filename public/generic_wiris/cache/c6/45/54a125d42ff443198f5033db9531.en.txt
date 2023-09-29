@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 comma 332 comma 800 minus 1 comma 000 comma 000 minus 1 comma 000 comma 000\nequals N 332 comma 800"},"status":"ok"}

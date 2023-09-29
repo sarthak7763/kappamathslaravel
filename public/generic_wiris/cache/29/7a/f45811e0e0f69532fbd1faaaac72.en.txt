@@ -1,0 +1,1 @@
+{"result":{"text":"x cubed plus 5 x squared y minus y cubed"},"status":"ok"}

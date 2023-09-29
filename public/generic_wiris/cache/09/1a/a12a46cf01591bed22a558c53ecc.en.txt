@@ -1,0 +1,1 @@
+{"result":{"text":"equals 100 cross times 10 to the power of 10 c m squared\nequals 10 to the power of 12 c m squared"},"status":"ok"}

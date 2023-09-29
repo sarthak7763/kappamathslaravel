@@ -1,0 +1,1 @@
+{"result":{"text":"equals P left parenthesis E with bar on top right parenthesis equals begin inline style 3 over 4 end style"},"status":"ok"}

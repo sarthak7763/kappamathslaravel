@@ -1,0 +1,1 @@
+{"result":{"text":"2 left parenthesis 2 right parenthesis squared plus left parenthesis k plus 2 right parenthesis left parenthesis 2 right parenthesis plus k equals 0\n8 plus 2 k plus 4 plus k equals 0\n2 k plus k equals negative 8 minus 4\n3 k equals negative 12\nk equals negative 4"},"status":"ok"}

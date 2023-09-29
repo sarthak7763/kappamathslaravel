@@ -1,0 +1,1 @@
+{"result":{"text":"equals x over 72 equals 144 over 72 equals 2"},"status":"ok"}

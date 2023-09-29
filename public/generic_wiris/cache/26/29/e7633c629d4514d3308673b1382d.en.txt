@@ -1,0 +1,1 @@
+{"result":{"text":"negative 4 minus 1 equals y plus 4\nminus 5 equals y plus 4\ny equals negative 5 minus 4\ny equals negative 9\ntherefore space space x y equals 1 left parenthesis negative 9 right parenthesis equals negative 9"},"status":"ok"}

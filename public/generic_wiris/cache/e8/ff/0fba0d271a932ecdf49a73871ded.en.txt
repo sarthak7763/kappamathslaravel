@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript n equals 2 to the power of n end subscript"},"status":"ok"}

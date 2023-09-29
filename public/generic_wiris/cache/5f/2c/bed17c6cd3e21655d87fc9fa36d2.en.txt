@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space T subscript 3 equals 1 plus 2 T subscript 3 minus 1 end subscript space space rightwards double arrow T subscript 3 equals 1 plus 2 T subscript 2"},"status":"ok"}

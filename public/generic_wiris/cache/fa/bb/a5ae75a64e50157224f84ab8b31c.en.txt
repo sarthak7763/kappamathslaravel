@@ -1,0 +1,1 @@
+{"result":{"text":"6 comma space x comma space minus 4"},"status":"ok"}

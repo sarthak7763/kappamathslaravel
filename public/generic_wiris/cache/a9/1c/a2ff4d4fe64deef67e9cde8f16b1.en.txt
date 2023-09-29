@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript 1 equals 8 comma"},"status":"ok"}

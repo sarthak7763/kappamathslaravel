@@ -1,0 +1,1 @@
+{"result":{"text":"3 x minus 2 y equals 3"},"status":"ok"}

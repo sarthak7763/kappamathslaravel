@@ -1,0 +1,1 @@
+{"result":{"text":"2 x squared plus m x plus n"},"status":"ok"}

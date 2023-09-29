@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 40 space k m over denominator 50 space k m divided by h end fraction equals 0.8 h r"},"status":"ok"}

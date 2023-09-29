@@ -1,0 +1,1 @@
+{"result":{"text":"R equals fraction numerator 100 cross times I over denominator P cross times T end fraction equals fraction numerator 100 cross times 800 over denominator 7200 cross times 5 over 6 end fraction equals 13 begin inline style 1 third end style percent sign"},"status":"ok"}

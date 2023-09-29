@@ -1,0 +1,1 @@
+{"result":{"text":"negative 4 minus x equals y minus left parenthesis negative 4 right parenthesis\nminus 4 minus x equals y plus 4"},"status":"ok"}

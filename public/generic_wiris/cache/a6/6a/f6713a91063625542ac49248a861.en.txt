@@ -1,0 +1,1 @@
+{"result":{"text":"x equals fraction numerator m n over denominator 3 end fraction................ left parenthesis 1 right parenthesis\nm equals v over y.................. left parenthesis 2 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow n left parenthesis U right parenthesis equals 7"},"status":"ok"}

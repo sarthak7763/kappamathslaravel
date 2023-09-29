@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 1000 x over denominator 3600 end fraction m s to the power of negative 1 end exponent equals 5 over 18 x m s to the power of negative 1 end exponent\ntherefore space space y equals 5 over 18 x"},"status":"ok"}

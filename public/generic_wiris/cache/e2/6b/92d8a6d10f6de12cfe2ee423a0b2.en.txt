@@ -1,0 +1,1 @@
+{"result":{"text":"P equals G H S 680 comma space R equals 5 percent sign comma space T equals 4 space y e a r s"},"status":"ok"}

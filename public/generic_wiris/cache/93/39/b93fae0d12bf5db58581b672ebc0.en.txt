@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator s p e e d over denominator 3 end fraction"},"status":"ok"}

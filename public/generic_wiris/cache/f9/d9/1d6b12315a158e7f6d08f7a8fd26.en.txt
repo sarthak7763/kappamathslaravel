@@ -1,0 +1,1 @@
+{"result":{"text":"d squared equals 6 over x minus y over 2"},"status":"ok"}

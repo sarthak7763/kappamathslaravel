@@ -1,0 +1,1 @@
+{"result":{"text":"C P equals 100 over 100"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 120 minus 75 equals 45"},"status":"ok"}

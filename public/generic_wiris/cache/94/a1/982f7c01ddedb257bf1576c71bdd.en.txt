@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x minus 6 equals negative 4 minus x\nrightwards double arrow x plus x equals negative 4 plus 6\nrightwards double arrow 2 x equals 2\nrightwards double arrow x equals 1"},"status":"ok"}

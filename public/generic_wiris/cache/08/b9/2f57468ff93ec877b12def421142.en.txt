@@ -1,0 +1,1 @@
+{"result":{"text":"C P equals fraction numerator 100 over denominator 100 plus P percent sign end fraction cross times S P\nequals fraction numerator 100 over denominator 100 plus 15 end fraction cross times 6900 equals N 6 comma 000"},"status":"ok"}

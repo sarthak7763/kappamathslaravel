@@ -1,0 +1,1 @@
+{"result":{"text":"M equals left curly bracket X colon 3 less or equal than X less than 8 right curly bracket"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 over 3 cross times 350.032 equals G H S 233.35"},"status":"ok"}

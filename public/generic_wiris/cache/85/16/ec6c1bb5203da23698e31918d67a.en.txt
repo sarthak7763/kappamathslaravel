@@ -1,0 +1,1 @@
+{"result":{"text":"equals V open parentheses 1 minus R over 100 close parentheses to the power of n equals 1 comma 850 open parentheses 1 minus 15 over 100 close parentheses cubed equals L e space 1 comma 136.13"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator n left parenthesis E right parenthesis over denominator n left parenthesis U right parenthesis end fraction equals 4 over 9"},"status":"ok"}

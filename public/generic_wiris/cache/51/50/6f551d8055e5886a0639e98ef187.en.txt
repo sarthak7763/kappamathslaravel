@@ -1,0 +1,1 @@
+{"result":{"text":"P space equals fraction numerator 1 cross times 100 over denominator R cross times T end fraction equals fraction numerator 500 cross times 100 over denominator 2 1 fifth cross times 5 end fraction equals fraction numerator 50 comma 000 over denominator 12.5 end fraction equals N 4 comma 000"},"status":"ok"}

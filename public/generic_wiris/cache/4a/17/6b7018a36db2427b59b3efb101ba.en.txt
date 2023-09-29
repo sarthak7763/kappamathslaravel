@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript n equals 1 plus 2 T subscript n minus 1 end subscript"},"status":"ok"}

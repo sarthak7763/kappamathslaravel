@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis x plus y right parenthesis left parenthesis x minus y right parenthesis equals 52"},"status":"ok"}

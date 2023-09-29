@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style plus left parenthesis negative begin inline style 1 third end style right parenthesis equals begin inline style 1 over 6 end style"},"status":"ok"}

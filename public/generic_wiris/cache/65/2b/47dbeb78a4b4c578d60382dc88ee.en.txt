@@ -1,0 +1,1 @@
+{"result":{"text":"I equals A minus P equals 8 comma 000 minus 7200 equals G H S 800"},"status":"ok"}

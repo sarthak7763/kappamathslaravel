@@ -1,0 +1,1 @@
+{"result":{"text":"100 percent sign equals 100 over 25 cross times 12 comma 500 equals G H S 50.000.00"},"status":"ok"}

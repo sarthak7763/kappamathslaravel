@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript 3 equals 1 plus 2 left parenthesis 17 right parenthesis equals 35"},"status":"ok"}

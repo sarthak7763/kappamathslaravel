@@ -1,0 +1,1 @@
+{"result":{"text":"2 over 3 space divided by 4 to the power of 4 space cross times square root of 4"},"status":"ok"}

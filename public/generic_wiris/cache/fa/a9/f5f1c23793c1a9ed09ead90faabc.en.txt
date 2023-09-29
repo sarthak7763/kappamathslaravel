@@ -1,0 +1,1 @@
+{"result":{"text":"asymptotically equal to fraction numerator 48 cross times 50 over denominator 30 end fraction asymptotically equal to 80 space k m divided by h"},"status":"ok"}

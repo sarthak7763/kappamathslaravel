@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow space 5 over 12 x minus 1 fourth x equals 18\n12 open parentheses 5 over 12 x close parentheses minus 12 open parentheses 1 fourth x close parentheses equals 12 left parenthesis 18 right parenthesis\n5 x minus 3 x equals 216\n2 x equals 216\nx equals 216 over 2 equals 108"},"status":"ok"}

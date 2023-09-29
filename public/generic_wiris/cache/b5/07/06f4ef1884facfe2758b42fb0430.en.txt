@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style 3 over 4 end style plus left parenthesis negative 4 right parenthesis equals negative begin inline style 13 over 4 end style"},"status":"ok"}

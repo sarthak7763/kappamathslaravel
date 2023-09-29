@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow E equals left curly bracket 4 comma space 8 comma space 12 comma space 16 comma space 20 comma space 24 comma space 28 comma space 32 comma space 36 comma space 40 right curly bracket\nrightwards double arrow n left parenthesis E right parenthesis equals 10"},"status":"ok"}

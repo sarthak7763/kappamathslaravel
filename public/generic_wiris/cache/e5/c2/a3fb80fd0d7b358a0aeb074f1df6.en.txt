@@ -1,0 +1,1 @@
+{"result":{"text":"d equals square root of begin inline style 6 over x end style minus begin inline style y over 2 end style end root"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"T subscript n equals n squared"},"status":"ok"}

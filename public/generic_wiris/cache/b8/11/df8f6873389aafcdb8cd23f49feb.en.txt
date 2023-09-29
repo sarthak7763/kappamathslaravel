@@ -1,0 +1,1 @@
+{"result":{"text":"112.5 percent sign equals fraction numerator 112.5 over denominator 100 end fraction cross times 15 comma 000 equals G H S 16 comma 875"},"status":"ok"}

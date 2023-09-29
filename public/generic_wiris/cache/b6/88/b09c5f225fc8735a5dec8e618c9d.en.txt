@@ -1,0 +1,1 @@
+{"result":{"text":"550 comma 000 equals x plus 1 over 10 x"},"status":"ok"}

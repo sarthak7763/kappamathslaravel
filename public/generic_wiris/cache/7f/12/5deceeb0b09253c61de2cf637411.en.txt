@@ -1,0 +1,1 @@
+{"result":{"text":"equals 20 minus 8 minus 7 equals 5"},"status":"ok"}

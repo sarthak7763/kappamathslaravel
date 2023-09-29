@@ -1,0 +1,1 @@
+{"result":{"text":"equals 30 comma 000 minus left parenthesis 3000 plus 9000 right parenthesis"},"status":"ok"}

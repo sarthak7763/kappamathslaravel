@@ -1,0 +1,1 @@
+{"result":{"text":"k equals square root of fraction numerator m minus y over denominator m plus 1 end fraction end root"},"status":"ok"}

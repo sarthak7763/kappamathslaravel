@@ -1,0 +1,1 @@
+{"result":{"text":"I equals fraction numerator 680 cross times 5 cross times 4 over denominator 100 end fraction equals G H S 136.00"},"status":"ok"}

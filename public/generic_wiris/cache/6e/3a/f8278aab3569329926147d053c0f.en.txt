@@ -1,0 +1,1 @@
+{"result":{"text":"5 over 55 cross times 100 percent sign equals 9.09 percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"w squared equals square root of fraction numerator m squared minus n over denominator r end fraction end root minus v"},"status":"ok"}

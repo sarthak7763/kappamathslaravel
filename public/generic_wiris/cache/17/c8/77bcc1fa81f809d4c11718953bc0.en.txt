@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow b equals negative 1 space"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 3 y equals 6 space"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator D i s tan c e over denominator T i m e end fraction"},"status":"ok"}

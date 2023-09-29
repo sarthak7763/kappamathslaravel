@@ -1,0 +1,1 @@
+{"result":{"text":"3 p minus 4 left parenthesis negative 3 right parenthesis equals 0\n3 p plus 12 equals 0\n3 p equals negative 12\np equals negative 4\ntherefore p q equals negative 4 left parenthesis negative 3 right parenthesis equals 12"},"status":"ok"}

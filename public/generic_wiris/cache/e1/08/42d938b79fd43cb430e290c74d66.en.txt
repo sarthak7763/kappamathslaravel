@@ -1,0 +1,1 @@
+{"result":{"text":"equals 4 over 9 x"},"status":"ok"}

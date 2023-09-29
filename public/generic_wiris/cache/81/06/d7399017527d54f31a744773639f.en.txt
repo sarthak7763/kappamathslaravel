@@ -1,0 +1,1 @@
+{"result":{"text":"26 begin inline style bevelled 1 half end style percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x equals begin inline style 17 over 7 end style space"},"status":"ok"}

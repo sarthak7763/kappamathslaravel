@@ -1,0 +1,1 @@
+{"result":{"text":"x squared equals 3 left parenthesis 2 x plus 9 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x plus 42 equals x squared\nx squared minus x minus 42 equals 0\nleft parenthesis x equals negative 6 comma space x equals 7 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator n left parenthesis F right parenthesis over denominator n left parenthesis X right parenthesis end fraction plus fraction numerator n left parenthesis M right parenthesis over denominator n left parenthesis X right parenthesis end fraction equals 6 over 10 plus 2 over 10 equals 8 over 10 equals 4 over 5"},"status":"ok"}
