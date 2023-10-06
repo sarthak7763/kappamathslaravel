@@ -1,0 +1,1 @@
+{"result":{"text":"6 x left parenthesis x plus 1 right parenthesis equals 0 space rightwards double arrow 6 x equals 0 comma space x plus 1 equals 0\nx equals 0 comma space a n d space minus 1"},"status":"ok"}

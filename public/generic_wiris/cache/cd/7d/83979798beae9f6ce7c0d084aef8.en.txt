@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of x plus 1 end exponent equals 2 to the power of x cross times 2 to the power of 1\nequals 1 over t cross times 2\nequals 2 over t"},"status":"ok"}

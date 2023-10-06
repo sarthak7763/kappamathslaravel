@@ -1,0 +1,1 @@
+{"result":{"text":"343 to the power of x plus 5 equals 12\nrightwards double arrow 343 to the power of x equals 12 minus 5\nrightwards double arrow 343 to the power of x equals 7\nrightwards double arrow 7 to the power of 3 x end exponent equals 7 to the power of 1\nrightwards double arrow 3 x equals 1\nrightwards double arrow x equals 1 third"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style bevelled fraction numerator 1 over denominator 2 space end fraction end style a n d space minus 1"},"status":"ok"}

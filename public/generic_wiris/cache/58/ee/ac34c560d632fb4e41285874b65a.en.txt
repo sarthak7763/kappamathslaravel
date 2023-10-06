@@ -1,0 +1,1 @@
+{"result":{"text":"bevelled 1 half space y left parenthesis y plus 1 right parenthesis equals 0\nrightwards double arrow y left parenthesis y plus 1 right parenthesis equals 0\nrightwards double arrow y equals 0 comma space space y plus 1 equals 0\nrightwards double arrow y equals 0 space a n d space minus 1"},"status":"ok"}

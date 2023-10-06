@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 2 to the power of left parenthesis 2 plus begin inline style n over 3 end style right parenthesis end exponent equals 4 y to the power of begin inline style 1 third end style end exponent"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 3 to the power of n minus 1 end exponent cross times 27 to the power of n plus 1 end exponent over denominator 81 to the power of n end fraction"},"status":"ok"}

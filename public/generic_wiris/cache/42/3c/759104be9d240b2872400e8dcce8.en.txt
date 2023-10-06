@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of left parenthesis 2 plus begin inline style n over 3 end style right parenthesis end exponent"},"status":"ok"}

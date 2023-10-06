@@ -1,0 +1,1 @@
+{"result":{"text":"5 to the power of n equals k"},"status":"ok"}

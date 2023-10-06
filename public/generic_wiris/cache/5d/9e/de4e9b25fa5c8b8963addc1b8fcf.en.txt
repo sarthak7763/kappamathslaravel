@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 y over denominator 2 y squared minus 8 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"y minus 7 equals 5 left parenthesis x minus 1 right parenthesis\nrightwards double arrow y equals 5 x plus 5 plus 7\nrightwards double arrow y equals 12 minus 5 x"},"status":"ok"}

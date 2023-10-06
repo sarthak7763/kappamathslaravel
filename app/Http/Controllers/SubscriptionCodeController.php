@@ -101,7 +101,7 @@ class SubscriptionCodeController extends Controller
 
               $btn = '<div class="admin-table-action-block">
 
-                    <a href="' . route('subscription-coupon.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
+                    <a href="' . route('coupon-subscription.edit', $row->id) . '" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating"><i class="fa fa-pencil"></i></a>
 
                     <button type="button" class="btn btn-danger changestatusbtn" data-toggle="modal" data-status="'.$row->coupon_status.'" data-target="#changestatusModal' . $row->id . '">Change Status </button></div>';
                    
@@ -214,7 +214,7 @@ class SubscriptionCodeController extends Controller
 
           return view('admin.subscriptioncode.create', compact('userlist','subscriptionlist','montharray'));
       }catch(\Exception $e){
-                  return redirect('admin/subscription-coupon/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/coupon-subscription/')->with('deleted','Something went wrong.');     
                }
 
     }
@@ -246,6 +246,7 @@ class SubscriptionCodeController extends Controller
             {
                 $request->validate([
                   'coupon_discount'=>'required',
+                  'minimum_transaction_amount'=>'required',
                   'coupon_max_amount' => 'required',
               ]);
             }
@@ -287,15 +288,18 @@ class SubscriptionCodeController extends Controller
             {
               $coupon_discount=$request->coupon_discount;
               $coupon_max_amount=$request->coupon_max_amount;
+              $minimum_transaction_amount=$request->minimum_transaction_amount;
             }
             else{
               $coupon_discount=0;
               $coupon_max_amount=0;
+              $minimum_transaction_amount=0;
             }
           }
           else{
               $coupon_discount=0;
               $coupon_max_amount=0;
+              $minimum_transaction_amount=0;
           }
 
 
@@ -327,12 +331,13 @@ class SubscriptionCodeController extends Controller
                 $subscriptioncoupon->coupon_type = $request->coupon_type;
                 $subscriptioncoupon->coupon_discount = $coupon_discount;
                 $subscriptioncoupon->coupon_max_amount = $coupon_max_amount;
+                $subscriptioncoupon->minimum_transaction_amount = $minimum_transaction_amount;
                 $subscriptioncoupon->coupon_subscription_type = $request->coupon_subscription_type;
                 $subscriptioncoupon->coupon_description = $request->coupon_description;
                 $subscriptioncoupon->coupon_status = $statusvalue;
                 $subscriptioncoupon->save();
 
-               return redirect('admin/subscription-coupon/')->with('success','Coupon has been added.');
+               return redirect('admin/coupon-subscription/')->with('success','Coupon has been added.');
 
 		        }catch(\Exception $e){
 		          return back()->with('error',$e->getMessage());     
@@ -421,7 +426,7 @@ class SubscriptionCodeController extends Controller
 	     return view('admin.subscriptioncode.edit',compact('subscriptioncoupon','subscriptionlist','montharray','userlist'));
      }
      catch(\Exception $e){
-                  return redirect('admin/subscription-coupon/')->with('deleted','Something went wrong.');     
+                  return redirect('admin/coupon-subscription/')->with('deleted','Something went wrong.');     
                }  
     }
 
@@ -474,7 +479,7 @@ class SubscriptionCodeController extends Controller
         $subscriptioncoupon = SubscriptionCoupon::find($id);
 
          if(is_null($subscriptioncoupon)){
-		   return redirect('admin/subscription-coupon')->with('error','Something went wrong.');
+		   return redirect('admin/coupon-subscription')->with('error','Something went wrong.');
 		}
 
       if(isset($request->status)){
@@ -561,7 +566,7 @@ class SubscriptionCodeController extends Controller
          try{
             $subscriptioncoupon->save();
 
-          return redirect('admin/subscription-coupon/')->with('success','Coupon updated !.');
+          return redirect('admin/coupon-subscription/')->with('success','Coupon updated !.');
 
          }catch(\Exception $e){
             return back()->with('error',$e->getMessage());
@@ -606,7 +611,7 @@ class SubscriptionCodeController extends Controller
         $subscriptioncoupon = SubscriptionCoupon::find($id);
 
         if(is_null($subscriptioncoupon)){
-		   return redirect('admin/subscription-coupon')->with('error','Something went wrong.');
+		   return redirect('admin/coupon-subscription')->with('error','Something went wrong.');
 		}
 
         try{
@@ -630,7 +635,7 @@ class SubscriptionCodeController extends Controller
         $subscriptioncoupon = SubscriptionCoupon::find($id);
 
         if(is_null($subscriptioncoupon)){
-		   return redirect('admin/subscription-coupon')->with('error','Something went wrong.');
+		   return redirect('admin/coupon-subscription')->with('error','Something went wrong.');
 		}
 
         if(isset($request->status)){

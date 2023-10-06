@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line P Q vertical line squared equals 10 squared plus 4 squared equals 116\nvertical line P Q vertical line equals square root of 116 equals 10.8 space m"},"status":"ok"}

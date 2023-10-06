@@ -174,9 +174,9 @@ Route::group(['middleware'=> 'isadmin'], function(){
   
   Route::post('/admin/course-category/changestatus','SubjectcategoryController@changestatus')->name('subjectcategorychangestatus');
 
-  Route::resource('/admin/subscription-coupon', 'SubscriptionCodeController');
+  Route::resource('/admin/coupon-subscription', 'SubscriptionCodeController');
   
-  Route::post('/admin/subscription-coupon/changestatus','SubscriptionCodeController@changestatus')->name('subscriptioncouponchangestatus');
+  Route::post('/admin/coupon-subscription/changestatus','SubscriptionCodeController@changestatus')->name('subscriptioncouponchangestatus');
 
   Route::resource('/admin/course-topic', 'CoursetopicController');
 

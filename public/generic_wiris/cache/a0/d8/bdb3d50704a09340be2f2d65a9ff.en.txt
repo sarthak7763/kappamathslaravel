@@ -1,0 +1,1 @@
+{"result":{"text":"equals 8 over 12 equals 2 over 3"},"status":"ok"}

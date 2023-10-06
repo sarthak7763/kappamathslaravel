@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 over 8 cross times 1 over 8 equals 1 over 64"},"status":"ok"}

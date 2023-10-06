@@ -1,0 +1,1 @@
+{"result":{"text":"2 y to the power of negative 3 end exponent"},"status":"ok"}

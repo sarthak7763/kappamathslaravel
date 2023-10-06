@@ -1,0 +1,1 @@
+{"result":{"text":"343 to the power of x plus 5 equals 12"},"status":"ok"}

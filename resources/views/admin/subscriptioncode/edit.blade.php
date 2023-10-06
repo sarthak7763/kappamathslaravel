@@ -28,6 +28,7 @@
   $coupon_use_per_user_error="";
   $coupon_discount_error="";
   $coupon_max_amount_error="";
+  $minimum_transaction_amount_error="";
   $coupon_subscription_type_error="";
   @endphp
 
@@ -94,6 +95,12 @@
       @php $coupon_max_amount_error=""; @endphp
       @endif
 
+      @if($validationmessage!="" && isset($validationmessage['minimum_transaction_amount']))
+      @php $minimum_transaction_amount_error=$validationmessage['minimum_transaction_amount']; @endphp
+      @else
+      @php $minimum_transaction_amount_error=""; @endphp
+      @endif
+
       @if($validationmessage!="" && isset($validationmessage['coupon_subscription_type']))
       @php $coupon_subscription_type_error=$validationmessage['coupon_subscription_type']; @endphp
       @else
@@ -106,7 +113,7 @@
   <div class="box">
     <div class="box-body">
         <h3>Edit Subscription Coupon
-          <a href="{{ route('subscription-coupon.index') }}" class="btn btn-gray pull-right">
+          <a href="{{ route('coupon-subscription.index') }}" class="btn btn-gray pull-right">
             <i class="fa fa-arrow-left"></i> Back
           </a>
         </h3>
@@ -223,20 +230,31 @@
             @php 
               $coupondiscountstyleclass="display:none"; 
               $couponmaxamountlimitstyleclass="display:none";
+              $mintransamountstyleclass="display:none";
             @endphp
           @else
             @php 
               $coupondiscountstyleclass="display:block";
-              $couponmaxamountlimitstyleclass="display:block";  
+              $couponmaxamountlimitstyleclass="display:block";
+              $mintransamountstyleclass="display:block";  
             @endphp
           @endif
 
           <div class="col-md-6" id="coupon_discount_div" style="{{$coupondiscountstyleclass}}">
              <div class="form-group{{ $errors->has('coupon_discount') ? ' has-error' : '' }}">
-              {!! Form::label('coupon_discount', 'Coupon Discount') !!}
+              {!! Form::label('coupon_discount', 'Coupon Discount(%)') !!}
               <span class="required">*</span>
               {!! Form::text('coupon_discount', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Coupon Discount']) !!}
               <small class="text-danger">{{ $coupon_discount_error }}</small>
+            </div>
+          </div>
+
+          <div class="col-md-6" id="min_trans_amount_div" style="{{$mintransamountstyleclass}}">
+             <div class="form-group{{ $errors->has('minimum_transaction_amount') ? ' has-error' : '' }}">
+              {!! Form::label('minimum_transaction_amount', 'Minimum Transaction Amount') !!}
+              <span class="required">*</span>
+              {!! Form::text('minimum_transaction_amount', null, ['class' => 'form-control', 'placeholder' => 'Please Enter Minimum Transaction Amount']) !!}
+              <small class="text-danger">{{ $minimum_transaction_amount_error }}</small>
             </div>
           </div>
 

@@ -1,0 +1,1 @@
+{"result":{"text":"G r a d i e n t comma space space m equals fraction numerator y subscript 2 minus y subscript 1 over denominator x subscript 2 minus x subscript 1 end fraction equals fraction numerator 1 minus 1 half over denominator 1 minus 0 end fraction equals fraction numerator 1 half over denominator 1 end fraction equals 1 half"},"status":"ok"}

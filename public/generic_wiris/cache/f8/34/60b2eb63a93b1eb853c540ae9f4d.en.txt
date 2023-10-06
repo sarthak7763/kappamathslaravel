@@ -1,0 +1,1 @@
+{"result":{"text":"25 to the power of x plus 1 end exponent"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"square root of fraction numerator 8 squared cross times 4 to the power of n plus 1 end exponent over denominator 2 to the power of 2 n end exponent cross times 16 end fraction end root"},"status":"ok"}

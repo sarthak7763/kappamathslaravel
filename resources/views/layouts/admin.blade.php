@@ -139,7 +139,7 @@ $setting = App\Setting::first();
 
           <li class="{{ (request()->is('admin/subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription')}}" title="Manage Subscription"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription</span></a></li>
 
-          <li class="{{ (request()->is('admin/subscription-coupon*')) ? 'active' : '' }}"><a href="{{url('/admin/subscription-coupon')}}" title="Manage Subscription Coupon"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription Coupon</span></a></li>
+          <li class="{{ (request()->is('admin/coupon-subscription*')) ? 'active' : '' }}"><a href="{{url('/admin/coupon-subscription')}}" title="Manage Subscription Coupon"><i class="fa fa-hand-o-up" aria-hidden="true"></i>  <span>Manage Subscription Coupon</span></a></li>
 
           <li class="{{ (request()->is('admin/faq*')) ? 'active' : '' }}"><a href="{{url('/admin/faq')}}" title="Manage FAQ"><i class="fa fa-info-circle" aria-hidden="true"></i>  <span>Manage FAQ</span></a></li>
 

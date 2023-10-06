@@ -1,0 +1,1 @@
+{"result":{"text":"t equals 2 to the power of negative x end exponent rightwards double arrow t equals 1 over 2 to the power of x rightwards double arrow 2 to the power of x equals 1 over t"},"status":"ok"}

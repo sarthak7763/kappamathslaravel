@@ -20,6 +20,7 @@ use App\UserNotification;
 use Validator;
 use Hash;
 use App\SubscriptionCoupon;
+use App\UserCouponCode;
 
 class DashboardController extends BaseController
 {
@@ -702,6 +703,14 @@ class DashboardController extends BaseController
 		        	$coupon_code="";
 		        }
 
+		        if(isset($request->user_coupon_code_id) && $request->user_coupon_code_id!="")
+		        {
+		        	$user_coupon_code_id=$request->user_coupon_code_id;
+		        }
+		        else{
+		        	$user_coupon_code_id=0;
+		        }
+
     			$reference_id=$request->reference_id;
     			$subscription_id=$request->subscription_id;
 
@@ -762,6 +771,7 @@ class DashboardController extends BaseController
 		            $usersubscription->subscription_end=$subscription_end;
 		            $usersubscription->subscription_status=1;
 		            $usersubscription->coupon_code_id=$coupon_code_id;
+		            $usersubscription->user_coupon_code_id=$user_coupon_code_id;
 		            $usersubscription->save();
 
 		            $this->sendpaymentsuccessnotification($user->id);
@@ -1169,7 +1179,7 @@ class DashboardController extends BaseController
                }
     }
 
-    public function applysubscriptioncoupon(Request $request)
+    public function applysubscriptioncouponold(Request $request)
     {
     	try{
     		$user=auth()->user();
@@ -1232,7 +1242,7 @@ class DashboardController extends BaseController
 			        		{
 			        			$paystack_slug=$paystack_create_payment_page['slug'];
 
-			        			$amountarray['paystack_slug']=$paystack_slug;	
+			        			$amountarray['paystack_slug']=env('paystack_pay_url').$paystack_slug;	
 			        		}
 			        		else{
 			        			return $this::sendError('Unauthorised.', ['error'=>$paystack_create_payment_page['message']]);
@@ -1330,6 +1340,14 @@ class DashboardController extends BaseController
 		        $coupon_code=$request->coupon_code;
     			$subscription_id=$request->subscription_id;
 
+    			if(isset($request->user_coupon_code_id) && $request->user_coupon_code_id!="")
+		        {
+		        	$user_coupon_code_id=$request->user_coupon_code_id;
+		        }
+		        else{
+		        	$user_coupon_code_id=0;
+		        }
+
     			$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
     			if($checksubscription)
     			{
@@ -1369,10 +1387,11 @@ class DashboardController extends BaseController
 		            $usersubscription->subscription_end=$subscription_end;
 		            $usersubscription->subscription_status=1;
 		            $usersubscription->coupon_code_id=$checkcouponcode->id;
+		            $usersubscription->user_coupon_code_id=$user_coupon_code_id;
 		            $usersubscription->save();
 
 		            $this->sendsubscriptionsuccessnotification($user->id);
-		            $success=[];
+		            $success['reference_id']='';
                 	return $this::sendResponse($success,'Subscription activate successfully');
     			}
     			else{
@@ -1389,7 +1408,7 @@ class DashboardController extends BaseController
 
     }
 
-    public function applysubscriptioncouponnew(Request $request)
+    public function applysubscriptioncoupon(Request $request)
     {
     	try{
     		$user=auth()->user();
@@ -1420,26 +1439,35 @@ class DashboardController extends BaseController
     				{
     					if($checkcouponcode->coupon_users!="0")
     					{
-    						$responsedata=$this->applycoupontospecificusers($checkcouponcode,$user->id);
+    						$responsedata=$this->applycoupontospecificusers($checkcouponcode,$user->id,$checksubscription->price);
     					}
     					else{
-    						$responsedata=$this->applycoupontoallusers($checkcouponcode,$user->id);
+    						$responsedata=$this->applycoupontoallusers($checkcouponcode,$user->id,$checksubscription->price);
     					}
 
     					if($responsedata['code']==200)
     					{
 
-	    				if($checkcouponcode->coupon_type=="1")
-						{
-							$subtotal=$checksubscription->price;
-							$coupon_discount=round(($subtotal*100)/100);
-							$total_amount=$subtotal-$coupon_discount;
-						}
-						else{
-							$subtotal=$checksubscription->price;
-							$coupon_discount=round(($subtotal*$checkcouponcode->coupon_discount)/100);
-							$total_amount=$subtotal-$coupon_discount;
-						}
+		    				if($checkcouponcode->coupon_type=="1")
+							{
+								$subtotal=$checksubscription->price;
+								$coupon_discount=round(($subtotal*100)/100);
+								$total_amount=$subtotal-$coupon_discount;
+							}
+							else{
+								$subtotal=$checksubscription->price;
+								$coupon_max_amount=$checkcouponcode->coupon_max_amount;
+								$newcoupon_discount=round(($subtotal*$checkcouponcode->coupon_discount)/100);
+								if($coupon_max_amount >= $newcoupon_discount)
+								{
+									$coupon_discount=$newcoupon_discount;
+								}
+								else{
+									$coupon_discount=$coupon_max_amount;
+								}
+
+								$total_amount=$subtotal-$coupon_discount;
+							}
 
 						$checksubscriptionarray=$checksubscription->toArray();
 
@@ -1449,8 +1477,42 @@ class DashboardController extends BaseController
     					$amountarray=array(
     							'subtotal'=>$subtotal,
     							'coupon_discount'=>$coupon_discount,
-    							'total_amount'=>$total_amount
+    							'total_amount'=>$total_amount,
+    							'coupon_code'=>$coupon_code,
+    							'coupon_type'=>$checkcouponcode->coupon_type
     						);
+
+
+	    					if($total_amount==0)
+	    					{
+	    						$amountarray['paystack_slug']="";
+	    					}
+	    					else{
+	    						$paystack_create_payment_page=$this->createpaymentpage($checksubscriptionarray);
+
+		    					if($paystack_create_payment_page['code']==200)
+				        		{
+				        			$paystack_slug=$paystack_create_payment_page['slug'];
+
+				        			$amountarray['paystack_slug']=env('paystack_pay_url').$paystack_slug;	
+				        		}
+				        		else{
+				        			return $this::sendError('Unauthorised.', ['error'=>$paystack_create_payment_page['message']]);
+				        		}
+	    					}
+
+
+	    			$usercouponcode = new UserCouponCode;
+		            $usercouponcode->user_id=$user->id;
+		            $usercouponcode->subtotal=$subtotal;
+		            $usercouponcode->coupon_discount=$coupon_discount;
+		            $usercouponcode->total_amount=$total_amount;
+		            $usercouponcode->coupon_code=$checkcouponcode->id;
+		            $usercouponcode->paystack_slug=$amountarray['paystack_slug'];
+		            $usercouponcode->amount_array_json=json_encode($amountarray);
+		            $usercouponcode->save();
+
+		            $amountarray['user_coupon_code_id']=$usercouponcode->id;
 
     						$success['amountarray']=$amountarray;
 							return $this::sendResponse($success, 'Coupon code applies successfully.');
@@ -1476,7 +1538,7 @@ class DashboardController extends BaseController
                }
     }
 
-    public function applycoupontospecificusers($checkcouponcode,$userid)
+    public function applycoupontospecificusers($checkcouponcode,$userid,$subprice)
     {
     	if($checkcouponcode->coupon_users!="0")
     	{
@@ -1487,8 +1549,16 @@ class DashboardController extends BaseController
 
 	    		if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
 	    		{
-	    			$data=array('code'=>200,'message'=>'Coupon valid user.');
-	    			return $data;
+
+	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
+	    			{
+	    				$data=array('code'=>200,'message'=>'Coupon valid.');
+	    				return $data;
+	    			}
+	    			else{
+	    				$data=array('code'=>400,'message'=>'Coupon not applicable.');
+	    				return $data;
+	    			}
 	    		}
 	    		else{
 	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
@@ -1502,7 +1572,7 @@ class DashboardController extends BaseController
     	}
     }
 
-    public function applycoupontoallusers($checkcouponcode,$userid)
+    public function applycoupontoallusers($checkcouponcode,$userid,$subprice)
     {
     	if($checkcouponcode->coupon_users=="0")
     	{
@@ -1514,8 +1584,15 @@ class DashboardController extends BaseController
     		{
 				if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
 	    		{
-	    			$data=array('code'=>200,'message'=>'Coupon valid user.');
-	    			return $data;
+	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
+	    			{
+	    				$data=array('code'=>200,'message'=>'Coupon valid.');
+	    				return $data;
+	    			}
+	    			else{
+	    				$data=array('code'=>400,'message'=>'Coupon not applicable.');
+	    				return $data;
+	    			}
 	    		}
 	    		else{
 	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
@@ -1528,6 +1605,164 @@ class DashboardController extends BaseController
     		}
     	}
     }
+
+    public function getusertransactionlogs()
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    			$getusertransactiondata=Usersubscriptions::where('user_id',$user->id)->get();
+    			if($getusertransactiondata)
+    			{
+    				$usertransactionsarray=$getusertransactiondata->toArray();
+    				$user_transactions=[];
+    				foreach($usertransactionsarray as $list)
+    				{
+    					$subscription_id=$list['subscription_id'];
+    					$checksubscription=Subscription::where('id',$subscription_id)->get()->first();
+    					if($checksubscription)
+    					{
+    						$subscription_name=$checksubscription->title;
+    						$subscription_price=$checksubscription->price;
+    					}
+    					else{
+    						$subscription_name="N.A.";
+    						$subscription_price=0;
+    					}
+
+    					$user_coupon_code_id=$list['user_coupon_code_id'];
+    					$checkusercouponcode=UserCouponCode::where('id',$user_coupon_code_id)->get()->first();
+    					if($checkusercouponcode)
+    					{
+    					$coupon_discount=$checkusercouponcode->coupon_discount;
+    					$total_amount=$checkusercouponcode->total_amount;
+    					$subtotal=$checkusercouponcode->subtotal;
+    					}
+    					else{
+    					$coupon_discount=0;
+    					$total_amount=0;
+    					$subtotal=0;
+    					}
+
+    					$checkcouponcode=SubscriptionCoupon::where('id',$list['coupon_code_id'])->get()->first();
+    					if($checkcouponcode)
+    					{
+    						$coupon_name=$checkcouponcode->coupon_name;
+    						$coupon_type=$checkcouponcode->coupon_type;
+    					}
+    					else{
+    						$coupon_name="";
+    						$coupon_type="";
+    					}
+
+    					$created_at=date('d M, Y h:i a',strtotime($list['created_at']));
+
+    					$user_transactions[]=array(
+    						'coupon_name'=>$coupon_name,
+    						'coupon_type'=>$coupon_type,
+    						'coupon_discount'=>$coupon_discount,
+    						'total_amount'=>$total_amount,
+    						'subtotal'=>$subtotal,
+    						'subscription_name'=>$subscription_name,
+    						'subscription_price'=>$subscription_price,
+    						'created_at'=>$created_at
+    					);
+
+    				}
+    			}
+    			else{
+    				$user_transactions=[];
+    			}
+
+    			$success['user_transactions']=$user_transactions;
+				return $this::sendResponse($success, 'User Transactions Logs.');
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+    }
+
+    public function getusercouponcodes()
+    {
+    	try{
+    		$user=auth()->user();
+    		if($user){
+
+    			$getcouponcodelist=SubscriptionCoupon::where('coupon_status','1')->get();
+    			if($getcouponcodelist)
+    			{
+    				$getcouponcodelistarr=$getcouponcodelist->toArray();
+    				if($getcouponcodelistarr)
+    				{
+    					$coupon_code_arr=[];
+    					foreach($getcouponcodelistarr as $list)
+    					{
+    						if($list['coupon_users']!="0")
+    						{
+    							$coupon_users_array=explode(',',$list['coupon_users']);
+    							if(in_array($user->id, $coupon_users_array))
+    							{
+    								$coupon_arr=1;
+    							}
+    							else{
+    								$coupon_arr=0;
+    							}
+    						}
+    						else{
+    							$coupon_arr=1;
+    						}
+
+    						if($coupon_arr=="1")
+    						{
+    							$subscriptionid=$list['coupon_subscription_type'];
+    							$checksubscription=Subscription::where('id',$subscriptionid)->get()->first();
+    							if($checksubscription)
+    							{
+    								$subscription_name=$checksubscription->title;
+    							}
+    							else{
+    								$subscription_name="";
+    							}
+
+    							$coupon_code_arr[]=array(
+    								'coupon_name'=>$list['coupon_name'],
+    								'coupon_date'=>$list['coupon_date'].' '.$list['coupon_time'],
+    								'coupon_type'=>$list['coupon_type'],
+    								'coupon_discount'=>$list['coupon_discount'],
+    								'coupon_max_amount'=>$list['coupon_max_amount'],
+    								'minimum_transaction_amount'=>$list['minimum_transaction_amount'],
+    								'coupon_subscription'=>$subscription_name,
+    								'coupon_description'=>$list['coupon_description']
+    							);
+    						}
+    					}
+    				}
+    				else{
+    					$coupon_code_arr=[];
+    				}
+    			}
+    			else{
+    				$coupon_code_arr=[];
+    			}
+
+    			$success['coupon_code_arr']=$coupon_code_arr;
+				return $this::sendResponse($success, 'User Coupon Code List.');
+    		}
+    		else{
+    			return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+    		}
+    	}
+    	catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+    }
+
+
 
 
 

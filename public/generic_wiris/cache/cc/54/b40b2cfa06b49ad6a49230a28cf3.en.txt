@@ -1,0 +1,1 @@
+{"result":{"text":"negative 2 x equals 5\nx equals negative 5 over 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 0.064 right parenthesis to the power of negative begin inline style 1 third end style end exponent"},"status":"ok"}

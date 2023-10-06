@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis a to the power of negative n end exponent right parenthesis squared equals a to the power of 4\nrightwards double arrow a to the power of negative 2 n end exponent equals a\nrightwards double arrow negative 2 n equals 4\nrightwards double arrow n equals negative 2"},"status":"ok"}

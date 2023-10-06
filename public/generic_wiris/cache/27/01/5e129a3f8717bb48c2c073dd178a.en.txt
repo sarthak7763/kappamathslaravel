@@ -1,0 +1,1 @@
+{"result":{"text":"3 cross times 9 to the power of 1 minus x end exponent equals 27 to the power of negative x end exponent"},"status":"ok"}

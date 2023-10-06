@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x to the power of negative 1 end exponent plus y to the power of negative 1 end exponent over denominator x plus y end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"5 to the power of n plus 1 end exponent equals 5 to the power of n cross times 5 to the power of 1 equals 5 left parenthesis 5 to the power of n right parenthesis"},"status":"ok"}

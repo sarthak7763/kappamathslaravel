@@ -1,0 +1,1 @@
+{"result":{"text":"4 minus x squared equals 0 space space rightwards double arrow 4 equals x squared space\nrightwards double arrow x equals plus-or-minus square root of 4\nrightwards double arrow x equals plus-or-minus 2\nrightwards double arrow x equals 2 comma negative 2"},"status":"ok"}

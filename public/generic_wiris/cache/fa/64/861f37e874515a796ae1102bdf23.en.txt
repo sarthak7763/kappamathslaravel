@@ -1,0 +1,1 @@
+{"result":{"text":"8 to the power of left parenthesis x minus begin inline style 2 over 3 end style right parenthesis end exponent equals 2 to the power of x 2 end exponent"},"status":"ok"}

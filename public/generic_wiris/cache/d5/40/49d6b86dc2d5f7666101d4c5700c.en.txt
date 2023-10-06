@@ -1,0 +1,1 @@
+{"result":{"text":"y minus 1 half equals 1 half left parenthesis x minus 0 right parenthesis\nrightwards double arrow y minus 1 half equals 1 half x\nrightwards double arrow y equals 1 half x plus 1 half\nrightwards double arrow y equals fraction numerator x plus 1 over denominator 2 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x equals fraction numerator 3 y minus 3 over denominator bevelled 1 half space y left parenthesis y plus 1 right parenthesis end fraction"},"status":"ok"}

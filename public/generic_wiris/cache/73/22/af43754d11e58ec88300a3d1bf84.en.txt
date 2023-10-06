@@ -1,0 +1,1 @@
+{"result":{"text":"t equals 2 to the power of negative x end exponent"},"status":"ok"}

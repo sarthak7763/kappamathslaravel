@@ -1,0 +1,1 @@
+{"result":{"text":"p squared minus p equals 0\np left parenthesis p minus 1 right parenthesis equals 0\np equals 0 comma space space p minus 1 equals 0\np equals 0 comma space p equals 1"},"status":"ok"}

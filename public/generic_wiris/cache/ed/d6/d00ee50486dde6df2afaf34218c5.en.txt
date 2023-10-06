@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x squared minus 7 x plus 8 over denominator x squared plus 2 x minus 8 end fraction"},"status":"ok"}

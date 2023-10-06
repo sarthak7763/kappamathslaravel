@@ -1,0 +1,1 @@
+{"result":{"text":"y equals x plus 1 half"},"status":"ok"}

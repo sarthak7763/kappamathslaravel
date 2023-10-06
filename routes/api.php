@@ -80,8 +80,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('getsubscriptionnotification', [DashboardController::class, 'getsubscriptionnotification']);
 
+    Route::get('getusertransactionlogs', [DashboardController::class, 'getusertransactionlogs']);
 
-    Route::post('applysubscriptioncouponnew', [DashboardController::class, 'applysubscriptioncouponnew']);
+    Route::get('getusercouponcodes', [DashboardController::class, 'getusercouponcodes']);
 
     //dashboard controller end
 

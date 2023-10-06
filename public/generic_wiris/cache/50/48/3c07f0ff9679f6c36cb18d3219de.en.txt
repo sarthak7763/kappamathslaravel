@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses 1 over 125 close parentheses to the power of x minus open parentheses 1 over 25 close parentheses to the power of begin inline style 3 over 4 end style end exponent equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"P left parenthesis G right parenthesis equals 2 over 5 space rightwards double arrow P left parenthesis G with bar on top right parenthesis equals 1 minus 2 over 5 equals 3 over 5"},"status":"ok"}

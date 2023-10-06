@@ -1,0 +1,1 @@
+{"result":{"text":"x squared plus 2 x minus 8 equals 0\nrightwards double arrow left parenthesis x minus 2 right parenthesis left parenthesis x plus 4 right parenthesis equals 0\ntherefore space space space x equals 2 comma space minus 4"},"status":"ok"}

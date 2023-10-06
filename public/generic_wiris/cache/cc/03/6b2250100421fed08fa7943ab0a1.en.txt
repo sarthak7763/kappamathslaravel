@@ -1,0 +1,1 @@
+{"result":{"text":"3 x minus 2 equals 0\nrightwards double arrow 3 x equals 2\nrightwards double arrow x equals 2 over 3\n"},"status":"ok"}

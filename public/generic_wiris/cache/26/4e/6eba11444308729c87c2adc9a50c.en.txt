@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of 0 plus 2 to the power of negative 1 end exponent plus 2 to the power of negative 2 end exponent"},"status":"ok"}

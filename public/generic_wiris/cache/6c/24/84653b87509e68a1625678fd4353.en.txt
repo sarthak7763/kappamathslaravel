@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 6 x squared minus 17 x plus 12 over denominator 6 x squared plus x minus 12 end fraction"},"status":"ok"}

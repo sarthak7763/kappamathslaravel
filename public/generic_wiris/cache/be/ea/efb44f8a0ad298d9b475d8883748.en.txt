@@ -1,0 +1,1 @@
+{"result":{"text":"5 to the power of n plus 1 end exponent"},"status":"ok"}

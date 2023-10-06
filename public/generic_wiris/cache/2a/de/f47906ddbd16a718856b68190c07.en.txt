@@ -1,0 +1,1 @@
+{"result":{"text":"2 y squared minus 8 equals 0\nrightwards double arrow 2 y squared equals 8\nrightwards double arrow y squared equals 4\nrightwards double arrow y equals plus-or-minus square root of 4 equals plus-or-minus 2\nrightwards double arrow y equals negative 2 space a n d space 2"},"status":"ok"}

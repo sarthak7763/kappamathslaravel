@@ -1,0 +1,1 @@
+{"result":{"text":"x equals negative begin inline style 1 third end style"},"status":"ok"}

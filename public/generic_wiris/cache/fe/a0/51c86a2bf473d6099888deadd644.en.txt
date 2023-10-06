@@ -1,0 +1,1 @@
+{"result":{"text":"y equals x minus 6"},"status":"ok"}

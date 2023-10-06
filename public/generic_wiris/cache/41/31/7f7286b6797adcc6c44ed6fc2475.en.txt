@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator y squared minus 9 y plus 18 over denominator y squared plus 4 y minus 21 end fraction"},"status":"ok"}

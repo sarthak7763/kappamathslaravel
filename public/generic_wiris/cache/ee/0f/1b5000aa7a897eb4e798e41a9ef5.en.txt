@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 6 x squared plus x minus 12 equals 0 space\nrightwards double arrow left parenthesis 3 x minus 4 right parenthesis left parenthesis 2 x plus 3 right parenthesis equals 0\nrightwards double arrow 3 x minus 4 equals 0 comma space 2 x plus 3 equals 0\nx equals 4 over 3 comma space x equals negative 3 over 2\n"},"status":"ok"}

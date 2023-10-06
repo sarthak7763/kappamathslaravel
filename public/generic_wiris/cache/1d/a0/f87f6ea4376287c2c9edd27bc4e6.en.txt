@@ -1,0 +1,1 @@
+{"result":{"text":"1 over y plus fraction numerator 1 over denominator y minus 1 end fraction space u n d e f i n e d space"},"status":"ok"}

@@ -18,7 +18,7 @@
   @endif
 
   <div class="margin-bottom">
-    <a href="{{route('subscription-coupon.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Coupon</a>
+    <a href="{{route('coupon-subscription.create')}}" data-toggle="tooltip" data-original-title="Edit" class="btn btn-primary btn-floating">Add Coupon</a>
   </div>
 
   <div class="box">
@@ -72,7 +72,7 @@ $(function () {
       scrollCollapse: true,
 
       ajax: {
-            url: "{{ route('subscription-coupon.index') }}",
+            url: "{{ route('coupon-subscription.index') }}",
             type: "GET",
             data: {
                 "filter_start_date": filter_start_date,

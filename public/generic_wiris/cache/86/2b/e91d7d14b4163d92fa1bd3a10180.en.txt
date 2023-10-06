@@ -1,0 +1,1 @@
+{"result":{"text":"tan space theta equals 20 over 9 equals 2.222\ntheta equals tan to the power of negative 1 end exponent left parenthesis 2.222 right parenthesis equals 65.8 degree"},"status":"ok"}

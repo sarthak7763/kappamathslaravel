@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 27 to the power of x cross times 3 to the power of 1 minus x end exponent over denominator 9 to the power of 2 x end exponent end fraction equals 1\n27 to the power of x cross times 3 to the power of 1 minus x end exponent equals 9 to the power of 2 x end exponent"},"status":"ok"}

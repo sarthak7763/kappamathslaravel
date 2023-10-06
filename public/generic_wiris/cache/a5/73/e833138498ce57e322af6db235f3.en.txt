@@ -1,0 +1,1 @@
+{"result":{"text":"begin inline style bevelled 1 half end style"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 0.25 right parenthesis to the power of x equals 32\nopen parentheses 1 fourth close parentheses to the power of x equals 32\nopen parentheses 1 over 2 squared close parentheses to the power of x equals 2 to the power of 5\nminus 2 to the power of negative 2 x end exponent equals 2 to the power of 5"},"status":"ok"}

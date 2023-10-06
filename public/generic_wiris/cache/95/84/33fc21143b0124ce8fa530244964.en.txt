@@ -1,0 +1,1 @@
+{"result":{"text":"f left parenthesis x right parenthesis equals fraction numerator x over denominator 3 x minus 2 end fraction comma space u n d e f i n e d ?"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"3 plus 2 x equals negative 3 x\n2 x plus 3 x equals negative 3"},"status":"ok"}

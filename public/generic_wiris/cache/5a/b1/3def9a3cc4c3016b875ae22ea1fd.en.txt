@@ -1,0 +1,1 @@
+{"result":{"text":"4 space a n d space minus 4"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals P left parenthesis 1 R intersection 2 G right parenthesis space o r space P left parenthesis I G intersection 2 R right parenthesis"},"status":"ok"}

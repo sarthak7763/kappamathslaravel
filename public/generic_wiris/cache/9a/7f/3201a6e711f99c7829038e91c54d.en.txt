@@ -1,0 +1,1 @@
+{"result":{"text":"f left parenthesis x right parenthesis equals negative 3 x plus 1\nF o r comma space f left parenthesis x right parenthesis equals negative 2\n3 x plus 1 equals negative 2\nrightwards double arrow 3 x equals negative 3\nrightwards double arrow x equals negative 1"},"status":"ok"}

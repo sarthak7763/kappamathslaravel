@@ -1,0 +1,1 @@
+{"result":{"text":"y squared plus 4 y minus 21 equals 0\nrightwards double arrow left parenthesis y minus 3 right parenthesis left parenthesis y plus 7 right parenthesis equals 0\nrightwards double arrow y equals 3 comma space minus 7\n"},"status":"ok"}

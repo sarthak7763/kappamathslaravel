@@ -1,0 +1,1 @@
+{"result":{"text":"equals 270 degree plus theta\nequals 270 degree plus 65.8 degree\nequals 335.8 degree almost equal to 336 degree"},"status":"ok"}

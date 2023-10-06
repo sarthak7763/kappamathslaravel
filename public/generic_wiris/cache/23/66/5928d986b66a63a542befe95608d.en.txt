@@ -1,0 +1,1 @@
+{"result":{"text":"G r a d i e n t comma space m equals fraction numerator y subscript 2 minus y subscript 1 over denominator x subscript 2 minus x subscript 1 end fraction equals fraction numerator 2 minus 7 over denominator 2 minus 1 end fraction equals negative 5"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator x minus 3 over denominator x squared plus 5 x minus 6 end fraction"},"status":"ok"}

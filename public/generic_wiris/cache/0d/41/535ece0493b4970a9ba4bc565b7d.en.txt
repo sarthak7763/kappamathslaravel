@@ -1,0 +1,1 @@
+{"result":{"text":"equals open parentheses 5 over 8 cross times 3 over 8 close parentheses plus open parentheses 3 over 8 cross times 5 over 8 close parentheses\nequals 15 over 64 plus 15 over 64 equals 30 over 64\nequals 15 over 32"},"status":"ok"}
