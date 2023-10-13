@@ -1,0 +1,1 @@
+{"result":{"text":"equals 270 degree minus theta\nequals 270 degree minus 54.5 degree equals 2215.5 degree\nalmost equal to 216 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 176 space c m squared minus 77 space c m squared\nequals 99 space c m squared"},"status":"ok"}

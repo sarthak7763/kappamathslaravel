@@ -1,0 +1,1 @@
+{"result":{"text":"7 begin inline style fraction numerator 1 over denominator 3 space space end fraction end style c m"},"status":"ok"}

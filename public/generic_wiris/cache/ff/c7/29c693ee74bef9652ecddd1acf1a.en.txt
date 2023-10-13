@@ -1,0 +1,1 @@
+{"result":{"text":"d squared equals 2 squared plus 2 squared equals 8\nrightwards double arrow d equals square root of 8 equals 2 square root of 2 space end root c m"},"status":"ok"}

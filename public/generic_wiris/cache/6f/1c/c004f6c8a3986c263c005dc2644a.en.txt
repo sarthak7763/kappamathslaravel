@@ -1,0 +1,1 @@
+{"result":{"text":"315 degree"},"status":"ok"}

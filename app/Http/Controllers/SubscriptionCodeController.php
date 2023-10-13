@@ -337,6 +337,40 @@ class SubscriptionCodeController extends Controller
                 $subscriptioncoupon->coupon_status = $statusvalue;
                 $subscriptioncoupon->save();
 
+                // if($coupon_users!=0)
+                // {
+                //   if($request->coupon_type=="1")
+                //   {
+                //     $coupontype="Voucher";
+                //   }
+                //   else{
+                //     $coupontype="Coupon";
+                //   }
+
+                //   $coupon_users_array=explode(',',$coupon_users);
+                //   if(count($coupon_users_array) > 0)
+                //   {
+                //   	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                //   $coupontitle="Purchase a subscription";
+                //   $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                //   sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
+                //   }
+                // }
+                // else{
+                //   if($request->coupon_type=="1")
+                //   {
+                //     $coupontype="Voucher";
+                //   }
+                //   else{
+                //     $coupontype="Coupon";
+                //   }
+
+                //   $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                //   $coupontitle="Purchase a subscription";
+                //   $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                //   sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
+                // }
+
                return redirect('admin/coupon-subscription/')->with('success','Coupon has been added.');
 
 		        }catch(\Exception $e){
@@ -523,6 +557,8 @@ class SubscriptionCodeController extends Controller
               $coupon_users=0;
           }
 
+          $db_coupon_users=$subscriptioncoupon->coupon_users;
+
           if($subscriptioncoupon->coupon_name==$request->coupon_title)
           {
 	            $subscriptioncoupon->coupon_date = $request->coupon_date;
@@ -565,6 +601,69 @@ class SubscriptionCodeController extends Controller
           }
          try{
             $subscriptioncoupon->save();
+
+            // if($db_coupon_users!=0)
+            // {
+            // 	if($coupon_users!=0)
+            //     {
+            //       if($request->coupon_type=="1")
+            //       {
+            //         $coupontype="Voucher";
+            //       }
+            //       else{
+            //         $coupontype="Coupon";
+            //       }
+
+            //       $coupon_users_array=explode(',',$coupon_users);
+
+            //       $db_coupon_users_array=explode(',',$db_coupon_users);
+
+            //       $result_coupon_users=array_diff($coupon_users_array,$db_coupon_users_array);
+
+            //       if(count($result_coupon_users) > 0)
+            //       {
+            //       $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+            //       $coupontitle="Purchase a subscription";
+            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+            //       sendNotificationtoparticulardevices($result_coupon_users,$coupon_image,$coupontitle,$coupon_message);
+            //       }
+            //     }
+            //     else{
+            //       if($request->coupon_type=="1")
+            //       {
+            //         $coupontype="Voucher";
+            //       }
+            //       else{
+            //         $coupontype="Coupon";
+            //       }
+
+            //       $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+            //       $coupontitle="Purchase a subscription";
+            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+            //       sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
+            //     }
+            // }
+            // else{
+            // 	if($coupon_users!=0)
+            //     {
+            //       if($request->coupon_type=="1")
+            //       {
+            //         $coupontype="Voucher";
+            //       }
+            //       else{
+            //         $coupontype="Coupon";
+            //       }
+
+            //       $coupon_users_array=explode(',',$coupon_users);
+            //       if(count($coupon_users_array) > 0)
+            //       {
+            //       	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+            //       $coupontitle="Purchase a subscription";
+            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+            //       sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
+            //       }
+            //     }
+            // }
 
           return redirect('admin/coupon-subscription/')->with('success','Coupon updated !.');
 

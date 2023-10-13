@@ -47,7 +47,7 @@
 
   <div class="content-block box">
     <div class="box-body table-responsive">
-      <table id="example2" class="table table-striped">
+      <table id="subscriptiontable" class="table table-striped">
         <thead>
           <tr>
             <th>#</th>
@@ -58,24 +58,30 @@
             <th>Status</th>
             <th>Subscription Start Date</th>
             <th>Subscription End Date</th>
+            <th>Coupon/Voucher</th>
+            <th>Discount Amount</th>
+            <th>Total Amount</th>
           </tr>
         </thead>
         <tbody>
-        @if($data)
+        @if($user_subscription_array)
             @php($n = 1)
-            @foreach ($data as $key => $item)
+            @foreach ($user_subscription_array as $key => $item)
               <tr>
                 <td>
                   {{$n}}
                   @php($n++)
                 </td>
-                <td>{{ $item->getUser->name }}</td>
-                <td>{{ $item->getSubscription->title }}</td>
-                <td>{{$item->subscription_payment}} GHS</td>
-                <td>{{$item->transaction_id}}</td>
-                <td>{{$item->subscription_status == 1 ? 'Successful' : 'Unsuccessful'}}</td>
-                <td>{{$item->subscription_start }}</td>
-                <td>{{$item->subscription_end }}</td>
+                <td>{{ $item['username'] }}</td>
+                <td>{{ $item['subscriptionname'] }}</td>
+                <td>{{$item['subscription_payment']}} GHS</td>
+                <td>{{$item['transaction_id']}}</td>
+                <td>{{$item['subscription_status'] == 1 ? 'Successful' : 'Unsuccessful'}}</td>
+                <td>{{$item['subscription_start'] }}</td>
+                <td>{{$item['subscription_end'] }}</td>
+                <td>{{$item['couponname'] }} ({{$item['coupon_type'] }})</td>
+                <td>{{$item['coupon_discount'] }} GHS</td>
+                <td>{{$item['total_amount'] }} GHS</td>
               </tr>
             @endforeach 
           @endif
@@ -83,4 +89,23 @@
       </table>
     </div>
   </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+
+$(function () {
+    var table = $('#subscriptiontable').DataTable({
+      processing: true,
+      serverSide: false,
+      responsive: true,
+      autoWidth: false,
+      scrollCollapse: true,
+    });
+
+  });
+  
+
+</script>
+
 @endsection

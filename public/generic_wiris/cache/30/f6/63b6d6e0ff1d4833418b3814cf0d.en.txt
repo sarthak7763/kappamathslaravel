@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 3 m plus 2 n space plus n plus 4 equals 19\nrightwards double arrow 3 m plus 3 n equals 15................ left parenthesis 1 right parenthesis"},"status":"ok"}

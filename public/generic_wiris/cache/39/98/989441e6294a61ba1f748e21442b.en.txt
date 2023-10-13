@@ -1,0 +1,1 @@
+{"result":{"text":"equals 180 degree minus theta\nequals 180 degree minus 24.2 degree equals 155.8 degree\nalmost equal to 156 degree"},"status":"ok"}

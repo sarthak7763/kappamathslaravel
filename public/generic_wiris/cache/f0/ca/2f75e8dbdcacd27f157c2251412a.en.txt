@@ -1,0 +1,1 @@
+{"result":{"text":"equals 360 degree minus left parenthesis 70 degree plus 43 degree right parenthesis equals 247 degree"},"status":"ok"}

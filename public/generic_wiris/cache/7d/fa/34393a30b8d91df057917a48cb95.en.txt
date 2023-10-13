@@ -1,0 +1,1 @@
+{"result":{"text":"angle W O X equals 60 degree comma space angle Y O E equals 50 degree space a n d angle O X Y equals 30 degree"},"status":"ok"}

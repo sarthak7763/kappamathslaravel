@@ -1,0 +1,1 @@
+{"result":{"text":"S space 54 degree E"},"status":"ok"}

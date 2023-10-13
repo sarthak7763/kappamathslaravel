@@ -1,0 +1,1 @@
+{"result":{"text":"151 degree equals S space 29 degree E"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 n plus 3 n equals 15 space rightwards double arrow 5 n equals 15 rightwards double arrow n equals 3"},"status":"ok"}

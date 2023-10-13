@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 2 left parenthesis l plus w right parenthesis equals 32 space rightwards double arrow l plus w equals 16"},"status":"ok"}

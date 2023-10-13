@@ -1,0 +1,1 @@
+{"result":{"text":"space space stack A B with rightwards arrow on top equals left parenthesis 5 k m comma space 300 degree right parenthesis"},"status":"ok"}

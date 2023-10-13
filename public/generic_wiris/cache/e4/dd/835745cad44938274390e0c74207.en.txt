@@ -1,0 +1,1 @@
+{"result":{"text":"l cross times w equals 10 cross times 4 equals 40 space c m squared"},"status":"ok"}

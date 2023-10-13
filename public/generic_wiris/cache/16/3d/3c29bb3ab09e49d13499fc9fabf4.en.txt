@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 120 degree over denominator 360 degree end fraction cross times straight pi cross times 6 squared\nequals 12 straight pi space cm squared"},"status":"ok"}

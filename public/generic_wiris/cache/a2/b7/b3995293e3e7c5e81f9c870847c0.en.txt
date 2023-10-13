@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q O R equals 2 cross times 60 degree equals 120 degree"},"status":"ok"}

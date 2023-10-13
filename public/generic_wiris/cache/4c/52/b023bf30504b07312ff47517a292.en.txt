@@ -1,0 +1,1 @@
+{"result":{"text":"equals 270 degree plus theta\nequals 270 degree plus 15 degree\nequals 285 degree"},"status":"ok"}

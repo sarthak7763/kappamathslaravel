@@ -1,0 +1,1 @@
+{"result":{"text":"angle E F G equals 90 degree"},"status":"ok"}

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Topic;
 use App\Usersubscriptions;
+use App\Subscription;
+use App\SubscriptionCoupon;
+use DB;
 
 class PaymentController extends Controller
 {
@@ -16,17 +19,90 @@ class PaymentController extends Controller
         if($request->user_id){
           $userid=$request->user_id;
           $clear_filter=1;
-          $data = Usersubscriptions::where('user_id',$request->user_id)->orderBy('id','DESC')->get();
+          $usersubscriptiondata = Usersubscriptions::where('user_id',$request->user_id)->orderBy('id','DESC')->get();
+
         }else{
           $userid="";
           $clear_filter=0;
-          $data = Usersubscriptions::orderBy('id','DESC')->get();
+          $usersubscriptiondata = Usersubscriptions::orderBy('id','DESC')->get();
         }
+
+        if($usersubscriptiondata)
+        {
+          $usersubscriptiondataarray=$usersubscriptiondata->toArray();
+          $user_subscription_array=[];
+          foreach($usersubscriptiondataarray as $item)
+          {
+            $userdet=User::find($item['user_id']);
+            if(is_null($userdet))
+            {
+              $username="";
+            }
+            else{
+              $username=$userdet->name;
+            }
+
+
+
+            $subscriptiondet=Subscription::find($item['subscription_id']);
+            if(is_null($userdet))
+            {
+              $subscriptionname="";
+            }
+            else{
+              $subscriptionname=$subscriptiondet->title;
+            }
+
+            $coupondet=SubscriptionCoupon::find($item['coupon_code_id']);
+            if(is_null($coupondet))
+            {
+              $couponname="";
+              $coupon_type="";
+            }
+            else{
+              $couponname=$coupondet->coupon_name;
+              $coupon_type=$coupondet->coupon_type;
+            }
+
+            $usercouponcodedet=DB::table('user_coupon_code')->where('id',$item['user_coupon_code_id'])->get()->first();
+            if($usercouponcodedet)
+            {
+              $coupon_discount=$usercouponcodedet->coupon_discount;
+              $total_amount=$usercouponcodedet->total_amount;
+              $subtotal=$usercouponcodedet->subtotal;
+            }
+            else{
+              $coupon_discount="";
+              $total_amount="";
+              $subtotal="";
+            }
+
+            $user_subscription_array[]=array(
+              'username'=>$username,
+              'subscriptionname'=>$subscriptionname,
+              'couponname'=>$couponname,
+              'coupon_type'=>$coupon_type,
+              'coupon_discount'=>$coupon_discount,
+              'total_amount'=>$total_amount,
+              'subtotal'=>$subtotal,
+              'transaction_id'=>$item['transaction_id'],
+              'subscription_payment'=>$item['subscription_payment'],
+              'subscription_start'=>$item['subscription_start'],
+              'subscription_end'=>$item['subscription_end'],
+              'subscription_status'=>$item['subscription_status']
+            );
+
+          }
+        }
+        else{
+          $user_subscription_array=[];
+        }
+
         $users = User::where('role','S')->get();
-        return view('admin.payment_history.index', compact('data','users','userid','clear_filter'));
+        return view('admin.payment_history.index', compact('user_subscription_array','users','userid','clear_filter'));
       }
       catch(\Exception $e){
-                  return back()->with('error','Something went wrong.');     
+                  return back()->with('error',$e->getMessage());     
                }
   }
 }

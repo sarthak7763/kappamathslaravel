@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator vertical line X Z vertical line over denominator 2 end fraction equals 34 over 2 equals 17 space c m"},"status":"ok"}

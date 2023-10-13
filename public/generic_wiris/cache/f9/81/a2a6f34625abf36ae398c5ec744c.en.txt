@@ -1,0 +1,1 @@
+{"result":{"text":"P left parenthesis negative 3 comma space 4 right parenthesis"},"status":"ok"}

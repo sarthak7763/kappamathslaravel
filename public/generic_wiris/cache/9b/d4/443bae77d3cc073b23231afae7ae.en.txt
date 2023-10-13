@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator theta over denominator 360 degree end fraction cross times straight pi straight r squared\nequals fraction numerator 225 degree over denominator 360 degree end fraction cross times 22 over 7 cross times 7 squared\nequals 96.3 space cm squared"},"status":"ok"}

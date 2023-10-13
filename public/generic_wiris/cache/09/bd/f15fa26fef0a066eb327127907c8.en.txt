@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle Q P S space equals angle R P S equals 50 degree"},"status":"ok"}

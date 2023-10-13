@@ -1,0 +1,1 @@
+{"result":{"text":"sin space 60 degree equals fraction numerator vertical line Q S vertical line over denominator 7 end fraction\nrightwards double arrow vertical line Q S vertical line equals space 7 space sin space 60 degree equals 6.06 space c m"},"status":"ok"}

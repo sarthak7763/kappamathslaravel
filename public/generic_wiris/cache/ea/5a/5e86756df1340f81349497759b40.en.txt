@@ -1,0 +1,1 @@
+{"result":{"text":"equals 40 degree plus 50 degree plus 50 degree equals 140 degree"},"status":"ok"}

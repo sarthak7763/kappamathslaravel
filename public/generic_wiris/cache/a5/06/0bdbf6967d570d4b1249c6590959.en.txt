@@ -1,0 +1,1 @@
+{"result":{"text":"equals 180 degree minus theta minus 60 degree\nequals 180 minus 15 degree minus 60 degree\nequals 105 degree"},"status":"ok"}

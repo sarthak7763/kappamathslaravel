@@ -1,0 +1,1 @@
+{"result":{"text":"angle B A C equals angle A B C equals theta"},"status":"ok"}

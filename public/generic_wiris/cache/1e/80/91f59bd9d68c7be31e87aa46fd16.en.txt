@@ -1,0 +1,1 @@
+{"result":{"text":"triangle E F H minus"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2200 over 100 equals 22 space m"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style straight pi straight r squared equals begin inline style 1 half end style cross times begin inline style 22 over 7 end style cross times 7 squared"},"status":"ok"}

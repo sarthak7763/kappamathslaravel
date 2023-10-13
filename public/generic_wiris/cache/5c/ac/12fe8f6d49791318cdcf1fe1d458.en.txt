@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator theta over denominator 360 degree end fraction cross times 2 straight pi straight r"},"status":"ok"}

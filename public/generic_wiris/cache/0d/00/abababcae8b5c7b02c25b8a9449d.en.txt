@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 320 degree equals N space 40 degree space W"},"status":"ok"}

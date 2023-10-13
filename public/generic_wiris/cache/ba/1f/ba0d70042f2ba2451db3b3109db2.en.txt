@@ -1,0 +1,1 @@
+{"result":{"text":"equals straight pi straight d equals begin inline style 22 over 7 end style cross times 70 equals 220 space cm"},"status":"ok"}

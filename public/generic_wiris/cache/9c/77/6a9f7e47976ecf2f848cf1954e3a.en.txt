@@ -1,0 +1,1 @@
+{"result":{"text":"N space 48 degree space W"},"status":"ok"}

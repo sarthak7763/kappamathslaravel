@@ -1,0 +1,1 @@
+{"result":{"text":"stack B A with rightwards arrow on top equals left parenthesis 5 space k m comma space 300 degree minus 180 degree right parenthesis equals 5 space k m comma space 120 degree right parenthesis"},"status":"ok"}

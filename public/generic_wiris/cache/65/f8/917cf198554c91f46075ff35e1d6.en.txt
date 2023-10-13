@@ -1,0 +1,1 @@
+{"result":{"text":"I f apostrophe space rightwards arrow for A B of space equals left parenthesis 5 k m comma space 300 degree right parenthesis space f i n d apostrophe space rightwards arrow for B A of"},"status":"ok"}

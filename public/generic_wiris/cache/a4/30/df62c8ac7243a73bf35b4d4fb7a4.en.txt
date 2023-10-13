@@ -1,0 +1,1 @@
+{"result":{"text":"H e n c e comma space 230 degree equals S space 50 degree W"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"l plus 39 over l equals 16 space space space rightwards double arrow l squared plus 39 equals 161\nrightwards double arrow l squared minus 16 plus 39 equals 0 space rightwards double arrow left parenthesis l minus 13 right parenthesis left parenthesis l minus 3 right parenthesis equals 0"},"status":"ok"}

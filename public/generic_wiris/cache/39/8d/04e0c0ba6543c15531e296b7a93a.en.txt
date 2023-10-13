@@ -1,0 +1,1 @@
+{"result":{"text":"128 space equals space 2 x cross times x\nrightwards double arrow space 128 equals 2 x squared\nrightwards double arrow 64 equals x to the power of 2 space end exponent space space space space space space\nrightwards double arrow space x equals square root of 64 equals 8"},"status":"ok"}

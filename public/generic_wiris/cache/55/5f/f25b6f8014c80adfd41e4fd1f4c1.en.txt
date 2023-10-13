@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle X Y Z equals 90 degree"},"status":"ok"}

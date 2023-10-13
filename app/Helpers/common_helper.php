@@ -176,4 +176,181 @@ function checkusersubscription($userid)
     }
 }
 
+    function sendNotificationtomultipledevices($quiz_image,$quiz_title,$quiz_message)
+    {
+        $firebaseTokendata = User::where('push_notifications','1')->where('status','1')->get();
+
+        if($firebaseTokendata)
+        {
+          $firebaseTokendataarray=$firebaseTokendata->toArray();
+          $firebasetokens=[];
+          foreach($firebaseTokendataarray as $list)
+          {
+            if($list['device_id']!="")
+            {
+              $firebasetokens[]=$list['device_id'];
+            }
+          }
+
+          if(count($firebasetokens) > 0)
+          {
+            $SERVER_API_KEY = env('FCM_SERVER_KEY');
+            
+
+          $data = [
+              "registration_ids" => $firebasetokens,
+              "notification" => [
+                  "title" => $quiz_title,
+                  "body" => $quiz_message,
+                  "image"=>$quiz_image,
+              ]
+          ];
+
+          $dataString = json_encode($data);
+
+            $headers = [
+              'Authorization: key=' . $SERVER_API_KEY,
+              'Content-Type: application/json',
+          ];
+      
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                     
+            $response = curl_exec($ch);
+
+            $responsearray=json_decode($response);
+        
+            return true;
+
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
+    }
+
+
+    function sendNotificationtoparticulardevices($userids,$quiz_image,$quiz_title,$quiz_message)
+    {
+        $firebaseTokendata = User::whereIn('id',$userids)->where('push_notifications','1')->where('status','1')->get();
+
+        if($firebaseTokendata)
+        {
+          $firebaseTokendataarray=$firebaseTokendata->toArray();
+          $firebasetokens=[];
+          foreach($firebaseTokendataarray as $list)
+          {
+            if($list['device_id']!="")
+            {
+              $firebasetokens[]=$list['device_id'];
+            }
+          }
+
+          if(count($firebasetokens) > 0)
+          {
+            $SERVER_API_KEY = env('FCM_SERVER_KEY');
+            
+
+          $data = [
+              "registration_ids" => $firebasetokens,
+              "notification" => [
+                  "title" => $quiz_title,
+                  "body" => $quiz_message,
+                  "image"=>$quiz_image,
+              ]
+          ];
+
+          $dataString = json_encode($data);
+
+            $headers = [
+              'Authorization: key=' . $SERVER_API_KEY,
+              'Content-Type: application/json',
+          ];
+      
+            $ch = curl_init();
+            
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                     
+            $response = curl_exec($ch);
+
+            $responsearray=json_decode($response);
+        
+            return true;
+
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
+    }
+
+
+    function sendNotification($quiz_image,$quiz_title,$quiz_message)
+    {
+        $firebaseTokendata = User::where('email','nahap96510@pyadu.com')->where('push_notifications','1')->get()->first();
+
+        if($firebaseTokendata)
+        {
+          $firebaseTokendataarray=$firebaseTokendata->toArray();
+          $firebaseToken=$firebaseTokendataarray['device_id'];
+          $SERVER_API_KEY = env('FCM_SERVER_KEY');
+
+          $data = [
+            "to" => $firebaseToken,
+            "notification" => [
+                "title" => $quiz_title,
+                "body" => $quiz_message,
+                "image"=>$quiz_image,
+                'sound' => true,
+                'priority' => "high",
+                'vibration'=>true,
+                'sound'=> "Enabled",  
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+      
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                 
+        $response = curl_exec($ch);
+
+        $responsearray=json_decode($response);
+
+        return true;
+
+        }
+        else{
+          return false;
+        }
+    }
+
+
 ?>

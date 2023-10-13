@@ -1,0 +1,1 @@
+{"result":{"text":"tan space theta equals 7 over 5 space rightwards double arrow tan space theta space equals 1.4\nrightwards double arrow theta equals tan to the power of negative 1 end exponent left parenthesis 1.4 right parenthesis equals 54.5 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"G apostrophe left parenthesis negative 4 comma space 6 right parenthesis"},"status":"ok"}

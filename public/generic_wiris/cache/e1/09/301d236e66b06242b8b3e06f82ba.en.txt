@@ -1,0 +1,1 @@
+{"result":{"text":"6 squared equals h squared plus 3 squared\nrightwards double arrow h squared equals 6 squared minus 3 squared\nrightwards double arrow h squared equals 27\nrightwards double arrow h equals square root of 27 equals 3 square root of 3 space end root c m\n"},"status":"ok"}

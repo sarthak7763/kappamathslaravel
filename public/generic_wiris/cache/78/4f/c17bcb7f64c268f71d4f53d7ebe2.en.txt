@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style cross times b cross times h equals begin inline style 1 half end style cross times 6 cross times 3 square root of 3"},"status":"ok"}

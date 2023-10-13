@@ -1,0 +1,1 @@
+{"result":{"text":"equals vertical line Q R vertical line equals 2 cross times 6.06 equals 12.1 space c m"},"status":"ok"}

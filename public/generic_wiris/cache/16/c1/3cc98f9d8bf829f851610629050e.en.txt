@@ -1,0 +1,1 @@
+{"result":{"text":"stack A B with rightwards arrow on top"},"status":"ok"}

@@ -1612,7 +1612,7 @@ class DashboardController extends BaseController
     		$user=auth()->user();
 
     		if($user){
-    			$getusertransactiondata=Usersubscriptions::where('user_id',$user->id)->get();
+    			$getusertransactiondata=Usersubscriptions::where('user_id',$user->id)->orderBy('id','DESC')->get();
     			if($getusertransactiondata)
     			{
     				$usertransactionsarray=$getusertransactiondata->toArray();

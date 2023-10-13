@@ -1,0 +1,1 @@
+{"result":{"text":"F r o m comma space triangle P Q R colon\ncos space 30 degree equals fraction numerator P R over denominator 10 end fraction\nrightwards double arrow P R equals 10 space cos space 30 degree equals 8.7 space m\ntherefore P space i s space 8.7 space m space"},"status":"ok"}

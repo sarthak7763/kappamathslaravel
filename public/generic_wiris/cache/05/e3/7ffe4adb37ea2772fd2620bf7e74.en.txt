@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line X Z vertical line squared equals 16 squared plus 30 squared\nrightwards double arrow vertical line X Z vertical line squared equals 1156\nvertical line X Z vertical line equals square root of 1156 equals 34 space c m"},"status":"ok"}

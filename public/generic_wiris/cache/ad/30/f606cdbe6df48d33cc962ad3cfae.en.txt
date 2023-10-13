@@ -1,0 +1,1 @@
+{"result":{"text":"equals 306 degree minus 180 degree equals 126 degree"},"status":"ok"}

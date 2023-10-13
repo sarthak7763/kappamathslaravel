@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 3 m equals 6\nrightwards double arrow m equals 2\ntherefore n equals 3 comma space m equals 3"},"status":"ok"}

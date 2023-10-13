@@ -1,0 +1,1 @@
+{"result":{"text":"28 equals 2 left parenthesis 10 right parenthesis plus 2 w\nrightwards double arrow 28 equals 20 plus 2 w\nrightwards double arrow 8 equals 2 w\nrightwards double arrow w equals 4 c m"},"status":"ok"}

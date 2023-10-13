@@ -1,0 +1,1 @@
+{"result":{"text":"l cross times w equals 39 rightwards double arrow space w equals 39 over l........ left parenthesis 2 right parenthesis"},"status":"ok"}

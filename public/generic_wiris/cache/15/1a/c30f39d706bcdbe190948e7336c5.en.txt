@@ -1,0 +1,1 @@
+{"result":{"text":"theta equals 360 degree minus 135 degree equals 225 degree"},"status":"ok"}

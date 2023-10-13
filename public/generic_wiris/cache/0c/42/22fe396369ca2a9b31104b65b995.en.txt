@@ -1,0 +1,1 @@
+{"result":{"text":"4 square root of 2 space c m"},"status":"ok"}

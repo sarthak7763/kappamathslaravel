@@ -1,0 +1,1 @@
+{"result":{"text":"equals 10 cross times 220 equals 2200 space c m"},"status":"ok"}

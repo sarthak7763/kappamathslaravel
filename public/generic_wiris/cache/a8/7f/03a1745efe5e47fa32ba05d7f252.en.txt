@@ -1,0 +1,1 @@
+{"result":{"text":"y equals negative x comma space o r space x plus y equals 0"},"status":"ok"}

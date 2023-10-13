@@ -1,0 +1,1 @@
+{"result":{"text":"3 m equals 2 n.................. left parenthesis 2 right parenthesis"},"status":"ok"}

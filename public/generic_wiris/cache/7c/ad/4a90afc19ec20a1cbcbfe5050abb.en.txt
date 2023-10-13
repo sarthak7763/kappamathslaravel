@@ -1,0 +1,1 @@
+{"result":{"text":"l squared equals 4"},"status":"ok"}

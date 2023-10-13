@@ -1,0 +1,1 @@
+{"result":{"text":"equals 8 cross times 12\nequals 96 space c m"},"status":"ok"}

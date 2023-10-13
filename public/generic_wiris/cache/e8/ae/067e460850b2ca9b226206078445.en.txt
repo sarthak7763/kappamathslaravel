@@ -1,0 +1,1 @@
+{"result":{"text":"5 squared equals h squared plus 2.5 to the power of 2 space end exponent\nrightwards double arrow h squared equals 5 squared minus 2.5 squared\nrightwards double arrow h squared equals 18.75\nrightwards double arrow h equals 4.33 space c m"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 312 degree space N space 48 degree space W"},"status":"ok"}

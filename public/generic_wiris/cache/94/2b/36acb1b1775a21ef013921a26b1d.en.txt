@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style cross times b cross times h equals begin inline style 1 half end style cross times 5 cross times 4.33\nequals 10.8 m squared"},"status":"ok"}

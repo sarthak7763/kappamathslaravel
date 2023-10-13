@@ -1,0 +1,1 @@
+{"result":{"text":"equals 270 degree plus 30 equals 300 degree"},"status":"ok"}

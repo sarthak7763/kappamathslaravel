@@ -1,0 +1,1 @@
+{"result":{"text":"equals d over 2 equals fraction numerator 2 square root of 2 over denominator 2 end fraction equals square root of 2 space end root c m"},"status":"ok"}

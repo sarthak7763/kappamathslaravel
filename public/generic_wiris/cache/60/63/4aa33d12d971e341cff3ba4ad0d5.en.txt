@@ -1,0 +1,1 @@
+{"result":{"text":"equals 14 over 2 equals 7 space c m"},"status":"ok"}
