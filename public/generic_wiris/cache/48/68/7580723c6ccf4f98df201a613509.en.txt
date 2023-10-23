@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line Z Y vertical line equals vertical line X Y vertical line comma angle W Y Z equals 65 degree"},"status":"ok"}

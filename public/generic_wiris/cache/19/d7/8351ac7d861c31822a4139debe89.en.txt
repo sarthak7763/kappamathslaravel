@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 10 x cubed"},"status":"ok"}

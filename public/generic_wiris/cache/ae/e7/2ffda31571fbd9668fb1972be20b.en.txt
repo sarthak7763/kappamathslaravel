@@ -1,0 +1,1 @@
+{"result":{"text":"a equals log space 7"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q O R equals 38 degree plus 38 degree equals 76 degree"},"status":"ok"}

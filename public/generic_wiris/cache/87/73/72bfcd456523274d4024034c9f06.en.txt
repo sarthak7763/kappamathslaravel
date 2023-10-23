@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator log space 27 over denominator log space 6 minus log space 2 end fraction"},"status":"ok"}

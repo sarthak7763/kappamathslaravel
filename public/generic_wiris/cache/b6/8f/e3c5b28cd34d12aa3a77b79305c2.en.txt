@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript space 2 end subscript left parenthesis 3 x minus 1 right parenthesis equals 5\nrightwards double arrow 3 x minus 1 equals 2 to the power of 5\nrightwards double arrow 3 x minus 1 equals 32\nrightwards double arrow 3 x equals 33\nrightwards double arrow x equals 11"},"status":"ok"}

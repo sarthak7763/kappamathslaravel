@@ -1,0 +1,1 @@
+{"result":{"text":"equals open parentheses table row 0 row 1 end table close parentheses plus open parentheses table row 2 row 3 end table close parentheses equals open parentheses table row 2 row 4 end table close parentheses"},"status":"ok"}

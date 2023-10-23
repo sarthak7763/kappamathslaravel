@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 2 open parentheses a close parentheses plus log subscript 2 open parentheses b close parentheses"},"status":"ok"}

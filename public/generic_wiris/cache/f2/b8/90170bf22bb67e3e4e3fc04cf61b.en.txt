@@ -1,0 +1,1 @@
+{"result":{"text":"log fifth root of x equals log space x to the power of begin inline style 1 fifth end style end exponent equals 1 fifth space log space x\n"},"status":"ok"}

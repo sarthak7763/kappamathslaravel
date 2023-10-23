@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P O Q equals 2 cross times 65 degree equals 130 degree"},"status":"ok"}

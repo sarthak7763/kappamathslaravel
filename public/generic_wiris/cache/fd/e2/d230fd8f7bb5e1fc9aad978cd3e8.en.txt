@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle P Q R equals 180 degree minus left parenthesis 64 degree plus 64 degree right parenthesis equals 52 degree"},"status":"ok"}

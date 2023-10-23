@@ -1,0 +1,1 @@
+{"result":{"text":"angle O X Q equals angle O Y S equals 90 degree"},"status":"ok"}

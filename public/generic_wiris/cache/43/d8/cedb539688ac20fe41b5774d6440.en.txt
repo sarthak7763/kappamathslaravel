@@ -1,0 +1,1 @@
+{"result":{"text":"3 space log left parenthesis 2 plus x right parenthesis equals log space 27\nlog left parenthesis 2 plus x right parenthesis cubed equals log space 27"},"status":"ok"}

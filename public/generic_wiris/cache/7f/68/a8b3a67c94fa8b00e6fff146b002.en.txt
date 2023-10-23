@@ -1,0 +1,1 @@
+{"result":{"text":"log space subscript 2 space left parenthesis 3 x minus 1 right parenthesis equals 5"},"status":"ok"}

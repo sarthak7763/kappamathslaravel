@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 3 x equals 2 cross times 60 degree\nrightwards double arrow 3 x equals 120 degree\nrightwards double arrow x equals 40 degree\ntherefore x plus y equals 40 degree plus 60 degree equals 100 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 360 minus 8 x equals 2 x\nrightwards double arrow negative 8 x minus 2 x equals negative 360\nrightwards double arrow negative 10 x equals negative 360\nrightwards double arrow x equals 360 degree"},"status":"ok"}

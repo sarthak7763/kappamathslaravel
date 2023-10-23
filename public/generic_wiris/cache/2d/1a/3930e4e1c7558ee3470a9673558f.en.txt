@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 250 degree equals 2 cross times space A n g l e ` N M L"},"status":"ok"}

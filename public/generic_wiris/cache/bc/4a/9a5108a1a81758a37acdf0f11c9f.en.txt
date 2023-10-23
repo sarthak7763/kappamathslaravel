@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle S Q R equals angle Q S R equals begin inline style 1 half end style left parenthesis 180 degree minus 110 degree right parenthesis equals 35 degree"},"status":"ok"}

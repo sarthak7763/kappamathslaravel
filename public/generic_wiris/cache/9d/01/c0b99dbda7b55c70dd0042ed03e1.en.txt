@@ -1,0 +1,1 @@
+{"result":{"text":"angle X O Y equals angle O Y Z\ntherefore angle X O Y equals 70 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 10 space 2 to the power of y equals 1.8060\ny space log subscript 10 space 2 equals 1.8060\ny equals fraction numerator 1.8060 over denominator log subscript 10 space 2 end fraction"},"status":"ok"}

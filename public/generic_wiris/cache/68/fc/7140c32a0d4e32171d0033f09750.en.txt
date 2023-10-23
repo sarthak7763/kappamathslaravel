@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus x plus 50 degree equals 180 degree\nrightwards double arrow 2 x equals 180 degree minus 50 degree\nrightwards double arrow 2 x equals 130 degree\nrightwards double arrow x equals 65 degree\ntherefore angle P Q O equals 65 degree"},"status":"ok"}

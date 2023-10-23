@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 10 space 6 minus 3 space log subscript 10 space 3 plus begin inline style 2 over 3 end style log subscript 10 space 27"},"status":"ok"}

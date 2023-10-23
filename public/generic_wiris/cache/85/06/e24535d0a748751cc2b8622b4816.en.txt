@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus 20 degree plus 252 degree plus 54 degree equals 360 degree\nrightwards double arrow x plus 326 degree equals 360 degree\nrightwards double arrow x equals 34 degree\ntherefore angle O P K equals 34 degree"},"status":"ok"}

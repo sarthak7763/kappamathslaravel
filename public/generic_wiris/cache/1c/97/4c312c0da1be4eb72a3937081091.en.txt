@@ -1,0 +1,1 @@
+{"result":{"text":"angle T Y Z equals 20 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"P O R equals 360 degree minus 108 degree equals 252 degree"},"status":"ok"}

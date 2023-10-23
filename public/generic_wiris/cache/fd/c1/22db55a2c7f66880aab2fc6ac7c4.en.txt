@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 10 space open parentheses 25 over 2 close parentheses"},"status":"ok"}

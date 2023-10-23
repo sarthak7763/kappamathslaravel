@@ -1,0 +1,1 @@
+{"result":{"text":"y to the power of x equals b to the power of a"},"status":"ok"}

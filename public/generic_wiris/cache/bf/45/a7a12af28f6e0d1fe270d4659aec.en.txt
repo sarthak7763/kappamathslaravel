@@ -1,0 +1,1 @@
+{"result":{"text":"3 space log subscript 10 space 2 plus log subscript 10 space 20 minus log subscript 10 space 1.6"},"status":"ok"}

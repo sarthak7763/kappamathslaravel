@@ -1,0 +1,1 @@
+{"result":{"text":"angle P Q S space equals space angle P S M equals 55 degree"},"status":"ok"}

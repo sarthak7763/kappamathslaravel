@@ -1,0 +1,1 @@
+{"result":{"text":"angle S Q R equals 60 comma angle angle P R equals y apostrophe space a n d angle S Q R equals 3 x"},"status":"ok"}

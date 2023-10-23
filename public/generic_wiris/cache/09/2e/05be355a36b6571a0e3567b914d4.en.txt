@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 2 space 8 plus log subscript k space K cubed plus log subscript 3 space 9"},"status":"ok"}

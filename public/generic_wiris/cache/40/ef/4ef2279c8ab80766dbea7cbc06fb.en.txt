@@ -1,0 +1,1 @@
+{"result":{"text":"angle T R Q equals angle T U R equals x degree"},"status":"ok"}

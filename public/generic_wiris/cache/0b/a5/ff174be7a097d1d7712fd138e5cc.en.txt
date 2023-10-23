@@ -1,0 +1,1 @@
+{"result":{"text":"equals 90 degree plus 35 degree equals 125 degree"},"status":"ok"}

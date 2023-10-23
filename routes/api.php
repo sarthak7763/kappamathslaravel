@@ -76,6 +76,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('applysubscriptioncoupon', [DashboardController::class, 'applysubscriptioncoupon']);
 
+    Route::post('applysubscriptioncouponnew', [DashboardController::class, 'applysubscriptioncouponnew']);
+
     Route::post('activatefreeamountsubscription', [DashboardController::class, 'activatefreeamountsubscription']);
 
     Route::post('getsubscriptionnotification', [DashboardController::class, 'getsubscriptionnotification']);

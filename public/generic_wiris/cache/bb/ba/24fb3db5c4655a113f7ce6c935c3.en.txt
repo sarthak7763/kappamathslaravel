@@ -1,0 +1,1 @@
+{"result":{"text":"log space x equals 7 with bar on top.2365"},"status":"ok"}

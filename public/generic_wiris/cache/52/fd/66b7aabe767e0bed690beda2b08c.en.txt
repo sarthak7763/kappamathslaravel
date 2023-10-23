@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space space space space y equals fraction numerator 1.8060 over denominator 0.3010 end fraction equals 6"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x to the power of begin inline style 1 third end style end exponent"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"b minus a plus 1"},"status":"ok"}

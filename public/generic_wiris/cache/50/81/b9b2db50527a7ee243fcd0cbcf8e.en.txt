@@ -1,0 +1,1 @@
+{"result":{"text":"angle Z X Y equals y degree comma space angle P Z X equals x degree comma space angle X Y Z equals left parenthesis y plus 17 degree right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle Q S O equals 90 degree minus x equals 90 degree minus 70 degree equals 20 degree"},"status":"ok"}

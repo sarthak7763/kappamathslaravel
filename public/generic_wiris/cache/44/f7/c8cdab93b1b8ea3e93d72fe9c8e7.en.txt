@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle N M L plus x degree equals 180 degree\nrightwards double arrow 125 degree plus x degree equals 180 degree\nrightwards double arrow x degree equals 180 degree minus 125 degree\nrightwards double arrow x degree equals 55 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus angle P O R equals 360 degree\nrightwards double arrow x plus 130 degree equals 360 degree\nrightwards double arrow x equals 360 degree minus 130 degree\ntherefore x equals 230 degree"},"status":"ok"}

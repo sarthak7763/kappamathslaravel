@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 2 space a plus log subscript 2 space b equals log subscript 2 2 to the power of 3.2 end exponent plus log subscript 2 2 to the power of 4.5 end exponent\nequals 3.2 space log subscript 2 space 2 plus 4.5 space log subscript 2 space 2\nequals 3.2 plus 4.5\nequals 7.7"},"status":"ok"}

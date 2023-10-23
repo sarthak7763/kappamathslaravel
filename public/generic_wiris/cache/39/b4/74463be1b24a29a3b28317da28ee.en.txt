@@ -1,0 +1,1 @@
+{"result":{"text":"log space 5.957 equals 0.7750"},"status":"ok"}

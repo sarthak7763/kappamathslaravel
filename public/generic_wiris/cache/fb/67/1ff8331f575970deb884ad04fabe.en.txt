@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 4 space x equals negative 3\nrightwards double arrow x equals 4 to the power of negative 3 end exponent\nrightwards double arrow x equals 1 over 4 cubed\nrightwards double arrow equals 1 over 64"},"status":"ok"}

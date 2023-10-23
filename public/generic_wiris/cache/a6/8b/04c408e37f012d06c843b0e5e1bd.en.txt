@@ -1,0 +1,1 @@
+{"result":{"text":"angle E F H equals angle F H I equals 54 degree"},"status":"ok"}

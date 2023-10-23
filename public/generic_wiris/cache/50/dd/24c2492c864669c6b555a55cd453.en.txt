@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row x row y end table close parentheses rightwards arrow open parentheses table row cell 3 y end cell row cell 2 x minus y end cell end table close parentheses"},"status":"ok"}

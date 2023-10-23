@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle O Y T equals 90 degree\nangle O Y Z equals 90 degree minus 20 degree equals 70 degree"},"status":"ok"}

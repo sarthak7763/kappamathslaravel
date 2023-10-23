@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle E H F plus 54 degree plus 54 equals 180 degree\nrightwards double arrow angle E H F equals 180 degree minus 108 degree equals 72 degree"},"status":"ok"}

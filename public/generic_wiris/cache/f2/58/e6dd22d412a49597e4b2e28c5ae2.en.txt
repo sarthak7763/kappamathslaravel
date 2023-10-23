@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P O Q space equals 2 cross times 25 degree equals 50 degree"},"status":"ok"}

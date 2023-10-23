@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript x 8 equals log subscript x 2 cubed\nequals 3 space log subscript x space end subscript 2\nequals 3 left parenthesis 0.3 right parenthesis equals 0.9"},"status":"ok"}

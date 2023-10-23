@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow y equals 2 left parenthesis y plus 17 right parenthesis minus 43\nrightwards double arrow y equals 2 y plus 34 minus 43\nrightwards double arrow y minus 2 y equals 34 minus 43\nrightwards double arrow negative y equals negative 9\ntherefore y equals 9"},"status":"ok"}

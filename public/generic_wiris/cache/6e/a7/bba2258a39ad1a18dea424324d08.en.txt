@@ -1,0 +1,1 @@
+{"result":{"text":"angle U V W plus x equals 180 degree\nrightwards double arrow angle U V W plus 36 degree equals 180 degree\nrightwards double arrow angle U V W equals 180 degree minus 36 degree equals 144 degree"},"status":"ok"}

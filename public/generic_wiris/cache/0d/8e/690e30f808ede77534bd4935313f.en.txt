@@ -1,0 +1,1 @@
+{"result":{"text":"4 with bar on top.1986"},"status":"ok"}

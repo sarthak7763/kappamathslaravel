@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator log space x space minus log space z to the power of 1 third end exponent over denominator log space y cubed end fraction"},"status":"ok"}

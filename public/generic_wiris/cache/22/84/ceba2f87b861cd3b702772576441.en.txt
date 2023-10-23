@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript x space 64 equals 3"},"status":"ok"}

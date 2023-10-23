@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle S O T equals angle O S R plus angle O R S\nangle S O T equals 38 degree plus 38 degree equals 76 degree\ntherefore angle O S R plus angle O R S plus angle S O T\nequals 38 degree plus 38 degree plus 76 degree equals 152 degree"},"status":"ok"}

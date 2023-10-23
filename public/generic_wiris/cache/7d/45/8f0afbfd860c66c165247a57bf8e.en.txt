@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line S T vertical line equals vertical line Q T vertical line rightwards double arrow triangle Q S T"},"status":"ok"}

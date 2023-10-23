@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 56 degree equals 2 cross times 2 x\nrightwards double arrow 56 degree equals 4 x\nrightwards double arrow x equals 14 degree"},"status":"ok"}

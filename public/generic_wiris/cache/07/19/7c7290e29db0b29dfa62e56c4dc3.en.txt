@@ -1,0 +1,1 @@
+{"result":{"text":"angle O Y T equals 90 degree"},"status":"ok"}

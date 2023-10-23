@@ -1,0 +1,1 @@
+{"result":{"text":"P Q R equals angle P Q S plus angle S Q R"},"status":"ok"}

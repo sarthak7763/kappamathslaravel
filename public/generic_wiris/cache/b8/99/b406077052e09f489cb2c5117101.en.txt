@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator log subscript 3 space 9 minus log subscript 2 space 8 over denominator log subscript 3 space 9 end fraction"},"status":"ok"}

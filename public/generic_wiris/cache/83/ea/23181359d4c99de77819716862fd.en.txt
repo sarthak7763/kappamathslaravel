@@ -1,0 +1,1 @@
+{"result":{"text":"a space log subscript space y space subscript space end subscript b equals x space\nrightwards double arrow log subscript space y end subscript space b to the power of a equals x\ntherefore space y to the power of x equals b to the power of a"},"status":"ok"}

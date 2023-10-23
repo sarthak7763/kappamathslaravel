@@ -1,0 +1,1 @@
+{"result":{"text":"angle O S R plus angle O R S plus angle S O T"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"N O L equals 360 degree minus 110 degree equals 250 degree"},"status":"ok"}

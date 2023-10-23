@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle X Z Y equals angle Z W Y equals 48 degree"},"status":"ok"}

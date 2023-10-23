@@ -1,0 +1,1 @@
+{"result":{"text":"log space 35 equals log open parentheses 70 over 2 close parentheses\nequals log space 70 minus log space 2\nequals log left parenthesis 7 cross times 10 right parenthesis minus log space 2\nequals log space 7 plus log space 10 minus log space 2\nequals a plus 1 minus b\nequals a minus b plus 1"},"status":"ok"}

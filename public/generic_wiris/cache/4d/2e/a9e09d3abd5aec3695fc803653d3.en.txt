@@ -1,0 +1,1 @@
+{"result":{"text":"Y Z T equals left parenthesis 2 x minus 43 right parenthesis degree"},"status":"ok"}

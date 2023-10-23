@@ -1,0 +1,1 @@
+{"result":{"text":"angle O S R equals angle O R S equals 38 degree"},"status":"ok"}

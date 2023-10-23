@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus x plus 40 degree equals 180 degree\nrightwards double arrow 2 x equals 180 degree minus 40 degree\nrightwards double arrow 2 x equals 140 degree\nrightwards double arrow x equals 70 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x space log subscript 2 space 8"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle R P S equals angle R Q S equals 35 degree"},"status":"ok"}

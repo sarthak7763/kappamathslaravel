@@ -1,0 +1,1 @@
+{"result":{"text":"L O with hat on top N equals 100 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"log space 3"},"status":"ok"}

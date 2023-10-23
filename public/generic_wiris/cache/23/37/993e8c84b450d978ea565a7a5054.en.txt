@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P Q R equals 2 cross times angle P Q R equals 2 cross times 52 degree equals 104 degree"},"status":"ok"}

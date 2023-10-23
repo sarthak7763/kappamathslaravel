@@ -1,0 +1,1 @@
+{"result":{"text":"log open parentheses cube root of x close parentheses equals log space x to the power of begin inline style 1 third end style end exponent equals log space x"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle O P Q equals angle O Q P equals 38 degree"},"status":"ok"}

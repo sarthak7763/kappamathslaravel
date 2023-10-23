@@ -1,0 +1,1 @@
+{"result":{"text":"U O W equals 360 minus 8 x"},"status":"ok"}

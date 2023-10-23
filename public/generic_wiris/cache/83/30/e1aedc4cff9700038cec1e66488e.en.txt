@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator log space x space minus space log space z to the power of begin display style 1 third end style end exponent over denominator log space y cubed end fraction"},"status":"ok"}

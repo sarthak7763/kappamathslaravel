@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 2 a plus log subscript 2 b"},"status":"ok"}

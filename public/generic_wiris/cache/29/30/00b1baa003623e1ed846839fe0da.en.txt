@@ -1,0 +1,1 @@
+{"result":{"text":"therefore angle R R S equals 90 degree minus 55 degree equals 35 degree"},"status":"ok"}

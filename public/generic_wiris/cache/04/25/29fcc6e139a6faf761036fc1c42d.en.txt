@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 2 space 8 plus log subscript k space K cubed plus log subscript 3 space 9\nequals log subscript 2 space 2 cubed plus log subscript k space K cubed plus log subscript 3 space 3 squared\nequals 3 space log subscript 2 space 2 plus 3 space log subscript k K plus 2 space log subscript 3 space 3\nequals 3 plus 3 plus 2\nequals 8"},"status":"ok"}

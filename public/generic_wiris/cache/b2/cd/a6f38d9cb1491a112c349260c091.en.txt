@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow angle P Q S equals 90 degree"},"status":"ok"}

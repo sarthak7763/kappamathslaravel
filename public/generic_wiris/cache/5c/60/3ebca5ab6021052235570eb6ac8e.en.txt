@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 2 x minus 43............... left parenthesis 1 right parenthesis\nx equals y plus 17.................. left parenthesis 2 right parenthesis"},"status":"ok"}

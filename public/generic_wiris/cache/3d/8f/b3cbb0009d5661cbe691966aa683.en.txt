@@ -1,0 +1,1 @@
+{"result":{"text":"log subscript 10 space y equals 1 plus 3 space log subscript 10 space x"},"status":"ok"}

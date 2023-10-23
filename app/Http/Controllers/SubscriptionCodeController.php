@@ -233,11 +233,11 @@ class SubscriptionCodeController extends Controller
         $request->validate([
             'coupon_type'=>'required',
             'coupon_title' => 'required',
-            'coupon_date'=>'required',
-            'coupon_time'=>'required',
+            'coupon_start_date'=>'required',
+            'coupon_end_date'=>'required',
             'user_type'=>'required',
             'coupon_use_per_user'=>'required',
-            'coupon_subscription_type'=>'required',
+            'coupon_subscription_type'=>'required'
         ]);
 
         if($request->coupon_type!="")
@@ -245,8 +245,18 @@ class SubscriptionCodeController extends Controller
             if($request->coupon_type=="2")
             {
                 $request->validate([
+                  'coupon_discount_type'=>'required',
                   'coupon_discount'=>'required',
                   'minimum_transaction_amount'=>'required',
+              ]);
+            }
+        }
+
+        if($request->coupon_discount_type!="")
+        {
+            if($request->coupon_discount_type=="2")
+            {
+                $request->validate([
                   'coupon_max_amount' => 'required',
               ]);
             }
@@ -286,20 +296,35 @@ class SubscriptionCodeController extends Controller
           {
             if($request->coupon_type=="2")
             {
+              $coupon_discount_type=$request->coupon_discount_type;
               $coupon_discount=$request->coupon_discount;
-              $coupon_max_amount=$request->coupon_max_amount;
               $minimum_transaction_amount=$request->minimum_transaction_amount;
             }
             else{
+              $coupon_discount_type=0;
               $coupon_discount=0;
-              $coupon_max_amount=0;
               $minimum_transaction_amount=0;
             }
           }
           else{
+              $coupon_discount_type=0;
               $coupon_discount=0;
-              $coupon_max_amount=0;
               $minimum_transaction_amount=0;
+          }
+
+
+          if($request->coupon_discount_type!="")
+          {
+            if($request->coupon_discount_type=="2")
+            {
+              $coupon_max_amount=$request->coupon_max_amount;
+            }
+            else{
+              $coupon_max_amount=0;
+            }
+          }
+          else{
+              $coupon_max_amount=0;
           }
 
 
@@ -323,12 +348,13 @@ class SubscriptionCodeController extends Controller
         	try{
                 $subscriptioncoupon = new SubscriptionCoupon;
                 $subscriptioncoupon->coupon_name = $request->coupon_title;
-                $subscriptioncoupon->coupon_date = $request->coupon_date;
-                $subscriptioncoupon->coupon_time = $request->coupon_time;
+                $subscriptioncoupon->coupon_start_date = date('Y-m-d',strtotime($request->coupon_start_date));
+                $subscriptioncoupon->coupon_end_date = date('Y-m-d',strtotime($request->coupon_end_date));
                 $subscriptioncoupon->coupon_users = $coupon_users;
                 $subscriptioncoupon->coupon_user_limit = $coupon_user_limit;
                 $subscriptioncoupon->coupon_use_per_user = $request->coupon_use_per_user;
                 $subscriptioncoupon->coupon_type = $request->coupon_type;
+                $subscriptioncoupon->coupon_discount_type = $coupon_discount_type;
                 $subscriptioncoupon->coupon_discount = $coupon_discount;
                 $subscriptioncoupon->coupon_max_amount = $coupon_max_amount;
                 $subscriptioncoupon->minimum_transaction_amount = $minimum_transaction_amount;
@@ -337,39 +363,39 @@ class SubscriptionCodeController extends Controller
                 $subscriptioncoupon->coupon_status = $statusvalue;
                 $subscriptioncoupon->save();
 
-                // if($coupon_users!=0)
-                // {
-                //   if($request->coupon_type=="1")
-                //   {
-                //     $coupontype="Voucher";
-                //   }
-                //   else{
-                //     $coupontype="Coupon";
-                //   }
+                if($coupon_users!=0)
+                {
+                  if($request->coupon_type=="1")
+                  {
+                    $coupontype="Voucher";
+                  }
+                  else{
+                    $coupontype="Coupon";
+                  }
 
-                //   $coupon_users_array=explode(',',$coupon_users);
-                //   if(count($coupon_users_array) > 0)
-                //   {
-                //   	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
-                //   $coupontitle="Purchase a subscription";
-                //   $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
-                //   sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
-                //   }
-                // }
-                // else{
-                //   if($request->coupon_type=="1")
-                //   {
-                //     $coupontype="Voucher";
-                //   }
-                //   else{
-                //     $coupontype="Coupon";
-                //   }
+                  $coupon_users_array=explode(',',$coupon_users);
+                  if(count($coupon_users_array) > 0)
+                  {
+                  	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                  $coupontitle="Purchase a subscription";
+                  $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                  sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
+                  }
+                }
+                else{
+                  if($request->coupon_type=="1")
+                  {
+                    $coupontype="Voucher";
+                  }
+                  else{
+                    $coupontype="Coupon";
+                  }
 
-                //   $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
-                //   $coupontitle="Purchase a subscription";
-                //   $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
-                //   sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
-                // }
+                  $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                  $coupontitle="Purchase a subscription";
+                  $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                  sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
+                }
 
                return redirect('admin/coupon-subscription/')->with('success','Coupon has been added.');
 
@@ -457,6 +483,8 @@ class SubscriptionCodeController extends Controller
 	     
 	     $subscriptioncoupon = SubscriptionCoupon::findOrFail($id);
        $subscriptioncoupon->coupon_title = $subscriptioncoupon->coupon_name;
+       $subscriptioncoupon->coupon_start_date = date('m/d/Y',strtotime($subscriptioncoupon->coupon_start_date));
+        $subscriptioncoupon->coupon_end_date = date('m/d/Y',strtotime($subscriptioncoupon->coupon_end_date));
 	     return view('admin.subscriptioncode.edit',compact('subscriptioncoupon','subscriptionlist','montharray','userlist'));
      }
      catch(\Exception $e){
@@ -477,8 +505,8 @@ class SubscriptionCodeController extends Controller
         $request->validate([
             'coupon_type'=>'required',
             'coupon_title' => 'required',
-            'coupon_date'=>'required',
-            'coupon_time'=>'required',
+            'coupon_start_date'=>'required',
+            'coupon_end_date'=>'required',
             'user_type'=>'required',
             'coupon_use_per_user'=>'required',
             'coupon_subscription_type'=>'required',
@@ -489,7 +517,19 @@ class SubscriptionCodeController extends Controller
             if($request->coupon_type=="2")
             {
                 $request->validate([
+                  'coupon_discount_type'=>'required',
                   'coupon_discount'=>'required',
+                  'minimum_transaction_amount'=>'required',
+              ]);
+            }
+        }
+
+
+        if($request->coupon_discount_type!="")
+        {
+            if($request->coupon_discount_type=="2")
+            {
+                $request->validate([
                   'coupon_max_amount' => 'required',
               ]);
             }
@@ -527,16 +567,33 @@ class SubscriptionCodeController extends Controller
           {
             if($request->coupon_type=="2")
             {
+              $coupon_discount_type=$request->coupon_discount_type;
               $coupon_discount=$request->coupon_discount;
+              $minimum_transaction_amount=$request->minimum_transaction_amount;
+            }
+            else{
+              $coupon_discount_type=0;
+              $coupon_discount=0;
+              $minimum_transaction_amount=0;
+            }
+          }
+          else{
+              $coupon_discount_type=0;
+              $minimum_transaction_amount=0;
+              $coupon_discount=0;
+          }
+
+          if($request->coupon_discount_type!="")
+          {
+            if($request->coupon_discount_type=="2")
+            {
               $coupon_max_amount=$request->coupon_max_amount;
             }
             else{
-              $coupon_discount=0;
               $coupon_max_amount=0;
             }
           }
           else{
-              $coupon_discount=0;
               $coupon_max_amount=0;
           }
 
@@ -561,14 +618,16 @@ class SubscriptionCodeController extends Controller
 
           if($subscriptioncoupon->coupon_name==$request->coupon_title)
           {
-	            $subscriptioncoupon->coupon_date = $request->coupon_date;
-              $subscriptioncoupon->coupon_time = $request->coupon_time;
+              $subscriptioncoupon->coupon_start_date = date('Y-m-d',strtotime($request->coupon_start_date));
+              $subscriptioncoupon->coupon_end_date = date('Y-m-d',strtotime($request->coupon_end_date));
               $subscriptioncoupon->coupon_users = $coupon_users;
               $subscriptioncoupon->coupon_user_limit = $coupon_user_limit;
               $subscriptioncoupon->coupon_use_per_user = $request->coupon_use_per_user;
               $subscriptioncoupon->coupon_type = $request->coupon_type;
+              $subscriptioncoupon->coupon_discount_type = $coupon_discount_type;
               $subscriptioncoupon->coupon_discount = $coupon_discount;
               $subscriptioncoupon->coupon_max_amount = $coupon_max_amount;
+              $subscriptioncoupon->minimum_transaction_amount = $minimum_transaction_amount;
               $subscriptioncoupon->coupon_subscription_type = $request->coupon_subscription_type;
               $subscriptioncoupon->coupon_description = $request->coupon_description;
               $subscriptioncoupon->coupon_status = $statusvalue;
@@ -586,14 +645,16 @@ class SubscriptionCodeController extends Controller
                }
 
               $subscriptioncoupon->coupon_name = $request->coupon_title;
-              $subscriptioncoupon->coupon_date = $request->coupon_date;
-              $subscriptioncoupon->coupon_time = $request->coupon_time;
+              $subscriptioncoupon->coupon_start_date = date('Y-m-d',strtotime($request->coupon_start_date));
+              $subscriptioncoupon->coupon_end_date = date('Y-m-d',strtotime($request->coupon_end_date));
               $subscriptioncoupon->coupon_users = $coupon_users;
               $subscriptioncoupon->coupon_user_limit = $coupon_user_limit;
               $subscriptioncoupon->coupon_use_per_user = $request->coupon_use_per_user;
               $subscriptioncoupon->coupon_type = $request->coupon_type;
+              $subscriptioncoupon->coupon_discount_type = $coupon_discount_type;
               $subscriptioncoupon->coupon_discount = $coupon_discount;
               $subscriptioncoupon->coupon_max_amount = $coupon_max_amount;
+              $subscriptioncoupon->minimum_transaction_amount = $minimum_transaction_amount;
               $subscriptioncoupon->coupon_subscription_type = $request->coupon_subscription_type;
               $subscriptioncoupon->coupon_description = $request->coupon_description;
               $subscriptioncoupon->coupon_status = $statusvalue;
@@ -602,68 +663,68 @@ class SubscriptionCodeController extends Controller
          try{
             $subscriptioncoupon->save();
 
-            // if($db_coupon_users!=0)
-            // {
-            // 	if($coupon_users!=0)
-            //     {
-            //       if($request->coupon_type=="1")
-            //       {
-            //         $coupontype="Voucher";
-            //       }
-            //       else{
-            //         $coupontype="Coupon";
-            //       }
+            if($db_coupon_users!=0)
+            {
+            	if($coupon_users!=0)
+                {
+                  if($request->coupon_type=="1")
+                  {
+                    $coupontype="Voucher";
+                  }
+                  else{
+                    $coupontype="Coupon";
+                  }
 
-            //       $coupon_users_array=explode(',',$coupon_users);
+                  $coupon_users_array=explode(',',$coupon_users);
 
-            //       $db_coupon_users_array=explode(',',$db_coupon_users);
+                  $db_coupon_users_array=explode(',',$db_coupon_users);
 
-            //       $result_coupon_users=array_diff($coupon_users_array,$db_coupon_users_array);
+                  $result_coupon_users=array_diff($coupon_users_array,$db_coupon_users_array);
 
-            //       if(count($result_coupon_users) > 0)
-            //       {
-            //       $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
-            //       $coupontitle="Purchase a subscription";
-            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
-            //       sendNotificationtoparticulardevices($result_coupon_users,$coupon_image,$coupontitle,$coupon_message);
-            //       }
-            //     }
-            //     else{
-            //       if($request->coupon_type=="1")
-            //       {
-            //         $coupontype="Voucher";
-            //       }
-            //       else{
-            //         $coupontype="Coupon";
-            //       }
+                  if(count($result_coupon_users) > 0)
+                  {
+                  $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                  $coupontitle="Purchase a subscription";
+                  $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                  sendNotificationtoparticulardevices($result_coupon_users,$coupon_image,$coupontitle,$coupon_message);
+                  }
+                }
+                else{
+                  if($request->coupon_type=="1")
+                  {
+                    $coupontype="Voucher";
+                  }
+                  else{
+                    $coupontype="Coupon";
+                  }
 
-            //       $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
-            //       $coupontitle="Purchase a subscription";
-            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
-            //       sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
-            //     }
-            // }
-            // else{
-            // 	if($coupon_users!=0)
-            //     {
-            //       if($request->coupon_type=="1")
-            //       {
-            //         $coupontype="Voucher";
-            //       }
-            //       else{
-            //         $coupontype="Coupon";
-            //       }
+                  $coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                  $coupontitle="Purchase a subscription";
+                  $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                  sendNotificationtomultipledevices($coupon_image,$coupontitle,$coupon_message);
+                }
+            }
+            else{
+            	if($coupon_users!=0)
+                {
+                  if($request->coupon_type=="1")
+                  {
+                    $coupontype="Voucher";
+                  }
+                  else{
+                    $coupontype="Coupon";
+                  }
 
-            //       $coupon_users_array=explode(',',$coupon_users);
-            //       if(count($coupon_users_array) > 0)
-            //       {
-            //       	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
-            //       $coupontitle="Purchase a subscription";
-            //       $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
-            //       sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
-            //       }
-            //     }
-            // }
+                  $coupon_users_array=explode(',',$coupon_users);
+                  if(count($coupon_users_array) > 0)
+                  {
+                  	$coupon_image=url('/').'images/logo/logo_1669793364logo.png';
+                  $coupontitle="Purchase a subscription";
+                  $coupon_message="Purchase a subscription now and get amazing discount. Use ".$coupontype." ".$request->coupon_title."";
+                  sendNotificationtoparticulardevices($coupon_users_array,$coupon_image,$coupontitle,$coupon_message);
+                  }
+                }
+            }
 
           return redirect('admin/coupon-subscription/')->with('success','Coupon updated !.');
 

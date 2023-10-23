@@ -1,0 +1,1 @@
+{"result":{"text":"Q R S equals 100 degree"},"status":"ok"}

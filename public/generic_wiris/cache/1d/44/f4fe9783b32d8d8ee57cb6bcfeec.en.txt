@@ -1,0 +1,1 @@
+{"result":{"text":"log space cube root of 0.0005957 end root"},"status":"ok"}

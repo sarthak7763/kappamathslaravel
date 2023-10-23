@@ -1408,7 +1408,7 @@ class DashboardController extends BaseController
 
     }
 
-    public function applysubscriptioncoupon(Request $request)
+    public function applysubscriptioncoupon_20oct(Request $request)
     {
     	try{
     		$user=auth()->user();
@@ -1439,10 +1439,10 @@ class DashboardController extends BaseController
     				{
     					if($checkcouponcode->coupon_users!="0")
     					{
-    						$responsedata=$this->applycoupontospecificusers($checkcouponcode,$user->id,$checksubscription->price);
+    						$responsedata=$this->applycoupontospecificusers_20oct($checkcouponcode,$user->id,$checksubscription->price);
     					}
     					else{
-    						$responsedata=$this->applycoupontoallusers($checkcouponcode,$user->id,$checksubscription->price);
+    						$responsedata=$this->applycoupontoallusers_20oct($checkcouponcode,$user->id,$checksubscription->price);
     					}
 
     					if($responsedata['code']==200)
@@ -1538,6 +1538,227 @@ class DashboardController extends BaseController
                }
     }
 
+    public function applycoupontospecificusers_20oct($checkcouponcode,$userid,$subprice)
+    {
+    	if($checkcouponcode->coupon_users!="0")
+    	{
+    		$coupon_users_arr=explode(',',$checkcouponcode->coupon_users);
+    		if(in_array($userid,$coupon_users_arr))
+    		{
+    			$getcodeuseperusercount=Usersubscriptions::where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->get()->count();
+
+	    		if($checkcouponcode->coupon_use_per_user > $getcodeuseperusercount)
+	    		{
+
+	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
+	    			{
+	    				$data=array('code'=>200,'message'=>'Coupon valid.');
+	    				return $data;
+	    			}
+	    			else{
+	    				$data=array('code'=>400,'message'=>'Coupon not applicable.');
+	    				return $data;
+	    			}
+	    		}
+	    		else{
+	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+	    			return $data;
+	    		}
+    		}
+    		else{
+    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+    			return $data;
+    		}
+    	}
+    }
+
+    public function applycoupontoallusers_20oct($checkcouponcode,$userid,$subprice)
+    {
+    	if($checkcouponcode->coupon_users=="0")
+    	{
+    		$getcodeuserlimit=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->groupBy('user_id')->get()->count();
+
+    		$getcodeuseperusercount=Usersubscriptions::where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->get()->count();
+
+    		if($checkcouponcode->coupon_user_limit >= $getcodeuserlimit)
+    		{
+				if($checkcouponcode->coupon_use_per_user > $getcodeuseperusercount)
+	    		{
+	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
+	    			{
+	    				$data=array('code'=>200,'message'=>'Coupon valid.');
+	    				return $data;
+	    			}
+	    			else{
+	    				$data=array('code'=>400,'message'=>'Coupon not applicable.');
+	    				return $data;
+	    			}
+	    		}
+	    		else{
+	    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+	    			return $data;
+	    		}
+    		}
+    		else{
+    			$data=array('code'=>400,'message'=>'Coupon not valid for this user.');
+    			return $data;
+    		}
+    	}
+    }
+
+
+
+
+    //new function for apply coupon
+
+    public function applysubscriptioncoupon(Request $request)
+    {
+    	try{
+    		$user=auth()->user();
+
+    		if($user){
+    		$validator = Validator::make($request->all(), [
+		            'coupon_code'=>'required',
+		            'subscription_id'=>'required'
+		        ]);
+
+    			if($validator->fails()){
+		            return $this::sendValidationError('Validation Error.',['error'=>$validator->messages()->all()[0]]);       
+		        }
+
+    		$coupon_code=$request->coupon_code;
+    		$subscription_id=$request->subscription_id;
+    		$checkcouponcode=SubscriptionCoupon::where('coupon_name',$coupon_code)->where('coupon_status','1')->get()->first();
+
+    		$checksubscription=Subscription::where('id',$subscription_id)->where('subscription_status','1')->get()->first();
+    		if(!$checksubscription)
+    		{
+    			return $this::sendError('Unauthorised.', ['error'=>'Invalid Subscription Plan.']);
+    		}
+
+    			if($checkcouponcode)
+    			{
+    				$currentdate=date('Y-m-d');
+    				if($currentdate >= $checkcouponcode->coupon_start_date && $currentdate <= $checkcouponcode->coupon_end_date)
+    				{
+	    				if($checkcouponcode->coupon_subscription_type==$subscription_id)
+	    				{
+	    					if($checkcouponcode->coupon_users!="0")
+	    					{
+	    						$responsedata=$this->applycoupontospecificusers($checkcouponcode,$user->id,$checksubscription->price);
+	    					}
+	    					else{
+	    						$responsedata=$this->applycoupontoallusers($checkcouponcode,$user->id,$checksubscription->price);
+	    					}
+
+	    					if($responsedata['code']==200)
+	    					{
+
+			    				if($checkcouponcode->coupon_type=="1")
+								{
+									$subtotal=$checksubscription->price;
+									$coupon_discount=round(($subtotal*100)/100);
+									$total_amount=$subtotal-$coupon_discount;
+									$coupon_discount_type=0;
+								}
+								else{
+									$subtotal=$checksubscription->price;
+									$coupon_max_amount=$checkcouponcode->coupon_max_amount;
+									$coupon_discount_type=$checkcouponcode->coupon_discount_type;
+									if($coupon_discount_type==1)
+									{
+										$coupon_discount=$checkcouponcode->coupon_discount;
+										$total_amount=$subtotal-$coupon_discount;
+									}
+									else{
+										$newcoupon_discount=round(($subtotal*$checkcouponcode->coupon_discount)/100);
+
+										if($coupon_max_amount >= $newcoupon_discount)
+										{
+											$coupon_discount=$newcoupon_discount;
+										}
+										else{
+											$coupon_discount=$coupon_max_amount;
+										}
+
+										$total_amount=$subtotal-$coupon_discount;
+									}
+								}
+
+							$checksubscriptionarray=$checksubscription->toArray();
+
+	    					$checksubscriptionarray['total_amount']=$total_amount;
+	    					$checksubscriptionarray['coupon_code']=$coupon_code;
+
+	    					$amountarray=array(
+	    							'subtotal'=>$subtotal,
+	    							'coupon_discount'=>$coupon_discount,
+	    							'coupon_discount_type'=>$coupon_discount_type,
+	    							'total_amount'=>$total_amount,
+	    							'coupon_code'=>$coupon_code,
+	    							'coupon_type'=>$checkcouponcode->coupon_type
+	    						);
+
+
+		    					if($total_amount==0)
+		    					{
+		    						$amountarray['paystack_slug']="";
+		    					}
+		    					else{
+		    						$paystack_create_payment_page=$this->createpaymentpage($checksubscriptionarray);
+
+			    					if($paystack_create_payment_page['code']==200)
+					        		{
+					        			$paystack_slug=$paystack_create_payment_page['slug'];
+
+					        			$amountarray['paystack_slug']=env('paystack_pay_url').$paystack_slug;	
+					        		}
+					        		else{
+					        			return $this::sendError('Unauthorised.', ['error'=>$paystack_create_payment_page['message']]);
+					        		}
+		    					}
+
+
+		    			$usercouponcode = new UserCouponCode;
+			            $usercouponcode->user_id=$user->id;
+			            $usercouponcode->subtotal=$subtotal;
+			            $usercouponcode->coupon_discount=$coupon_discount;
+			            $usercouponcode->total_amount=$total_amount;
+			            $usercouponcode->coupon_code=$checkcouponcode->id;
+			            $usercouponcode->paystack_slug=$amountarray['paystack_slug'];
+			            $usercouponcode->amount_array_json=json_encode($amountarray);
+			            $usercouponcode->save();
+
+			            $amountarray['user_coupon_code_id']=$usercouponcode->id;
+
+	    						$success['amountarray']=$amountarray;
+								return $this::sendResponse($success, 'Coupon code applies successfully.');
+	    					}
+	    					else{
+	    						return $this::sendError('Unauthorised.', ['error'=>$responsedata['message']]);
+	    					}
+	    				}
+	    				else{
+	    					return $this::sendError('Unauthorised.', ['error'=>'Coupon not applied to this subscription.']);
+	    				}
+    				}
+    				else{
+    					return $this::sendError('Unauthorised.', ['error'=>'Coupon Code has been expired.']);
+    				}
+    			}
+    			else{
+    				return $this::sendError('Unauthorised.', ['error'=>'Invalid Code.']);
+    			}
+    		}
+    		else{
+	        	return $this::sendUnauthorisedError('Unauthorised.', ['error'=>'Please login again.']);
+	        }
+	    }
+	    catch(\Exception $e){
+                  return $this::sendExceptionError('Unauthorised Exception.', ['error'=>$e->getMessage()]);    
+               }
+    }
+
     public function applycoupontospecificusers($checkcouponcode,$userid,$subprice)
     {
     	if($checkcouponcode->coupon_users!="0")
@@ -1545,9 +1766,9 @@ class DashboardController extends BaseController
     		$coupon_users_arr=explode(',',$checkcouponcode->coupon_users);
     		if(in_array($userid,$coupon_users_arr))
     		{
-    			$getcodeuseperusercount=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->groupBy('user_id')->get()->count();
+    			$getcodeuseperusercount=Usersubscriptions::where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->get()->count();
 
-	    		if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
+	    		if($checkcouponcode->coupon_use_per_user > $getcodeuseperusercount)
 	    		{
 
 	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
@@ -1578,11 +1799,11 @@ class DashboardController extends BaseController
     	{
     		$getcodeuserlimit=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->groupBy('user_id')->get()->count();
 
-    		$getcodeuseperusercount=Usersubscriptions::select('user_id')->where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->groupBy('user_id')->get()->count();
+    		$getcodeuseperusercount=Usersubscriptions::where('coupon_code_id',$checkcouponcode->id)->where('user_id',$userid)->get()->count();
 
     		if($checkcouponcode->coupon_user_limit >= $getcodeuserlimit)
     		{
-				if($checkcouponcode->coupon_use_per_user >= $getcodeuseperusercount)
+				if($checkcouponcode->coupon_use_per_user > $getcodeuseperusercount)
 	    		{
 	    			if($subprice >= $checkcouponcode->minimum_transaction_amount)
 	    			{

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator log square root of 243 minus log square root of 27 over denominator log space 81 end fraction"},"status":"ok"}

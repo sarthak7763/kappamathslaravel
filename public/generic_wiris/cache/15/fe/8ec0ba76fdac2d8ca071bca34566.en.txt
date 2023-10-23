@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow a plus 65 plus 48 plus 48 equals 180\nrightwards double arrow a equals 180 minus 161 equals 19 degree\ntherefore angle W Y X equals 19 degree"},"status":"ok"}
