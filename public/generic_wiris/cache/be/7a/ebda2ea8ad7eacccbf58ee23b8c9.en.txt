@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 plus 5 plus 8 plus 12 plus 11 plus 7 plus 3 plus 2\nequals 50"},"status":"ok"}

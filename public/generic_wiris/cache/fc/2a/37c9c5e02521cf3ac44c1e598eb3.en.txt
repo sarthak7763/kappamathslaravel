@@ -1,0 +1,1 @@
+{"result":{"text":"table row x cell x squared end cell row 13 169 row 14 196 row 17 289 row 18 324 row 19 361 row cell sum x equals 81 end cell cell sum x squared equals 1339 end cell end table"},"status":"ok"}

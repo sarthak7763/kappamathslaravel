@@ -1,0 +1,1 @@
+{"result":{"text":"equals open parentheses table row cell 3 x plus 1 end cell row cell negative 2 y plus 3 end cell end table close parentheses equals open parentheses table row cell negative 8 end cell row 5 end table close parentheses"},"status":"ok"}

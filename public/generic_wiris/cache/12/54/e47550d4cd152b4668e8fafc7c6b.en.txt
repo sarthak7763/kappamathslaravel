@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space space open parentheses table row 3 row cell negative 4 end cell end table close parentheses equals left parenthesis 5 k m comma space 143 degree right parenthesis"},"status":"ok"}

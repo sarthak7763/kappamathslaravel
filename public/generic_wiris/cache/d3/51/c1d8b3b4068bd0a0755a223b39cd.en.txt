@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row cell negative 1 end cell row 3 end table close parentheses equals fraction numerator 3 over denominator negative 1 end fraction equals negative 3"},"status":"ok"}

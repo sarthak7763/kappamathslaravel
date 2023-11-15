@@ -1,0 +1,1 @@
+{"result":{"text":"equals 3 cross times G H S 650 comma 000 equals G H S 1 comma 950 comma 000"},"status":"ok"}

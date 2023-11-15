@@ -1,0 +1,1 @@
+{"result":{"text":"101 subscript t w o end subscript plus 12 subscript y equals 23 subscript f i v e end subscript"},"status":"ok"}

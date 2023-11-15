@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row cell negative 15 end cell row cell negative 6 end cell end table close parentheses equals fraction numerator negative 6 over denominator negative 15 end fraction equals 2 over 5"},"status":"ok"}

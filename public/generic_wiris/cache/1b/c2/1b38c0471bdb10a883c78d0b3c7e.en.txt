@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow y equals 18 over 9 equals 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 third end style cross times 625 cross times 42 equals 8750 space c m cubed"},"status":"ok"}

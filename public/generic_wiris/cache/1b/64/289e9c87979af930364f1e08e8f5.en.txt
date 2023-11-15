@@ -1,0 +1,1 @@
+{"result":{"text":"equals 932 comma 000 minus 260 comma 000"},"status":"ok"}

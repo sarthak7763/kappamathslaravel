@@ -1,0 +1,1 @@
+{"result":{"text":"H equals fraction numerator 1 half p over denominator y squared end fraction equals fraction numerator 1 p over denominator 2 y squared end fraction equals fraction numerator p over denominator 2 y squared end fraction"},"status":"ok"}

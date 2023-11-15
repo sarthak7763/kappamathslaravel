@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space space space space 32 space equals k over left parenthesis 1 half right parenthesis squared\n32 equals fraction numerator k over denominator 1 fourth end fraction\nk equals 32 cross times begin inline style 1 fourth end style equals 8"},"status":"ok"}

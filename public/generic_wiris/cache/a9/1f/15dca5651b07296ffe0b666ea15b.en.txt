@@ -1,0 +1,1 @@
+{"result":{"text":"G H S space 8 comma 500.00"},"status":"ok"}

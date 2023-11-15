@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 4 equals k over 2 squared space rightwards double arrow 4 equals k over 4 rightwards double arrow k equals 16"},"status":"ok"}

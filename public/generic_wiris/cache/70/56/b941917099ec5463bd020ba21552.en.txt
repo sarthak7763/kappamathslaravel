@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis rightwards double arrow right parenthesis"},"status":"ok"}

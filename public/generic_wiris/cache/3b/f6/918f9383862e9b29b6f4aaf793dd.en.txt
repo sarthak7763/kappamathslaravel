@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row 24 row 32 end table close parentheses equals square root of 24 squared plus 32 squared end root"},"status":"ok"}

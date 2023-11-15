@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of left parenthesis negative 6 right parenthesis squared plus left parenthesis 9 right parenthesis squared end root space equals square root of 117"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"s equals r minus q"},"status":"ok"}

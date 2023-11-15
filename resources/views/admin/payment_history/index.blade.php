@@ -79,7 +79,11 @@
                 <td>{{$item['subscription_status'] == 1 ? 'Successful' : 'Unsuccessful'}}</td>
                 <td>{{$item['subscription_start'] }}</td>
                 <td>{{$item['subscription_end'] }}</td>
+                @if($item['couponname']!="")
                 <td>{{$item['couponname'] }} ({{$item['coupon_type'] }})</td>
+                @else
+                <td>N.A.</td>
+                @endif
                 <td>{{$item['coupon_discount'] }} GHS</td>
                 <td>{{$item['total_amount'] }} GHS</td>
               </tr>

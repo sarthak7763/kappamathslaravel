@@ -1,0 +1,1 @@
+{"result":{"text":"25 equals 900 over x squared rightwards double arrow x squared equals 900 over 25 equals 36\nrightwards double arrow x equals square root of 36 equals 6"},"status":"ok"}

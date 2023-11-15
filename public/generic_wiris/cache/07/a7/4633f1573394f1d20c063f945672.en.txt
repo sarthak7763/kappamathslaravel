@@ -1,0 +1,1 @@
+{"result":{"text":"y equals fraction numerator square root of x over denominator k end fraction............. left parenthesis 1 right parenthesis"},"status":"ok"}

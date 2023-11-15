@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style left parenthesis Q subscript 3 minus Q subscript 1 right parenthesis\n20 equals begin inline style 1 half end style left parenthesis 96 minus Q subscript 1 right parenthesis\n40 equals 96 minus Q subscript 1\nQ subscript 1 equals 96 minus 40 equals 56"},"status":"ok"}

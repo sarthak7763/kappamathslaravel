@@ -1,0 +1,1 @@
+{"result":{"text":"equals 90 degree minus theta\nequals 90 degree minus 35 degree equals 37 degree\ntherefore space space space open parentheses table row 24 row 32 end table close parentheses equals left parenthesis 40 space u n i t s comma space 037 degree right parenthesis"},"status":"ok"}

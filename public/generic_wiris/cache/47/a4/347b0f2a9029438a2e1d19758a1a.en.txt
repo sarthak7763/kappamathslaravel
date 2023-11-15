@@ -1,0 +1,1 @@
+{"result":{"text":"equals 360 degree minus 90 minus 75 degree minus 45 equals 150 degree"},"status":"ok"}

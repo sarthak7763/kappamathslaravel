@@ -1,0 +1,1 @@
+{"result":{"text":"equals 10 minus 0 equals 10"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"25 over 100 cross times 2 comma 250 comma 000 equals G H S 562 comma 500"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 562 comma 500 over denominator 12 end fraction equals G H S 46 comma 875"},"status":"ok"}

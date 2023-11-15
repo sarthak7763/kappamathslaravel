@@ -1,0 +1,1 @@
+{"result":{"text":"6.72 straight pi space straight m squared"},"status":"ok"}

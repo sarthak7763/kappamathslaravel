@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 9 equals 4 over 225 d squared rightwards double arrow 4 d squared equals 2025\nrightwards double arrow d squared equals 2025 over 4\nrightwards double arrow d equals square root of 2025 over 4 end root equals 45 over 2\nequals 22 begin inline style 1 half end style k m"},"status":"ok"}

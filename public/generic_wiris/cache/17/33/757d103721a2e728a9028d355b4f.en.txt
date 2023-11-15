@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 99.4 equals k left parenthesis 2 right parenthesis squared rightwards double arrow 99.4 equals 4 k\nrightwards double arrow k equals fraction numerator 99.4 over denominator 4 end fraction equals 24.85"},"status":"ok"}

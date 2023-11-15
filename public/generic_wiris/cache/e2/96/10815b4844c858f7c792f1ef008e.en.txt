@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 100 equals space k over 3 squared rightwards double arrow 100 equals k over 9 rightwards double arrow k equals 900"},"status":"ok"}

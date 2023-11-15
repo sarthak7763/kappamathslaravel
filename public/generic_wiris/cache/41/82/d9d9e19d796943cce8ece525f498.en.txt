@@ -1,0 +1,1 @@
+{"result":{"text":"stack P Q with rightwards arrow on top equals open parentheses fraction numerator negative 8 over denominator 6 end fraction close parentheses"},"status":"ok"}

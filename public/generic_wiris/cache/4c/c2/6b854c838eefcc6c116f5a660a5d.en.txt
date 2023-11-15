@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row 3 row cell negative 4 end cell end table close parentheses equals square root of left parenthesis 3 right parenthesis squared plus left parenthesis negative 4 right parenthesis squared end root"},"status":"ok"}

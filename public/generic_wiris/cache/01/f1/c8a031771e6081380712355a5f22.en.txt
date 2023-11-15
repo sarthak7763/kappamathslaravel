@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow P equals 192 over 12 equals 16"},"status":"ok"}

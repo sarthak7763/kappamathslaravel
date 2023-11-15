@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 cross times straight pi rh equals 2 cross times 2 cross times straight pi cross times 0.84 cross times 2"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow p equals 16 over q squared"},"status":"ok"}

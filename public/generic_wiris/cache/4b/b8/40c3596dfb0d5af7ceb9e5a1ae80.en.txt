@@ -1,0 +1,1 @@
+{"result":{"text":"equals G H S 250 comma 000 minus G H S 86 comma 000 equals G H S 164 comma 000"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"15 equals fraction numerator k left parenthesis 10 right parenthesis over denominator 4 end fraction space rightwards double arrow space 15 equals fraction numerator 10 k over denominator 4 end fraction\n15 cross times 4 equals 10 k\n60 equals 10 k\nk equals 60 over 10 equals 6"},"status":"ok"}

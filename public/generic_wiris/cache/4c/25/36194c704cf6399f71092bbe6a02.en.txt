@@ -1,0 +1,1 @@
+{"result":{"text":"stack R Q with rightwards arrow on top equals open parentheses table row cell negative 2 end cell row 5 end table close parentheses"},"status":"ok"}

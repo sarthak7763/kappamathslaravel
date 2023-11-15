@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 6 equals k over 3 space rightwards double arrow k equals 18"},"status":"ok"}

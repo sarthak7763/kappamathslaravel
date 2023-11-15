@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 3 equals fraction numerator k over denominator cube root of 64 end fraction rightwards double arrow 3 equals k over 4\nrightwards double arrow k equals 3 cross times 4 equals 12"},"status":"ok"}

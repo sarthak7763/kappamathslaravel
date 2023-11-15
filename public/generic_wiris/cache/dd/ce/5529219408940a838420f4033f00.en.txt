@@ -1,0 +1,1 @@
+{"result":{"text":"c equals 4 over 225 d squared"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of 25 space equals space 5 space k m"},"status":"ok"}

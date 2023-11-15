@@ -1,0 +1,1 @@
+{"result":{"text":"y infinity 1 over x squared space space rightwards double arrow space y equals k over x squared................... left parenthesis 1 right parenthesis"},"status":"ok"}

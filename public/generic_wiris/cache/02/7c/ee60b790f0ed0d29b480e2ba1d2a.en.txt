@@ -1,0 +1,1 @@
+{"result":{"text":"equals 25 percent sign plus 40 percent sign equals 65 percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"table row cell s i z e space left parenthesis x right parenthesis end cell cell F r e q left parenthesis f right parenthesis end cell cell f x end cell row 5 4 20 row 6 5 36 row 7 9 36 row 8 15 120 row 9 14 126 row 10 7 70 row 11 5 55 row blank cell sum f equals 60 end cell cell sum f x equals 490 end cell end table"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 1 fourth equals 16 over q squared rightwards double arrow q squared equals 64\nrightwards double arrow q equals 8"},"status":"ok"}

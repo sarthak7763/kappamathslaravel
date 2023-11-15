@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of left parenthesis negative 6 right parenthesis squared plus left parenthesis 9 right parenthesis squared end root space equals square root of 117\nequals square root of 9 cross times 13 end root equals 3 square root of 13"},"status":"ok"}

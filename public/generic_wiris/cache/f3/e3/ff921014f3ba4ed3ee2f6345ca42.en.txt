@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 24 equals k over 8 rightwards double arrow k equals 192"},"status":"ok"}

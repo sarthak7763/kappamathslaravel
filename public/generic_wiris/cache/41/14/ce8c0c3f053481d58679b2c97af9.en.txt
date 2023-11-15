@@ -1,0 +1,1 @@
+{"result":{"text":"equals G H S 1500 comma 000 plus 15 percent sign V A T"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"\nstack attributes charalign center stackalign right end attributes 10101 1001 horizontal line row asterisk times asterisk times asterisk times asterisk times asterisk times end row end stack\n111001"},"status":"ok"}

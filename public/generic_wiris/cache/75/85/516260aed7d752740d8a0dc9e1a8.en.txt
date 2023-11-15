@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1500 comma 000 plus open parentheses 15 over 100 cross times G H S 1500 comma 000 close parentheses\nequals G H S 1500 comma 000 plus 225 comma 000\nequals G H S 1 comma 725 comma 000"},"status":"ok"}

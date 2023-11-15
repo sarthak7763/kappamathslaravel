@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 r equals 2 cross times 14 equals 28 space c m"},"status":"ok"}

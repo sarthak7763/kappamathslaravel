@@ -1,0 +1,1 @@
+{"result":{"text":"40 subscript s i x end subscript equals fraction numerator s u m ` space o f ` space t h e ` space n u m b e r s over denominator 5 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 3 over 4 cross times sum f equals 3 over 4 cross times 20 equals 15 to the power of t h end exponent space s c o r e"},"status":"ok"}

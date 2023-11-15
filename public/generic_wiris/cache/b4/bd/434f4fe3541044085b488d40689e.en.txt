@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 4 equals k left parenthesis 15 right parenthesis squared rightwards double arrow 4 equals 225 k rightwards double arrow k equals 4 over 225"},"status":"ok"}

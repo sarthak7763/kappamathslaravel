@@ -1,0 +1,1 @@
+{"result":{"text":"x infinity y over z rightwards double arrow x equals fraction numerator k y over denominator z end fraction................... left parenthesis 1 right parenthesis"},"status":"ok"}

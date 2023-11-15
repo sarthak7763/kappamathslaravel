@@ -1,0 +1,1 @@
+{"result":{"text":"m infinity fraction numerator 1 over denominator cube root of n end fraction rightwards double arrow m equals fraction numerator k over denominator cube root of n end fraction............. left parenthesis 1 right parenthesis"},"status":"ok"}

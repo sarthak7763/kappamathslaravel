@@ -61,7 +61,13 @@ class PaymentController extends Controller
             }
             else{
               $couponname=$coupondet->coupon_name;
-              $coupon_type=$coupondet->coupon_type;
+              if($coupondet->coupon_type=="1")
+              {
+                $coupon_type="Voucher Code";
+              }
+              else{
+                $coupon_type="Coupon Code";
+              }
             }
 
             $usercouponcodedet=DB::table('user_coupon_code')->where('id',$item['user_coupon_code_id'])->get()->first();

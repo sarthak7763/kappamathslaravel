@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 36 equals 4 left parenthesis 2 x plus 3 right parenthesis space space rightwards double arrow 36 equals 8 x plus 12\nrightwards double arrow 24 equals 8 x space rightwards double arrow x equals 24 over 8 equals 3"},"status":"ok"}

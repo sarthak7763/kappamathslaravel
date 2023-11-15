@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator 50 R minus 118 over denominator R minus 2 end fraction equals 49\nrightwards double arrow 50 R minus 118 equals 49 R minus 98\nrightwards double arrow 50 R minus 49 R equals negative 98 plus 118\ntherefore space space space space space space R equals 20"},"status":"ok"}

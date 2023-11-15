@@ -1,0 +1,1 @@
+{"result":{"text":"6 equals k over 3 space rightwards double arrow space k equals 6 cross times 3 equals 18"},"status":"ok"}

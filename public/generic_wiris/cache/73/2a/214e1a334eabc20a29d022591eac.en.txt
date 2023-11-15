@@ -1,0 +1,1 @@
+{"result":{"text":"equals l squared equals 25 squared equals 625 space c m squared"},"status":"ok"}

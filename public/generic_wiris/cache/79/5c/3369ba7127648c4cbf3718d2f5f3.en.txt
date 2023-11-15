@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow l equals 24.85 T squared"},"status":"ok"}

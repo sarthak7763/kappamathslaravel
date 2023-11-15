@@ -1,0 +1,1 @@
+{"result":{"text":"c infinity d squared rightwards double arrow c rightwards double arrow k d squared............... left parenthesis 1 right parenthesis"},"status":"ok"}

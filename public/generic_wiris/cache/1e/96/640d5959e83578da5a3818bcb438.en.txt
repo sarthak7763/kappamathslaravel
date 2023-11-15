@@ -1,0 +1,1 @@
+{"result":{"text":"sum f equals 20"},"status":"ok"}

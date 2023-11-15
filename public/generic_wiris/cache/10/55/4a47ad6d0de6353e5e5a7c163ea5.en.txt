@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 150 degree over denominator 360 degree end fraction cross times 600 equals 250"},"status":"ok"}

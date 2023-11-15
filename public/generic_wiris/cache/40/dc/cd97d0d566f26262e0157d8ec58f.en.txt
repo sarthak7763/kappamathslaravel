@@ -1,0 +1,1 @@
+{"result":{"text":"tilde P rightwards double arrow Q"},"status":"ok"}

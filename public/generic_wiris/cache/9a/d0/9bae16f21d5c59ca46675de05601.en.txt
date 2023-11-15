@@ -1,0 +1,1 @@
+{"result":{"text":"I f ` space stack P Q with rightwards arrow on top equals open parentheses fraction numerator negative 8 over denominator 6 end fraction close parentheses comma space f i n d space open vertical bar stack P Q with rightwards arrow on top close vertical bar"},"status":"ok"}

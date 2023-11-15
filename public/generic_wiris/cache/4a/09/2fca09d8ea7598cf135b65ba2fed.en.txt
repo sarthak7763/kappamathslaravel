@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 3.4 k m comma space 043 degree right parenthesis equals open parentheses table row cell 3.4 space sin space 43 degree end cell row cell 3.4 space cos space 43 degree end cell end table close parentheses equals open parentheses table row cell 2.3 end cell row cell 2.5 end cell end table close parentheses"},"status":"ok"}

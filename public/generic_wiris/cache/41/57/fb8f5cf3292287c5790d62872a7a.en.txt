@@ -1,0 +1,1 @@
+{"result":{"text":"equals 22 over 7 cross times 14 squared cross times 50 equals 30 comma 800 space c m cubed"},"status":"ok"}

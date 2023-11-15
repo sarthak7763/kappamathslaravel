@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 900 over x squared"},"status":"ok"}

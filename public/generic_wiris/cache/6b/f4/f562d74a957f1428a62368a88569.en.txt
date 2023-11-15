@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space 111 ` space u n i t s space equals space 111 cross times G H S 500 equals G H S 55 comma 500"},"status":"ok"}

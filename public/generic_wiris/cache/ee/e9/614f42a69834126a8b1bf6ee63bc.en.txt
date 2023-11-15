@@ -1,0 +1,1 @@
+{"result":{"text":"equals 90 degree plus theta\nequals 90 degree plus 53 degree equals 143 degree"},"status":"ok"}

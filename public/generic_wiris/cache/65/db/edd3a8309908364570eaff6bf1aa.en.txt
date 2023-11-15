@@ -1,0 +1,1 @@
+{"result":{"text":"P Q T equals begin inline style 1 half end style cross times 8 cross times 4 equals 16 space c m squared"},"status":"ok"}

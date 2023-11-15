@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 3.4 k m comma space 043 degree right parenthesis"},"status":"ok"}

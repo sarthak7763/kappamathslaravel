@@ -1,0 +1,1 @@
+{"result":{"text":"equals l squared equals 4 squared equals 16 space c m squared"},"status":"ok"}

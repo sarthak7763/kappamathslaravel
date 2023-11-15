@@ -1,0 +1,1 @@
+{"result":{"text":"left parenthesis 100 k m comma space 225 degree right parenthesis equals open parentheses table row cell 100 sin space 225 degree end cell row cell 100 cos space 225 degree end cell end table close parentheses equals open parentheses table row cell negative 70.71 end cell row cell negative 70.71 end cell end table close parentheses"},"status":"ok"}

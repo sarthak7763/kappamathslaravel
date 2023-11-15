@@ -1,0 +1,1 @@
+{"result":{"text":"z infinity fraction numerator square root of x over denominator s cubed end fraction rightwards double arrow z equals fraction numerator k square root of x over denominator s cubed end fraction"},"status":"ok"}

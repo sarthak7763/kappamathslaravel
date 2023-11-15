@@ -1,0 +1,1 @@
+{"result":{"text":"p infinity q space space space rightwards double arrow p equals k q space........ left parenthesis 1 right parenthesis"},"status":"ok"}

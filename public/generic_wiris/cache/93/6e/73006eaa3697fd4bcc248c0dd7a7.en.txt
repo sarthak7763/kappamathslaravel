@@ -1,0 +1,1 @@
+{"result":{"text":"H infinity p over y squared space space rightwards double arrow H equals fraction numerator k p over denominator y squared end fraction................... left parenthesis 1 right parenthesis"},"status":"ok"}

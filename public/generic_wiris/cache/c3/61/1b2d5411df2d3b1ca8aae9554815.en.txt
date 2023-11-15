@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow d equals 5 left parenthesis 6 right parenthesis squared rightwards double arrow space d equals 5 left parenthesis 36 right parenthesis rightwards double arrow\nd equals 180 space c m"},"status":"ok"}

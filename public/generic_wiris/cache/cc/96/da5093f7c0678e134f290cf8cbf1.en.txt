@@ -1,0 +1,1 @@
+{"result":{"text":"y rightwards double arrow tilde x"},"status":"ok"}

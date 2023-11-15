@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of 1600 equals 40 ` space u n i t s"},"status":"ok"}

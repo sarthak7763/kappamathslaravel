@@ -1,0 +1,1 @@
+{"result":{"text":"P equals 32"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"x infinity 1 over y space a n d ` space y infinity z\nrightwards double arrow x infinity 1 over z"},"status":"ok"}

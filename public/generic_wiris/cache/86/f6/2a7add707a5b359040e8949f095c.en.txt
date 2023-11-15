@@ -1,0 +1,1 @@
+{"result":{"text":"x infinity 1 over z"},"status":"ok"}

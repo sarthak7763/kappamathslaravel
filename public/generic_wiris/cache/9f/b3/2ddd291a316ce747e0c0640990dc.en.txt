@@ -1,0 +1,1 @@
+{"result":{"text":"tan space theta equals begin inline style 4 over 3 end style equals 1.333\ntheta equals tan to the power of negative 1 end exponent left parenthesis 1.333 right parenthesis equals 53 degree"},"status":"ok"}

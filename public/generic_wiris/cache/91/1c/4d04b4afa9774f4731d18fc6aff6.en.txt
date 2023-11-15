@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of 9 cross times 13 end root equals 3 square root of 13"},"status":"ok"}

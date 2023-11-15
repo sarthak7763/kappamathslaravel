@@ -1,0 +1,1 @@
+{"result":{"text":"2 r equals p plus q rightwards double arrow r equals begin inline style 1 half end style left parenthesis p plus q right parenthesis"},"status":"ok"}

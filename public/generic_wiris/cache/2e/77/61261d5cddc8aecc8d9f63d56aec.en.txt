@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow I intersection R"},"status":"ok"}

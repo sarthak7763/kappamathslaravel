@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row 20 row 8 end table close parentheses equals 8 over 20 equals 2 over 5"},"status":"ok"}

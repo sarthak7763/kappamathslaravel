@@ -1,0 +1,1 @@
+{"result":{"text":"equals 50 R minus left parenthesis 55 plus 63 right parenthesis equals 50 R minus 118"},"status":"ok"}

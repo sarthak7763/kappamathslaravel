@@ -1,0 +1,1 @@
+{"result":{"text":"x infinity w over y squared space space rightwards double arrow space space space space x equals fraction numerator k w over denominator y squared end fraction"},"status":"ok"}

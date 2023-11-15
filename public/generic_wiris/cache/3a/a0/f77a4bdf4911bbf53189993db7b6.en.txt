@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 672 comma 000 over denominator 42 end fraction equals G H S 16 comma 000 equals G H S 1.60"},"status":"ok"}

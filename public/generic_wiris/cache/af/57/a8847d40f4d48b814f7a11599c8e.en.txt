@@ -1,0 +1,1 @@
+{"result":{"text":"open vertical bar stack P Q with rightwards arrow on top close vertical bar"},"status":"ok"}

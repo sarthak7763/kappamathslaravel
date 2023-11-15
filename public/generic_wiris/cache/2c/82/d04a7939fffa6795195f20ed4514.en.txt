@@ -1,0 +1,1 @@
+{"result":{"text":"equals R minus 2"},"status":"ok"}

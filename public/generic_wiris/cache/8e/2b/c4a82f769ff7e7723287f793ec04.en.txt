@@ -1,0 +1,1 @@
+{"result":{"text":"equals G H S 2 comma 800 comma 000 minus G H S space 550 comma 000 equals G H S 2 comma 250 comma 000"},"status":"ok"}

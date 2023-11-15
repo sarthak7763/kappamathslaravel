@@ -1,0 +1,1 @@
+{"result":{"text":"k equals 4 over 225 space i n t o space left parenthesis 1 right parenthesis"},"status":"ok"}

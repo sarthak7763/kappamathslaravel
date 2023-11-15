@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 45 degree over denominator 360 degree end fraction cross times 100 percent sign"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"z equals fraction numerator square root of x over denominator s cubed end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 p plus 3 q minus 4 r"},"status":"ok"}

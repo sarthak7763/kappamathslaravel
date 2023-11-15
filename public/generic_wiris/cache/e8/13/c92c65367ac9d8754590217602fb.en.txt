@@ -1,0 +1,1 @@
+{"result":{"text":"equals 12 cross times 48 comma 000 equals G H S 576 comma 000"},"status":"ok"}

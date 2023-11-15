@@ -1,0 +1,1 @@
+{"result":{"text":"equals 5 cross times 12 equals 60"},"status":"ok"}

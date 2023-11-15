@@ -1,0 +1,1 @@
+{"result":{"text":"Q subset of P"},"status":"ok"}

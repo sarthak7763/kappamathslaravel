@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 45 equals k left parenthesis 3 right parenthesis squared space space rightwards double arrow 45 equals 9 k space rightwards double arrow k equals 45 over 9 equals 5"},"status":"ok"}

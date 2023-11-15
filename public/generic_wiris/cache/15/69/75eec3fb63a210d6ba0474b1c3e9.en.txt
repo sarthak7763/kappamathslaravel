@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator sum f x over denominator sum f end fraction equals 490 over 60 almost equal to 8"},"status":"ok"}

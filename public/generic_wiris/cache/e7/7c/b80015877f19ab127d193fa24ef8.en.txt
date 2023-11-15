@@ -1,0 +1,1 @@
+{"result":{"text":"equals 22 over 7 cross times 14 squared cross times 50 equals 30 comma 800 space c m cubed\nequals fraction numerator 30 comma 800 over denominator 1000 end fraction equals 30.8 space l i t r e s"},"status":"ok"}

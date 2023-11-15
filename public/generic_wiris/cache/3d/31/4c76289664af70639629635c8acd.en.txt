@@ -1,0 +1,1 @@
+{"result":{"text":"equals 66 minus 60 equals 6"},"status":"ok"}

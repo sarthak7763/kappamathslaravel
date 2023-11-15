@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 225 comma 000 over denominator 3 end fraction equals G H S 75 comma 000"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"q equals open parentheses table row 4 row cell negative 2 end cell end table close parentheses"},"status":"ok"}

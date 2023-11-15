@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 52 equals k left square bracket 2 left parenthesis 5 right parenthesis plus 3 right square bracket space space rightwards double arrow 52 equals 13 k\nrightwards double arrow k equals 52 over 13 equals 4"},"status":"ok"}

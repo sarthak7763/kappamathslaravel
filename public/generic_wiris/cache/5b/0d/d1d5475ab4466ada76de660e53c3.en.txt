@@ -1,0 +1,1 @@
+{"result":{"text":"p logical or q left right double arrow r"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"Q U R equals begin inline style 1 half end style cross times 5 cross times 4 equals 10 space c m squared"},"status":"ok"}

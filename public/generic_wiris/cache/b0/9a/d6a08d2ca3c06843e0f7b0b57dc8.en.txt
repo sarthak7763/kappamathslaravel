@@ -1,0 +1,1 @@
+{"result":{"text":"equals 40 plus 16 plus 16 plus 10 plus 10 equals 92 space c m squared"},"status":"ok"}

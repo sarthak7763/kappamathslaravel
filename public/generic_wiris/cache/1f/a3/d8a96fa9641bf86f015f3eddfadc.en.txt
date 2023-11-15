@@ -1,0 +1,1 @@
+{"result":{"text":"stack attributes charalign center stackalign right end attributes 5162 row minus 2644 end row horizontal line row 2 asterisk times 15 end row end stack"},"status":"ok"}

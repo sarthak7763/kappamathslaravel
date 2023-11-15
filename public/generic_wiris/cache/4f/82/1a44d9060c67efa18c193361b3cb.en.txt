@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 half end style left parenthesis sum f plus 1 right parenthesis\nequals begin inline style 1 half end style left parenthesis 15 plus 1 right parenthesis\nequals 8 to the power of t h end exponent ` space P o s i t i o n"},"status":"ok"}

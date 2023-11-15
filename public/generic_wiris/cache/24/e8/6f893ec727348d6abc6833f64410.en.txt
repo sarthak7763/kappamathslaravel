@@ -1,0 +1,1 @@
+{"result":{"text":"equals square root of l squared plus w squared plus h squared end root\nequals square root of 60 squared plus 30 squared plus 20 squared end root equals square root of 4900 equals 70 space c m"},"status":"ok"}

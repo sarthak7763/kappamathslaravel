@@ -1,0 +1,1 @@
+{"result":{"text":"equals R cross times 50 equals 50 R"},"status":"ok"}

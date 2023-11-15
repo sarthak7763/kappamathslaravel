@@ -1,0 +1,1 @@
+{"result":{"text":"tan space theta equals 32 over 24 equals 1.333\ntheta equals tan to the power of negative 1 end exponent left parenthesis 1.333 right parenthesis equals 53 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 576 comma 000 over denominator 3 comma 840 comma 000 end fraction cross times 100 percent sign equals 15 percent sign"},"status":"ok"}

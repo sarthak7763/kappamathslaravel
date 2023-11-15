@@ -1,0 +1,1 @@
+{"result":{"text":"equals 5 cross times left square bracket 4 cross times 6 to the power of 1 right parenthesis plus left parenthesis 0 cross times 6 to the power of 0 right parenthesis right square bracket\nequals 5 cross times left parenthesis 24 plus 0 right parenthesis\nequals 5 cross times 24\nequals 120"},"status":"ok"}

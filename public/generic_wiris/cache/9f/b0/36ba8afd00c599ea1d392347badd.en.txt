@@ -1,0 +1,1 @@
+{"result":{"text":"n equals open parentheses table row cell negative 8 end cell row 5 end table close parentheses"},"status":"ok"}

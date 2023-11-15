@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 172 degree over denominator 360 degree end fraction cross times 18 comma 000 equals G H S space 8 comma 600.00"},"status":"ok"}

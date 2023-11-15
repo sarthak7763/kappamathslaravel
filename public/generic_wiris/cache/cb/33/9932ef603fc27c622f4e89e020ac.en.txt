@@ -1,0 +1,1 @@
+{"result":{"text":"equals G H S 3 comma 279 comma 600 plus open parentheses 5 over 100 cross times G H S 150 comma 000 comma 000 close parentheses\nequals G H S 3279 comma 600 space plus space G H S 7 comma 500 comma 000\nequals G H S 10 comma 779 comma 600"},"status":"ok"}

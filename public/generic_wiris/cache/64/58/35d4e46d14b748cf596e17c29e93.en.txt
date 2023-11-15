@@ -1,0 +1,1 @@
+{"result":{"text":"m equals fraction numerator 12 over denominator cube root of 8 end fraction equals 12 over 2 equals 6"},"status":"ok"}

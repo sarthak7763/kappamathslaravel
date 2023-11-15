@@ -1,0 +1,1 @@
+{"result":{"text":"p infinity 1 over q squared rightwards double arrow p equals k over q squared............... left parenthesis 1 right parenthesis"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"P Q R S equals 8 cross times 5 equals 40 space c m squared"},"status":"ok"}
