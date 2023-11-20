@@ -117,6 +117,10 @@
 
   <script>
 
+    MathJax.Hub.Config({
+      MathML: {extensions: ["mml3.js"]}
+    });
+
     $(function () {
 
     var table = $('#questionsTable').DataTable({

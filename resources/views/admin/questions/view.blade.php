@@ -151,7 +151,14 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
+
+
     <script type="text/javascript">
+
+    MathJax.Hub.Config({
+      MathML: {extensions: ["mml3.js"]}
+    });
+
       $(document).ready(function() {
       var textareavalue=$('#textareavalue').val();
     $("#renderer").empty();
