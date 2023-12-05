@@ -1,0 +1,1 @@
+{"result":{"text":"n circled times n equals 1"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"angle P O Q equals fraction numerator angle R O S over denominator 2 end fraction\nrightwards double arrow space 3 x equals 66 over 2\nrightwards double arrow space 3 x equals 33\nrightwards double arrow space x equals 11 degree"},"status":"ok"}

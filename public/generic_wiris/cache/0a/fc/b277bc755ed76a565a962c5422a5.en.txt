@@ -1,0 +1,1 @@
+{"result":{"text":"angle V Z X equals angle X W Y equals 90 degree"},"status":"ok"}

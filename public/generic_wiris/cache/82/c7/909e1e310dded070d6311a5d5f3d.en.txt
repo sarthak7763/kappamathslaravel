@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator A r e a ` space o f ` space triangle P R S over denominator A r e a ` space o f ` space triangle P Q T end fraction equals open parentheses fraction numerator 2 plus 3 over denominator 2 end fraction close parentheses squared equals open parentheses 5 over 2 close parentheses squared"},"status":"ok"}

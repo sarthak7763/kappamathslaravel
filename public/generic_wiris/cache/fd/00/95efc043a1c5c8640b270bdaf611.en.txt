@@ -1,0 +1,1 @@
+{"result":{"text":"equals l cross times w cross times h space rightwards double arrow space 11 cross times 2 cross times 7 equals 154 m squared"},"status":"ok"}

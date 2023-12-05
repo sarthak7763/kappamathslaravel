@@ -1,0 +1,1 @@
+{"result":{"text":"equals l squared equals 12 squared equals 144 space c m squared"},"status":"ok"}

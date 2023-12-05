@@ -1,0 +1,1 @@
+{"result":{"text":"triangle X Y Z space"},"status":"ok"}

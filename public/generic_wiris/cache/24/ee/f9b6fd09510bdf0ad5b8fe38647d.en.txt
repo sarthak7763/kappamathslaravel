@@ -1,0 +1,1 @@
+{"result":{"text":"triangle P Q T equals 40 space c m squared comma vertical line P Q vertical line equals 2 space c m comma space vertical line Q R vertical line equals 3 space c m"},"status":"ok"}

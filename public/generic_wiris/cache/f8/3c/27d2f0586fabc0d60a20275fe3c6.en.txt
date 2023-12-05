@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 third straight pi squared straight h equals 1 third cross times straight pi cross times left parenthesis 2 straight h right parenthesis squared cross times straight h\nequals 1 third cross times straight pi cross times 4 straight h squared cross times straight h\nequals 4 over 3 straight pi straight h cubed\n"},"status":"ok"}

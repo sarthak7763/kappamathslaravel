@@ -1,0 +1,1 @@
+{"result":{"text":"3 plus 4 plus 1 plus 2 plus 3 space left parenthesis m o d space 5 right parenthesis space equals space 13 space left parenthesis m o d space 5 right parenthesis\nequals 13 over 5 equals 2. space space r e m ` space 3\ntherefore 3 plus 4 plus 1 plus 2 plus 3 space left parenthesis m o d space 5 right parenthesis space equals space 3"},"status":"ok"}

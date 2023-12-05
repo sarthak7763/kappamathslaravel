@@ -1,0 +1,1 @@
+{"result":{"text":"5 squared equals h squared plus 3 to the power of blank\nh squared equals 5 squared minus 3 squared\nh squared equals 16\nh equals square root of 16 equals 4 space c m"},"status":"ok"}

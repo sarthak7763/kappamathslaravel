@@ -1,0 +1,1 @@
+{"result":{"text":"angle J K L equals 90 degree"},"status":"ok"}

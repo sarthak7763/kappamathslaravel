@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line stack Z X with bar on top vertical line colon vertical line stack Y Z vertical line with bar on top"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals straight pi straight r squared straight h equals straight pi left parenthesis 2 straight r right parenthesis squared straight h equals 4 straight pi straight r squared straight h"},"status":"ok"}

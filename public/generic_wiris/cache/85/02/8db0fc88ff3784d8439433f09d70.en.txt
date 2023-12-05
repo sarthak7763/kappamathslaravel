@@ -1,0 +1,1 @@
+{"result":{"text":"0 plus y equals 5 space space rightwards double arrow space space y equals 5"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"stack X Z with bar on top"},"status":"ok"}

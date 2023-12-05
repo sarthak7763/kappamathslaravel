@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator 4 over denominator 2 h end fraction equals 1 fourth space rightwards double arrow space space 2 h equals 16 space space rightwards double arrow space space h equals 8"},"status":"ok"}

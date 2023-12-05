@@ -1,0 +1,1 @@
+{"result":{"text":"therefore 6 minus 36 left parenthesis m o d space 9 right parenthesis equals 6 minus 0 equals 6"},"status":"ok"}

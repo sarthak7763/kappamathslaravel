@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator A r e a apostrophe space o f apostrophe triangle P R S over denominator A r e a apostrophe space o f space triangle P Q T end fraction equals 25 over 4\nspace equals 25 colon 4"},"status":"ok"}

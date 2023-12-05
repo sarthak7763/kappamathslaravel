@@ -1,0 +1,1 @@
+{"result":{"text":"angle R O S equals 60 degree"},"status":"ok"}

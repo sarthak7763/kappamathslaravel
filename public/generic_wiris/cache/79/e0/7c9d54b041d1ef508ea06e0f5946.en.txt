@@ -1,0 +1,1 @@
+{"result":{"text":"equals 42 over 8 equals 5 space"},"status":"ok"}

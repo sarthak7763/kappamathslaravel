@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator L H over denominator J H end fraction equals fraction numerator K L over denominator J I end fraction"},"status":"ok"}

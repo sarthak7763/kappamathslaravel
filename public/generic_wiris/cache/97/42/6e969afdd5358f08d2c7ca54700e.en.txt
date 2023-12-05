@@ -1,0 +1,1 @@
+{"result":{"text":"594 equals 22 over 7 cross times r squared cross times 21 space rightwards double arrow space space 594 equals 66 r squared\nrightwards double arrow r squared equals 594 over 66 equals 9 space rightwards double arrow r equals square root of 9 equals 3 space c m"},"status":"ok"}

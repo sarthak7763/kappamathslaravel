@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 1 identical to 4 space m o d space 7\n2 x plus 1 equals 4 plus 7\n2 x plus 1 equals 11\n2 x equals 11 minus 1\n2 x equals 10\nx equals 5"},"status":"ok"}

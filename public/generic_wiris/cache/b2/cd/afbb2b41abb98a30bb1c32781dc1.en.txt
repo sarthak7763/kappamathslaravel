@@ -1,0 +1,1 @@
+{"result":{"text":"equals straight pi cross times 3 squared cross times 8 equals 72 straight pi space cm cubed"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"y minus 3 less or equal than 0 semicolon space space y greater or equal than 6 minus x semicolon space"},"status":"ok"}

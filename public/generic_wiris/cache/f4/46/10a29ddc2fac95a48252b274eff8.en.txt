@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow r equals 2 h"},"status":"ok"}

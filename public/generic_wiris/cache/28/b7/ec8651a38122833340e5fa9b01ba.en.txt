@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 88 over 7 r squared equals 154 space rightwards double arrow 88 r squared equals 1078\nr squared equals 1078 over 88 equals 12.25\nr equals square root of 12.25 end root equals 3.50 space m"},"status":"ok"}

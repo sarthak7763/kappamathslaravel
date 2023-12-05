@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 17 equals 5"},"status":"ok"}

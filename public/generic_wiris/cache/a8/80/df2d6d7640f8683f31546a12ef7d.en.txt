@@ -1,0 +1,1 @@
+{"result":{"text":"0 equals 6 minus x space space rightwards double arrow space x equals 6"},"status":"ok"}

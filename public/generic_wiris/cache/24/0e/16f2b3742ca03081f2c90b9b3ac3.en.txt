@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 10 straight pi straight r squared equals 4 straight pi straight r squared straight h\nrightwards double arrow straight h equals fraction numerator 10 straight pi straight r squared over denominator 4 straight pi straight r squared end fraction equals 10 over 4 equals 2.5 space cm"},"status":"ok"}

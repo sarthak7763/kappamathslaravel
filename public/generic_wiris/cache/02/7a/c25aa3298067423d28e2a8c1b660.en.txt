@@ -1,0 +1,1 @@
+{"result":{"text":"6 circled times 7 equals m left parenthesis m o d 8 right parenthesis space space space space rightwards double arrow 42 equals m left parenthesis m o d 8 right parenthesis"},"status":"ok"}

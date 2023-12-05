@@ -1,0 +1,1 @@
+{"result":{"text":"angle Y X Z equals angle X K Z equals 90 degree comma vertical line Y K vertical line equals 4 space c m"},"status":"ok"}

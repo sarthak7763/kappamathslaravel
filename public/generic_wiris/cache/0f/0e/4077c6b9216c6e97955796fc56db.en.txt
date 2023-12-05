@@ -1,0 +1,1 @@
+{"result":{"text":"6 circled times 7 equals m"},"status":"ok"}

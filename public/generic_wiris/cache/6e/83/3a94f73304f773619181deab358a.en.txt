@@ -1,0 +1,1 @@
+{"result":{"text":"equals begin inline style 1 third end style cross times straight pi cross times 3 squared cross times 4 equals 12 straight pi space cm cubed"},"status":"ok"}

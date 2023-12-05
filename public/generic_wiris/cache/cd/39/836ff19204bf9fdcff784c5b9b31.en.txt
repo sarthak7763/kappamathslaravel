@@ -1,0 +1,1 @@
+{"result":{"text":"y plus x less or equal than 3 comma space space x greater or equal than 0 comma space space y less or equal than 0"},"status":"ok"}

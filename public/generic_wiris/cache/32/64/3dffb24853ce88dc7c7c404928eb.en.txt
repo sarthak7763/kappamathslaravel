@@ -1,0 +1,1 @@
+{"result":{"text":"equals l cubed"},"status":"ok"}

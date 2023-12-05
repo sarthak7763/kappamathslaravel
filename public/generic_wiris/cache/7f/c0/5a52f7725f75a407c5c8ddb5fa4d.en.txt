@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1305 over 4 equals 326 space r e m ` space 1\ntherefore space 893 plus 412 space left parenthesis m o d space 4 right parenthesis\nequals 1"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals 2 r equals 2 left parenthesis 3 right parenthesis equals 6 space c m"},"status":"ok"}

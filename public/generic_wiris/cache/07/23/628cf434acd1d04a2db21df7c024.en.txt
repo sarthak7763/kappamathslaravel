@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator A r e a ` space o f ` space triangle P R S over denominator A r e a ` space o f ` space triangle P Q T end fraction equals open parentheses fraction numerator P S over denominator P T end fraction close parentheses squared"},"status":"ok"}

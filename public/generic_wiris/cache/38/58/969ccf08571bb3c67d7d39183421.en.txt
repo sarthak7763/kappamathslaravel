@@ -1,0 +1,1 @@
+{"result":{"text":"equals 1 third cross times 144 cross times 8"},"status":"ok"}

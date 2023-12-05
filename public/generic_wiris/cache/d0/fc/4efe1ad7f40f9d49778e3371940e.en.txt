@@ -1,0 +1,1 @@
+{"result":{"text":"equals straight pi straight r squared"},"status":"ok"}

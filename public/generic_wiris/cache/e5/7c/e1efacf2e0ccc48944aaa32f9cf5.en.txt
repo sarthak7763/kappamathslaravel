@@ -1,0 +1,1 @@
+{"result":{"text":"vertical line X Y vertical line squared equals 6 squared plus 4 squared equals 52\nvertical line X Y vertical line equals square root of 52"},"status":"ok"}

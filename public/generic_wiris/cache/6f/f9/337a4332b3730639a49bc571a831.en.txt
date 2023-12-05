@@ -1,0 +1,1 @@
+{"result":{"text":"x over a plus y over b equals 1 space rightwards double arrow space x over 3 plus y over 3 equals 1 space rightwards double arrow x plus y equals 3"},"status":"ok"}

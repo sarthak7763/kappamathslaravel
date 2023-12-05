@@ -1,0 +1,1 @@
+{"result":{"text":"1078 equals 1 third cross times 22 over 7 cross times 7 squared cross times h\n1078 equals 51.333 h\nh equals fraction numerator 1078 over denominator 51.333 end fraction equals 21 space c m"},"status":"ok"}

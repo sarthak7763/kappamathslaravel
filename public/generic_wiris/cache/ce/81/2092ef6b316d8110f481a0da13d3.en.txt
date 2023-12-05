@@ -1,0 +1,1 @@
+{"result":{"text":"equals 22 over 7 r squared left parenthesis 4 right parenthesis equals 88 over 7 r squared space m cubed"},"status":"ok"}

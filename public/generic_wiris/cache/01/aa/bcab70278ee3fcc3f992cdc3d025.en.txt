@@ -1,0 +1,1 @@
+{"result":{"text":"y minus 3 equals 0 space space rightwards double arrow y equals 3\nf o r ` space y equals 6 minus x"},"status":"ok"}

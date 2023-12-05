@@ -1,0 +1,1 @@
+{"result":{"text":"10 less or equal than y less or equal than 30"},"status":"ok"}

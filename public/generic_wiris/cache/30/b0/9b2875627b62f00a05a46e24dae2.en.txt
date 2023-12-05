@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 9 equals 1 plus w space rightwards double arrow space space space w equals 9 minus 1 space space space rightwards double arrow space space space space space w equals 8"},"status":"ok"}

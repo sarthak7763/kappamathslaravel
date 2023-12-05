@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 2 x plus 5 equals 2 left parenthesis 5 right parenthesis plus 5 equals 15 equals"},"status":"ok"}

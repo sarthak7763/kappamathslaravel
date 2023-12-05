@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow left parenthesis 12 square root of 2 right parenthesis squared equals l squared plus l squared rightwards double arrow 288 equals 2 l squared\nrightwards double arrow l squared equals 288 over 2 equals 144 rightwards double arrow l equals square root of 144 equals 12 space c m"},"status":"ok"}

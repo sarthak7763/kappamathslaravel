@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 17 equals 5 plus m\nrightwards double arrow m equals 17 minus 5\nrightwards double arrow m equals 12"},"status":"ok"}

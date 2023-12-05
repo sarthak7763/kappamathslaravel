@@ -1,0 +1,1 @@
+{"result":{"text":"1 greater than 0 rightwards double arrow x greater or equal than 0\n1 greater than 0 rightwards double arrow y greater or equal than 0\n1 plus 1 less than 3 rightwards double arrow y plus x less or equal than 3"},"status":"ok"}

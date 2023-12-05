@@ -1,0 +1,1 @@
+{"result":{"text":"h over 3 equals 20 over 8\nh equals 3 cross times 20 over 8 equals 7.5 space m"},"status":"ok"}

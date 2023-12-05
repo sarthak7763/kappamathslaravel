@@ -1,0 +1,1 @@
+{"result":{"text":"90 over 100 cross times 500"},"status":"ok"}

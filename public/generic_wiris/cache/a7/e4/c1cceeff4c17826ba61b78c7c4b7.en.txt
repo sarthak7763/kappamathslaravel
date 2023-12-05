@@ -1,0 +1,1 @@
+{"result":{"text":"2 x plus 1 identical to 4"},"status":"ok"}

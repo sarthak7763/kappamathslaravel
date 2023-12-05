@@ -1,0 +1,1 @@
+{"result":{"text":"left curly bracket x colon 2 less or equal than x less or equal than 18 semicolon space x element of i n t e g e r right curly bracket"},"status":"ok"}

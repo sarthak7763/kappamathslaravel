@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow 3 x plus 1 equals 4 plus 9\nrightwards double arrow 3 x plus 1 equals 13\nrightwards double arrow 3 x equals 13 minus 1\nrightwards double arrow 3 x equals 12\nrightwards double arrow x equals 4"},"status":"ok"}

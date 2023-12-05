@@ -1,0 +1,1 @@
+{"result":{"text":"1 circled times 1 equals 1 semicolon space space space 6 circled times circled times 6 equals 1\ntherefore space n equals left curly bracket 1 comma 6 right curly bracket"},"status":"ok"}

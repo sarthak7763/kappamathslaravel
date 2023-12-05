@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow y equals 13 comma space 21 comma space 29"},"status":"ok"}

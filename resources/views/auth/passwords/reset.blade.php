@@ -7,6 +7,27 @@
         'csrfToken' => csrf_token(),
     ]); ?>
   </script>
+
+   <style type="text/css">
+  .field-icon {
+    float: right;
+    margin-left: -21px;
+    margin-top: -28px;
+    position: relative;
+    z-index: 2;
+    margin-right: 5px;
+  }
+
+  .field-icon-password {
+    float: right;
+    margin-left: -21px;
+    margin-top: -28px;
+    position: relative;
+    z-index: 2;
+    margin-right: 5px;
+  }
+
+  </style>
 @endsection
 
 @section('content')
@@ -65,7 +86,7 @@
 
                             <div class="col-md-8">
                                 <input id="password" type="password" class="form-control" name="password">
-
+                                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                <small class="text-danger">{{$password_error}}</small>
                             </div>
                           </div>
@@ -77,7 +98,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
+                                <span toggle="#password-confirm" class="fa fa-fw fa-eye field-icon-password toggle-password-confirm"></span>
                                 <small class="text-danger">{{$password_confirm_error}}</small>
                             </div>
                           </div>
@@ -107,5 +128,27 @@
         }, 4500);
       });
     });
+  </script>
+
+  <script type="text/javascript">
+    $(".toggle-password").click(function() {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+
+    $(".toggle-password-confirm").click(function() {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
   </script>
 @endsection

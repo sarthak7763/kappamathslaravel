@@ -1,0 +1,1 @@
+{"result":{"text":"512 equals l cubed space rightwards double arrow space l equals cube root of 512 equals 8"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"4 x equals 7 left parenthesis m o d space 9 right parenthesis\nrightwards double arrow 4 x equals 7 plus 9\nrightwards double arrow 4 x equals 16\nrightwards double arrow x equals 16 over 4 equals 4"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"Y divided by M equals X"},"status":"ok"}

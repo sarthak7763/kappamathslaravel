@@ -1,0 +1,1 @@
+{"result":{"text":"equals 3 squared cross times 120"},"status":"ok"}
