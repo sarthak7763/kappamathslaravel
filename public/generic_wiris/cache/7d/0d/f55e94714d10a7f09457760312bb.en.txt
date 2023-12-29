@@ -1,0 +1,1 @@
+{"result":{"text":"negative 3 y minus 32 equals negative 59\nminus 3 y equals negative 59 plus 32\nminus 3 y equals negative 27\ny equals 9"},"status":"ok"}

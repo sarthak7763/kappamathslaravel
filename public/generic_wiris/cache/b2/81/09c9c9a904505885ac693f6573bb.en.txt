@@ -1,0 +1,1 @@
+{"result":{"text":"4 left parenthesis 1 minus 2 y right parenthesis plus 3 y equals 4\n4 minus 8 y plus 3 y equals 4\nminus 5 y equals 0\ny equals 0"},"status":"ok"}

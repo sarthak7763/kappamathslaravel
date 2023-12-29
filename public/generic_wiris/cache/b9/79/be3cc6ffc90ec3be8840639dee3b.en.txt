@@ -1,0 +1,1 @@
+{"result":{"text":"r equals 4900 k m"},"status":"ok"}

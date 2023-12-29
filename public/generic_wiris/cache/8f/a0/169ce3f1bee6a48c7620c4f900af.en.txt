@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 5.20 minus 3.90 over denominator 6.85 minus 6.20 end fraction\nequals fraction numerator 1.30 over denominator 0.65 end fraction equals 2"},"status":"ok"}

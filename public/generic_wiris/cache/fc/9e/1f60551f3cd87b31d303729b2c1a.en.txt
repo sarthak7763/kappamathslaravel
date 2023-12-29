@@ -1,0 +1,1 @@
+{"result":{"text":"825 space k m h to the power of negative 1 end exponent"},"status":"ok"}

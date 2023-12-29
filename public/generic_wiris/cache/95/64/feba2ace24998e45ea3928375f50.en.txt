@@ -1,0 +1,1 @@
+{"result":{"text":"triangle Q Z O"},"status":"ok"}

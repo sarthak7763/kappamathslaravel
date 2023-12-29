@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 7 cos open parentheses x close parentheses minus 3 sin open parentheses x close parentheses"},"status":"ok"}

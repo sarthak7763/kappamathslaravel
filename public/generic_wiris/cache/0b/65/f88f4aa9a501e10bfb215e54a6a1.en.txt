@@ -1,0 +1,1 @@
+{"result":{"text":"negative 4 less or equal than x less or equal than 0.5"},"status":"ok"}

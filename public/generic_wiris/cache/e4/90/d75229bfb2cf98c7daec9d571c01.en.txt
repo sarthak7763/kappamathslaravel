@@ -1,0 +1,1 @@
+{"result":{"text":"8 minus 8 n plus 3 n equals 3\nminus 5 n equals negative 5\nn equals 1"},"status":"ok"}

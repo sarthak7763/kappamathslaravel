@@ -1,0 +1,1 @@
+{"result":{"text":"angle P apostrophe O L equals 38 degree"},"status":"ok"}

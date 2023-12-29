@@ -1,0 +1,1 @@
+{"result":{"text":"cos 40 degree equals r over 6400\nrightwards double arrow r equals 6400 cos 40 degree equals 4902.6844"},"status":"ok"}

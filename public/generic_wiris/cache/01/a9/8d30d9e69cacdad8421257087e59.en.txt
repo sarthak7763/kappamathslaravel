@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 60 degree over denominator 360 degree end fraction cross times 2 cross times 22 over 7 cross times 4902.6844\nequals 5136.145562"},"status":"ok"}

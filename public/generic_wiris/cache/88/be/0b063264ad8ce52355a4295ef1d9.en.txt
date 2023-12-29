@@ -1,0 +1,1 @@
+{"result":{"text":"5 sin open parentheses x close parentheses plus 9 cos open parentheses x close parentheses equals 2"},"status":"ok"}

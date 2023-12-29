@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 50 degree over denominator 360 degree end fraction cross times 2 cross times 22 over 7 cross times 6400 cos 34 degree\nequals 4632.0829\nequals 4632 space k m space space left parenthesis 4 space s. f right parenthesis"},"status":"ok"}

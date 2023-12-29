@@ -1,0 +1,1 @@
+{"result":{"text":"equals theta over 360 cross times 2 straight pi straight r\nwhere space straight theta equals 65 degree minus 15 degree equals 50 degree\nstraight r equals straight R space cos space straight x equals 6400 cos 34 degree"},"status":"ok"}

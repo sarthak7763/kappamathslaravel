@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space y equals x squared minus 1 x minus 2\ny equals x squared minus x minus 2"},"status":"ok"}

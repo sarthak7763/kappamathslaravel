@@ -1,0 +1,1 @@
+{"result":{"text":"almost equal to 5 space h o u r s"},"status":"ok"}

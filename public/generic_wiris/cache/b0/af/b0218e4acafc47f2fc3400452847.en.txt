@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow fraction numerator angle A O B over denominator 360 degree end fraction cross times 2 straight pi straight r equals 10 comma 000"},"status":"ok"}

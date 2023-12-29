@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator angle P Z Q over denominator 360 degree end fraction cross times 2 straight pi straight r\nwhere comma space angle PZQ equals 78 degree minus 18 degree equals 60 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 40 degree over denominator 360 degree end fraction cross times 2 cross times 3.142 cross times 6400 cos 20 degree\nequals 4 comma 199.1313 space k m"},"status":"ok"}

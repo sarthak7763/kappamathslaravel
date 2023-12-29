@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator angle X O Y over denominator 360 degree end fraction cross times 2 straight pi straight r\nwhere comma space straight r equals Rcos 52 degree equals 6400 cos 52 degree\nangle XOY equals 32 degree plus 28 degree equals 60 degree"},"status":"ok"}

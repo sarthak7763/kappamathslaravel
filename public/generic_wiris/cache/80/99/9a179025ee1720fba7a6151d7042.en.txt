@@ -1,0 +1,1 @@
+{"result":{"text":"C equals 2 straight pi straight r"},"status":"ok"}

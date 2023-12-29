@@ -1,0 +1,1 @@
+{"result":{"text":"0 degree less or equal than x less or equal than 270 degree"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"straight pi equals 22 over 7 comma straight R equals 6400 km"},"status":"ok"}

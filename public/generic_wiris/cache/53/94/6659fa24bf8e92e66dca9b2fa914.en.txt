@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 60 degree over denominator 360 degree end fraction cross times 2 cross times 3.142 cross times 6400 space cos 52 degree\nequals 4126.7378 space k m\nalmost equal to 4126.74 space k m"},"status":"ok"}

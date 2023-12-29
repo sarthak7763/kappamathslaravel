@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator D i s tan c e ` space t r a v e l l e d over denominator T i m e ` space t a k e n end fraction"},"status":"ok"}

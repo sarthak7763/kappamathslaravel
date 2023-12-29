@@ -1,0 +1,1 @@
+{"result":{"text":"z equals negative 17"},"status":"ok"}

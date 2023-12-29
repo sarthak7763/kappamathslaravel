@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow C almost equal to 24800 space k m"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"r equals R cos 52 degree equals 6400 space cos 52 degree"},"status":"ok"}

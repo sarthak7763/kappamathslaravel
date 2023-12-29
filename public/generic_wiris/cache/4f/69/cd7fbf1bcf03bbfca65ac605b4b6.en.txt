@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 4 comma 199.1313 over denominator 6 end fraction equals 699.8552\nalmost equal to 700 space k m h to the power of negative 1 end exponent space left parenthesis 3 space s. f right parenthesis"},"status":"ok"}

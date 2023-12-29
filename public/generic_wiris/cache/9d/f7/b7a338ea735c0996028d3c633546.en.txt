@@ -1,0 +1,1 @@
+{"result":{"text":"9 space cos space x plus 5 space sin space x equals 3.5"},"status":"ok"}

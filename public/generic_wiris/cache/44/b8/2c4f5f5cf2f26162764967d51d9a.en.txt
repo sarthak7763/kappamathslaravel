@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space theta almost equal to 45"},"status":"ok"}

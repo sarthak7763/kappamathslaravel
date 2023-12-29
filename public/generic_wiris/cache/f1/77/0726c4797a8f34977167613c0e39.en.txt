@@ -1,0 +1,1 @@
+{"result":{"text":"open parentheses table row cell x minus 10 end cell cell negative 6 end cell row 4 cell x plus 1 end cell end table close parentheses"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"9 cos space x plus 5 sin space x equals 0"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"9 cos x plus 5 sin x"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"table row x cell 0 degree end cell cell 30 degree end cell cell 60 degree end cell cell 90 degree end cell cell 120 degree end cell row y cell 7.0 end cell cell 4.6 end cell cell 0.9 end cell cell negative 3.0 end cell cell negative 6.1 end cell end table table row cell 150 degree end cell row cell negative 7.6 end cell end table"},"status":"ok"}

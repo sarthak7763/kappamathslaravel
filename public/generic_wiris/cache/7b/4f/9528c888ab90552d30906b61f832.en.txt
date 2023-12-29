@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator theta over denominator 360 degree end fraction cross times 2 straight pi straight r\nwhere comma space straight theta equals 60 degree minus 20 degree equals 40 degree\nstraight r equals Rcos 20 degree equals 6400 cos 20 degree"},"status":"ok"}

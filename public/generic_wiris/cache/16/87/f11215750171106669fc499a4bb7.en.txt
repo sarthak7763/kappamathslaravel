@@ -1,0 +1,1 @@
+{"result":{"text":"equals 13 comma 409.5238 minus 10 comma 057.1429\nequals 3 comma 352.3809 space k m\nequals 3 comma 352 space k m"},"status":"ok"}

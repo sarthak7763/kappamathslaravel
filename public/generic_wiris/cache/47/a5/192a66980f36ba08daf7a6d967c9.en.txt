@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator 4126.7378 over denominator 825 end fraction equals 5.0021 space h r"},"status":"ok"}

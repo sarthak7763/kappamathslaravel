@@ -1,0 +1,1 @@
+{"result":{"text":"2 sin open parentheses x close parentheses equals 0.5"},"status":"ok"}

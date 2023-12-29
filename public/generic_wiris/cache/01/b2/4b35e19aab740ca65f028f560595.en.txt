@@ -1,0 +1,1 @@
+{"result":{"text":"therefore space x equals 42 degree"},"status":"ok"}

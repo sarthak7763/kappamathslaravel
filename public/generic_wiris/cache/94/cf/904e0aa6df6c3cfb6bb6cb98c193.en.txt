@@ -1,0 +1,1 @@
+{"result":{"text":"equals open parentheses table row cell 0.28 end cell cell 0.96 end cell row cell 0.96 end cell cell negative 0.28 end cell end table close parentheses"},"status":"ok"}

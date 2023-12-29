@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow y equals 1.5"},"status":"ok"}

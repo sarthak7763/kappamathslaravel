@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 3 sin open parentheses x close parentheses plus 2 space cos space x comma\nrightwards double arrow y less than 1.5"},"status":"ok"}

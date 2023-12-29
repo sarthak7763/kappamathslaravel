@@ -1,0 +1,1 @@
+{"result":{"text":"3 minus 2 cos open parentheses x close parentheses equals 3 minus 0.5\n3 minus 2 cos open parentheses x close parentheses equals 2.5"},"status":"ok"}

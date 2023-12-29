@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow C equals 2 cross times 3.142 cross times 6400 cos 52 degree\nrightwards double arrow C equals 24757 space k m"},"status":"ok"}

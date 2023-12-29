@@ -1,0 +1,1 @@
+{"result":{"text":"2 sin open parentheses x close parentheses plus 1 equals 0.5 plus 1\n2 sin open parentheses x close parentheses plus 1 equals 1.5"},"status":"ok"}

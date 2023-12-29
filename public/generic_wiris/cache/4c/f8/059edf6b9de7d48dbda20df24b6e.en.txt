@@ -1,0 +1,1 @@
+{"result":{"text":"equals fraction numerator angle italic X O Y over denominator 360 degree end fraction cross times 2 pi r space\nwhere comma space r double bond Rcos 52 degree equals 6400 cos 52 degree\nangle XOY equals 32 degree plus 28 degree equals 60 degree"},"status":"ok"}

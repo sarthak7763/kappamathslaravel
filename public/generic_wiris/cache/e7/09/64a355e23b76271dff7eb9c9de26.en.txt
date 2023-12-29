@@ -1,0 +1,1 @@
+{"result":{"text":"cos open parentheses x close parentheses equals 0.25"},"status":"ok"}

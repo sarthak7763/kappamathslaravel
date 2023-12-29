@@ -1,0 +1,1 @@
+{"result":{"text":"T i m e equals D i s tan c e divided by S p e e d equals fraction numerator 4126.7378 over denominator 825 end fraction equals 5.0021 h r\nalmost equal to space 5 space h o u r s"},"status":"ok"}

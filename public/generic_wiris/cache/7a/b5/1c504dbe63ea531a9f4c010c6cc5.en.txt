@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator angle P O Q over denominator 360 degree end fraction cross times 2 straight pi straight r"},"status":"ok"}

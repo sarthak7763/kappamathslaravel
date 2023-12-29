@@ -1,0 +1,1 @@
+{"result":{"text":"20 degree space N comma space 20 degree space E"},"status":"ok"}

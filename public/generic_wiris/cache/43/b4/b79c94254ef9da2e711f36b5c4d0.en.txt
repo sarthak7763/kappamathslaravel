@@ -1,0 +1,1 @@
+{"result":{"text":"sin space 40 degree equals fraction numerator open vertical bar O Z close vertical bar over denominator 6400 end fraction\nrightwards double arrow open vertical bar O Z close vertical bar equals 6400 sin space 40 degree equals 4113.8407\nrightwards double arrow open vertical bar O Z close vertical bar equals 4114 space k m"},"status":"ok"}

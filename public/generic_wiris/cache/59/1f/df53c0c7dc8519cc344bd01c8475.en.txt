@@ -1,0 +1,1 @@
+{"result":{"text":"negative 15 plus 2 x equals negative 27\n2 x equals negative 27 plus 15\n2 x equals negative 12\nx equals negative 6\ntherefore space x equals negative 6 comma space y equals 9 comma space z equals negative 17"},"status":"ok"}

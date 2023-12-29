@@ -1,0 +1,1 @@
+{"result":{"text":"y equals negative 5 x minus 1"},"status":"ok"}

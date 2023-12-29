@@ -1,0 +1,1 @@
+{"result":{"text":"sin open parentheses x close parentheses equals 1 fourth"},"status":"ok"}

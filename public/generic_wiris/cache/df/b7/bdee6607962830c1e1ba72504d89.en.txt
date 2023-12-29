@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 3 x squared plus 4 x minus 7\nfraction numerator negative left parenthesis 0 equals 3 x squared minus x minus 8 right parenthesis over denominator y equals 5 x plus 1 end fraction"},"status":"ok"}

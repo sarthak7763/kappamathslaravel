@@ -1,0 +1,1 @@
+{"result":{"text":"equals 3940 over 760 equals 5.2 space h o u r s"},"status":"ok"}

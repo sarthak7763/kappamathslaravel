@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 9 space cos open parentheses x close parentheses space plus 5 space sin open parentheses x close parentheses"},"status":"ok"}

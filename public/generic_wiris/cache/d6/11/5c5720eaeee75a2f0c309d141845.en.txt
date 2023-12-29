@@ -1,0 +1,1 @@
+{"result":{"text":"m equals 2 minus 2 n"},"status":"ok"}

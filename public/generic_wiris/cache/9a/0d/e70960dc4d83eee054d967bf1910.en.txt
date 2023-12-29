@@ -1,0 +1,1 @@
+{"result":{"text":"almost equal to space 5100 k m"},"status":"ok"}

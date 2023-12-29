@@ -1,0 +1,1 @@
+{"result":{"text":"x equals negative 4 comma x equals 1.5 equals begin inline style 3 over 2 end style"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"Q equals 40.03 degree equals 40.0 degree E space left parenthesis 1 space d. p right parenthesis"},"status":"ok"}

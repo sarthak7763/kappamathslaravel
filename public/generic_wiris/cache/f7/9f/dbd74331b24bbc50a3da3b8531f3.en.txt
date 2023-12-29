@@ -1,0 +1,1 @@
+{"result":{"text":"1 minus 4 cos open parentheses x close parentheses equals 0"},"status":"ok"}

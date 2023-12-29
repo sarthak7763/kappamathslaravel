@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator D i s tan c e over denominator S p e e d end fraction equals 3940 over 760 equals 5.2"},"status":"ok"}

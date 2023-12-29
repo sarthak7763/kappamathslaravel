@@ -1,0 +1,1 @@
+{"result":{"text":"R cos 20 degree equals 6400 cos 20 degree"},"status":"ok"}

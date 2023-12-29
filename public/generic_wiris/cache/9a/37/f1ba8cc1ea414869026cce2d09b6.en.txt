@@ -1,0 +1,1 @@
+{"result":{"text":"y equals 0 comma space x equals 119 degree"},"status":"ok"}

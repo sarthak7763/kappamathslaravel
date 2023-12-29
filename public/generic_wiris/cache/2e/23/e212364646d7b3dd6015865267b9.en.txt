@@ -1,0 +1,1 @@
+{"result":{"text":"x squared minus x minus 2 equals 2 x minus 1\nx squared minus x minus 2 x minus 2 plus 1 equals 0\nx squared minus 3 x minus 1 equals 0"},"status":"ok"}

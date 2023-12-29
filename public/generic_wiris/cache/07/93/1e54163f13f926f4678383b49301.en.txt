@@ -1,0 +1,1 @@
+{"result":{"text":"equals 10 comma 450 minus 4500\nequals 5950 space k m"},"status":"ok"}

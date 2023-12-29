@@ -1,0 +1,1 @@
+{"result":{"text":"R equals 80.27 degree equals 80.3 degree S space left parenthesis 1 space d. p right parenthesis"},"status":"ok"}

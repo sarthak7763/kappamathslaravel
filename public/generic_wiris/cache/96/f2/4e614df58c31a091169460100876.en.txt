@@ -1,0 +1,1 @@
+{"result":{"text":"y equals x squared plus 2 plus k\nA t ` space left parenthesis 2 comma 0 right parenthesis\n0 equals 2 squared plus 2 left parenthesis 2 right parenthesis plus k\n0 equals 4 plus 4 plus k\n0 equals 8 plus k\nk equals negative 8"},"status":"ok"}

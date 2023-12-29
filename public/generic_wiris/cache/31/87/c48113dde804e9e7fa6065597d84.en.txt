@@ -1,0 +1,1 @@
+{"result":{"text":"5 sin open parentheses x close parentheses plus 9 cos open parentheses x close parentheses equals 0......... left parenthesis 1 right parenthesis\n5 sin open parentheses x close parentheses plus 9 cos open parentheses x close parentheses equals y......... left parenthesis 2 right parenthesis"},"status":"ok"}
