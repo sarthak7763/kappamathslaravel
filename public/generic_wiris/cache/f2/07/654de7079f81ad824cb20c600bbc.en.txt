@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 3 over 4 open parentheses 3 3 over 8 plus 1 5 over 6 close parentheses over denominator 2 1 over 8 minus 1 1 half end fraction"},"status":"ok"}

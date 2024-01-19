@@ -1,0 +1,1 @@
+{"result":{"text":"16 to the power of n equals cube root of 2 squared end root\n16 to the power of n equals cube root of 4\n4 to the power of 2 n end exponent equals 4 to the power of begin inline style 1 third end style end exponent\n2 n equals 1 third\n6 n equals 1\nn equals 1 over 6"},"status":"ok"}

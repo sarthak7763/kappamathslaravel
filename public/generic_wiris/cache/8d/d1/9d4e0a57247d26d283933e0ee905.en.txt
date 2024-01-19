@@ -1,0 +1,1 @@
+{"result":{"text":"square root of fraction numerator 0.0048 cross times 0.8 cross times 10 to the power of negative 7 end exponent over denominator 0.027 cross times 0.04 cross times 10 to the power of 6 end fraction end root"},"status":"ok"}

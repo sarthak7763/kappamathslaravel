@@ -1,0 +1,1 @@
+{"result":{"text":"4 to the power of 2 minus x end exponent cross times 16 to the power of x plus 1 end exponent equals 64"},"status":"ok"}

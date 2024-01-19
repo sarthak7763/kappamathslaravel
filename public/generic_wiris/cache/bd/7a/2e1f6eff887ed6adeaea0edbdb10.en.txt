@@ -1,0 +1,1 @@
+{"result":{"text":"3 to the power of x divided by 3 to the power of 2 y end exponent equals 1 over 27"},"status":"ok"}

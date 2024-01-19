@@ -1,0 +1,1 @@
+{"result":{"text":"3 to the power of m divided by 3 to the power of 2 n end exponent equals 9"},"status":"ok"}

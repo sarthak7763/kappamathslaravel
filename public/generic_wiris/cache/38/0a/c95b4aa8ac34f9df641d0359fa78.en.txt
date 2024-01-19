@@ -1,0 +1,1 @@
+{"result":{"text":"x to the power of 5 equals 1024 space space rightwards double arrow space x to the power of 5 equals 4 to the power of 5 space space rightwards double arrow x equals 4"},"status":"ok"}

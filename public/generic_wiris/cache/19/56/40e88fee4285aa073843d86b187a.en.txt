@@ -1,0 +1,1 @@
+{"result":{"text":"5 x minus 4 y equals 6 semicolon space 3 to the power of 3 left parenthesis y minus x right parenthesis end exponent equals 1 over 27"},"status":"ok"}

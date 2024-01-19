@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator open parentheses begin display style 1 third end style close parentheses to the power of X cross times 9 to the power of 3 1 half end exponent over denominator 3 end fraction equals 27 to the power of begin inline style 2 over 3 end style end exponent"},"status":"ok"}

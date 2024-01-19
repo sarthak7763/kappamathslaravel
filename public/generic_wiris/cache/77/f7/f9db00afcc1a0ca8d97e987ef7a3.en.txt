@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow x plus 4 left parenthesis negative begin inline style 1 half end style right parenthesis equals 0 rightwards double arrow x minus 2 equals 0 rightwards double arrow x equals 2"},"status":"ok"}

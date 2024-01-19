@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of x plus y end exponent equals 8 semicolon space 2 x plus y equals 4"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 2 7 over 8 cross times 1 1 fifth over denominator 8 minus 2 1 fourth end fraction"},"status":"ok"}

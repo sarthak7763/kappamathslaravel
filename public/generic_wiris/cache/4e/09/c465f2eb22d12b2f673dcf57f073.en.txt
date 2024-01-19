@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 7.25 cross times left parenthesis 0.16 right parenthesis squared over denominator 0.004 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"1 half left parenthesis 81 to the power of n right parenthesis equals 1 over 54 comma"},"status":"ok"}

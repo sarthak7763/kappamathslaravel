@@ -1,0 +1,1 @@
+{"result":{"text":"square root of open parentheses fraction numerator x cubed y to the power of 5 over denominator x y to the power of 7 end fraction close parentheses end root"},"status":"ok"}

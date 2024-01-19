@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of negative x end exponent cross times 4 to the power of negative y end exponent equals 1 over 8"},"status":"ok"}

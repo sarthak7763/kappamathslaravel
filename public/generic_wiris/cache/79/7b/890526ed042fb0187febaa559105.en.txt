@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 64 to the power of n cross times 2 over denominator 16 to the power of 1 minus n end exponent end fraction equals 4 to the power of 2 n end exponent"},"status":"ok"}

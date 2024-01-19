@@ -1,0 +1,1 @@
+{"result":{"text":"9 to the power of x cross times 3 to the power of 2 y end exponent equals 1 over 729"},"status":"ok"}

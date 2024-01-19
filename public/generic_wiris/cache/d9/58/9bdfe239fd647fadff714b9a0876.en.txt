@@ -1,0 +1,1 @@
+{"result":{"text":"3 to the power of m cross times 3 to the power of n equals 243"},"status":"ok"}

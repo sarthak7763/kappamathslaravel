@@ -1,0 +1,1 @@
+{"result":{"text":"rightwards double arrow m plus 1 equals 5 space space rightwards double arrow space space m equals 4"},"status":"ok"}

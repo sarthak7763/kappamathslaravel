@@ -1,0 +1,1 @@
+{"result":{"text":"3 to the power of x cross times 9 to the power of y equals 243"},"status":"ok"}

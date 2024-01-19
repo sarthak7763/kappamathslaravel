@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator left parenthesis 0.00042 cross times 10 to the power of negative 8 end exponent right parenthesis left parenthesis 15 comma 000 over denominator left parenthesis 5000 cross times 10 to the power of 7 right parenthesis left parenthesis 0.0021 cross times 10 to the power of 14 end fraction"},"status":"ok"}

@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of x plus 2 to the power of left parenthesis x minus 1 right parenthesis end exponent equals 48"},"status":"ok"}

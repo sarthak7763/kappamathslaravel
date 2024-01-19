@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of left parenthesis x plus 4 right parenthesis end exponent equals 1 comma space 2 to the power of left parenthesis x plus 8 y right parenthesis end exponent equals begin inline style 1 fourth end style"},"status":"ok"}

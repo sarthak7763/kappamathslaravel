@@ -1,0 +1,1 @@
+{"result":{"text":"fraction numerator 0.0048 cross times 0.81 over denominator 0.0027 cross times 0.004 end fraction"},"status":"ok"}
