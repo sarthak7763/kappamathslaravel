@@ -30,6 +30,9 @@ $setting = App\Setting::first();
   <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 
+  <!-- sweatalert -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -209,6 +212,10 @@ $setting = App\Setting::first();
        ©2023 Kappa Maths
 
     </strong>
+
+    <!-- sweatalert -->
+ <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+
   </footer>
 </div>
 </div>

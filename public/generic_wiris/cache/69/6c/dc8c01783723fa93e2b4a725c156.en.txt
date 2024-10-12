@@ -1,0 +1,1 @@
+{"result":{"text":"2 left parenthesis 2 to the power of x right parenthesis plus 2 to the power of x equals 96\n3 left parenthesis 2 to the power of x right parenthesis equals 96\n2 to the power of x equals 96 over 3\n2 to the power of x equals 32\n2 to the power of x equals 2 to the power of 5\nx equals 5"},"status":"ok"}

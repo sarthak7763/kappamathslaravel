@@ -1,0 +1,1 @@
+{"result":{"text":"2 to the power of x plus 2 to the power of left parenthesis x minus 1 right parenthesis end exponent equals 48\n2 to the power of x plus 2 to the power of x divided by 2 to the power of negative 1 end exponent equals 48\n2 to the power of x plus begin inline style 1 half end style left parenthesis 2 to the power of x right parenthesis equals 4"},"status":"ok"}

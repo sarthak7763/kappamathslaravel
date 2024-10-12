@@ -252,6 +252,23 @@ Route::get('/view-quiz-question/{slug}','QuestionsController@viewquizquestion')-
 
 
 
+Route::get('/admin/add-mycourse-category','MySubjectcategoryController@add')->name('mycoursetopic-add');
+ Route::post('/admin/save-mycourse-category','MySubjectcategoryController@store')->name('mycoursetopic-save');
+Route::any('/admin/mycourse-category','MySubjectcategoryController@index')->name('mycoursetopic-list');
+
+
+ Route::get('/admin/mycourse-category/edit/{id}','MySubjectcategoryController@edit')->name('mycoursetopic-edit');
+Route::post('/admin/mycourse-category/changestatus','MySubjectcategoryController@updateStatus')->name('mycoursetopic-change-status');
+Route::post('/admin/getsubjectcategory','MySubjectcategoryController@subjectCategory')->name('mycoursetopic-get-category');
+
+
+
+// Route::get('/admin/mycourse-category/delete/{id}','MySubjectcategoryController@destroy')->name('mycoursetopic-delete');
+
+
+
+
+
 Route::fallback( function () {
     abort( 405 );
 });

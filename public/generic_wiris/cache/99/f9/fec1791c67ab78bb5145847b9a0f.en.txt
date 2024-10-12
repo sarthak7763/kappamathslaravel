@@ -1,0 +1,1 @@
+{"result":{"text":"alpha right parenthesis space space x bullet 4 equals 8 semicolon\nbeta right parenthesis space e bullet e equals e semicolon\ngamma right parenthesis space left parenthesis 4 bullet f right parenthesis bullet 4 equals f."},"status":"ok"}
